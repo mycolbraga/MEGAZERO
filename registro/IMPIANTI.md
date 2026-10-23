@@ -8,7 +8,8 @@ Snapshot: 23 ottobre 2026.
 | Lava e riempimento secchi | **COMPLETATI** | Entrambi automatici; non riprogettare. |
 | Cottura continua RS | **COMPLETATA** | Exporter filtrato per i materiali da cuocere sempre. |
 | Cottura su richiesta RS | **COMPLETATA e provata** | Processing Pattern: test Cobblestone → Stone concluso. Autocrafter rivolto **direttamente alla cassa**, non all'Exporter. |
-| Cobblestone infinita | **COMPLETATA** | Produzione automatica confermata. |
+| Cobblestone infinita | **COMPLETATA** | Produzione automatica confermata; il giocatore indica anche la **generazione di cobblestone nella stazione tecnica all'interno del complesso delle 30 farm**. |
+| Stazione Stone Liquefier e riempimento secchi (complesso 30 farm) | **COSTRUITA — CONFIGURAZIONE OPERATIVA DEL LIQUEFIER DA PRECISARE** | Il giocatore conferma il 23/10/2026 che nella stessa stazione ci sono **Stone Liquefier (Energized Power)**, **riempimento secchi (Energized Power)** e **produzione di cobblestone**. Non confondere questa conferma d'esistenza con un nuovo collaudo specifico del Liquefier o con un collegamento RS non dichiarato. |
 | Farm argilla (complesso 30 farm) | **NON ANCORA COSTRUITA** | Il giocatore conferma il 23/10/2026 che l'impianto non è stato realizzato. Non indicare automazioni o collegamenti RS attivi. |
 | Farm miele (complesso 30 farm) | **COMPLETATA, AUTOMATICA E COLLEGATA A RS** | Il giocatore conferma il 23/10/2026 che la farm del miele è costruita, automatizzata e collegata a Refined Storage. Dettagli della raccolta non ancora documentati. |
 | Farm kelp (complesso 30 farm) | **COMPLETATA, AUTOMATICA E COLLEGATA A RS** | Confermata dal giocatore il 23/10/2026: costruita, automatizzata e collegata a Refined Storage. Dettagli tecnici da documentare. |
@@ -26,7 +27,8 @@ Snapshot: 23 ottobre 2026.
 | Farm galline (complesso 30 farm) | **OPERATIVA — GALLINE MANUALI; UOVA AUTOMATICHE IN RS** | Conferma del 23/10/2026: gestione delle galline manuale; **raccolta delle uova automatizzata e già collegata a Refined Storage**. Non presume automazione/trasferimento di pollo e piume. |
 | Farm mucche (complesso 30 farm) | **OPERATIVA — MANUALE** | Allevamento di mucche per carne e pelle. Confermato dal giocatore il 23/10/2026: NON automatizzato, gestione manuale come i maiali. RS non verificato. |
 | Farm maiali (complesso 30 farm) | **OPERATIVA — MANUALE** | Il giocatore conferma il 23/10/2026 che la gestione è manuale, come per le mucche. NON automatizzata; collegamento RS non verificato. |
-| Pane da grano (complesso 30 farm) | **COMPLETATA, AUTOMATICA E COLLEGATA A RS** | Confermato dal giocatore il 23/10/2026: produzione finale **solo pane**. Non registrare una linea aggiuntiva di grano disponibile in RS. |
+| Pane da grano (complesso 30 farm) | **COMPLETATA, AUTOMATICA E COLLEGATA A RS** | Questa farm produce **solo pane**. Distinta dalla nuova farm semiautomatica dedicata al grano, anch'essa collegata a RS (confermato 23/10/2026). |
+| Farm di grano separata (complesso 30 farm) | **COSTRUITA, SEMIAUTOMATICA E COLLEGATA A RS** | Aggiunta confermata dal giocatore il 23/10/2026. Produce grano separatamente dalla farm che produce solo pane. Operazioni ancora manuali non specificate. |
 | Carote (complesso 30 farm) | **1 FARM COMPLETATA, AUTOMATICA E COLLEGATA A RS; seconda NON costruita** | Il giocatore conferma il 23/10/2026 che l'unica farm di carote realizzata è automatizzata e invia la produzione a Refined Storage, come quella delle patate. La seconda unità prevista **non è stata costruita**. |
 | Farm bacche rosse (complesso 30 farm) | **COMPLETATA, AUTOMATICA E COLLEGATA A RS** | Confermato dal giocatore il 23/10/2026. Meccanica di raccolta non ancora specificata. |
 | Farm lana (complesso 30 farm) | **COMPLETATA, AUTOMATICA E COLLEGATA A RS** | Confermato dal giocatore il 23/10/2026. Meccanica di raccolta non ancora specificata. |
@@ -52,4 +54,4 @@ Snapshot: 23 ottobre 2026.
 - Fix datapack per loot foglie Pale Oak su Vanilla Backport: drop ripristinati.
 - Overlay Litematica «Lista Materiali, chunk rimanenti (7)»: risolto.
 - RS: target scorte circa **500 per prodotto**, Detector installati **gradualmente** in base alla necessità; controllo dell'ingresso, non grande impianto di compostaggio. Eventuali eccedenze possono rimanere sul campo e despawnare.
-- Preferenza fornaci tradizionali; Powered Furnace scartata; Stone Liquefier resta nel progetto.
+- Preferenza fornaci tradizionali; Powered Furnace scartata. **Stone Liquefier già installato nella stazione tecnica del complesso** (confermato 23/10/2026); stato di funzionamento specifico ancora da precisare.
