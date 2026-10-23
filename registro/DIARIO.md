@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Revisione punto 17 — bacche rosse (Sweet Berries), complesso delle 30 farm:** confermato dal giocatore che la farm è **costruita, automatizzata e collegata a Refined Storage**. Stato COMPLETATA. Modalità tecnica di raccolta non documentata; prossimo controllo: carote.
+
 - **Revisione punto 17 — lana, complesso delle 30 farm:** il giocatore conferma che la farm lana è **già costruita, automatizzata e collegata direttamente a Refined Storage**. Stato COMPLETATA; metodo tecnico di raccolta non ancora specificato. La farm delle bacche rosse è il prossimo punto da verificare.
 
 - **Revisione punto 16 — Gino:** il giocatore conferma che **la stalla è già stata costruita all'interno del complesso delle 30 farm**. Segnata COMPLETATA, non più tra i progetti da realizzare. Gino è il cavallo con armatura azzurra.
