@@ -19,15 +19,29 @@ I seguenti file, già generati nelle precedenti conversazioni, sono **recuperabi
 
 **Importante:** la PREVIEW era alleggerita/tagliata sul terreno e non rappresenta la montagna completa. La versione con montagna ripristinata è una *terza versione* e non bisogna applicarle senza verifica i conteggi della Preview o dell'isola completa. Non è stato stabilito un elenco definitivo dei soli blocchi ancora da posare nel mondo corrente.
 
+## Posizionamento Litematica — origine verificata da screenshot 23/10/2026
+
+**Configurazione mostrata nell'interfaccia «Gestisci posizionamenti schema»:**
+
+| Campo | Valore |
+| --- | --- |
+| **Origine X** | **2138** |
+| **Origine Y** | **63** |
+| **Origine Z** | **2680** |
+| **Rotazione** | **CW_90** (90° orari) |
+| **Specchiatura** | **NONE** (nessuna) |
+
+**Questi sono i valori del posizionamento Litematica visualizzato nello screenshot**, non la posizione del giocatore. Preservare X=2138, Y=63, Z=2680 e rotazione CW_90: la quota Y=63 è stata verificata dall'interfaccia. Lo screenshot **non mostra il nome della versione `.litematic` caricata**, quindi non dedurlo dalla sola schermata. L'eventuale origine X=2196,Y=66,Z=506 è obsoleta come riferimento operativo.
+
 ## Posizionamento e coordinate già discusse
 
 - **Area scelta:** promontorio nel bioma **Cherry Grove**, da preservare come ubicazione della Stark Estate.
 - **Riferimento visuale:** giocatore/camera **X=2082, Y=103, Z=2698**, vista orientata verso **OVEST**.
 - **Riferimento lato ciliegi:** **X=2088, Y=104, Z=2702**.
 - **Riferimento base esistente:** circa **X=1916, Z=2719**, usato per confrontare le distanze con la villa.
-- **Decisione del giocatore (22/10/2026):** **mantenere la posizione/orientamento correnti**; rotazione citata **90°**; **quota già perfetta, NON spostare verticalmente** per passare alle varianti con montagna/isola.
-- **Valore storico riportato per l'origine della schematic:** **X=2196, Y=66, Z=506**. **ATTENZIONE: NON è stato verificato come coordinate definitive di posa** e il valore Z appare incoerente con i riferimenti Cherry Grove intorno a Z=2700. Registrarlo solo come riferimento storico da riconciliare **prima di usare un comando di piazzamento o modificare la posizione Litematica**. Non inventare un'origine definitiva da questi dati.
-- **Coordinate esatte dell'ancora di posizionamento / angolo della villa nella partita:** **non confermate in modo affidabile nel registro**.
+- **Decisione del giocatore (22/10/2026):** mantenere posizione/orientamento correnti e non spostare verticalmente la struttura. **Conferma visiva successiva 23/10/2026:** origine **2138,63,2680**, rotazione **CW_90**, specchiatura **NONE**.
+- **Valore storico riportato per l'origine della schematic:** **X=2196, Y=66, Z=506**, **NON più utilizzabile come origine del posizionamento attuale**. Conservarlo solo per cronologia: è stato superato dall'origine **X=2138, Y=63, Z=2680** letta direttamente nelle impostazioni Litematica.
+- **Origine del posizionamento visibile in Litematica:** **X=2138, Y=63, Z=2680**, rotazione **CW_90**, specchiatura **NONE**, confermate direttamente da screenshot. L'origine della bounding box/angolo fisico della villa può non coincidere con l'origine Litematica quando vi sono offset o rotazioni; non dedurla senza osservare il posizionamento.
 
 ## Materiali: quantità della PREVIEW, non rimanenze
 
@@ -69,7 +83,7 @@ Fonte integrale: **[lista materiali completa su GitHub](STARK_ESTATE_LISTA_MATER
 
 ## Questioni realmente aperte
 
-1. **Verificare e documentare l'origine/ancora Litematica esatta**, tenendo la posizione, la rotazione e l'altezza già approvate: i valori storici sopra non sono coerenti tra loro e non vanno reinterpretati arbitrariamente.
+1. **Origine di posizionamento Litematica — VERIFICATA (23/10/2026):** X=2138, Y=63, Z=2680, rotazione CW_90, specchiatura NONE. Non spostare la quota. Rimane utile solo verificare **quale variante della schematic è attualmente caricata**, non la posizione nei controlli.
 2. **Ricalcolare la distinta materiali della variante effettivamente scelta/posizionata**, specialmente se è quella con montagna ripristinata; le 229 righe oggi archiviate sono il confronto Preview/isola, non il computo certo della montagna ripristinata.
 3. **Confrontare la Material List di Litematica nel piazzamento reale con le scorte RS** per determinare i blocchi *mancanti*, senza confondere il conteggio geometrico con l'approvvigionamento.
 4. **Rilevare scorte correnti** di Pale Oak scortecciato, pietra liscia e altre risorse prioritarie. Nessuna quantità di scorte effettive ancora confermata.
