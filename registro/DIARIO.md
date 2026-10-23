@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Revisione punto 10 — Hoglin farm:** confermata struttura 12×10 con quattro funghi scarlatti; resa migliorata, attualmente più che soddisfacente. **Continuare a monitorare l'andamento**, senza modifiche immediate. Modalità di raccolta carne/pelle non specificata.
+
 - **Revisione punto 9 — Farm funghi marroni:** confermata dal giocatore ancora invariata: stanza 16×16, quattro funghi madre, 32 dispenser d'acqua e timer. Impianto completato e collaudato.
 
 - **Revisione punto 8 — Canna da zucchero COMPLETATA:** il giocatore conferma che la vecchia farm separata 18×12 con flying machine non esiste più. La produzione è **integrata nel complesso delle 30 farm**, con **taglio automatico Observer+pistoni**, raccolta con **carrello a tramoggia e tramogge** e **collegamento già operativo a Refined Storage**. Nessun lavoro di raccolta/collegamento RS da riproporre.
