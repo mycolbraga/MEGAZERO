@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Revisione punto 17 — galline:** il giocatore conferma **gestione manuale delle galline**, ma **raccolta delle uova automatica e collegata a Refined Storage**. La distinzione è essenziale: **pollo e piume non risultano automatizzati**, e il loro invio a RS non è confermato. Prossimo controllo: cactus.
+
 - **Revisione punto 17 — mucche e maiali:** il giocatore conferma che la farm delle **mucche NON è automatizzata**, e funziona manualmente **come quella dei maiali**. Registrare entrambe come farm esistenti e operative, a **gestione manuale**. Produzioni previste: mucche carne/pelle, maiali carne. Non attribuire ad alcuna collegamento a Refined Storage senza conferma. Prossima verifica: galline.
 
 - **Revisione punto 17 — grano/pane:** il giocatore conferma che la farm del complesso delle 30 farm è **costruita, automatizzata e collegata a Refined Storage**, ma produce **SOLO PANE**. Non contare il grano come prodotto separato della farm né presumere che entri in RS.
