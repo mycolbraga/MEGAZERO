@@ -18,7 +18,7 @@ Snapshot: 23 ottobre 2026.
 | Farm oro Nether | **OPERATIVA, CON LAVORI APERTI** | Confermati 70 lingotti/10 min (~420/h). Conversione automatica delle pepite in lingotti **ancora da realizzare**; collegamento a Refined Storage **ancora da realizzare** (confermato 23/10/2026). |
 | Canna da zucchero | **COMPLETATA, AUTOMATIZZATA E COLLEGATA A RS** | Integrata nel complesso delle 30 farm: **taglio con Observer e pistoni**, raccolta con **carrello con tramoggia e tramogge**, scarico collegato a **Refined Storage**; confermato 23/10/2026. La vecchia farm separata 18×12 con flying machine **non esiste più**. |
 | Funghi marroni | **COMPLETATA E COLLAUDATA — confermata 23/10/2026** | Stanza 16×16 con 4 funghi madre, 32 dispenser d'acqua e funzionamento con timer. Il giocatore conferma che la struttura è ancora questa, senza modifiche. |
-| Hoglin | **OPERATIVA** | 12×10, quattro funghi scarlatti, resa migliorata. |
+| Hoglin | **OPERATIVA — RESA ATTUALMENTE BUONA, DA MONITORARE** | Piattaforma 12×10, quattro funghi scarlatti; spawn verificato. Resa migliorata rispetto all'inizio e al momento più che soddisfacente (conferma del giocatore 23/10/2026). **Continuare a osservare la produzione**, senza modifiche necessarie adesso. Modalità di raccolta di carne/pelle non ancora documentata. |
 | Patate | **UNA FARM ATTIVA** | Altra farm rimossa per stalla Gino. |
 | Querceto/abeteto 8 alberi | **STORICO** | Codice conservato, ma non confondere con Pale Oak a 3 postazioni. |
 | Monumento oceanico | **ESPLORATO** | Recuperate 26 spugne e otto blocchi d'oro. |
