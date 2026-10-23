@@ -33,8 +33,8 @@ Il **complesso delle 30 farm esiste** e comprende almeno la canna da zucchero, c
 | Argilla | **NON ANCORA COSTRUITA** al 23/10/2026, confermato dal giocatore. Farm prevista ma non presente tra gli impianti attivi; nessuna automazione o collegamento a Refined Storage da considerare operativi. |
 | Farm alberi 2×2 (ex querceto), Pale Oak e scortecciatura | Produzione 2×2 e scortecciatura automatizzate secondo il giocatore; la vecchia farm querceto è stata riconvertita, non è un impianto separato |
 | Farm alberi 1×1 (nuova struttura) | Seconda farm appena costruita, separata dalla 2×2; automatismi, coordinate e specie da documentare |
-| Cobblestone | **Produzione presente anche nella stazione tecnica del complesso**, insieme a Stone Liquefier e riempimento secchi; il generatore automatico di cobblestone era già registrato come operativo. |
-| Stazione tecnica — Stone Liquefier, secchi, cobblestone | **COSTRUITA E OPERATIVA NEL COMPLESSO**, confermata il 23/10/2026: **Stone Liquefier (Energized Power) già in funzione e produttore di lava**; il sistema **riempie già i secchi**. Nella stazione è presente anche la produzione di cobblestone. Il collegamento specifico del Liquefier a Refined Storage non è ancora confermato. Non contare tutta la stazione come farm agricola aggiuntiva. |
+| Cobblestone | **PRODUZIONE AUTOMATICA GIÀ OPERATIVA NEL COMPLESSO**, confermata il 23/10/2026; collocata nella stazione tecnica con Stone Liquefier e riempimento secchi. Collegamento specifico del generatore a RS non ancora dichiarato. |
+| Stazione tecnica — Stone Liquefier, secchi, cobblestone | **COSTRUITA E OPERATIVA NEL COMPLESSO**, confermata il 23/10/2026: **Stone Liquefier (Energized Power) già in funzione e produttore di lava**; il sistema **riempie già i secchi**. Nella stessa stazione è **operativa anche la produzione automatica di cobblestone**, confermata dal giocatore. Il collegamento specifico del Liquefier a Refined Storage non è ancora confermato. Non contare tutta la stazione come farm agricola aggiuntiva. |
 | Funghi marroni, slime, oro | Farm completate; alcuni collegamenti RS da verificare |
 | Mob farm XP, Hoglin | Funzionanti |
 
