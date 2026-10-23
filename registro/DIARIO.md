@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Stark Estate — coordinate effettive del posizionamento Litematica da screenshot:** l'utente mostra **Origine X=2138, Y=63, Z=2680**, **Rotazione CW_90** e **Specchiatura NONE**. Valori dei controlli della schematic, **non coordinate del giocatore**. L'origine precedente X2196 Y66 Z506 è un riferimento storico obsoleto per il posizionamento attuale. Rimane non visibile nello screenshot il nome della variante `.litematic` selezionata; non confondere con un angolo fisico della villa.
+
 - **Audit Stark Estate:** verificato che il vecchio file `STARK_ESTATE.md` conservava solo dieci materiali e non le coordinate/decisioni di posizionamento. Recuperati nella Libreria ChatGPT gli originali Litematica (PREVIEW, TERRAIN, MONTAGNA_RIPRISTINATA e ISOLA_COMPLETA) e la lista completa di **229 ID materiali**, ora copiata integralmente in `registro/STARK_ESTATE_LISTA_MATERIALI_COMPLETA.txt`. Il file dedicato registra Cherry Grove, riferimenti di posizione X2082 Y103 Z2698 e X2088 Y104 Z2702, rotazione 90°, quota da non alterare, vecchia origine X2196 Y66 Z506 **contraddittoria/non confermata come ancora finale**, e collegamento RS al cantiere **già funzionante a circa 169 blocchi**. Restano da verificare materiale finale della versione montagna ripristinata, posizione-ancora esatta e scorte effettive; non dichiarare che ogni dettaglio era già salvato.
 
 - **Mining Turtle — scavo 32×16:** il giocatore comunica **«fatto»** e conferma lo scavo completato. La quota Y39 è il target previsto nel progetto precedente; non è stata ribadita separatamente. Spostato tra i lavori completati, non più in sospeso.
