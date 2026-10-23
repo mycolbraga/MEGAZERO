@@ -17,7 +17,7 @@ Snapshot: 23 ottobre 2026.
 | Mob farm XP | **XP OPERATIVA; DROP ANCORA MANUALI** | Kill **manuale da preservare** per XP/Mending; livello 28→38 in ~5 min, riparazioni Mending, drop vari e witch. Il giocatore conferma che **raccolta/gestione dei drop è manuale**. **DA PROGETTARE** scarico, smistamento verso RS dei materiali utili e smaltimento automatico delle eccedenze/oggetti indesiderati. |
 | Farm oro Nether | **OPERATIVA, CON LAVORI APERTI** | Confermati 70 lingotti/10 min (~420/h). Conversione automatica delle pepite in lingotti **ancora da realizzare**; collegamento a Refined Storage **ancora da realizzare** (confermato 23/10/2026). |
 | Canna da zucchero | **COMPLETATA, AUTOMATIZZATA E COLLEGATA A RS** | Integrata nel complesso delle 30 farm: **taglio con Observer e pistoni**, raccolta con **carrello con tramoggia e tramogge**, scarico collegato a **Refined Storage**; confermato 23/10/2026. La vecchia farm separata 18×12 con flying machine **non esiste più**. |
-| Funghi marroni | **COMPLETATA** | Locale 16×16, quattro funghi madre, 32 dispenser, timer. |
+| Funghi marroni | **COMPLETATA E COLLAUDATA — confermata 23/10/2026** | Stanza 16×16 con 4 funghi madre, 32 dispenser d'acqua e funzionamento con timer. Il giocatore conferma che la struttura è ancora questa, senza modifiche. |
 | Hoglin | **OPERATIVA** | 12×10, quattro funghi scarlatti, resa migliorata. |
 | Patate | **UNA FARM ATTIVA** | Altra farm rimossa per stalla Gino. |
 | Querceto/abeteto 8 alberi | **STORICO** | Codice conservato, ma non confondere con Pale Oak a 3 postazioni. |
