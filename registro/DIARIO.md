@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Revisione punto 13 — Monumento oceanico:** confermato stato invariato dopo la prima esplorazione (X≈1136, Z≈2752): **26 spugne** e **8 blocchi d'oro** recuperati. Nessun altro lavoro al monumento registrato.
+
 - **Decisione del giocatore — farm alberi 1×1:** i programmi `querceto_1x1.lua` e `abeteto_1x1.lua` restano archiviati e **saranno provati solo quando serviranno**. Nessun collaudo effettuato, automazione nuova farm non ancora attiva. Non proporre test adesso.
 
 - **Punto 12 — scarico e adattamento programmi nuova farm 1×1:** il giocatore indica come scarico il **blocco davanti alla base**: Turtle X1903 Y66 Z2715 NORD → scarico X1903 Y66 Z2714, acqua prevista sotto a Y65. Creati `querceto_1x1.lua` e `abeteto_1x1.lua`, adattamenti dei file storici a otto postazioni e percorso lungo Z decrescente. **Ancora da collaudare in gioco**: modalità prova, acqua e giro reale; gli script originali sono invariati.
