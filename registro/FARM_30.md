@@ -29,7 +29,7 @@ Il **complesso delle 30 farm esiste** e comprende almeno la canna da zucchero, c
 | Bambù (Bamboo) | **COMPLETATA, AUTOMATIZZATA E COLLEGATA A REFINED STORAGE** nel complesso delle 30 farm, confermato dal giocatore il 23/10/2026. Meccanica di raccolta non ancora documentata. |
 | Kelp | **COMPLETATA, AUTOMATIZZATA E COLLEGATA A REFINED STORAGE** nel complesso delle 30 farm, confermato dal giocatore il 23/10/2026. Modalità tecnica di raccolta non ancora documentata. |
 | Miele | **COMPLETATA, AUTOMATIZZATA E COLLEGATA A REFINED STORAGE** nel complesso delle 30 farm, confermato dal giocatore il 23/10/2026. Modalità tecnica di raccolta non ancora documentata. |
-| Argilla | **Da verificare** |
+| Argilla | **NON ANCORA COSTRUITA** al 23/10/2026, confermato dal giocatore. Farm prevista ma non presente tra gli impianti attivi; nessuna automazione o collegamento a Refined Storage da considerare operativi. |
 | Farm alberi 2×2 (ex querceto), Pale Oak e scortecciatura | Produzione 2×2 e scortecciatura automatizzate secondo il giocatore; la vecchia farm querceto è stata riconvertita, non è un impianto separato |
 | Farm alberi 1×1 (nuova struttura) | Seconda farm appena costruita, separata dalla 2×2; automatismi, coordinate e specie da documentare |
 | Cobblestone | Infinita |
