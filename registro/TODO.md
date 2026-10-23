@@ -18,7 +18,7 @@
 - [ ] **Farm oro nel Nether:** automatizzare la conversione pepite→lingotti e collegare la produzione a Refined Storage. Entrambi i lavori ancora da fare, confermato 23/10/2026.
 - [ ] Progetto quarzo su tetto Nether.
 - [x] **Stalla di Gino — COMPLETATA:** già costruita all'interno del complesso delle 30 farm, confermata dal giocatore il 23/10/2026.
-- [ ] Stato scavo Turtle 32×16 fino a Y39.
+- [x] **Scavo Mining Turtle 32×16 — COMPLETATO**, confermato dal giocatore il 23/10/2026. Obiettivo originale: Y39; la quota finale non è stata ribadita nella conferma. Non riproporlo come lavoro aperto.
 - [ ] Aggiornare il piano 30 linee dopo conferme effettive.
 - [x] **Stazione Stone Liquefier (Energized Power) — COSTRUITA, OPERATIVA E COLLEGATA A RS nel complesso delle 30 farm:** il Liquefier produce già lava e il sistema riempie i secchi; **produzione automatica di cobblestone già operativa** (confermato 23/10/2026). **Tutta la stazione è collegata a Refined Storage**, come confermato dal giocatore. Non riproporre costruzione, avviamento, test di funzionamento o collegamento a RS.
 - [x] **Collegamenti Refined Storage della stazione:** confermati per Stone Liquefier/lava, riempimento secchi e produzione automatica cobblestone (23/10/2026). Nessun collegamento da effettuare.
