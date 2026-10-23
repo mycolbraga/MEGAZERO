@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Argilla:** il giocatore conferma che la farm non è ancora costruita. Non segnare impianto o collegamento RS come attivo.
+
 - **Revisione punto 17 — miele:** farm del miele confermata **costruita, automatizzata e collegata a Refined Storage**. Stato COMPLETATA. Prossima produzione da verificare: argilla.
 
 - **Revisione punto 17 — kelp:** il giocatore conferma farm del kelp **costruita, automatizzata e collegata a Refined Storage**. Stato COMPLETATA. Prossima verifica: miele.
