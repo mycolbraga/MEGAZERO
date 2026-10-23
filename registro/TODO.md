@@ -1,5 +1,7 @@
 # Lavori aperti e verifiche
 
+- [ ] **Stark Estate — studio nuove produzioni, NESSUNA ancora costruita:** valutare Crusher Energized Power per cobblestone→gravel→sand, autocrafting sandstone e cemento verde, e possibili metodi di produzione dirt. Conteggi nella [scheda di studio](STARK_ESTATE_STUDIO_PRODUZIONI.md); verificare prima ricette nella versione della mod installata e materiali realmente mancanti. Non considerare completata una nuova farm senza conferma.
+
 - [ ] Farm argilla: non ancora costruita (23/10/2026); priorità da stabilire.
 
 - [ ] **Farm Bone Meal — senza urgenza:** impianto già costruito e collegato a Refined Storage; configurare **filtri e dettagli mancanti**, quindi verificare il funzionamento completo. Non riproporre la costruzione né il collegamento RS come attività da fare.
