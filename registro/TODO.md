@@ -10,7 +10,9 @@
 - [ ] **Hoglin farm — tenere sotto osservazione la resa:** attualmente va più che bene (confermato il 23/10/2026); verificare saltuariamente che la produzione resti soddisfacente, senza avviare ottimizzazioni finché non emergono problemi. Raccolta carne/pelle non documentata.
 - [ ] **Mob farm XP — progettare scarico e smaltimento automatico dei drop** (richiesta esplicita del giocatore, stato attuale MANUALE): mantenere uccisione manuale per XP/Mending; studiare raccolta post-uccisione, smistamento dei drop utili verso Refined Storage, gestione separata di archi/armature non impilabili ed eliminazione controllata degli scarti. Non considerare già costruito; evitare smaltimento accidentale degli oggetti utili.
 - [ ] Registrare nuovi Processing Pattern realmente creati, oltre Cobblestone→Stone.
-- [ ] Contare scorte attuali di pietra liscia e legno Pale Oak scortecciato per Stark Estate.
+- [ ] **Stark Estate — verificare l'ancora esatta Litematica** nel promontorio Cherry Grove prima di modificare piazzamento: rotazione attuale 90° e quota già approvata da NON spostare. I vecchi riferimenti X2196 Y66 Z506 e X2082 Y103 Z2698 non formano un'ancora certa; vedere `STARK_ESTATE.md`.
+- [ ] **Stark Estate — calcolare i materiali realmente mancanti per la schematic in uso**, specialmente la versione con montagna ripristinata. La lista integrale PREVIEW/isola da 229 blocchi-ID è ora salvata in `registro/STARK_ESTATE_LISTA_MATERIALI_COMPLETA.txt`; non interpretarla come lista definitiva dei blocchi da procurare.
+- [ ] **Stark Estate — contare scorte attuali** di pietra liscia, Pale Oak scortecciato e altri materiali in RS. Collegamento RS al cantiere già funzionante (circa 169 blocchi), non va riprogettato.
 - [ ] Confermare versione Turtle Pale Oak installata, tempi per albero e eventuali tronchi residui.
 - [ ] Stato espansione Trading Hall 32→72.
 - [ ] Upgrade dischi RS 64K, se ancora necessario.
