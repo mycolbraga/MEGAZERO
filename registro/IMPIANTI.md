@@ -9,6 +9,7 @@ Snapshot: 23 ottobre 2026.
 | Cottura continua RS | **COMPLETATA** | Exporter filtrato per i materiali da cuocere sempre. |
 | Cottura su richiesta RS | **COMPLETATA e provata** | Processing Pattern: test Cobblestone → Stone concluso. Autocrafter rivolto **direttamente alla cassa**, non all'Exporter. |
 | Cobblestone infinita | **COMPLETATA** | Produzione automatica confermata. |
+| Farm Bone Meal (complesso 30 farm) | **COSTRUITA E COLLEGATA A RS — SETUP INCOMPLETO** | Il giocatore conferma il 23/10/2026 collegamento a Refined Storage. Restano filtri e altre impostazioni da configurare, senza fretta; automazione completa non ancora confermata. |
 | Farm neve (complesso 30 farm) | **OPERATIVA — MANUALE** | Confermato dal giocatore il 23/10/2026: la farm esiste ma funziona manualmente; collegamento a Refined Storage non verificato. |
 | Farm Nether Wart (complesso 30 farm) | **OPERATIVA — MANUALE** | Costruita, produzione gestita manualmente; confermata il 23/10/2026. Collegamento a Refined Storage non verificato. |
 | Farm Glow Berries (complesso 30 farm) | **OPERATIVA — MANUALE** | Costruita, produzione gestita manualmente; confermata il 23/10/2026. Collegamento a Refined Storage non verificato. |
