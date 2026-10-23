@@ -4,7 +4,7 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
-- **Nuova conferma — farm di ferro:** farm **già costruita, automatica e collegata a Refined Storage**; gli Iron Golem sono generati tramite **villager spaventati**. Posizione rispetto al complesso delle 30 farm non dichiarata; non aggiungere una falsa ubicazione. Nessun lavoro di automazione o connessione RS da riproporre.
+- **Nuova conferma — farm di ferro:** farm **già costruita, automatica e collegata a Refined Storage**; gli Iron Golem sono generati tramite **villager spaventati**. **Successiva conferma:** è una **struttura separata** dal complesso delle 30 farm; coordinate esatte non ancora dichiarate. Nessun lavoro di automazione o connessione RS da riproporre.
 
 - **Integrazione complesso 30 farm — farm di GRANO separata:** il giocatore conferma **farm di grano semiautomatica, costruita e collegata a Refined Storage**. È distinta dalla farm già registrata che produce soltanto **PANE**. Non eliminare né confondere le due linee.
 - **Integrazione complesso 30 farm — stazione tecnica Energized Power:** confermati **Stone Liquefier già operativo e produttore di lava**, **riempimento dei secchi già funzionante** e **produzione automatica di cobblestone già operativa direttamente nel complesso** (ulteriore conferma del giocatore 23/10/2026). Non riproporre costruzione, configurazione di base o avvio di questi impianti. **Confermato successivamente: TUTTA la stazione tecnica è collegata a Refined Storage**, inclusi Stone Liquefier/lava, riempimento secchi e generazione automatica di cobblestone. Nessuna verifica residua sui collegamenti.
