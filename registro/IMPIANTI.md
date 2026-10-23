@@ -9,7 +9,7 @@ Snapshot: 23 ottobre 2026.
 | Cottura continua RS | **COMPLETATA** | Exporter filtrato per i materiali da cuocere sempre. |
 | Cottura su richiesta RS | **COMPLETATA e provata** | Processing Pattern: test Cobblestone → Stone concluso. Autocrafter rivolto **direttamente alla cassa**, non all'Exporter. |
 | Cobblestone infinita | **COMPLETATA** | Produzione automatica confermata; il giocatore indica anche la **generazione di cobblestone nella stazione tecnica all'interno del complesso delle 30 farm**. |
-| Stazione Stone Liquefier e riempimento secchi (complesso 30 farm) | **COSTRUITA — CONFIGURAZIONE OPERATIVA DEL LIQUEFIER DA PRECISARE** | Il giocatore conferma il 23/10/2026 che nella stessa stazione ci sono **Stone Liquefier (Energized Power)**, **riempimento secchi (Energized Power)** e **produzione di cobblestone**. Non confondere questa conferma d'esistenza con un nuovo collaudo specifico del Liquefier o con un collegamento RS non dichiarato. |
+| Stazione Stone Liquefier e riempimento secchi (complesso 30 farm) | **COMPLETATA E OPERATIVA: LAVA PRODOTTA E SECCHI RIEMPITI** | Confermato dal giocatore il 23/10/2026: **Stone Liquefier (Energized Power) in funzione, produce lava e riempie già i secchi**; stessa stazione con produzione di cobblestone. Collegamento specifico del Liquefier a RS non ancora confermato. Non chiedere più se il Liquefier funzioni. |
 | Farm argilla (complesso 30 farm) | **NON ANCORA COSTRUITA** | Il giocatore conferma il 23/10/2026 che l'impianto non è stato realizzato. Non indicare automazioni o collegamenti RS attivi. |
 | Farm miele (complesso 30 farm) | **COMPLETATA, AUTOMATICA E COLLEGATA A RS** | Il giocatore conferma il 23/10/2026 che la farm del miele è costruita, automatizzata e collegata a Refined Storage. Dettagli della raccolta non ancora documentati. |
 | Farm kelp (complesso 30 farm) | **COMPLETATA, AUTOMATICA E COLLEGATA A RS** | Confermata dal giocatore il 23/10/2026: costruita, automatizzata e collegata a Refined Storage. Dettagli tecnici da documentare. |
@@ -54,4 +54,4 @@ Snapshot: 23 ottobre 2026.
 - Fix datapack per loot foglie Pale Oak su Vanilla Backport: drop ripristinati.
 - Overlay Litematica «Lista Materiali, chunk rimanenti (7)»: risolto.
 - RS: target scorte circa **500 per prodotto**, Detector installati **gradualmente** in base alla necessità; controllo dell'ingresso, non grande impianto di compostaggio. Eventuali eccedenze possono rimanere sul campo e despawnare.
-- Preferenza fornaci tradizionali; Powered Furnace scartata. **Stone Liquefier già installato nella stazione tecnica del complesso** (confermato 23/10/2026); stato di funzionamento specifico ancora da precisare.
+- Preferenza fornaci tradizionali; Powered Furnace scartata. **Stone Liquefier già installato e funzionante nella stazione tecnica del complesso**: produce lava e riempie secchi (confermato 23/10/2026).
