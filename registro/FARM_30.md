@@ -38,4 +38,8 @@ Il **complesso delle 30 farm esiste** e comprende almeno la canna da zucchero, c
 | Funghi marroni, slime, oro | Farm completate; alcuni collegamenti RS da verificare |
 | Mob farm XP, Hoglin | Funzionanti |
 
+### Altri impianti MegaZero confermati (ubicazione rispetto al complesso da verificare)
+
+- **Farm di ferro (Iron Golem): COMPLETATA, AUTOMATIZZATA E COLLEGATA A REFINED STORAGE.** Funziona con **villager spaventati** che provocano la generazione degli Iron Golem. Conferma del 23/10/2026. **Non attribuire automaticamente questa farm al complesso delle 30 farm**, perché l'ubicazione non è stata specificata; registrarla comunque fra gli impianti MegaZero.
+
 **Gestione eccedenze RS:** Detector solo progressivamente, priorità alle farm più produttive, scorta-obiettivo ~500 per prodotto; evitare grande rete di compostaggio, accettare despawn eccedenze quando ingresso bloccato.
