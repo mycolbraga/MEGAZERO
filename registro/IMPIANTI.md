@@ -9,6 +9,7 @@ Snapshot: 23 ottobre 2026.
 | Cottura continua RS | **COMPLETATA** | Exporter filtrato per i materiali da cuocere sempre. |
 | Cottura su richiesta RS | **COMPLETATA e provata** | Processing Pattern: test Cobblestone → Stone concluso. Autocrafter rivolto **direttamente alla cassa**, non all'Exporter. |
 | Cobblestone infinita | **COMPLETATA** | Produzione automatica confermata. |
+| Farm miele (complesso 30 farm) | **COMPLETATA, AUTOMATICA E COLLEGATA A RS** | Il giocatore conferma il 23/10/2026 che la farm del miele è costruita, automatizzata e collegata a Refined Storage. Dettagli della raccolta non ancora documentati. |
 | Farm kelp (complesso 30 farm) | **COMPLETATA, AUTOMATICA E COLLEGATA A RS** | Confermata dal giocatore il 23/10/2026: costruita, automatizzata e collegata a Refined Storage. Dettagli tecnici da documentare. |
 | Farm bambù (complesso 30 farm) | **COMPLETATA, AUTOMATICA E COLLEGATA A RS** | Il giocatore conferma il 23/10/2026 che la farm del bambù è costruita, automatizzata e collegata a Refined Storage. Dettagli tecnici di raccolta non ancora documentati. |
 | Farm scute armadillo (complesso 30 farm) | **COMPLETATA, AUTOMATICA E COLLEGATA A RS** | Il giocatore conferma il 23/10/2026 che la farm degli armadilli è automatizzata e collegata a Refined Storage; modalità tecnica da documentare. |
