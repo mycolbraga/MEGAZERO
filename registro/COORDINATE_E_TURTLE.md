@@ -35,7 +35,7 @@ Il giocatore conferma il 23/10/2026 che **la vecchia farm del querceto è stata 
 
 **Informazioni necessarie prima dell'adattamento:** coordinate X/Y/Z di partenza della nuova Turtle, verso cui guarda, posizione della cassa di rifornimento e del punto di scarico, coordinate di tutti i tronchi 1×1 e configurazione dei corridoi/ostacoli. I due codici originali sono vincolati alla precedente geometria: `HOME_X/Y/Z`, `LANE_Z`, `X_TREES`, `SOUTH_Z`/`NORTH_Z`, le sequenze di spostamento da 7 blocchi e scarico fisso a (1911,66,2733); adattare anche controlli e messaggi associati. **Non trasferire automaticamente le vecchie coordinate.**
 
-**Primo riferimento della nuova farm (screenshot del 23/10/2026):** il giocatore è **in piedi sopra la cassa** alle coordinate HUD **X=1903, Y=67, Z=2716** e riferisce che la **Turtle è una casella davanti a lui**. L'HUD mostra direzione **N (Nord)**, per cui la casella immediatamente davanti dovrebbe essere **X=1903, Z=2715**; **deduzione ancora da confermare**. La quota **Y della Turtle** e il suo **orientamento effettivo** non sono stati verificati: il valore Y=67 dello screenshot è quello del giocatore sulla cassa e non va copiato automaticamente come quota della Turtle.
+**Base nuova Turtle (confermata da screenshot e giocatore il 23/10/2026):** giocatore **in piedi sopra la Turtle** a **X=1903, Y=67, Z=2715**; la Turtle stessa occupa il blocco **X=1903, Y=66, Z=2715** (un blocco sotto i piedi del giocatore). **Cassa dietro alla base:** giocatore in piedi sulla cassa a **X=1903, Y=67, Z=2716**, dunque cassa a **X=1903, Y=66, Z=2716**. La cassa è quindi a **SUD (+Z)** rispetto alla Turtle. L'indicatore HUD **N** descrive la direzione del *giocatore*, **non conferma il verso in cui guarda la Turtle**: orientamento Turtle ancora da verificare. Per avere la cassa dietro alla Turtle come negli script, la Turtle dovrebbe guardare **NORD (−Z)**.
 
 **Posizioni di piantagione 1×1 confermate dal giocatore (23/10/2026):** nel secondo screenshot il giocatore era **in piedi sul primo blocco destinato all'albero** a X=1899, Y=68, Z=2712; le altre sette coordinate sono state fornite direttamente. Non confondere più queste posizioni con una semplice indicazione del mirino.
 
@@ -52,9 +52,11 @@ Il giocatore conferma il 23/10/2026 che **la vecchia farm del querceto è stata 
 
 **Geometria calcolata:** due file parallele X=1899 e X=1907, quattro postazioni per fila; Z=2712, 2705, 2698, 2691 (passo 7); distanza orizzontale fra file X=8. Corridoio centrale ipotizzato sull'asse **X=1903**: 4 blocchi fra corsia e ciascun tronco. Se la Turtle inizia effettivamente a Z=2715 rivolta a nord, la prima coppia è 3 blocchi avanti. **La posizione X=1903 Z=2715 è dedotta dal primo screenshot, non ancora confermata.**
 
-**Da verificare prima di adattare/avviare i due programmi:** Y effettiva della Turtle (non attribuire alla Turtle la Y=67 dell'HUD del giocatore sulla cassa), direzione in cui è orientata la Turtle, posizione reale dello scarico in acqua, accessibilità del corridoio. Il programma andrà adattato alla percorrenza verso **−Z** e agli offset laterali **±4 X**, non limitandosi a sostituire numeri superficiali.
+**Quote reali:** Turtle blocco **Y=66**, terreno d'impianto **Y=67** perché il giocatore stava in piedi sui blocchi di terra a **Y=68**; il primo tronco/sapling è quindi collocato a **Y=68**. Il programma dovrà gestire il **dislivello tra Turtle (Y=66) e tronchi (Y=68)**, senza scambiare HUD giocatore e quota dei blocchi.
 
-**Stato script nuovi:** NON ANCORA GENERATI; le **otto postazioni sono note**, rimangono le verifiche della Turtle e dello scarico. Gli originali `querceto2.txt` e `abeteto_8.lua` restano invariati.
+**Da verificare prima di adattare/avviare i due programmi:** direzione in cui guarda **fisicamente la Turtle** (la direzione HUD N non basta), posizione effettiva dello scarico in acqua, accessibilità del corridoio e spazio necessario alla salita. Percorrenza verso **−Z** e offset laterali **±4 X**; non basta cambiare i numeri superficiali.
+
+**Stato script nuovi:** NON ANCORA GENERATI; le **otto postazioni e la base della Turtle sono note**, rimangono da verificare orientamento della Turtle, percorso/dislivello e punto di scarico. Gli originali `querceto2.txt` e `abeteto_8.lua` restano invariati.
 
 ## Turtle scortecciatrice dedicata
 
