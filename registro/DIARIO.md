@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Revisione registro, punto 4 — Trading Hall:** il giocatore conferma **ancora 32 postazioni attive**; l'espansione prevista a 72 non è conclusa. Nessun avanzamento intermedio confermato.
+
 - **Revisione registro, punto 3 — Refined Storage confermato dal giocatore:** sistema RS operativo; gestione degli ingressi tramite Detector da implementare gradualmente, target circa 500 unità per risorsa; nessuna grande linea di smaltimento. Restano **non specificati** numero di Detector già installati ed eventuali ampliamenti dei dischi.
 
 - Aggiunto il programma originale **`scorteccia(1).lua`** consegnato dal giocatore, archiviato senza modifiche logiche come `scripts/turtle/scorteccia.lua`. Scortecciatura con Turtle separata: tronchi dalla cassa sopra, ascia slot 2, output nella cassa sotto.
