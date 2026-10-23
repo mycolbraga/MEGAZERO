@@ -13,7 +13,9 @@ Il **complesso delle 30 farm esiste** e comprende almeno la canna da zucchero, c
 | Carote — seconda farm prevista | **NON COSTRUITA**: era prevista una seconda unità, ma il giocatore conferma di averne realizzata **una sola**. Non contare la seconda fra le farm attive. |
 | Pane (farm basata su grano) | **COMPLETATA, AUTOMATIZZATA E COLLEGATA A REFINED STORAGE** nel complesso delle 30 farm. Confermato il 23/10/2026: **produce esclusivamente PANE**, non consegna grano separato al magazzino. Il grano è utilizzato come coltura/intermedio, non come produzione distinta verificata. |
 | Patate | **COMPLETATA NEL COMPLESSO DELLE 30 FARM**: raccolta automatica tramite villager e trasferimento già collegato a **Refined Storage**, confermato il 23/10/2026. Una vecchia farm separata era stata rimossa per la stalla di Gino; numero di moduli attuali non precisato. |
-| Mucche carne/pelle, galline pollo/piume/uova, maiali | Da verificare |
+| Mucche (carne e pelle) | **COSTRUITA E FUNZIONANTE — GESTIONE MANUALE**, confermato il 23/10/2026. **NON automatizzata**. Collegamento effettivo dei prodotti a Refined Storage non confermato. |
+| Maiali (carne) | **COSTRUITA E FUNZIONANTE — GESTIONE MANUALE**, come la farm mucche, confermato il 23/10/2026. **NON automatizzata**. Collegamento a Refined Storage non confermato. |
+| Galline (pollo, piume, uova) | **Da verificare** |
 | Cactus, angurie, zucche, barbabietola, cacao | Da verificare |
 | Nether wart, glow berries, neve, bone meal | Da verificare |
 | Scute armadillo, bamboo, kelp, miele, argilla | Da verificare |
