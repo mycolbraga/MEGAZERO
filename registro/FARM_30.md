@@ -12,7 +12,8 @@ Il **complesso delle 30 farm esiste** e comprende almeno la canna da zucchero, c
 | Cactus, angurie, zucche, barbabietola, cacao | Da verificare |
 | Nether wart, glow berries, neve, bone meal | Da verificare |
 | Scute armadillo, bamboo, kelp, miele, argilla | Da verificare |
-| Pale Oak, scortecciatura | Automatizzate secondo il giocatore |
+| Farm alberi 2×2 (ex querceto), Pale Oak e scortecciatura | Produzione 2×2 e scortecciatura automatizzate secondo il giocatore; la vecchia farm querceto è stata riconvertita, non è un impianto separato |
+| Farm alberi 1×1 (nuova struttura) | Seconda farm appena costruita, separata dalla 2×2; automatismi, coordinate e specie da documentare |
 | Cobblestone | Infinita |
 | Lava e riempimento secchi | Automatici |
 | Funghi marroni, slime, oro | Farm completate; alcuni collegamenti RS da verificare |

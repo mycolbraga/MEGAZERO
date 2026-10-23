@@ -1,6 +1,8 @@
 # Coordinate e Mining Turtle
 
-## Farm Pale Oak 3 × 2×2
+## Farm alberi 2×2 (ex querceto; attualmente Pale Oak)
+
+Il giocatore conferma il 23/10/2026 che **la vecchia farm del querceto è stata riconvertita per gli alberi 2×2**, oggi usata per Pale Oak. Non è una struttura aggiuntiva rispetto alle tre postazioni qui sotto. La compatibilità dei programmi con altre specie 2×2 andrà verificata prima dell'uso.
 
 **Casa Turtle:** X=1910 Y=67 Z=2732, rivolta a **EST**; chest dietro (OVEST). **Corsia confermata:** Z=2731. **Scarico:** Turtle sopra acqua a (1911,67,2733), acqua Y=66.
 
@@ -24,8 +26,12 @@
 | Tetto Nether | 1079,7,3091 |
 | Monumento oceanico | 1136, Z2752 |
 | Mob farm aerea | spiaggia 1841,62,2792 → torre 1700,151,2949 |
-| Vecchio querceto 8 posti | X 1913,1920,1927,1934; Z 2735/2728 |
+| Ex querceto 8 posti (solo riferimento storico) | X 1913,1920,1927,1934; Z 2735/2728. La farm originaria è diventata l'attuale farm alberi 2×2. |
 | Scavo Turtle 32×16 | partenza 1890,75,2766; stop a Y39, stato da verificare |
+
+## Nuova farm alberi 1×1 (struttura separata)
+
+**Costruita e confermata dal giocatore il 23 ottobre 2026.** È una seconda farm per alberi che crescono 1×1, distinta dall'ex querceto convertito per alberi 2×2. Coordinate, disposizione, alberi coltivati, eventuale Turtle/script attivo, raccolta dei prodotti e collegamento a Refined Storage **non sono ancora documentati**. Non assumere che il vecchio `querceto2.txt` o `abeteto_8.lua` sia già il programma usato in questa nuova farm.
 
 ## Turtle scortecciatrice dedicata
 
