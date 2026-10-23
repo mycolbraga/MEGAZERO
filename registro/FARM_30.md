@@ -5,7 +5,7 @@ Il **complesso delle 30 farm esiste** e comprende almeno la canna da zucchero, c
 | Linea | Stato noto |
 | --- | --- |
 | Lana, bacche rosse | Da verificare |
-| Canna da zucchero | **INTEGRATA NEL COMPLESSO DELLE 30 FARM**; vecchia farm 18×12 indipendente non più esistente; **taglio automatico con Observer e pistoni** confermato; raccolta drop e integrazione RS da documentare |
+| Canna da zucchero | **COMPLETATA, nel complesso delle 30 farm**: Observer e pistoni per il taglio, **carrello con tramoggia e tramogge** per la raccolta, **collegata a Refined Storage**. La precedente 18×12 separata è dismessa. |
 | Carote (2), grano/pane | Da verificare |
 | Patate (2 originarie) | Una rimossa, una ancora attiva |
 | Mucche carne/pelle, galline pollo/piume/uova, maiali | Da verificare |
