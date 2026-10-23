@@ -4,6 +4,9 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Integrazione complesso 30 farm — farm di GRANO separata:** il giocatore conferma **farm di grano semiautomatica, costruita e collegata a Refined Storage**. È distinta dalla farm già registrata che produce soltanto **PANE**. Non eliminare né confondere le due linee.
+- **Integrazione complesso 30 farm — stazione tecnica Energized Power:** il giocatore conferma una stazione costruita contenente **Stone Liquefier**, **sistema di riempimento secchi** e **produzione di cobblestone**. Aggiornato lo stato: non è un progetto di costruzione da avviare. Stato di collaudo specifico del Liquefier e collegamento individuale a RS non ancora confermati.
+
 - **Argilla:** il giocatore conferma che la farm non è ancora costruita. Non segnare impianto o collegamento RS come attivo.
 
 - **Revisione punto 17 — miele:** farm del miele confermata **costruita, automatizzata e collegata a Refined Storage**. Stato COMPLETATA. Prossima produzione da verificare: argilla.
