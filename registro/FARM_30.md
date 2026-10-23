@@ -20,7 +20,7 @@ Il **complesso delle 30 farm esiste** e comprende almeno la canna da zucchero, c
 | Angurie | **COMPLETATA, AUTOMATIZZATA E COLLEGATA A REFINED STORAGE** nel complesso delle 30 farm, confermato dal giocatore il 23/10/2026. Meccanica specifica di raccolta non ancora documentata. |
 | Zucche | **COMPLETATA, AUTOMATIZZATA E COLLEGATA A REFINED STORAGE** nel complesso delle 30 farm, confermato dal giocatore il 23/10/2026. Modalità specifica di raccolta non ancora documentata. |
 | Barbabietola | **NON ANCORA REALIZZATA** al 23/10/2026, come confermato dal giocatore. Non conteggiare fra le farm costruite o collegate a Refined Storage. |
-| Cacao | **Da verificare** |
+| Cacao | **COSTRUITA E OPERATIVA — GESTIONE MANUALE**. Confermato dal giocatore il 23/10/2026: la farm esiste ma il funzionamento è **manuale**, non automatizzato. Collegamento a Refined Storage **non confermato**. |
 | Nether wart, glow berries, neve, bone meal | Da verificare |
 | Scute armadillo, bamboo, kelp, miele, argilla | Da verificare |
 | Farm alberi 2×2 (ex querceto), Pale Oak e scortecciatura | Produzione 2×2 e scortecciatura automatizzate secondo il giocatore; la vecchia farm querceto è stata riconvertita, non è un impianto separato |
