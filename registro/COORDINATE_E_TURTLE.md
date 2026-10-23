@@ -37,9 +37,9 @@ Il giocatore conferma il 23/10/2026 che **la vecchia farm del querceto è stata 
 
 **Base nuova Turtle (confermata da screenshot e giocatore il 23/10/2026):** giocatore **in piedi sopra la Turtle** a **X=1903, Y=67, Z=2715**; la Turtle stessa occupa il blocco **X=1903, Y=66, Z=2715** (un blocco sotto i piedi del giocatore). **Cassa dietro alla base:** giocatore in piedi sulla cassa a **X=1903, Y=67, Z=2716**, dunque cassa a **X=1903, Y=66, Z=2716**. La cassa è quindi a **SUD (+Z)** rispetto alla Turtle. L'indicatore HUD **N** descrive la direzione del *giocatore*, **non conferma il verso in cui guarda la Turtle**: orientamento Turtle ancora da verificare. Per avere la cassa dietro alla Turtle come negli script, la Turtle dovrebbe guardare **NORD (−Z)**.
 
-**Posizioni di piantagione 1×1 confermate dal giocatore (23/10/2026):** nel secondo screenshot il giocatore era **in piedi sul primo blocco destinato all'albero** a X=1899, Y=68, Z=2712; le altre sette coordinate sono state fornite direttamente. Non confondere più queste posizioni con una semplice indicazione del mirino.
+**Otto posizioni X/Z dei terreni confermate dal giocatore (23/10/2026).** Le terne qui sotto riportano le **coordinate HUD del giocatore in piedi sulle postazioni**, così come comunicate (Y HUD=68); **non usare Y=68 come quota del blocco di terra**. L'utente ha corretto esplicitamente il dislivello: **Turtle e terra degli alberi sono sullo stesso livello; il germoglio/tronco inizia solo 1 blocco sopra**. Per il percorso utilizzare la quota fisica della Turtle come quota del terreno, non un salto di due blocchi.
 
-| Albero | X | Y | Z | Fila |
+| Albero | X | Y HUD giocatore | Z | Fila |
 | --- | ---: | ---: | ---: | --- |
 | 1 | 1899 | 68 | 2712 | Ovest |
 | 2 | 1899 | 68 | 2705 | Ovest |
@@ -50,13 +50,13 @@ Il giocatore conferma il 23/10/2026 che **la vecchia farm del querceto è stata 
 | 7 | 1907 | 68 | 2705 | Est |
 | 8 | 1907 | 68 | 2712 | Est |
 
-**Geometria calcolata:** due file parallele X=1899 e X=1907, quattro postazioni per fila; Z=2712, 2705, 2698, 2691 (passo 7); distanza orizzontale fra file X=8. Corridoio centrale ipotizzato sull'asse **X=1903**: 4 blocchi fra corsia e ciascun tronco. Se la Turtle inizia effettivamente a Z=2715 rivolta a nord, la prima coppia è 3 blocchi avanti. **La posizione X=1903 Z=2715 è dedotta dal primo screenshot, non ancora confermata.**
+**Geometria calcolata:** due file parallele X=1899 e X=1907, quattro postazioni per fila; Z=2712, 2705, 2698, 2691 (passo 7); distanza fra file X=8. Corridoio centrale ipotizzato sull'asse **X=1903**: 4 blocchi fra corsia e ciascun tronco. **Base Turtle X=1903 Z=2715 confermata** dal giocatore (screenshot in piedi sopra la Turtle), a tre blocchi lungo Z dalla prima coppia. L'orientamento fisico della Turtle resta da verificare.
 
-**Quote reali:** Turtle blocco **Y=66**, terreno d'impianto **Y=67** perché il giocatore stava in piedi sui blocchi di terra a **Y=68**; il primo tronco/sapling è quindi collocato a **Y=68**. Il programma dovrà gestire il **dislivello tra Turtle (Y=66) e tronchi (Y=68)**, senza scambiare HUD giocatore e quota dei blocchi.
+**CORREZIONE ESPLICITA DEL GIOCATORE — prevale sulle deduzioni dagli HUD:** la **Turtle è alla stessa altezza della terra degli alberi**; il tronco/sapling cresce **un solo blocco più in alto**. La Turtle occupa il blocco registrato a **Y=66**; per il percorso considerare quindi la **terra anch'essa a Y=66** e il **primo tronco/sapling a Y=67**. Le coordinate HUD Y=68 rilevate sopra i terreni non devono essere interpretate come coordinate del blocco di terra. **Non programmare una salita artificiale di due blocchi.**
 
-**Da verificare prima di adattare/avviare i due programmi:** direzione in cui guarda **fisicamente la Turtle** (la direzione HUD N non basta), posizione effettiva dello scarico in acqua, accessibilità del corridoio e spazio necessario alla salita. Percorrenza verso **−Z** e offset laterali **±4 X**; non basta cambiare i numeri superficiali.
+**Da verificare prima di adattare/avviare i due programmi:** direzione in cui guarda **fisicamente la Turtle** (la direzione HUD N non basta), posizione effettiva dello scarico in acqua e accessibilità del corridoio. Percorrenza verso **−Z** e offset laterali **±4 X**; **nessuna salita di due blocchi**. Non basta cambiare i numeri superficiali.
 
-**Stato script nuovi:** NON ANCORA GENERATI; le **otto postazioni e la base della Turtle sono note**, rimangono da verificare orientamento della Turtle, percorso/dislivello e punto di scarico. Gli originali `querceto2.txt` e `abeteto_8.lua` restano invariati.
+**Stato script nuovi:** NON ANCORA GENERATI; le **otto postazioni, la base Turtle e l'assenza di dislivello Turtle-terreno sono note**. Restano da verificare orientamento della Turtle, percorso e punto di scarico. Gli originali `querceto2.txt` e `abeteto_8.lua` restano invariati.
 
 ## Turtle scortecciatrice dedicata
 
