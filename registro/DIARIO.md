@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Revisione punto 17 — grano/pane:** il giocatore conferma che la farm del complesso delle 30 farm è **costruita, automatizzata e collegata a Refined Storage**, ma produce **SOLO PANE**. Non contare il grano come prodotto separato della farm né presumere che entri in RS.
+
 - **Revisione punto 17 — carote, successiva conferma:** l'**unica** farm di carote costruita è **automatizzata e collegata a Refined Storage**, come la farm delle patate. La seconda farm inizialmente prevista resta **NON COSTRUITA**. La conferma aggiorna la precedente nota che dava l'automazione da verificare.
 
 - **Revisione punto 17 — carote:** nel complesso delle 30 farm il giocatore conferma **una sola farm costruita**, mentre la seconda originariamente prevista **non è stata costruita**. Non segnare automaticamente completate tutte e due, né presumere automazione e collegamento a Refined Storage per quella esistente: informazioni ancora da verificare.
