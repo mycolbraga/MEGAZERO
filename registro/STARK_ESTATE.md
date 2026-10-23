@@ -109,6 +109,10 @@ Fonte integrale: **[lista materiali completa su GitHub](STARK_ESTATE_LISTA_MATER
 - **Collegamento RS direttamente al cantiere della Stark Estate GIÀ FUNZIONANTE:** Network Transmitter / Network Receiver e Grid vicina alla villa; distanza riferita circa **169 blocchi**. Non servono 300 cavi né una batteria di casse doppie solo per trasportare e immagazzinare i materiali in loco. I chunk necessari devono essere caricati perché la connessione operi.
 - L'estimazione precedente di circa **21 casse doppie** per la Preview (**19** escludendo luce/acqua/fuoco) era uno scenario logistico, ora **superato come soluzione necessaria** dal collegamento RS funzionante.
 
+## Studio di ulteriori automazioni materiali
+
+**Avviato il 23/10/2026 su richiesta del giocatore:** [studio produzioni con Energized Power, RS e Turtle](STARK_ESTATE_STUDIO_PRODUZIONI.md). Contiene la possibile catena cobblestone→gravel→sand→sandstone, produzione green concrete powder, metodi per dirt e altri blocchi. **Sono proposte da verificare, non impianti già costruiti.**
+
 ## Questioni realmente aperte
 
 1. **Origine e variante Litematica — VERIFICATE (23/10/2026):** versione **`Stark_Estate_MegaZero_MONTAGNA_RIPRISTINATA.litematic`**, X=2138, Y=63, Z=2680, rotazione CW_90, specchiatura NONE. Non spostare la quota né riproporre la verifica del nome della schematic.
