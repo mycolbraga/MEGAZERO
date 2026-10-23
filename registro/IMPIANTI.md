@@ -13,7 +13,7 @@ Snapshot: 23 ottobre 2026.
 | Scortecciatura Pale Oak | **COMPLETATA secondo il giocatore** | Seconda Turtle con programma originale `scripts/turtle/scorteccia.lua`: tronchi dalla cassa sopra, ascia slot 2, scarico cassa sotto; lavora in ciclo continuo. Non proporla come lavoro mancante. |
 | Refined Storage | **OPERATIVO** | Grid/controller; almeno due dischi 16K in precedenza; Importer, Exporter, Regulator; rete a distanza smelter con Transmitter/Receiver. Upgrade 64K da verificare. |
 | Trading Hall | **32 POSTAZIONI ATTIVE** | Zombificazione integrata; espansione a 72 progettata, non confermata finita. |
-| Slime farm | **COMPLETATA** | Scavo 16×16 fino a bedrock; collegata a RS; 71 sticky piston completati. |
+| Slime farm | **COMPLETATA — PASSIVA** | Il giocatore conferma produzione **passiva e automatica**, senza intervento manuale; scavo 16×16 fino a bedrock; collegata a RS; 71 sticky piston completati. |
 | Mob farm XP | **COMPLETATA** | Kill manuale; livello 28→38 in ~5 min, riparazioni Mending, drop vari e witch. |
 | Farm oro Nether | **COMPLETATA** | Misura 70 lingotti/10 min (~420/h). Pepite→lingotti e collegamento RS ancora da verificare. |
 | Canna da zucchero | **RACCOLTA COMPLETATA** | 18×12, flying machine con sensore luce all'alba/tramonto, minecart con tramoggia; Importer RS da verificare. |
