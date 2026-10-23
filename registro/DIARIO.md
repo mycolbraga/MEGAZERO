@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Revisione punto 7 — Farm d'oro Nether:** confermata resa registrata di circa 70 lingotti/10 minuti, mentre la trasformazione automatica delle pepite e il collegamento a Refined Storage non sono ancora realizzati.
+
 - **Revisione registro, punto 6 — Mob farm XP:** il giocatore conferma che **tutti i drop sono ancora gestiti manualmente**. Richiesta progettazione futura di un sistema di **scarico/smistamento/smaltimento automatico**, mantenendo le uccisioni manuali per XP/Mending. Lavoro aperto, nessun impianto drop automatico ancora confermato.
 
 - **Revisione registro, punto 5 — Slime farm confermata:** completata e **produce passivamente**, senza intervento manuale; già collegata a Refined Storage.
