@@ -1,5 +1,7 @@
 # Lavori aperti e verifiche
 
+- [ ] **Farm Bone Meal — senza urgenza:** impianto già costruito e collegato a Refined Storage; configurare **filtri e dettagli mancanti**, quindi verificare il funzionamento completo. Non riproporre la costruzione né il collegamento RS come attività da fare.
+
 **Non riproporre** lo smelter, produzione lava, secchi, cottura on-demand, Cobblestone infinita, Pale Oak e scortecciatura come progetti ancora da realizzare.
 
 - [ ] **Nuova farm alberi 1×1 — COLLAUDO RINVIATO A QUANDO SERVIRÀ.** Struttura costruita; due script adattati e salvati (`scripts/turtle/querceto_1x1.lua`, `scripts/turtle/abeteto_1x1.lua`), originali conservati. Base Turtle 1903,66,2715 rivolta NORD, cassa dietro a 1903,66,2716, otto postazioni X1899/1907 e Z2712/2705/2698/2691, terra allo stesso livello della Turtle. Scarico previsto un blocco davanti a 1903,66,2714 con acqua sotto a Y65 da verificare. **Il giocatore ha deciso di non provare gli script adesso:** prima prova senza tagli, poi giro reale e solo dopo eventuale avvia. Stato **NON COLLAUDATA / NON AUTOMATIZZATA**; non sollecitare test finché non è necessario.
