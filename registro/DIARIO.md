@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Revisione punto 17 — zucche:** il giocatore conferma che la farm delle zucche nel complesso delle 30 farm è **costruita, automatizzata e collegata a Refined Storage**. Stato COMPLETATA. Prossima produzione da verificare: barbabietole.
+
 - **Revisione punto 17 — angurie:** il giocatore conferma che la farm delle angurie è **costruita, automatizzata e collegata a Refined Storage**. Stato COMPLETATA. Prossima produzione da verificare: zucche.
 
 - **Revisione punto 17 — cactus:** confermata dal giocatore la farm di cactus **già costruita, automatizzata e collegata a Refined Storage**. Stato COMPLETATA. Prossima produzione da verificare: angurie.
