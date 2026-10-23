@@ -7,7 +7,7 @@ Il **complesso delle 30 farm esiste** e comprende almeno la canna da zucchero, c
 | Linea | Stato noto |
 | --- | --- |
 | Lana | **COMPLETATA, AUTOMATIZZATA E COLLEGATA A REFINED STORAGE** nel complesso delle 30 farm. Confermato dal giocatore il 23/10/2026; modalità tecnica di tosatura e raccolta non ancora documentata. |
-| Bacche rosse | **Da verificare** |
+| Bacche rosse (Sweet Berries) | **COMPLETATA, AUTOMATIZZATA E COLLEGATA A REFINED STORAGE** nel complesso delle 30 farm. Confermato dal giocatore il 23/10/2026; meccanica di raccolta non ancora specificata. |
 | Canna da zucchero | **COMPLETATA, nel complesso delle 30 farm**: Observer e pistoni per il taglio, **carrello con tramoggia e tramogge** per la raccolta, **collegata a Refined Storage**. La precedente 18×12 separata è dismessa. |
 | Carote (2), grano/pane | Da verificare |
 | Patate | **COMPLETATA NEL COMPLESSO DELLE 30 FARM**: raccolta automatica tramite villager e trasferimento già collegato a **Refined Storage**, confermato il 23/10/2026. Una vecchia farm separata era stata rimossa per la stalla di Gino; numero di moduli attuali non precisato. |
