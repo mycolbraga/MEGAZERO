@@ -1,0 +1,237 @@
+STARK ESTATE – MEGAZERO | LISTA MATERIALI
+Fonte: conteggio diretto dei tipi di blocco delle schematic .litematic generate dal mondo Malibu Point.
+PREVIEW = villa e terreno parziale (60.105 blocchi); ISOLA COMPLETA = villa e tutto il paesaggio (3.522.622 blocchi).
+Quantita' della schematic, NON blocchi effettivamente da aggiungere al terreno gia' presente.
+NOTA: minecraft:light non e' ottenibile normalmente in Survival; air esclusa dai conteggi.
+
+MATERIALE                                          PREVIEW     STACK        ISOLA  MINECRAFT ID
+------------------------------------------------------------------------------------------------------------------------
+Legno di quercia pallida scortecciato                9,590    149+54       10,917  minecraft:stripped_pale_oak_wood
+Terra                                                9,423    147+15    3,212,141  minecraft:dirt
+Blocco di luce invisibile                            4,785     74+49       42,092  minecraft:light
+Pietra liscia                                        3,525     55+5         4,716  minecraft:smooth_stone
+Blocco d’erba                                        2,974     46+30       20,409  minecraft:grass_block
+Lastra di quercia pallida                            2,550     39+54        2,611  minecraft:pale_oak_slab
+Blocco di muschio                                    1,961     30+41       28,507  minecraft:moss_block
+Polvere di cemento verde                             1,937     30+17       31,823  minecraft:green_concrete_powder
+Lastra di pietra liscia                              1,799     28+7         1,906  minecraft:smooth_stone_slab
+Pietra                                               1,484     23+12       66,555  minecraft:stone
+Mattoni di pietra                                    1,311     20+31        2,110  minecraft:stone_bricks
+Assi di abete                                        1,084     16+60        1,084  minecraft:spruce_planks
+Erba corta                                           1,080     16+56        9,807  minecraft:short_grass
+Vetro grigio                                           954     14+58          954  minecraft:gray_stained_glass
+Pietrisco                                              891     13+59          891  minecraft:cobblestone
+Blocco di corallo tubolare morto                       808     12+40          808  minecraft:dead_tube_coral_block
+Assi della giungla                                     771     12+3         2,657  minecraft:jungle_planks
+Rame esposto cerato                                    709     11+5         2,669  minecraft:waxed_exposed_copper
+Blocco di fungo marrone                                700     10+60        2,695  minecraft:brown_mushroom_block
+Legno di quercia scura scortecciato                    688     10+48        2,699  minecraft:stripped_dark_oak_wood
+Legno della giungla scortecciato                       651     10+11        2,393  minecraft:stripped_jungle_wood
+Fango compatto                                         646     10+6         2,467  minecraft:packed_mud
+Legno di abete scortecciato                            617      9+41          617  minecraft:stripped_spruce_wood
+Legno di mangrovia                                     504      7+56        2,309  minecraft:mangrove_wood
+Lana marrone                                           443      6+59        2,017  minecraft:brown_wool
+Botola di quercia pallida                              442      6+58          444  minecraft:pale_oak_trapdoor
+Acqua                                                  390      6+6           527  minecraft:water
+Muretto di diorite                                     376      5+56        1,224  minecraft:diorite_wall
+Botola di ferro                                        325      5+5           333  minecraft:iron_trapdoor
+Erba alta                                              323      5+3         2,327  minecraft:tall_grass
+Botola di quercia scura                                309      4+53          317  minecraft:dark_oak_trapdoor
+Lanterna marina                                        280      4+24          281  minecraft:sea_lantern
+Pannello di vetro nero                                 260      4+4           260  minecraft:black_stained_glass_pane
+Foglie della giungla                                   259      4+3         1,141  minecraft:jungle_leaves
+Muretto di mattoni di fango                            222      3+30          623  minecraft:mud_brick_wall
+Verga dell’End                                         222      3+30          222  minecraft:end_rod
+Lastra di mattoni di pietra                            221      3+29          250  minecraft:stone_brick_slab
+Assi di quercia scura                                  219      3+27          219  minecraft:dark_oak_planks
+Muretto di pietrisco                                   198      3+6           236  minecraft:cobblestone_wall
+Foglie di abete                                        184      2+56          184  minecraft:spruce_leaves
+Scale di pietra                                        182      2+54          188  minecraft:stone_stairs
+Lastra di pietra                                       156      2+28          228  minecraft:stone_slab
+Libreria                                               129      2+1           129  minecraft:bookshelf
+Vetro grigio chiaro                                    123      1+59          123  minecraft:light_gray_stained_glass
+Lastra di abete                                        122      1+58          136  minecraft:spruce_slab
+Botola di abete                                        121      1+57          221  minecraft:spruce_trapdoor
+Ventaglio di corallo di fuoco morto                    117      1+53          117  minecraft:dead_fire_coral_fan
+Lastra di quarzo                                       116      1+52          146  minecraft:quartz_slab
+Pannello di vetro grigio                               106      1+42          106  minecraft:gray_stained_glass_pane
+Tappeto grigio chiaro                                  104      1+40          104  minecraft:light_gray_carpet
+Tronco della giungla scortecciato                       94      1+30           94  minecraft:stripped_jungle_log
+Rampicante                                              89      1+25           89  minecraft:vine
+Lastra di quercia scura                                 87      1+23           87  minecraft:dark_oak_slab
+Andesite levigata                                       75      1+11           75  minecraft:polished_andesite
+Catena                                                  71      1+7            71  minecraft:chain
+Tappeto bianco                                          66      1+2            66  minecraft:white_carpet
+Scale di quercia scura                                  63      0+63           63  minecraft:dark_oak_stairs
+Scale di abete                                          60      0+60           60  minecraft:spruce_stairs
+Filo per trappole                                       60      0+60           60  minecraft:tripwire
+Lastra di pietrisco                                     59      0+59           59  minecraft:cobblestone_slab
+Cartello a parete di quercia scura                      56      0+56           58  minecraft:dark_oak_wall_sign
+Lana grigio chiaro                                      54      0+54           54  minecraft:light_gray_wool
+Barile                                                  51      0+51          104  minecraft:barrel
+Pietranera                                              50      0+50       31,746  minecraft:blackstone
+Scale di mattoni di pietra                              49      0+49           49  minecraft:stone_brick_stairs
+Tappeto nero                                            47      0+47           47  minecraft:black_carpet
+Staccionata di abete                                    46      0+46          116  minecraft:spruce_fence
+Sbarre di ferro                                         46      0+46           46  minecraft:iron_bars
+Foglie di betulla                                       44      0+44        2,672  minecraft:birch_leaves
+Scale di quercia pallida                                44      0+44           44  minecraft:pale_oak_stairs
+Scale di andesite levigata                              41      0+41           41  minecraft:polished_andesite_stairs
+Lana rossa                                              39      0+39           39  minecraft:red_wool
+Botola di rame ossidato cerato                          38      0+38           39  minecraft:waxed_weathered_copper_trapdoor
+Porta di quercia scura                                  38      0+38           38  minecraft:dark_oak_door
+Ardesia profonda levigata                               38      0+38           38  minecraft:polished_deepslate
+Assi di bambù                                           36      0+36           88  minecraft:bamboo_planks
+Staccionata di quercia scura                            36      0+36           36  minecraft:dark_oak_fence
+Scale di ardesia profonda levigata                      36      0+36           36  minecraft:polished_deepslate_stairs
+Compostiera                                             34      0+34          105  minecraft:composter
+Lastra di andesite levigata                             33      0+33           33  minecraft:polished_andesite_slab
+Tronco della giungla                                    32      0+32          111  minecraft:jungle_log
+Stendardo verde lime da parete                          32      0+32           32  minecraft:lime_wall_banner
+Lastra di tufo levigato                                 31      0+31           35  minecraft:polished_tuff_slab
+Polished Deepslate Wall                                 30      0+30           32  minecraft:polished_deepslate_wall
+Tronco di quercia scura                                 30      0+30           30  minecraft:dark_oak_log
+Mangrove Slab                                           30      0+30           30  minecraft:mangrove_slab
+Warped Planks                                           28      0+28           28  minecraft:warped_planks
+Stone Button                                            26      0+26           26  minecraft:stone_button
+Stripped Mangrove Wood                                  26      0+26           26  minecraft:stripped_mangrove_wood
+Polished Blackstone                                     23      0+23           23  minecraft:polished_blackstone
+Pale Oak Fence                                          21      0+21           21  minecraft:pale_oak_fence
+Stone Brick Wall                                        21      0+21           21  minecraft:stone_brick_wall
+Polished Tuff Stairs                                    20      0+20           24  minecraft:polished_tuff_stairs
+Nether Brick Fence                                      20      0+20           20  minecraft:nether_brick_fence
+Oak Trapdoor                                            20      0+20           20  minecraft:oak_trapdoor
+Polished Diorite Stairs                                 20      0+20           20  minecraft:polished_diorite_stairs
+Warped Slab                                             20      0+20           20  minecraft:warped_slab
+Cancello di betulla                                     18      0+18          741  minecraft:birch_fence_gate
+Light Gray Stained Glass Pane                           18      0+18           18  minecraft:light_gray_stained_glass_pane
+Staccionata di betulla                                  16      0+16          926  minecraft:birch_fence
+Cemento nero                                            16      0+16          184  minecraft:black_concrete
+Black Stained Glass                                     16      0+16           17  minecraft:black_stained_glass
+Quartz Pillar                                           16      0+16           16  minecraft:quartz_pillar
+Smooth Quartz Stairs                                    16      0+16           16  minecraft:smooth_quartz_stairs
+Stripped Crimson Hyphae                                 16      0+16           16  minecraft:stripped_crimson_hyphae
+Polished Tuff                                           15      0+15           15  minecraft:polished_tuff
+Vetro verde                                             14      0+14        1,014  minecraft:green_stained_glass
+Pannello di vetro verde lime                            14      0+14           92  minecraft:lime_stained_glass_pane
+Black Wool                                              14      0+14           14  minecraft:black_wool
+Observer                                                14      0+14           14  minecraft:observer
+Leva                                                    13      0+13           77  minecraft:lever
+Iron Block                                              13      0+13           13  minecraft:iron_block
+Polished Diorite                                        13      0+13           13  minecraft:polished_diorite
+Muretto di andesite                                     12      0+12          136  minecraft:andesite_wall
+Dark Oak Fence Gate                                     12      0+12           13  minecraft:dark_oak_fence_gate
+Light Gray Concrete Powder                              12      0+12           12  minecraft:light_gray_concrete_powder
+Polished Blackstone Button                              11      0+11           13  minecraft:polished_blackstone_button
+Pannello di vetro verde                                 10      0+10        1,607  minecraft:green_stained_glass_pane
+Decorated Pot                                           10      0+10           10  minecraft:decorated_pot
+Diorite                                                 10      0+10           10  minecraft:diorite
+Smooth Red Sandstone                                    10      0+10           10  minecraft:smooth_red_sandstone
+Smooth Red Sandstone Stairs                             10      0+10           10  minecraft:smooth_red_sandstone_stairs
+Fire                                                     9      0+9             9  minecraft:fire
+Netherrack                                               9      0+9             9  minecraft:netherrack
+Cyan Stained Glass Pane                                  8      0+8             8  minecraft:cyan_stained_glass_pane
+Polished Blackstone Stairs                               8      0+8             8  minecraft:polished_blackstone_stairs
+Quartz Stairs                                            8      0+8             8  minecraft:quartz_stairs
+Redstone Lamp                                            8      0+8             8  minecraft:redstone_lamp
+Stone Pressure Plate                                     8      0+8             8  minecraft:stone_pressure_plate
+Cobbled Deepslate Wall                                   7      0+7            26  minecraft:cobbled_deepslate_wall
+Gray Carpet                                              7      0+7            11  minecraft:gray_carpet
+Azalea Leaves                                            7      0+7             7  minecraft:azalea_leaves
+Blackstone Slab                                          7      0+7             7  minecraft:blackstone_slab
+Crafter                                                  7      0+7             7  minecraft:crafter
+Dark Oak Wood                                            7      0+7             7  minecraft:dark_oak_wood
+Flower Pot                                               7      0+7             7  minecraft:flower_pot
+Jungle Wall Sign                                         7      0+7             7  minecraft:jungle_wall_sign
+Loom                                                     7      0+7             7  minecraft:loom
+Mangrove Planks                                          7      0+7             7  minecraft:mangrove_planks
+Polished Blackstone Pressure Plate                       7      0+7             7  minecraft:polished_blackstone_pressure_plate
+Botola di betulla                                        6      0+6           346  minecraft:birch_trapdoor
+Wither Skeleton Wall Skull                               6      0+6             7  minecraft:wither_skeleton_wall_skull
+Deepslate Tile Wall                                      6      0+6             6  minecraft:deepslate_tile_wall
+Ice                                                      6      0+6             6  minecraft:ice
+Pale Oak Wall Sign                                       6      0+6             6  minecraft:pale_oak_wall_sign
+Polished Blackstone Slab                                 6      0+6             6  minecraft:polished_blackstone_slab
+Snow                                                     6      0+6             6  minecraft:snow
+Polished Tuff Wall                                       5      0+5            10  minecraft:polished_tuff_wall
+Flowering Azalea Leaves                                  5      0+5             5  minecraft:flowering_azalea_leaves
+Jungle Trapdoor                                          5      0+5             5  minecraft:jungle_trapdoor
+Light Blue Stained Glass Pane                            5      0+5             5  minecraft:light_blue_stained_glass_pane
+Smooth Quartz Slab                                       5      0+5             5  minecraft:smooth_quartz_slab
+Stripped Spruce Log                                      5      0+5             5  minecraft:stripped_spruce_log
+Verdant Froglight                                        5      0+5             5  minecraft:verdant_froglight
+Stripped Bamboo Block                                    4      0+4            12  minecraft:stripped_bamboo_block
+Blackstone Stairs                                        4      0+4             7  minecraft:blackstone_stairs
+Acacia Trapdoor                                          4      0+4             4  minecraft:acacia_trapdoor
+Crafting Table                                           4      0+4             4  minecraft:crafting_table
+Cyan Stained Glass                                       4      0+4             4  minecraft:cyan_stained_glass
+Dark Oak Button                                          4      0+4             4  minecraft:dark_oak_button
+Grindstone                                               4      0+4             4  minecraft:grindstone
+Iron Door                                                4      0+4             4  minecraft:iron_door
+Lightning Rod                                            4      0+4             4  minecraft:lightning_rod
+Mangrove Stairs                                          4      0+4             4  minecraft:mangrove_stairs
+Mangrove Trapdoor                                        4      0+4             4  minecraft:mangrove_trapdoor
+Mossy Cobblestone                                        4      0+4             4  minecraft:mossy_cobblestone
+Polished Diorite Slab                                    4      0+4             4  minecraft:polished_diorite_slab
+Quartz Block                                             4      0+4             4  minecraft:quartz_block
+Rail                                                     4      0+4             4  minecraft:rail
+Smooth Quartz                                            4      0+4             4  minecraft:smooth_quartz
+Stripped Mangrove Log                                    4      0+4             4  minecraft:stripped_mangrove_log
+Waxed Copper Trapdoor                                    4      0+4             4  minecraft:waxed_copper_trapdoor
+Assi di betulla                                          3      0+3         3,717  minecraft:birch_planks
+Chiseled Bookshelf                                       3      0+3             3  minecraft:chiseled_bookshelf
+Comparator                                               3      0+3             3  minecraft:comparator
+Mangrove Fence Gate                                      3      0+3             3  minecraft:mangrove_fence_gate
+Mossy Cobblestone Slab                                   3      0+3             3  minecraft:mossy_cobblestone_slab
+Polished Deepslate Slab                                  3      0+3             3  minecraft:polished_deepslate_slab
+Red Nether Brick Wall                                    3      0+3             3  minecraft:red_nether_brick_wall
+Tripwire Hook                                            3      0+3             3  minecraft:tripwire_hook
+Lastra di diorite                                        2      0+2           129  minecraft:diorite_slab
+Bamboo Trapdoor                                          2      0+2            41  minecraft:bamboo_trapdoor
+Andesite Slab                                            2      0+2            39  minecraft:andesite_slab
+Andesite Stairs                                          2      0+2            39  minecraft:andesite_stairs
+Deepslate Tile Stairs                                    2      0+2            14  minecraft:deepslate_tile_stairs
+Acacia Button                                            2      0+2             2  minecraft:acacia_button
+Acacia Pressure Plate                                    2      0+2             2  minecraft:acacia_pressure_plate
+Cobblestone Stairs                                       2      0+2             2  minecraft:cobblestone_stairs
+Heavy Weighted Pressure Plate                            2      0+2             2  minecraft:heavy_weighted_pressure_plate
+Jungle Pressure Plate                                    2      0+2             2  minecraft:jungle_pressure_plate
+Ladder                                                   2      0+2             2  minecraft:ladder
+Oxidized Copper Grate                                    2      0+2             2  minecraft:oxidized_copper_grate
+Powered Rail                                             2      0+2             2  minecraft:powered_rail
+Smithing Table                                           2      0+2             2  minecraft:smithing_table
+Spruce Button                                            2      0+2             2  minecraft:spruce_button
+Spruce Wood                                              2      0+2             2  minecraft:spruce_wood
+Warped Stairs                                            2      0+2             2  minecraft:warped_stairs
+Acacia Wall Sign                                         1      0+1             1  minecraft:acacia_wall_sign
+Birch Stairs                                             1      0+1             1  minecraft:birch_stairs
+Chiseled Tuff Bricks                                     1      0+1             1  minecraft:chiseled_tuff_bricks
+Crimson Fence                                            1      0+1             1  minecraft:crimson_fence
+Daylight Detector                                        1      0+1             1  minecraft:daylight_detector
+Gray Banner                                              1      0+1             1  minecraft:gray_banner
+Lantern                                                  1      0+1             1  minecraft:lantern
+Mossy Cobblestone Stairs                                 1      0+1             1  minecraft:mossy_cobblestone_stairs
+Oak Planks                                               1      0+1             1  minecraft:oak_planks
+Oxidized Copper Trapdoor                                 1      0+1             1  minecraft:oxidized_copper_trapdoor
+Player Head                                              1      0+1             1  minecraft:player_head
+Repeater                                                 1      0+1             1  minecraft:repeater
+Smoker                                                   1      0+1             1  minecraft:smoker
+Stonecutter                                              1      0+1             1  minecraft:stonecutter
+Stripped Acacia Wood                                     1      0+1             1  minecraft:stripped_acacia_wood
+Tuff                                                     1      0+1             1  minecraft:tuff
+Tuff Stairs                                              1      0+1             1  minecraft:tuff_stairs
+Warped Fence                                             1      0+1             1  minecraft:warped_fence
+Warped Trapdoor                                          1      0+1             1  minecraft:warped_trapdoor
+Warped Wall Sign                                         1      0+1             1  minecraft:warped_wall_sign
+Waxed Chiseled Copper                                    1      0+1             1  minecraft:waxed_chiseled_copper
+Waxed Copper Block                                       1      0+1             1  minecraft:waxed_copper_block
+White Wall Banner                                        1      0+1             1  minecraft:white_wall_banner
+Arenaria                                                 0      0+0         4,636  minecraft:sandstone
+Legno di betulla scortecciato                            0      0+0         2,713  minecraft:stripped_birch_wood
+Tronco di betulla                                        0      0+0           554  minecraft:birch_log
+Foglie di quercia                                        0      0+0           205  minecraft:oak_leaves
+Cartello sospeso a parete di betulla                     0      0+0            66  minecraft:birch_wall_hanging_sign
+Tappeto di muschio                                       0      0+0            63  minecraft:moss_carpet
+White Stained Glass Pane                                 0      0+0            32  minecraft:white_stained_glass_pane
+Cobweb                                                   0      0+0            21  minecraft:cobweb
+Gray Concrete                                            0      0+0             2  minecraft:gray_concrete
