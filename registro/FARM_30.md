@@ -7,7 +7,7 @@ Il **complesso delle 30 farm esiste** e comprende almeno la canna da zucchero, c
 | Lana, bacche rosse | Da verificare |
 | Canna da zucchero | **COMPLETATA, nel complesso delle 30 farm**: Observer e pistoni per il taglio, **carrello con tramoggia e tramogge** per la raccolta, **collegata a Refined Storage**. La precedente 18×12 separata è dismessa. |
 | Carote (2), grano/pane | Da verificare |
-| Patate | **PRODUZIONE PRESENTE NEL COMPLESSO DELLE 30 FARM** (confermato 23/10/2026). Storicamente una delle due farm originarie era stata rimossa per la stalla di Gino; non assumere che la configurazione attuale coincida con le due originarie. Dettagli di raccolta e RS da verificare. |
+| Patate | **COMPLETATA NEL COMPLESSO DELLE 30 FARM**: raccolta automatica tramite villager e trasferimento già collegato a **Refined Storage**, confermato il 23/10/2026. Una vecchia farm separata era stata rimossa per la stalla di Gino; numero di moduli attuali non precisato. |
 | Mucche carne/pelle, galline pollo/piume/uova, maiali | Da verificare |
 | Cactus, angurie, zucche, barbabietola, cacao | Da verificare |
 | Nether wart, glow berries, neve, bone meal | Da verificare |
