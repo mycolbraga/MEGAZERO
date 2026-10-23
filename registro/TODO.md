@@ -8,7 +8,7 @@
 - [ ] Confermare versione Turtle Pale Oak installata, tempi per albero e eventuali tronchi residui.
 - [ ] Stato espansione Trading Hall 32→72.
 - [ ] Upgrade dischi RS 64K, se ancora necessario.
-- [ ] **Canna da zucchero nel complesso delle 30 farm:** **taglio automatico con Observer e pistoni già confermato**; documentare il sistema di raccolta dei drop e come viene gestito l'ingresso in RS. La precedente farm 18×12 non esiste più; non proporre un Importer sulla vecchia struttura.
+- [x] **Canna da zucchero, complesso delle 30 farm:** taglio con Observer e pistoni, raccolta con carrello con tramoggia e tramogge, collegata a Refined Storage. **COMPLETATA**, confermato 23/10/2026. La vecchia farm separata 18×12 non esiste più.
 - [ ] **Farm oro nel Nether:** automatizzare la conversione pepite→lingotti e collegare la produzione a Refined Storage. Entrambi i lavori ancora da fare, confermato 23/10/2026.
 - [ ] Progetto quarzo su tetto Nether.
 - [ ] Stato stalla di Gino.
