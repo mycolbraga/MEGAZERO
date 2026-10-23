@@ -35,7 +35,9 @@ Il giocatore conferma il 23/10/2026 che **la vecchia farm del querceto è stata 
 
 **Informazioni necessarie prima dell'adattamento:** coordinate X/Y/Z di partenza della nuova Turtle, verso cui guarda, posizione della cassa di rifornimento e del punto di scarico, coordinate di tutti i tronchi 1×1 e configurazione dei corridoi/ostacoli. I due codici originali sono vincolati alla precedente geometria: `HOME_X/Y/Z`, `LANE_Z`, `X_TREES`, `SOUTH_Z`/`NORTH_Z`, le sequenze di spostamento da 7 blocchi e scarico fisso a (1911,66,2733); adattare anche controlli e messaggi associati. **Non trasferire automaticamente le vecchie coordinate.**
 
-**Stato script nuovi:** NON ANCORA GENERATI, perché non sono state comunicate le nuove coordinate.
+**Primo riferimento della nuova farm (screenshot del 23/10/2026):** il giocatore è **in piedi sopra la cassa** alle coordinate HUD **X=1903, Y=67, Z=2716** e riferisce che la **Turtle è una casella davanti a lui**. L'HUD mostra direzione **N (Nord)**, per cui la casella immediatamente davanti dovrebbe essere **X=1903, Z=2715**; **deduzione ancora da confermare**. La quota **Y della Turtle** e il suo **orientamento effettivo** non sono stati verificati: il valore Y=67 dello screenshot è quello del giocatore sulla cassa e non va copiato automaticamente come quota della Turtle.
+
+**Stato script nuovi:** NON ANCORA GENERATI: mancano coordinate degli alberi, quota e orientamento della Turtle e geometria definitiva del percorso/scarico. Non assumere che le coordinate della farm 2×2 o dello storico querceto valgano qui.
 
 ## Turtle scortecciatrice dedicata
 
