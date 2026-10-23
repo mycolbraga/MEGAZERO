@@ -22,7 +22,7 @@ Snapshot: 23 ottobre 2026.
 | Patate | **COMPLETATA — AUTOMATICA E COLLEGATA A RS** | Produzione nel complesso delle 30 farm; **villager raccolgono automaticamente le patate e il prodotto viene inviato a Refined Storage**, confermato il 23/10/2026. Una vecchia farm separata era stata rimossa per la stalla di Gino (solo nota storica). Numero di moduli attuali non ancora documentato. |
 | Farm alberi 1×1 (nuova) | **SOLO STRUTTURA COSTRUITA — AUTOMAZIONE DA FARE** | Seconda farm 1×1 costruita, confermato 23/10/2026. **Non ancora automatizzata**: occorre adattare alle nuove coordinate i programmi originari `querceto2.txt` e `abeteto_8.lua`, preservando gli originali. Posizioni Turtle/alberi/viale/scarico, orientamento e geometria attuale ancora da rilevare. Distinta dalla farm 2×2 già operativa. |
 | Script querceto/abeteto a 8 alberi | **ARCHIVIATI** | `querceto2.txt` e `abeteto_8.lua` sono programmi storici; non implicano che le vecchie strutture esistano ancora separatamente o che la nuova farm 1×1 usi già quegli script. |
-| Monumento oceanico | **ESPLORATO** | Recuperate 26 spugne e otto blocchi d'oro. |
+| Monumento oceanico | **ESPLORATO — STATO CONFERMATO 23/10/2026** | X≈1136, Z≈2752; recuperate **26 spugne** e **8 blocchi d'oro** dalla stanza del tesoro. Il giocatore conferma nessun ulteriore intervento o recupero rispetto alla prima esplorazione. |
 | Metro mob farm | **REALIZZATA** | ~150 blocchi orizzontali, +110 Y, tempo circa 1:30. |
 
 ### Risoluzioni e preferenze già confermate
