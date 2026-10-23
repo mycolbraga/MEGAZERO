@@ -37,6 +37,8 @@ Il giocatore conferma il 23/10/2026 che **la vecchia farm del querceto è stata 
 
 **Primo riferimento della nuova farm (screenshot del 23/10/2026):** il giocatore è **in piedi sopra la cassa** alle coordinate HUD **X=1903, Y=67, Z=2716** e riferisce che la **Turtle è una casella davanti a lui**. L'HUD mostra direzione **N (Nord)**, per cui la casella immediatamente davanti dovrebbe essere **X=1903, Z=2715**; **deduzione ancora da confermare**. La quota **Y della Turtle** e il suo **orientamento effettivo** non sono stati verificati: il valore Y=67 dello screenshot è quello del giocatore sulla cassa e non va copiato automaticamente come quota della Turtle.
 
+**Secondo riferimento (screenshot del 23/10/2026):** il giocatore, richiesto di mostrare il primo blocco di terra a sinistra vicino alla Turtle, invia uno screenshot con HUD **X=1899, Y=68, Z=2712**, visuale **N (Nord)** e mirino su un blocco di terra circondato dall'acqua. **Sono coordinate della posizione del giocatore**, non quelle garantite del blocco mirato: non assegnare ancora X=1899 Z=2712 al tronco senza conferma. La terra sembra più in basso rispetto alla visuale del giocatore. Serve conferma se il giocatore si trova sul blocco di terra o lo indica da un altro punto.
+
 **Stato script nuovi:** NON ANCORA GENERATI: mancano coordinate degli alberi, quota e orientamento della Turtle e geometria definitiva del percorso/scarico. Non assumere che le coordinate della farm 2×2 o dello storico querceto valgano qui.
 
 ## Turtle scortecciatrice dedicata
