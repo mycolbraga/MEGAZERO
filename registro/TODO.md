@@ -1,5 +1,7 @@
 # Lavori aperti e verifiche
 
+- [ ] Farm argilla: non ancora costruita (23/10/2026); priorità da stabilire.
+
 - [ ] **Farm Bone Meal — senza urgenza:** impianto già costruito e collegato a Refined Storage; configurare **filtri e dettagli mancanti**, quindi verificare il funzionamento completo. Non riproporre la costruzione né il collegamento RS come attività da fare.
 
 **Non riproporre** lo smelter, produzione lava, secchi, cottura on-demand, Cobblestone infinita, Pale Oak e scortecciatura come progetti ancora da realizzare.
