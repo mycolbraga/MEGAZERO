@@ -9,6 +9,7 @@ Snapshot: 23 ottobre 2026.
 | Cottura continua RS | **COMPLETATA** | Exporter filtrato per i materiali da cuocere sempre. |
 | Cottura su richiesta RS | **COMPLETATA e provata** | Processing Pattern: test Cobblestone → Stone concluso. Autocrafter rivolto **direttamente alla cassa**, non all'Exporter. |
 | Cobblestone infinita | **COMPLETATA** | Produzione automatica confermata. |
+| Carote (complesso 30 farm) | **1 FARM COSTRUITA SU 2 PREVISTE** | Il giocatore conferma il 23/10/2026 di avere costruito solo una delle due farm di carote previste; la seconda **non esiste**. Automazione/collegamento RS della prima da verificare. |
 | Farm bacche rosse (complesso 30 farm) | **COMPLETATA, AUTOMATICA E COLLEGATA A RS** | Confermato dal giocatore il 23/10/2026. Meccanica di raccolta non ancora specificata. |
 | Farm lana (complesso 30 farm) | **COMPLETATA, AUTOMATICA E COLLEGATA A RS** | Confermato dal giocatore il 23/10/2026. Meccanica di raccolta non ancora specificata. |
 | Farm alberi 2×2 (ex querceto) | **AUTOMATIZZATA, oggi usata per Pale Oak** | La precedente area del querceto è stata convertita alla coltivazione di alberi 2×2; attualmente Pale Oak, 3 postazioni, Bone Meal, taglio e ripiantagione con Turtle. Ultima versione dello script consegnata V4; stato esatto del collaudo da documentare. **Non esiste un vecchio querceto 1×1 separato da aggiungere alle farm attive.** |
