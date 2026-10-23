@@ -9,6 +9,7 @@ Snapshot: 23 ottobre 2026.
 | Cottura continua RS | **COMPLETATA** | Exporter filtrato per i materiali da cuocere sempre. |
 | Cottura su richiesta RS | **COMPLETATA e provata** | Processing Pattern: test Cobblestone → Stone concluso. Autocrafter rivolto **direttamente alla cassa**, non all'Exporter. |
 | Cobblestone infinita | **COMPLETATA** | Produzione automatica confermata. |
+| Farm angurie (complesso 30 farm) | **COMPLETATA, AUTOMATICA E COLLEGATA A RS** | Confermata dal giocatore il 23/10/2026. Meccanismo di raccolta non ancora documentato. |
 | Farm cactus (complesso 30 farm) | **COMPLETATA, AUTOMATICA E COLLEGATA A RS** | Confermata dal giocatore il 23/10/2026. Meccanismo tecnico di raccolta non ancora documentato. |
 | Farm galline (complesso 30 farm) | **OPERATIVA — GALLINE MANUALI; UOVA AUTOMATICHE IN RS** | Conferma del 23/10/2026: gestione delle galline manuale; **raccolta delle uova automatizzata e già collegata a Refined Storage**. Non presume automazione/trasferimento di pollo e piume. |
 | Farm mucche (complesso 30 farm) | **OPERATIVA — MANUALE** | Allevamento di mucche per carne e pelle. Confermato dal giocatore il 23/10/2026: NON automatizzato, gestione manuale come i maiali. RS non verificato. |
