@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Punto 12 — coordinate definitive dei punti alberi 1×1:** il giocatore conferma di essere in piedi sul terreno destinato all'albero nello screenshot a **1899,68,2712**. Fornite altre 7 posizioni: **1899,68,2705 / 2698 / 2691** e **1907,68,2691 / 2698 / 2705 / 2712**. Totale 8 alberi, due file X1899 e X1907, quattro righe distanti 7 su Z, asse centrale stimato X1903. Restano da verificare quota e orientamento della Turtle e scarico acqua prima di modificare i due script; gli originali non sono stati toccati.
+
 - **Nuova farm alberi 1×1, primo terreno a sinistra:** secondo screenshot mostra il giocatore a **X=1899, Y=68, Z=2712**, rivolto a nord, con mirino su un blocco di terra nel canale d'acqua. Coordinate esatte del blocco di terra ancora da confermare, non confondere con HUD giocatore. Nessun programma adattato ancora.
 
 - **Nuova farm 1×1, primo riferimento visivo:** screenshot HUD X=1903 Y=67 Z=2716, giocatore sopra la cassa, Turtle a un blocco davanti. Indicazione Nord suggerisce Turtle a X=1903 Z=2715, da confermare, così come quota Y e orientamento della Turtle. Le coordinate degli alberi non sono ancora state fornite; nessuno script modificato.
