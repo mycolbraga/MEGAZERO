@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Nuova farm 1×1, primo riferimento visivo:** screenshot HUD X=1903 Y=67 Z=2716, giocatore sopra la cassa, Turtle a un blocco davanti. Indicazione Nord suggerisce Turtle a X=1903 Z=2715, da confermare, così come quota Y e orientamento della Turtle. Le coordinate degli alberi non sono ancora state fornite; nessuno script modificato.
+
 - **Ulteriore precisazione punto 12 — nuova farm 1×1:** il giocatore conferma **solo la struttura costruita**, non l'automazione. Occorre prendere i programmi storici `querceto2.txt` e `abeteto_8.lua` e adattarne le coordinate per la nuova farm. Controllati i sorgenti GitHub: oltre a home e coordinate alberi, contengono geometria del viale, spostamenti fissi (7 blocchi) e punto di scarico in acqua. Preservare i programmi originali e attendere coordinate/geometria della nuova struttura prima di produrre le due versioni aggiornate.
 
 - **Revisione punto 12 — Alberi:** correzione del giocatore: **l'ex querceto è l'attuale farm per alberi 2×2**, usata per Pale Oak. Ha **appena costruito una seconda farm per gli alberi 1×1**. Non esistono tre farm distinte «querceto storico / Pale Oak / nuova 1×1». Gli script precedenti restano archiviati. Per la nuova 1×1 non sono ancora documentati specie, coordinate e automazione.
