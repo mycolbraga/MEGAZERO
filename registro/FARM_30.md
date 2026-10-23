@@ -1,5 +1,7 @@
 # Piano di 30 linee produttive
 
+**Struttura accessoria del complesso confermata il 23/10/2026:** la **stalla di Gino** (cavallo con armatura azzurra) è **già costruita all'interno del complesso delle 30 farm**. Non è una linea produttiva e non va contata fra le 30.
+
 Il **complesso delle 30 farm esiste** e comprende almeno la canna da zucchero, come confermato dal giocatore il 23/10/2026. Questa tabella resta una lista storica delle linee previste: non presumere che le altre siano tutte costruite. Stato da verificare linea per linea.
 
 | Linea | Stato noto |
