@@ -14,7 +14,7 @@ Snapshot: 23 ottobre 2026.
 | Refined Storage | **OPERATIVO** | Grid/controller; almeno due dischi 16K in precedenza; Importer, Exporter, Regulator; rete a distanza smelter con Transmitter/Receiver. Upgrade 64K da verificare. |
 | Trading Hall | **32 POSTAZIONI ATTIVE** | Zombificazione integrata; espansione a 72 progettata, non confermata finita. |
 | Slime farm | **COMPLETATA — PASSIVA** | Il giocatore conferma produzione **passiva e automatica**, senza intervento manuale; scavo 16×16 fino a bedrock; collegata a RS; 71 sticky piston completati. |
-| Mob farm XP | **COMPLETATA** | Kill manuale; livello 28→38 in ~5 min, riparazioni Mending, drop vari e witch. |
+| Mob farm XP | **XP OPERATIVA; DROP ANCORA MANUALI** | Kill **manuale da preservare** per XP/Mending; livello 28→38 in ~5 min, riparazioni Mending, drop vari e witch. Il giocatore conferma che **raccolta/gestione dei drop è manuale**. **DA PROGETTARE** scarico, smistamento verso RS dei materiali utili e smaltimento automatico delle eccedenze/oggetti indesiderati. |
 | Farm oro Nether | **COMPLETATA** | Misura 70 lingotti/10 min (~420/h). Pepite→lingotti e collegamento RS ancora da verificare. |
 | Canna da zucchero | **RACCOLTA COMPLETATA** | 18×12, flying machine con sensore luce all'alba/tramonto, minecart con tramoggia; Importer RS da verificare. |
 | Funghi marroni | **COMPLETATA** | Locale 16×16, quattro funghi madre, 32 dispenser, timer. |
