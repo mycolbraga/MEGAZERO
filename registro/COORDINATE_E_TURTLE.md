@@ -22,7 +22,7 @@ Il giocatore conferma il 23/10/2026 che **la vecchia farm del querceto è stata 
 
 | Luogo | Coordinate / note |
 | --- | --- |
-| Stronghold / End Portal | ~1436,23,1044; 0/12 occhi al rilevamento, due biblioteche |
+| Stronghold / End Portal | **Stato confermato 23/10/2026:** circa X=1436, Y=23, Z=1044; portale trovato ma **ancora NON attivato**, 0/12 occhi segnalati, **due biblioteche** individuate. Nessun ulteriore avanzamento rispetto all'esplorazione precedente. |
 | Tetto Nether | 1079,7,3091 |
 | Monumento oceanico | 1136, Z2752 |
 | Mob farm aerea | spiaggia 1841,62,2792 → torre 1700,151,2949 |
