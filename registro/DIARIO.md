@@ -4,7 +4,7 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
-- **Revisione punto 11 — Patate:** il giocatore conferma che la produzione attuale fa parte del **complesso delle 30 farm**. La precedente nota sulle farm di patate separate è storica; una struttura originaria era stata rimossa per la stalla di Gino. Restano da descrivere raccolta, numero di moduli e collegamento RS.
+- **Revisione punto 11 — Patate:** il giocatore conferma che la produzione attuale fa parte del **complesso delle 30 farm**. La precedente nota sulle farm di patate separate è storica; una struttura originaria era stata rimossa per la stalla di Gino. Il giocatore conferma ora **raccolta automatica con villager e trasferimento delle patate direttamente a Refined Storage**: punto 11 completato; resta solo non precisato il numero di moduli attuali.
 
 - **Revisione punto 10 — Hoglin farm:** confermata struttura 12×10 con quattro funghi scarlatti; resa migliorata, attualmente più che soddisfacente. **Continuare a monitorare l'andamento**, senza modifiche immediate. Modalità di raccolta carne/pelle non specificata.
 
