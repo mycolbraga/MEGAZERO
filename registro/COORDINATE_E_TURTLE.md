@@ -37,9 +37,24 @@ Il giocatore conferma il 23/10/2026 che **la vecchia farm del querceto è stata 
 
 **Primo riferimento della nuova farm (screenshot del 23/10/2026):** il giocatore è **in piedi sopra la cassa** alle coordinate HUD **X=1903, Y=67, Z=2716** e riferisce che la **Turtle è una casella davanti a lui**. L'HUD mostra direzione **N (Nord)**, per cui la casella immediatamente davanti dovrebbe essere **X=1903, Z=2715**; **deduzione ancora da confermare**. La quota **Y della Turtle** e il suo **orientamento effettivo** non sono stati verificati: il valore Y=67 dello screenshot è quello del giocatore sulla cassa e non va copiato automaticamente come quota della Turtle.
 
-**Secondo riferimento (screenshot del 23/10/2026):** il giocatore, richiesto di mostrare il primo blocco di terra a sinistra vicino alla Turtle, invia uno screenshot con HUD **X=1899, Y=68, Z=2712**, visuale **N (Nord)** e mirino su un blocco di terra circondato dall'acqua. **Sono coordinate della posizione del giocatore**, non quelle garantite del blocco mirato: non assegnare ancora X=1899 Z=2712 al tronco senza conferma. La terra sembra più in basso rispetto alla visuale del giocatore. Serve conferma se il giocatore si trova sul blocco di terra o lo indica da un altro punto.
+**Posizioni di piantagione 1×1 confermate dal giocatore (23/10/2026):** nel secondo screenshot il giocatore era **in piedi sul primo blocco destinato all'albero** a X=1899, Y=68, Z=2712; le altre sette coordinate sono state fornite direttamente. Non confondere più queste posizioni con una semplice indicazione del mirino.
 
-**Stato script nuovi:** NON ANCORA GENERATI: mancano coordinate degli alberi, quota e orientamento della Turtle e geometria definitiva del percorso/scarico. Non assumere che le coordinate della farm 2×2 o dello storico querceto valgano qui.
+| Albero | X | Y | Z | Fila |
+| --- | ---: | ---: | ---: | --- |
+| 1 | 1899 | 68 | 2712 | Ovest |
+| 2 | 1899 | 68 | 2705 | Ovest |
+| 3 | 1899 | 68 | 2698 | Ovest |
+| 4 | 1899 | 68 | 2691 | Ovest |
+| 5 | 1907 | 68 | 2691 | Est |
+| 6 | 1907 | 68 | 2698 | Est |
+| 7 | 1907 | 68 | 2705 | Est |
+| 8 | 1907 | 68 | 2712 | Est |
+
+**Geometria calcolata:** due file parallele X=1899 e X=1907, quattro postazioni per fila; Z=2712, 2705, 2698, 2691 (passo 7); distanza orizzontale fra file X=8. Corridoio centrale ipotizzato sull'asse **X=1903**: 4 blocchi fra corsia e ciascun tronco. Se la Turtle inizia effettivamente a Z=2715 rivolta a nord, la prima coppia è 3 blocchi avanti. **La posizione X=1903 Z=2715 è dedotta dal primo screenshot, non ancora confermata.**
+
+**Da verificare prima di adattare/avviare i due programmi:** Y effettiva della Turtle (non attribuire alla Turtle la Y=67 dell'HUD del giocatore sulla cassa), direzione in cui è orientata la Turtle, posizione reale dello scarico in acqua, accessibilità del corridoio. Il programma andrà adattato alla percorrenza verso **−Z** e agli offset laterali **±4 X**, non limitandosi a sostituire numeri superficiali.
+
+**Stato script nuovi:** NON ANCORA GENERATI; le **otto postazioni sono note**, rimangono le verifiche della Turtle e dello scarico. Gli originali `querceto2.txt` e `abeteto_8.lua` restano invariati.
 
 ## Turtle scortecciatrice dedicata
 
