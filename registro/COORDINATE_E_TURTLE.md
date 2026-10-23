@@ -56,7 +56,9 @@ Il giocatore conferma il 23/10/2026 che **la vecchia farm del querceto è stata 
 
 **Da verificare prima di adattare/avviare i due programmi:** posizione effettiva dello **scarico in acqua** e accessibilità del corridoio. Orientamento **NORD confermato**. Percorrenza verso **−Z** e offset laterali **±4 X**; **nessuna salita di due blocchi**. Non basta cambiare i numeri superficiali.
 
-**Stato script nuovi:** NON ANCORA GENERATI; le **otto postazioni, la base Turtle e l'assenza di dislivello Turtle-terreno sono note**. Restano da verificare **punto di scarico in acqua e percorso**; l'orientamento della Turtle è **NORD, confermato**. Gli originali `querceto2.txt` e `abeteto_8.lua` restano invariati.
+**Scarico identificato dal giocatore (23/10/2026):** **un blocco davanti alla base della Turtle**; dato che guarda NORD, la posizione di scarico è **X=1903, Y=66, Z=2714**, con `dropDown()` verso il blocco inferiore **X=1903, Y=65, Z=2714**. **La presenza dell'acqua a Y65 è da verificare con `prova`**, non ancora collaudata.
+
+**Script nuovi GENERATI ma NON ancora collaudati in gioco:** [`querceto_1x1.lua`](../scripts/turtle/querceto_1x1.lua) e [`abeteto_1x1.lua`](../scripts/turtle/abeteto_1x1.lua), copie adattate degli originali. Percorso NORD a Z decrescente, due file est/ovest e quota di lavoro Y67; la Turtle sale di un blocco da Y66 per raggiungere la base dei tronchi e ridiscende alla base Y66 prima dello scarico. **Prima di avviare `giro` o `avvia`, eseguire la `prova` senza tagli.** Gli originali `querceto2.txt` e `abeteto_8.lua` restano invariati.
 
 ## Turtle scortecciatrice dedicata
 

@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Punto 12 — scarico e adattamento programmi nuova farm 1×1:** il giocatore indica come scarico il **blocco davanti alla base**: Turtle X1903 Y66 Z2715 NORD → scarico X1903 Y66 Z2714, acqua prevista sotto a Y65. Creati `querceto_1x1.lua` e `abeteto_1x1.lua`, adattamenti dei file storici a otto postazioni e percorso lungo Z decrescente. **Ancora da collaudare in gioco**: modalità prova, acqua e giro reale; gli script originali sono invariati.
+
 - **Punto 12 — orientamento della Turtle nuova farm 1×1 confermato:** la Turtle a X=1903, Y=66, Z=2715 **guarda NORD (verso Z decrescente)**, con cassa alle sue spalle a X=1903, Y=66, Z=2716 (SUD). L'unica informazione infrastrutturale essenziale ancora da rilevare è il **punto di scarico**, poi preparare le due versioni adattate degli script 1×1 senza toccare gli originali.
 
 - **RETTIFICA DEL GIOCATORE — altezza farm alberi 1×1:** la Turtle è **allo stesso livello della terra degli alberi**; la base del tronco/sapling è **un solo blocco sopra**. Corregge e **sostituisce** la deduzione precedente 'Turtle Y66, terreno Y67, tronco Y68' e ogni indicazione che occorra superare due blocchi di dislivello. Altezza Turtle registrata Y66, terreno da considerare Y66, tronco Y67; Y68 nella lista è quota HUD del giocatore durante il rilievo, non quota tronco.
