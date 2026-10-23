@@ -9,6 +9,8 @@ Snapshot: 23 ottobre 2026.
 | Cottura continua RS | **COMPLETATA** | Exporter filtrato per i materiali da cuocere sempre. |
 | Cottura su richiesta RS | **COMPLETATA e provata** | Processing Pattern: test Cobblestone → Stone concluso. Autocrafter rivolto **direttamente alla cassa**, non all'Exporter. |
 | Cobblestone infinita | **COMPLETATA** | Produzione automatica confermata. |
+| Farm mucche (complesso 30 farm) | **OPERATIVA — MANUALE** | Allevamento di mucche per carne e pelle. Confermato dal giocatore il 23/10/2026: NON automatizzato, gestione manuale come i maiali. RS non verificato. |
+| Farm maiali (complesso 30 farm) | **OPERATIVA — MANUALE** | Il giocatore conferma il 23/10/2026 che la gestione è manuale, come per le mucche. NON automatizzata; collegamento RS non verificato. |
 | Pane da grano (complesso 30 farm) | **COMPLETATA, AUTOMATICA E COLLEGATA A RS** | Confermato dal giocatore il 23/10/2026: produzione finale **solo pane**. Non registrare una linea aggiuntiva di grano disponibile in RS. |
 | Carote (complesso 30 farm) | **1 FARM COMPLETATA, AUTOMATICA E COLLEGATA A RS; seconda NON costruita** | Il giocatore conferma il 23/10/2026 che l'unica farm di carote realizzata è automatizzata e invia la produzione a Refined Storage, come quella delle patate. La seconda unità prevista **non è stata costruita**. |
 | Farm bacche rosse (complesso 30 farm) | **COMPLETATA, AUTOMATICA E COLLEGATA A RS** | Confermato dal giocatore il 23/10/2026. Meccanica di raccolta non ancora specificata. |
