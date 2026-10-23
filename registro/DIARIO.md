@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Revisione punto 17 — mucche e maiali:** il giocatore conferma che la farm delle **mucche NON è automatizzata**, e funziona manualmente **come quella dei maiali**. Registrare entrambe come farm esistenti e operative, a **gestione manuale**. Produzioni previste: mucche carne/pelle, maiali carne. Non attribuire ad alcuna collegamento a Refined Storage senza conferma. Prossima verifica: galline.
+
 - **Revisione punto 17 — grano/pane:** il giocatore conferma che la farm del complesso delle 30 farm è **costruita, automatizzata e collegata a Refined Storage**, ma produce **SOLO PANE**. Non contare il grano come prodotto separato della farm né presumere che entri in RS.
 
 - **Revisione punto 17 — carote, successiva conferma:** l'**unica** farm di carote costruita è **automatizzata e collegata a Refined Storage**, come la farm delle patate. La seconda farm inizialmente prevista resta **NON COSTRUITA**. La conferma aggiorna la precedente nota che dava l'automazione da verificare.
