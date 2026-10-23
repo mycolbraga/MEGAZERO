@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- Aggiunto il programma originale **`scorteccia(1).lua`** consegnato dal giocatore, archiviato senza modifiche logiche come `scripts/turtle/scorteccia.lua`. Scortecciatura con Turtle separata: tronchi dalla cassa sopra, ascia slot 2, output nella cassa sotto.
+
 - Repository GitHub `mycolbraga/MEGAZERO` creato dal giocatore; branch `registro/megazero` creato e documentazione iniziale pubblicata.
 - Smelter 10 fornaci e circuito lava/secchi/RS già funzionanti.
 - Test autocrafting Cobblestone → Stone riuscito, Autocrafter orientato verso **cassa** e non Exporter.

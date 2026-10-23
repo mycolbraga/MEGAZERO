@@ -26,3 +26,15 @@
 | Mob farm aerea | spiaggia 1841,62,2792 → torre 1700,151,2949 |
 | Vecchio querceto 8 posti | X 1913,1920,1927,1934; Z 2735/2728 |
 | Scavo Turtle 32×16 | partenza 1890,75,2766; stop a Y39, stato da verificare |
+
+## Turtle scortecciatrice dedicata
+
+Script originale: [`scripts/turtle/scorteccia.lua`](../scripts/turtle/scorteccia.lua), fornito dal giocatore il 23/10/2026. **Non è la Turtle che abbatte i tre Pale Oak**: è una seconda automazione.
+
+- Ingresso: cassa **sopra** la Turtle, tronchi vanilla con ID `minecraft:*_log`.
+- Attrezzo: ascia nello **slot 2**; gli altri slot devono essere vuoti alla partenza.
+- Spazio davanti: libero per piazzare il tronco, usare l'ascia, ispezionare il blocco e raccoglierlo.
+- Uscita: cassa **sotto** la Turtle; in caso di uscita piena attende e riprova ogni 3 secondi.
+- Se manca input attende 2 secondi. Ogni 16 pezzi stampa il conteggio.
+- Controlla il risultato `minecraft:stripped_*_log`; interrompe se inserito un oggetto non valido o se l'operazione fallisce.
+- **Coordinate Turtle scortecciatrice non ancora registrate**, non inventarle.

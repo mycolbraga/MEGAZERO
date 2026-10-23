@@ -10,7 +10,7 @@ Snapshot: 23 ottobre 2026.
 | Cottura su richiesta RS | **COMPLETATA e provata** | Processing Pattern: test Cobblestone → Stone concluso. Autocrafter rivolto **direttamente alla cassa**, non all'Exporter. |
 | Cobblestone infinita | **COMPLETATA** | Produzione automatica confermata. |
 | Quercia pallida | **AUTOMATIZZATA secondo il giocatore** | Tre postazioni 2×2, Bone Meal, taglio tronchi/rami e ripiantagione; ultima versione dello script consegnata V4, collaudo completo da documentare. |
-| Scortecciatura Pale Oak | **COMPLETATA secondo il giocatore** | Automazione già costruita; non proporla come lavoro mancante. |
+| Scortecciatura Pale Oak | **COMPLETATA secondo il giocatore** | Seconda Turtle con programma originale `scripts/turtle/scorteccia.lua`: tronchi dalla cassa sopra, ascia slot 2, scarico cassa sotto; lavora in ciclo continuo. Non proporla come lavoro mancante. |
 | Refined Storage | **OPERATIVO** | Grid/controller; almeno due dischi 16K in precedenza; Importer, Exporter, Regulator; rete a distanza smelter con Transmitter/Receiver. Upgrade 64K da verificare. |
 | Trading Hall | **32 POSTAZIONI ATTIVE** | Zombificazione integrata; espansione a 72 progettata, non confermata finita. |
 | Slime farm | **COMPLETATA** | Scavo 16×16 fino a bedrock; collegata a RS; 71 sticky piston completati. |
