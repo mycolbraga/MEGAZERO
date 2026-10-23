@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Revisione punto 17 — bambù:** il giocatore conferma farm del bambù **costruita, automatizzata e collegata a Refined Storage**. Stato COMPLETATA. Prossima verifica: kelp.
+
 - **Revisione punto 17 — scute di armadillo:** il giocatore conferma farm **costruita, automatizzata e collegata a Refined Storage**. Stato COMPLETATA. Prossima produzione da verificare: bambù.
 
 - **Revisione punto 17 — Bone Meal:** farm **costruita e collegata a Refined Storage**. Restano da impostare **filtri e altri aspetti della configurazione**, senza urgenza; non contrassegnare come automatizzazione completa collaudata. Prossimo controllo: scute degli armadilli.
