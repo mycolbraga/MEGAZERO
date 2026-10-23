@@ -4,7 +4,7 @@
 
 **Errore risolto:** torce piazzate prima degli observer; mancava impulso iniziale. Ripiazzare torce dopo installazione observer faceva funzionare il circuito. Dei 5 composter, 4 sono meccanici e **non** da convertire in leggii. Botole erroneamente segnate Spruce erano Birch.
 
-## Prezzi bibliotecari registrati (snapshot 20/10/2026)
+## Prezzi bibliotecari registrati (base 20/10/2026, aggiornamento 23/10/2026)
 
 | Incantesimo | Smeraldi |
 | --- | ---: |
@@ -25,5 +25,8 @@
 | Efficienza V | 26 |
 | Perforazione IV | 33 |
 | Lealtà III | 20 |
+| **Protezione IV** | **20** |
+
+**Nuovo bibliotecario confermato il 23/10/2026:** **Protezione IV a 20 smeraldi**, villager **già zombificato**. Il prezzo di 20 è quello attuale segnalato; non assumere che un'altra cura lo riduca. **Protezione IV è distinta da Protezione dalle Esplosioni IV**, già registrata come offerta secondaria.
 
 Offerte secondarie note: Silk Touch → anche Respirazione III e Tiro Multiplo I a 1; Unbreaking → Depth Strider II a 1; Potenza V → Impaling II a 11 e Curse of Vanishing I a 1; Sharpness V → Protezione Esplosioni IV a 20. Aspetto di Fuoco II: 21→7 dopo cura; Lama Sferzante III: 29→1. Spine III 17 in attesa di cura; Quick Charge III prezzo da verificare; Densità V e Flagello degli Artropodi V visti ma non bloccati. Confermare prezzi attuali prima di aggiornarli.
