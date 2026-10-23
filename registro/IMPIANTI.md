@@ -4,6 +4,7 @@ Snapshot: 23 ottobre 2026.
 
 | Impianto | Stato | Dettagli |
 | --- | --- | --- |
+| Scavo Mining Turtle 32×16 | **COMPLETATO** | Il giocatore conferma il 23/10/2026 che lo scavo è stato eseguito. Partenza registrata X1890 Y75 Z2766; profondità-obiettivo Y39, quota effettivamente raggiunta non specificata nel nuovo aggiornamento. |
 | Farm di ferro (Iron Golem) | **COMPLETATA, AUTOMATICA E COLLEGATA A RS** | Confermato dal giocatore il 23/10/2026: utilizza **villager spaventati** per generare Iron Golem; produzione e raccolta del ferro automatizzate e collegate a Refined Storage. **STRUTTURA SEPARATA dal complesso delle 30 farm**, come confermato dal giocatore il 23/10/2026. Coordinate esatte non documentate. |
 | Smelter | **COMPLETATO e provato** | 10 fornaci tradizionali in parallelo; alimentazione con lava; secchi vuoti recuperati e reimmessi nel ciclo; prodotti in RS. |
 | Lava e riempimento secchi | **COMPLETATI** | Entrambi automatici; non riprogettare. |
