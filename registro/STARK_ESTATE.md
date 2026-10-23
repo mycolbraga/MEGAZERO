@@ -31,7 +31,7 @@ I seguenti file, già generati nelle precedenti conversazioni, sono **recuperabi
 | **Rotazione** | **CW_90** (90° orari) |
 | **Specchiatura** | **NONE** (nessuna) |
 
-**Questi sono i valori del posizionamento Litematica visualizzato nello screenshot**, non la posizione del giocatore. Preservare X=2138, Y=63, Z=2680 e rotazione CW_90: la quota Y=63 è stata verificata dall'interfaccia. Lo screenshot **non mostra il nome della versione `.litematic` caricata**, quindi non dedurlo dalla sola schermata. L'eventuale origine X=2196,Y=66,Z=506 è obsoleta come riferimento operativo.
+**SCHEMATIC CONFERMATA DAL GIOCATORE: `Stark_Estate_MegaZero_MONTAGNA_RIPRISTINATA.litematic`.** Questi sono i valori del suo posizionamento Litematica visualizzati nello screenshot e confermati dal giocatore il 23/10/2026, non la posizione del giocatore. Preservare **X=2138, Y=63, Z=2680**, rotazione **CW_90**, specchiatura **NONE**. La quota Y=63 non va modificata. Il vecchio riferimento X=2196,Y=66,Z=506 è obsoleto come origine operativa.
 
 ## Posizionamento e coordinate già discusse
 
@@ -83,7 +83,7 @@ Fonte integrale: **[lista materiali completa su GitHub](STARK_ESTATE_LISTA_MATER
 
 ## Questioni realmente aperte
 
-1. **Origine di posizionamento Litematica — VERIFICATA (23/10/2026):** X=2138, Y=63, Z=2680, rotazione CW_90, specchiatura NONE. Non spostare la quota. Rimane utile solo verificare **quale variante della schematic è attualmente caricata**, non la posizione nei controlli.
+1. **Origine e variante Litematica — VERIFICATE (23/10/2026):** versione **`Stark_Estate_MegaZero_MONTAGNA_RIPRISTINATA.litematic`**, X=2138, Y=63, Z=2680, rotazione CW_90, specchiatura NONE. Non spostare la quota né riproporre la verifica del nome della schematic.
 2. **Ricalcolare la distinta materiali della variante effettivamente scelta/posizionata**, specialmente se è quella con montagna ripristinata; le 229 righe oggi archiviate sono il confronto Preview/isola, non il computo certo della montagna ripristinata.
 3. **Confrontare la Material List di Litematica nel piazzamento reale con le scorte RS** per determinare i blocchi *mancanti*, senza confondere il conteggio geometrico con l'approvvigionamento.
 4. **Rilevare scorte correnti** di Pale Oak scortecciato, pietra liscia e altre risorse prioritarie. Nessuna quantità di scorte effettive ancora confermata.
