@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Revisione punto 17 — lana, complesso delle 30 farm:** il giocatore conferma che la farm lana è **già costruita, automatizzata e collegata direttamente a Refined Storage**. Stato COMPLETATA; metodo tecnico di raccolta non ancora specificato. La farm delle bacche rosse è il prossimo punto da verificare.
+
 - **Revisione punto 16 — Gino:** il giocatore conferma che **la stalla è già stata costruita all'interno del complesso delle 30 farm**. Segnata COMPLETATA, non più tra i progetti da realizzare. Gino è il cavallo con armatura azzurra.
 
 - **Revisione punto 15 — Stronghold/Portale dell'End:** il giocatore conferma che la situazione è invariata: Stronghold già individuata intorno a X1436 Y23 Z1044, portale ancora **NON attivato**, 0/12 occhi al rilevamento, due biblioteche esplorate/individuate. Non attribuire un completamento non avvenuto.
