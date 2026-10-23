@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Ulteriore precisazione punto 12 — nuova farm 1×1:** il giocatore conferma **solo la struttura costruita**, non l'automazione. Occorre prendere i programmi storici `querceto2.txt` e `abeteto_8.lua` e adattarne le coordinate per la nuova farm. Controllati i sorgenti GitHub: oltre a home e coordinate alberi, contengono geometria del viale, spostamenti fissi (7 blocchi) e punto di scarico in acqua. Preservare i programmi originali e attendere coordinate/geometria della nuova struttura prima di produrre le due versioni aggiornate.
+
 - **Revisione punto 12 — Alberi:** correzione del giocatore: **l'ex querceto è l'attuale farm per alberi 2×2**, usata per Pale Oak. Ha **appena costruito una seconda farm per gli alberi 1×1**. Non esistono tre farm distinte «querceto storico / Pale Oak / nuova 1×1». Gli script precedenti restano archiviati. Per la nuova 1×1 non sono ancora documentati specie, coordinate e automazione.
 
 - **Revisione punto 11 — Patate:** il giocatore conferma che la produzione attuale fa parte del **complesso delle 30 farm**. La precedente nota sulle farm di patate separate è storica; una struttura originaria era stata rimossa per la stalla di Gino. Il giocatore conferma ora **raccolta automatica con villager e trasferimento delle patate direttamente a Refined Storage**: punto 11 completato; resta solo non precisato il numero di moduli attuali.

@@ -31,7 +31,11 @@ Il giocatore conferma il 23/10/2026 che **la vecchia farm del querceto è stata 
 
 ## Nuova farm alberi 1×1 (struttura separata)
 
-**Costruita e confermata dal giocatore il 23 ottobre 2026.** È una seconda farm per alberi che crescono 1×1, distinta dall'ex querceto convertito per alberi 2×2. Coordinate, disposizione, alberi coltivati, eventuale Turtle/script attivo, raccolta dei prodotti e collegamento a Refined Storage **non sono ancora documentati**. Non assumere che il vecchio `querceto2.txt` o `abeteto_8.lua` sia già il programma usato in questa nuova farm.
+**Solo struttura costruita**, confermato il 23 ottobre 2026. **Nessun automatismo Turtle ancora realizzato** per questa farm. La farm 1×1 è distinta dalla 2×2 Pale Oak. Il lavoro concordato è **fare due nuovi programmi adattando i file originali** `scripts/turtle/querceto2.txt` e `scripts/turtle/abeteto_8.lua` alle nuove coordinate, senza sovrascrivere i sorgenti storici.
+
+**Informazioni necessarie prima dell'adattamento:** coordinate X/Y/Z di partenza della nuova Turtle, verso cui guarda, posizione della cassa di rifornimento e del punto di scarico, coordinate di tutti i tronchi 1×1 e configurazione dei corridoi/ostacoli. I due codici originali sono vincolati alla precedente geometria: `HOME_X/Y/Z`, `LANE_Z`, `X_TREES`, `SOUTH_Z`/`NORTH_Z`, le sequenze di spostamento da 7 blocchi e scarico fisso a (1911,66,2733); adattare anche controlli e messaggi associati. **Non trasferire automaticamente le vecchie coordinate.**
+
+**Stato script nuovi:** NON ANCORA GENERATI, perché non sono state comunicate le nuove coordinate.
 
 ## Turtle scortecciatrice dedicata
 

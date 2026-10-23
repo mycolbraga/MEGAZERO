@@ -7,6 +7,6 @@
 - `abeteto_8.lua`: programma storico per 8 abeti 1×1. Non è ancora confermato che sia in uso nella **nuova seconda farm 1×1**.
 - `scorteccia.lua`: **programma originale fornito dal giocatore**, Turtle scortecciatrice dedicata: cassa superiore con tronchi vanilla, ascia nello slot 2, posa/scortecciatura/verifica/raccolta e scarico nella cassa inferiore. Non alterato rispetto all'allegato.
 
-La **seconda farm 1×1** è stata costruita dal giocatore; il programma installato non è ancora stato identificato.
+La **seconda farm 1×1** ha **solo la struttura costruita**: i nuovi script non esistono ancora. **Da fare:** copiare `querceto2.txt` e `abeteto_8.lua` e adattarli alla nuova configurazione di coordinate, orientamento, viale, alberi e scarico. **Non sovrascrivere i due file storici.** Le versioni modificate vanno create soltanto dopo avere ricevuto la disposizione reale.
 
 Prima di avviare, controllare coordinate e orientamento della Turtle e usare modalità `prova` se disponibile.
