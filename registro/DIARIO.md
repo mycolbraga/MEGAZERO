@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Revisione registro, punto 6 — Mob farm XP:** il giocatore conferma che **tutti i drop sono ancora gestiti manualmente**. Richiesta progettazione futura di un sistema di **scarico/smistamento/smaltimento automatico**, mantenendo le uccisioni manuali per XP/Mending. Lavoro aperto, nessun impianto drop automatico ancora confermato.
+
 - **Revisione registro, punto 5 — Slime farm confermata:** completata e **produce passivamente**, senza intervento manuale; già collegata a Refined Storage.
 
 - **Revisione registro, punto 4 — Trading Hall:** il giocatore conferma **ancora 32 postazioni attive**; l'espansione prevista a 72 non è conclusa. Nessun avanzamento intermedio confermato.
