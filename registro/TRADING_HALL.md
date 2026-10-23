@@ -1,6 +1,6 @@
 # Trading Hall
 
-**Stato:** 32 postazioni attive, villager piazzati e zombificatore integrato. **Progetto:** 72 postazioni totali (+40): due moduli da 20, replicando il modulo centrale e preservando redstone/observer/binari. Espansione non confermata completata.
+**Stato confermato dal giocatore il 23 ottobre 2026:** **32 postazioni attive**, villager piazzati e zombificatore integrato. **Progetto NON ancora completato:** 72 postazioni totali (+40), mediante due moduli da 20, replicando il modulo centrale e preservando redstone/observer/binari. Non sono state confermate nuove postazioni attive; l'avanzamento dei lavori preparatori non è noto.
 
 **Errore risolto:** torce piazzate prima degli observer; mancava impulso iniziale. Ripiazzare torce dopo installazione observer faceva funzionare il circuito. Dei 5 composter, 4 sono meccanici e **non** da convertire in leggii. Botole erroneamente segnate Spruce erano Birch.
 
