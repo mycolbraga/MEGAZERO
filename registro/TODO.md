@@ -13,7 +13,7 @@
 - [x] **Canna da zucchero, complesso delle 30 farm:** taglio con Observer e pistoni, raccolta con carrello con tramoggia e tramogge, collegata a Refined Storage. **COMPLETATA**, confermato 23/10/2026. La vecchia farm separata 18×12 non esiste più.
 - [ ] **Farm oro nel Nether:** automatizzare la conversione pepite→lingotti e collegare la produzione a Refined Storage. Entrambi i lavori ancora da fare, confermato 23/10/2026.
 - [ ] Progetto quarzo su tetto Nether.
-- [ ] Stato stalla di Gino.
+- [x] **Stalla di Gino — COMPLETATA:** già costruita all'interno del complesso delle 30 farm, confermata dal giocatore il 23/10/2026.
 - [ ] Stato scavo Turtle 32×16 fino a Y39.
 - [ ] Aggiornare il piano 30 linee dopo conferme effettive.
 - [ ] Stone Liquefier: mantenere in progetto/uso, identificare esatta macchina che ora produce la lava.
