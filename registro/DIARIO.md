@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Trading Hall — nuovo bibliotecario:** aggiunto **Protezione IV (Protection IV)** a **20 smeraldi**, villager **già zombificato** al momento della conferma. Distinguere dal precedente **Protezione dalle Esplosioni IV** a 20, offerta secondaria del bibliotecario Affilatezza V. Il totale delle postazioni resta 32 salvo ulteriore conferma.
+
 - **Nuova conferma — farm di ferro:** farm **già costruita, automatica e collegata a Refined Storage**; gli Iron Golem sono generati tramite **villager spaventati**. **Successiva conferma:** è una **struttura separata** dal complesso delle 30 farm; coordinate esatte non ancora dichiarate. Nessun lavoro di automazione o connessione RS da riproporre.
 
 - **Integrazione complesso 30 farm — farm di GRANO separata:** il giocatore conferma **farm di grano semiautomatica, costruita e collegata a Refined Storage**. È distinta dalla farm già registrata che produce soltanto **PANE**. Non eliminare né confondere le due linee.
