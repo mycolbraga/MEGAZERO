@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Revisione punto 15 — Stronghold/Portale dell'End:** il giocatore conferma che la situazione è invariata: Stronghold già individuata intorno a X1436 Y23 Z1044, portale ancora **NON attivato**, 0/12 occhi al rilevamento, due biblioteche esplorate/individuate. Non attribuire un completamento non avvenuto.
+
 - **Revisione punto 14 — Metro della mob farm:** il giocatore conferma **nessuna modifica al momento**. Collegamento funzionante tra spiaggia e mob farm aerea, tratto storico di circa 150 blocchi e +110 Y, durata circa 1:30.
 
 - **Revisione punto 13 — Monumento oceanico:** confermato stato invariato dopo la prima esplorazione (X≈1136, Z≈2752): **26 spugne** e **8 blocchi d'oro** recuperati. Nessun altro lavoro al monumento registrato.
