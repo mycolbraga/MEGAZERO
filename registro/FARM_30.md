@@ -34,7 +34,7 @@ Il **complesso delle 30 farm esiste** e comprende almeno la canna da zucchero, c
 | Farm alberi 2×2 (ex querceto), Pale Oak e scortecciatura | Produzione 2×2 e scortecciatura automatizzate secondo il giocatore; la vecchia farm querceto è stata riconvertita, non è un impianto separato |
 | Farm alberi 1×1 (nuova struttura) | Seconda farm appena costruita, separata dalla 2×2; automatismi, coordinate e specie da documentare |
 | Cobblestone | **Produzione presente anche nella stazione tecnica del complesso**, insieme a Stone Liquefier e riempimento secchi; il generatore automatico di cobblestone era già registrato come operativo. |
-| Stazione tecnica — Stone Liquefier, secchi, cobblestone | **COSTRUITA NEL COMPLESSO**, confermata il 23/10/2026: contiene **Stone Liquefier (mod Energized Power)**, sistema di **riempimento secchi (Energized Power)** e **produzione di cobblestone**. Esistenza e co-localizzazione confermate; collaudo specifico e connessioni RS del Liquefier non ancora precisati. Il circuito lava/secchi risultava già automatico nel registro generale. Non contare tutta la stazione come una farm agricola ulteriore. |
+| Stazione tecnica — Stone Liquefier, secchi, cobblestone | **COSTRUITA E OPERATIVA NEL COMPLESSO**, confermata il 23/10/2026: **Stone Liquefier (Energized Power) già in funzione e produttore di lava**; il sistema **riempie già i secchi**. Nella stazione è presente anche la produzione di cobblestone. Il collegamento specifico del Liquefier a Refined Storage non è ancora confermato. Non contare tutta la stazione come farm agricola aggiuntiva. |
 | Funghi marroni, slime, oro | Farm completate; alcuni collegamenti RS da verificare |
 | Mob farm XP, Hoglin | Funzionanti |
 
