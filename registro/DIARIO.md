@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Revisione punto 9 — Farm funghi marroni:** confermata dal giocatore ancora invariata: stanza 16×16, quattro funghi madre, 32 dispenser d'acqua e timer. Impianto completato e collaudato.
+
 - **Revisione punto 8 — Canna da zucchero COMPLETATA:** il giocatore conferma che la vecchia farm separata 18×12 con flying machine non esiste più. La produzione è **integrata nel complesso delle 30 farm**, con **taglio automatico Observer+pistoni**, raccolta con **carrello a tramoggia e tramogge** e **collegamento già operativo a Refined Storage**. Nessun lavoro di raccolta/collegamento RS da riproporre.
 
 - **Revisione punto 7 — Farm d'oro Nether:** confermata resa registrata di circa 70 lingotti/10 minuti, mentre la trasformazione automatica delle pepite e il collegamento a Refined Storage non sono ancora realizzati.
