@@ -27,7 +27,8 @@ Il **complesso delle 30 farm esiste** e comprende almeno la canna da zucchero, c
 | Bone Meal (farina d'ossa) | **COSTRUITA E COLLEGATA A REFINED STORAGE — CONFIGURAZIONE DA COMPLETARE**. Confermato dal giocatore il 23/10/2026: restano da impostare **filtri e altri dettagli**, senza urgenza. Non considerare completata l'automazione end-to-end finché non verificata; distinguere dalla farina d'ossa usata nella farm alberi 2×2. |
 | Scute armadillo | **COMPLETATA, AUTOMATIZZATA E COLLEGATA A REFINED STORAGE** nel complesso delle 30 farm, confermato dal giocatore il 23/10/2026. Dettagli tecnici della raccolta non ancora documentati. |
 | Bambù (Bamboo) | **COMPLETATA, AUTOMATIZZATA E COLLEGATA A REFINED STORAGE** nel complesso delle 30 farm, confermato dal giocatore il 23/10/2026. Meccanica di raccolta non ancora documentata. |
-| Kelp, miele, argilla | **Da verificare** |
+| Kelp | **COMPLETATA, AUTOMATIZZATA E COLLEGATA A REFINED STORAGE** nel complesso delle 30 farm, confermato dal giocatore il 23/10/2026. Modalità tecnica di raccolta non ancora documentata. |
+| Miele, argilla | **Da verificare** |
 | Farm alberi 2×2 (ex querceto), Pale Oak e scortecciatura | Produzione 2×2 e scortecciatura automatizzate secondo il giocatore; la vecchia farm querceto è stata riconvertita, non è un impianto separato |
 | Farm alberi 1×1 (nuova struttura) | Seconda farm appena costruita, separata dalla 2×2; automatismi, coordinate e specie da documentare |
 | Cobblestone | Infinita |
