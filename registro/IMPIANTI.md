@@ -4,6 +4,7 @@ Snapshot: 23 ottobre 2026.
 
 | Impianto | Stato | Dettagli |
 | --- | --- | --- |
+| Farm di ferro (Iron Golem) | **COMPLETATA, AUTOMATICA E COLLEGATA A RS** | Confermato dal giocatore il 23/10/2026: utilizza **villager spaventati** per generare Iron Golem; produzione e raccolta del ferro automatizzate e collegate a Refined Storage. Posizione esatta e appartenenza al complesso delle 30 farm non ancora confermate. |
 | Smelter | **COMPLETATO e provato** | 10 fornaci tradizionali in parallelo; alimentazione con lava; secchi vuoti recuperati e reimmessi nel ciclo; prodotti in RS. |
 | Lava e riempimento secchi | **COMPLETATI** | Entrambi automatici; non riprogettare. |
 | Cottura continua RS | **COMPLETATA** | Exporter filtrato per i materiali da cuocere sempre. |
