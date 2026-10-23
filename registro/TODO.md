@@ -2,6 +2,7 @@
 
 **Non riproporre** lo smelter, produzione lava, secchi, cottura on-demand, Cobblestone infinita, Pale Oak e scortecciatura come progetti ancora da realizzare.
 
+- [ ] **Hoglin farm — tenere sotto osservazione la resa:** attualmente va più che bene (confermato il 23/10/2026); verificare saltuariamente che la produzione resti soddisfacente, senza avviare ottimizzazioni finché non emergono problemi. Raccolta carne/pelle non documentata.
 - [ ] **Mob farm XP — progettare scarico e smaltimento automatico dei drop** (richiesta esplicita del giocatore, stato attuale MANUALE): mantenere uccisione manuale per XP/Mending; studiare raccolta post-uccisione, smistamento dei drop utili verso Refined Storage, gestione separata di archi/armature non impilabili ed eliminazione controllata degli scarti. Non considerare già costruito; evitare smaltimento accidentale degli oggetti utili.
 - [ ] Registrare nuovi Processing Pattern realmente creati, oltre Cobblestone→Stone.
 - [ ] Contare scorte attuali di pietra liscia e legno Pale Oak scortecciato per Stark Estate.
