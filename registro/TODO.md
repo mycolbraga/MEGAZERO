@@ -20,4 +20,5 @@
 - [x] **Stalla di Gino — COMPLETATA:** già costruita all'interno del complesso delle 30 farm, confermata dal giocatore il 23/10/2026.
 - [ ] Stato scavo Turtle 32×16 fino a Y39.
 - [ ] Aggiornare il piano 30 linee dopo conferme effettive.
-- [ ] Stone Liquefier: mantenere in progetto/uso, identificare esatta macchina che ora produce la lava.
+- [x] **Stazione Stone Liquefier (Energized Power) — COSTRUITA nel complesso delle 30 farm:** comprende Stone Liquefier, riempimento secchi Energized Power e creazione di cobblestone, confermata 23/10/2026. Non proporre di costruirla da zero.
+- [ ] **Verifica di dettaglio stazione Stone Liquefier:** stabilire se il Liquefier sia già operativo e come venga gestita la lava; collegamento specifico a RS non confermato. La produzione di lava e il riempimento secchi dello smelter risultano già funzionanti e non sono lavori da rifare.
