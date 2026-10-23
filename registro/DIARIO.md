@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Revisione punto 17 — miele:** farm del miele confermata **costruita, automatizzata e collegata a Refined Storage**. Stato COMPLETATA. Prossima produzione da verificare: argilla.
+
 - **Revisione punto 17 — kelp:** il giocatore conferma farm del kelp **costruita, automatizzata e collegata a Refined Storage**. Stato COMPLETATA. Prossima verifica: miele.
 
 - **Revisione punto 17 — bambù:** il giocatore conferma farm del bambù **costruita, automatizzata e collegata a Refined Storage**. Stato COMPLETATA. Prossima verifica: kelp.
