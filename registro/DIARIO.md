@@ -4,7 +4,7 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
-- **Revisione punto 8 — Canna da zucchero:** il giocatore conferma che la vecchia farm indipendente 18×12 (flying machine, minecart con tramoggia) non esiste più. La produzione è stata **incorporata nel complesso delle 30 farm**. La nuova configurazione e l'integrazione RS devono ancora essere documentate; non continuare a trattare la vecchia struttura come attiva.
+- **Revisione punto 8 — Canna da zucchero:** il giocatore conferma che la vecchia farm indipendente 18×12 (flying machine, minecart con tramoggia) non esiste più. La produzione è stata **incorporata nel complesso delle 30 farm**. **Taglio automatico con Observer e pistoni**, confermato dal giocatore. Raccolta dei drop e integrazione RS ancora da documentare; non continuare a trattare la vecchia struttura come attiva.
 
 - **Revisione punto 7 — Farm d'oro Nether:** confermata resa registrata di circa 70 lingotti/10 minuti, mentre la trasformazione automatica delle pepite e il collegamento a Refined Storage non sono ancora realizzati.
 
