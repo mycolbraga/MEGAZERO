@@ -23,7 +23,7 @@ Snapshot: 23 ottobre 2026.
 | Farm alberi 1×1 (nuova) | **SOLO STRUTTURA COSTRUITA — AUTOMAZIONE DA FARE** | Seconda farm 1×1 costruita, confermato 23/10/2026. **Non ancora automatizzata**: occorre adattare alle nuove coordinate i programmi originari `querceto2.txt` e `abeteto_8.lua`, preservando gli originali. Posizioni Turtle/alberi/viale/scarico, orientamento e geometria attuale ancora da rilevare. Distinta dalla farm 2×2 già operativa. |
 | Script querceto/abeteto a 8 alberi | **ARCHIVIATI** | `querceto2.txt` e `abeteto_8.lua` sono programmi storici; non implicano che le vecchie strutture esistano ancora separatamente o che la nuova farm 1×1 usi già quegli script. |
 | Monumento oceanico | **ESPLORATO — STATO CONFERMATO 23/10/2026** | X≈1136, Z≈2752; recuperate **26 spugne** e **8 blocchi d'oro** dalla stanza del tesoro. Il giocatore conferma nessun ulteriore intervento o recupero rispetto alla prima esplorazione. |
-| Metro mob farm | **REALIZZATA** | ~150 blocchi orizzontali, +110 Y, tempo circa 1:30. |
+| Metro mob farm | **COMPLETATA E INVARIATA — confermata 23/10/2026** | Collegamento dalla spiaggia verso la mob farm sopra l'oceano, circa 150 blocchi orizzontali e 110 di dislivello; percorrenza circa 1 minuto e 30 secondi. Nessuna modifica apportata, confermato dal giocatore. |
 
 ### Risoluzioni e preferenze già confermate
 
