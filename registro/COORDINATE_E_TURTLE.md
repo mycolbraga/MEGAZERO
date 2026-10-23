@@ -27,7 +27,7 @@ Il giocatore conferma il 23/10/2026 che **la vecchia farm del querceto è stata 
 | Monumento oceanico | 1136, Z2752 |
 | Mob farm aerea | spiaggia 1841,62,2792 → torre 1700,151,2949 |
 | Ex querceto 8 posti (solo riferimento storico) | X 1913,1920,1927,1934; Z 2735/2728. La farm originaria è diventata l'attuale farm alberi 2×2. |
-| Scavo Turtle 32×16 | partenza 1890,75,2766; stop a Y39, stato da verificare |
+| Scavo Turtle 32×16 | **COMPLETATO**, confermato il 23/10/2026. Partenza 1890,75,2766; profondità-obiettivo del progetto Y39 (quota finale non nuovamente precisata). |
 
 ## Nuova farm alberi 1×1 (struttura separata)
 
