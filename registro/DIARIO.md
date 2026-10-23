@@ -5,7 +5,7 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
 - **Integrazione complesso 30 farm — farm di GRANO separata:** il giocatore conferma **farm di grano semiautomatica, costruita e collegata a Refined Storage**. È distinta dalla farm già registrata che produce soltanto **PANE**. Non eliminare né confondere le due linee.
-- **Integrazione complesso 30 farm — stazione tecnica Energized Power:** confermati **Stone Liquefier già operativo e produttore di lava**, **riempimento dei secchi già funzionante** e **produzione automatica di cobblestone già operativa direttamente nel complesso** (ulteriore conferma del giocatore 23/10/2026). Non riproporre costruzione, configurazione di base o avvio di questi impianti. I collegamenti specifici del Liquefier e del generatore cobblestone a RS non sono stati ancora dichiarati.
+- **Integrazione complesso 30 farm — stazione tecnica Energized Power:** confermati **Stone Liquefier già operativo e produttore di lava**, **riempimento dei secchi già funzionante** e **produzione automatica di cobblestone già operativa direttamente nel complesso** (ulteriore conferma del giocatore 23/10/2026). Non riproporre costruzione, configurazione di base o avvio di questi impianti. **Confermato successivamente: TUTTA la stazione tecnica è collegata a Refined Storage**, inclusi Stone Liquefier/lava, riempimento secchi e generazione automatica di cobblestone. Nessuna verifica residua sui collegamenti.
 
 - **Argilla:** il giocatore conferma che la farm non è ancora costruita. Non segnare impianto o collegamento RS come attivo.
 
