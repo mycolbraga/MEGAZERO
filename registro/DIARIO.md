@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Audit Stark Estate:** verificato che il vecchio file `STARK_ESTATE.md` conservava solo dieci materiali e non le coordinate/decisioni di posizionamento. Recuperati nella Libreria ChatGPT gli originali Litematica (PREVIEW, TERRAIN, MONTAGNA_RIPRISTINATA e ISOLA_COMPLETA) e la lista completa di **229 ID materiali**, ora copiata integralmente in `registro/STARK_ESTATE_LISTA_MATERIALI_COMPLETA.txt`. Il file dedicato registra Cherry Grove, riferimenti di posizione X2082 Y103 Z2698 e X2088 Y104 Z2702, rotazione 90°, quota da non alterare, vecchia origine X2196 Y66 Z506 **contraddittoria/non confermata come ancora finale**, e collegamento RS al cantiere **già funzionante a circa 169 blocchi**. Restano da verificare materiale finale della versione montagna ripristinata, posizione-ancora esatta e scorte effettive; non dichiarare che ogni dettaglio era già salvato.
+
 - **Mining Turtle — scavo 32×16:** il giocatore comunica **«fatto»** e conferma lo scavo completato. La quota Y39 è il target previsto nel progetto precedente; non è stata ribadita separatamente. Spostato tra i lavori completati, non più in sospeso.
 
 - **Trading Hall — nuovo bibliotecario:** aggiunto **Protezione IV (Protection IV)** a **20 smeraldi**, villager **già zombificato** al momento della conferma. Distinguere dal precedente **Protezione dalle Esplosioni IV** a 20, offerta secondaria del bibliotecario Affilatezza V. Il totale delle postazioni resta 32 salvo ulteriore conferma.
