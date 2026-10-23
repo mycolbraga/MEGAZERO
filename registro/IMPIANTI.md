@@ -9,6 +9,8 @@ Snapshot: 23 ottobre 2026.
 | Cottura continua RS | **COMPLETATA** | Exporter filtrato per i materiali da cuocere sempre. |
 | Cottura su richiesta RS | **COMPLETATA e provata** | Processing Pattern: test Cobblestone → Stone concluso. Autocrafter rivolto **direttamente alla cassa**, non all'Exporter. |
 | Cobblestone infinita | **COMPLETATA** | Produzione automatica confermata. |
+| Farm Nether Wart (complesso 30 farm) | **OPERATIVA — MANUALE** | Costruita, produzione gestita manualmente; confermata il 23/10/2026. Collegamento a Refined Storage non verificato. |
+| Farm Glow Berries (complesso 30 farm) | **OPERATIVA — MANUALE** | Costruita, produzione gestita manualmente; confermata il 23/10/2026. Collegamento a Refined Storage non verificato. |
 | Farm cacao (complesso 30 farm) | **OPERATIVA — MANUALE** | Il giocatore conferma il 23/10/2026 che la farm del cacao è costruita, ma funziona manualmente. Automazione assente; collegamento a Refined Storage da verificare. |
 | Farm barbabietole (complesso 30 farm) | **NON ANCORA REALIZZATA** | Confermato dal giocatore il 23/10/2026: non è ancora pronta; nessuna automazione/connessione RS da indicare come attiva. |
 | Farm zucche (complesso 30 farm) | **COMPLETATA, AUTOMATICA E COLLEGATA A RS** | Confermato dal giocatore il 23/10/2026; meccanica di raccolta non ancora documentata. |
