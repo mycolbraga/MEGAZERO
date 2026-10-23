@@ -11,7 +11,7 @@ Il **complesso delle 30 farm esiste** e comprende almeno la canna da zucchero, c
 | Canna da zucchero | **COMPLETATA, nel complesso delle 30 farm**: Observer e pistoni per il taglio, **carrello con tramoggia e tramogge** per la raccolta, **collegata a Refined Storage**. La precedente 18×12 separata è dismessa. |
 | Carote — prima farm | **COMPLETATA, AUTOMATIZZATA E COLLEGATA A REFINED STORAGE** nel complesso delle 30 farm, confermato dal giocatore il 23/10/2026. È l'**unica** farm di carote realizzata; metodo tecnico di raccolta non precisato. |
 | Carote — seconda farm prevista | **NON COSTRUITA**: era prevista una seconda unità, ma il giocatore conferma di averne realizzata **una sola**. Non contare la seconda fra le farm attive. |
-| Grano / pane | **Da verificare** |
+| Pane (farm basata su grano) | **COMPLETATA, AUTOMATIZZATA E COLLEGATA A REFINED STORAGE** nel complesso delle 30 farm. Confermato il 23/10/2026: **produce esclusivamente PANE**, non consegna grano separato al magazzino. Il grano è utilizzato come coltura/intermedio, non come produzione distinta verificata. |
 | Patate | **COMPLETATA NEL COMPLESSO DELLE 30 FARM**: raccolta automatica tramite villager e trasferimento già collegato a **Refined Storage**, confermato il 23/10/2026. Una vecchia farm separata era stata rimossa per la stalla di Gino; numero di moduli attuali non precisato. |
 | Mucche carne/pelle, galline pollo/piume/uova, maiali | Da verificare |
 | Cactus, angurie, zucche, barbabietola, cacao | Da verificare |
