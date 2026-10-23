@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **RETTIFICA DEL GIOCATORE — altezza farm alberi 1×1:** la Turtle è **allo stesso livello della terra degli alberi**; la base del tronco/sapling è **un solo blocco sopra**. Corregge e **sostituisce** la deduzione precedente 'Turtle Y66, terreno Y67, tronco Y68' e ogni indicazione che occorra superare due blocchi di dislivello. Altezza Turtle registrata Y66, terreno da considerare Y66, tronco Y67; Y68 nella lista è quota HUD del giocatore durante il rilievo, non quota tronco.
+
 - **Punto 12 — quota Turtle confermata:** screenshot HUD del giocatore **in piedi sopra la Turtle** a X=1903, Y=67, Z=2715: il **blocco Turtle è a 1903,66,2715**, con cassa a **1903,66,2716**. Gli 8 terreni di piantagione sono a **Y=67**, perché il giocatore era in piedi su di essi a Y=68; i tronchi occupano la quota Y=68 alla base. Resta da confermare la direzione effettiva della Turtle: il simbolo HUD N descrive solo l'orientamento del giocatore. Da adattare dislivello e scarico. Questa conferma supera le precedenti annotazioni incerte sulla base.
 
 - **Punto 12 — coordinate definitive dei punti alberi 1×1:** il giocatore conferma di essere in piedi sul terreno destinato all'albero nello screenshot a **1899,68,2712**. Fornite altre 7 posizioni: **1899,68,2705 / 2698 / 2691** e **1907,68,2691 / 2698 / 2705 / 2712**. Totale 8 alberi, due file X1899 e X1907, quattro righe distanti 7 su Z, asse centrale stimato X1903. Restano da verificare quota e orientamento della Turtle e scarico acqua prima di modificare i due script; gli originali non sono stati toccati.
