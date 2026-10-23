@@ -4,6 +4,8 @@ Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare 
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
 
+- **Revisione punto 17 — Nether Wart e Glow Berries:** il giocatore conferma che **entrambe le farm sono costruite** ma operano con **gestione manuale**, senza automazione. Non attribuire collegamento a Refined Storage a nessuna delle due senza conferma. Prossima verifica: neve.
+
 - **Revisione punto 17 — cacao:** il giocatore conferma farm costruita e funzionante, con **gestione manuale**. Non automatizzata; collegamento Refined Storage ancora da verificare. Prossima produzione: verruche del Nether.
 
 
