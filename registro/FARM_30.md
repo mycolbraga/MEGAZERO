@@ -15,7 +15,7 @@ Il **complesso delle 30 farm esiste** e comprende almeno la canna da zucchero, c
 | Patate | **COMPLETATA NEL COMPLESSO DELLE 30 FARM**: raccolta automatica tramite villager e trasferimento già collegato a **Refined Storage**, confermato il 23/10/2026. Una vecchia farm separata era stata rimossa per la stalla di Gino; numero di moduli attuali non precisato. |
 | Mucche (carne e pelle) | **COSTRUITA E FUNZIONANTE — GESTIONE MANUALE**, confermato il 23/10/2026. **NON automatizzata**. Collegamento effettivo dei prodotti a Refined Storage non confermato. |
 | Maiali (carne) | **COSTRUITA E FUNZIONANTE — GESTIONE MANUALE**, come la farm mucche, confermato il 23/10/2026. **NON automatizzata**. Collegamento a Refined Storage non confermato. |
-| Galline (pollo, piume, uova) | **Da verificare** |
+| Galline (pollo, piume, uova) | **OPERATIVA — GESTIONE MANUALE DELLE GALLINE; RACCOLTA UOVA AUTOMATICA E COLLEGATA A RS.** Confermato dal giocatore il 23/10/2026: la farm funziona manualmente per gli animali, mentre le **uova vengono raccolte automaticamente** e inviate a Refined Storage. **Non** dichiarare automatizzata la produzione/raccolta di pollo e piume; collegamento RS di questi due prodotti non confermato. |
 | Cactus, angurie, zucche, barbabietola, cacao | Da verificare |
 | Nether wart, glow berries, neve, bone meal | Da verificare |
 | Scute armadillo, bamboo, kelp, miele, argilla | Da verificare |
