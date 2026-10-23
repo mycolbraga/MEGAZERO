@@ -1,11 +1,11 @@
 # Piano di 30 linee produttive
 
-È un **piano storico**, non l'elenco delle farm tutte concluse. Stato da verificare linea per linea.
+Il **complesso delle 30 farm esiste** e comprende almeno la canna da zucchero, come confermato dal giocatore il 23/10/2026. Questa tabella resta una lista storica delle linee previste: non presumere che le altre siano tutte costruite. Stato da verificare linea per linea.
 
 | Linea | Stato noto |
 | --- | --- |
 | Lana, bacche rosse | Da verificare |
-| Canna da zucchero | Farm 18×12 completa; Importer RS da verificare |
+| Canna da zucchero | **INTEGRATA NEL COMPLESSO DELLE 30 FARM**; vecchia farm 18×12 indipendente non più esistente; dettagli del nuovo sistema e RS da documentare |
 | Carote (2), grano/pane | Da verificare |
 | Patate (2 originarie) | Una rimossa, una ancora attiva |
 | Mucche carne/pelle, galline pollo/piume/uova, maiali | Da verificare |
