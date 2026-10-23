@@ -9,7 +9,7 @@
 - [ ] Stato espansione Trading Hall 32→72.
 - [ ] Upgrade dischi RS 64K, se ancora necessario.
 - [ ] Verificare Importer RS della canna da zucchero.
-- [ ] Verificare pepite→lingotti e importazione RS dell'oro.
+- [ ] **Farm oro nel Nether:** automatizzare la conversione pepite→lingotti e collegare la produzione a Refined Storage. Entrambi i lavori ancora da fare, confermato 23/10/2026.
 - [ ] Progetto quarzo su tetto Nether.
 - [ ] Stato stalla di Gino.
 - [ ] Stato scavo Turtle 32×16 fino a Y39.
