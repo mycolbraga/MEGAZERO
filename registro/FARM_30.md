@@ -17,7 +17,8 @@ Il **complesso delle 30 farm esiste** e comprende almeno la canna da zucchero, c
 | Maiali (carne) | **COSTRUITA E FUNZIONANTE — GESTIONE MANUALE**, come la farm mucche, confermato il 23/10/2026. **NON automatizzata**. Collegamento a Refined Storage non confermato. |
 | Galline (pollo, piume, uova) | **OPERATIVA — GESTIONE MANUALE DELLE GALLINE; RACCOLTA UOVA AUTOMATICA E COLLEGATA A RS.** Confermato dal giocatore il 23/10/2026: la farm funziona manualmente per gli animali, mentre le **uova vengono raccolte automaticamente** e inviate a Refined Storage. **Non** dichiarare automatizzata la produzione/raccolta di pollo e piume; collegamento RS di questi due prodotti non confermato. |
 | Cactus | **COMPLETATA, AUTOMATIZZATA E COLLEGATA A REFINED STORAGE** nel complesso delle 30 farm, confermato dal giocatore il 23/10/2026. Modalità tecnica di raccolta non ancora documentata. |
-| Angurie, zucche, barbabietola, cacao | **Da verificare** |
+| Angurie | **COMPLETATA, AUTOMATIZZATA E COLLEGATA A REFINED STORAGE** nel complesso delle 30 farm, confermato dal giocatore il 23/10/2026. Meccanica specifica di raccolta non ancora documentata. |
+| Zucche, barbabietola, cacao | **Da verificare** |
 | Nether wart, glow berries, neve, bone meal | Da verificare |
 | Scute armadillo, bamboo, kelp, miele, argilla | Da verificare |
 | Farm alberi 2×2 (ex querceto), Pale Oak e scortecciatura | Produzione 2×2 e scortecciatura automatizzate secondo il giocatore; la vecchia farm querceto è stata riconvertita, non è un impianto separato |
