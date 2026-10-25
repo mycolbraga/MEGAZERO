@@ -62,14 +62,15 @@ Il giocatore conferma il 23/10/2026 che **la vecchia farm del querceto è stata 
 
 ## Turtle scortecciatrice dedicata
 
-Script originale: [`scripts/turtle/scorteccia.lua`](../scripts/turtle/scorteccia.lua), fornito dal giocatore il 23/10/2026. **Non è la Turtle che abbatte i tre Pale Oak**: è una seconda automazione.
+Script attuale: [`scripts/turtle/scorteccia.lua`](../scripts/turtle/scorteccia.lua), derivato da quello fornito dal giocatore il 23/10/2026. **VERSIONE CON RICAMBIO AUTOMATICO DELLE ASCE DI FERRO COLLAUDATA E CONFERMATA FUNZIONANTE DAL GIOCATORE il 25/10/2026. Conservare come versione stabile e non modificare senza richiesta.** Non è la Turtle che abbatte i tre Pale Oak: è una seconda automazione.
 
-- Ingresso: cassa **sopra** la Turtle, tronchi vanilla con ID `minecraft:*_log`.
-- Attrezzo: ascia nello **slot 2**; gli altri slot devono essere vuoti alla partenza.
-- Spazio davanti: libero per piazzare il tronco, usare l'ascia, ispezionare il blocco e raccoglierlo.
-- Uscita: cassa **sotto** la Turtle; in caso di uscita piena attende e riprova ogni 3 secondi.
-- Se manca input attende 2 secondi. Ogni 16 pezzi stampa il conteggio.
-- Controlla il risultato `minecraft:stripped_*_log`; interrompe se inserito un oggetto non valido o se l'operazione fallisce.
+- Ingresso: cassa **sopra** la Turtle con tronchi vanilla `minecraft:*_log` **e circa 10 asce di ferro di ricambio**; le asce possono essere mescolate ai tronchi, il programma le cerca fra gli slot.
+- Attrezzo: **slot 2** della Turtle; al consumo recupera automaticamente una nuova ascia di ferro dalla cassa superiore e attende se non sono disponibili ricambi. **Slot 1** per i tronchi, **slot 3** per buffer temporaneo; gli altri slot vuoti alla partenza.
+- Spazio davanti: libero per piazzare il tronco, usare l'ascia, ispezionare e raccogliere.
+- Uscita: cassa **sotto** la Turtle; se piena, attende e riprova ogni 3 secondi.
+- Se mancano tronchi attende 2 secondi. Ogni 16 pezzi stampa il conteggio.
+- Controlla il risultato `minecraft:stripped_*_log`; blocca la lavorazione se la scortecciatura non riesce.
+- **Il codice prima della modifica resta recuperabile nella cronologia Git**; non sovrascrivere la versione attuale funzionante.
 - **Coordinate Turtle scortecciatrice non ancora registrate**, non inventarle.
 
 ### Betulle nella nuova farm 1×1 — aggiornamento 25/10/2026
