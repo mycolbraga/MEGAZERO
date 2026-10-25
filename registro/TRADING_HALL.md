@@ -40,3 +40,5 @@ Offerte secondarie note: Silk Touch → anche Respirazione III e Tiro Multiplo I
 - **Bibliotecario #21 — offerte confermate il 25/10/2026:** **Contraccolpo II (Knockback II) a 1 smeraldo** (livello massimo) e **Carica Rapida I (Quick Charge I) a 1 smeraldo** (livello massimo III). La nota storica su «Quick Charge III bloccato, prezzo da verificare» riguarda un'offerta precedente non assegnata qui a una postazione; non dedurre che sia del bibliotecario #21.
 
 - **Bibliotecario #26 — offerte confermate il 25/10/2026:** **Passo Gelato II (Frost Walker II) a 18 smeraldi** (livello massimo), **Anatema V (Smite V) a 1 smeraldo** (livello massimo), **Maledizione del Legame I (Curse of Binding I) a 1 smeraldo** (livello unico). Postazione #26 occupata.
+
+- **Bibliotecario #15 — offerte confermate il 25/10/2026:** **Protezione dai Proiettili IV (Projectile Protection IV) a 1 smeraldo** (livello massimo) e **Flagello degli Artropodi I (Bane of Arthropods I) a 1 smeraldo** (livello massimo V). Postazione #15 occupata.
