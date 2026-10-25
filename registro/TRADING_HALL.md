@@ -30,3 +30,8 @@
 **Nuovo bibliotecario confermato il 23/10/2026:** **Protezione IV a 20 smeraldi**, villager **già zombificato**. Il prezzo di 20 è quello attuale segnalato; non assumere che un'altra cura lo riduca. **Protezione IV è distinta da Protezione dalle Esplosioni IV**, già registrata come offerta secondaria.
 
 Offerte secondarie note: Silk Touch → anche Respirazione III e Tiro Multiplo I a 1; Unbreaking → Depth Strider II a 1; Potenza V → Impaling II a 11 e Curse of Vanishing I a 1; Sharpness V → Protezione Esplosioni IV a 20. Aspetto di Fuoco II: 21→7 dopo cura; Lama Sferzante III: 29→1. Spine III 17 in attesa di cura; Quick Charge III prezzo da verificare; Densità V e Flagello degli Artropodi V visti ma non bloccati. Confermare prezzi attuali prima di aggiornarli.
+
+## Aggiornamento bibliotecari — 25 ottobre 2026
+
+- **Bibliotecario #28 — Esca III (Lure III): 1 smeraldo.** Offerta comunicata e confermata dal giocatore il 25/10/2026; il posto #28 è **occupato**, non più libero. Esca III è il livello massimo dell'incantesimo.
+- La tabella storica sopra risale al 20–23 ottobre e potrebbe non riflettere tutti i cambiamenti successivi; non sostituire i prezzi storici con deduzioni non confermate.
