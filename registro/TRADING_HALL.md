@@ -42,3 +42,5 @@ Offerte secondarie note: Silk Touch → anche Respirazione III e Tiro Multiplo I
 - **Bibliotecario #26 — offerte confermate il 25/10/2026:** **Passo Gelato II (Frost Walker II) a 18 smeraldi** (livello massimo), **Anatema V (Smite V) a 1 smeraldo** (livello massimo), **Maledizione del Legame I (Curse of Binding I) a 1 smeraldo** (livello unico). Postazione #26 occupata.
 
 - **Bibliotecario #15 — offerte confermate il 25/10/2026:** **Protezione dai Proiettili IV (Projectile Protection IV) a 1 smeraldo** (livello massimo) e **Flagello degli Artropodi I (Bane of Arthropods I) a 1 smeraldo** (livello massimo V). Postazione #15 occupata.
+
+- **Bibliotecario #25 — offerte confermate il 25/10/2026:** **Fortuna del Mare III (Luck of the Sea III) a 15 smeraldi** (livello massimo) e **Ripristino I (Mending I) a 2 smeraldi** (livello massimo). Migliora il precedente prezzo registrato di Ripristino a 3 smeraldi, senza cancellare la vecchia offerta dall'inventario storico. Postazione #25 occupata.
