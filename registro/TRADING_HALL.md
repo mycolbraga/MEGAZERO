@@ -33,5 +33,5 @@ Offerte secondarie note: Silk Touch → anche Respirazione III e Tiro Multiplo I
 
 ## Aggiornamento bibliotecari — 25 ottobre 2026
 
-- **Bibliotecario #28 — Esca III (Lure III): 1 smeraldo.** Offerta comunicata e confermata dal giocatore il 25/10/2026; il posto #28 è **occupato**, non più libero. Esca III è il livello massimo dell'incantesimo.
+- **Bibliotecario #28 — tre offerte confermate il 25/10/2026:** **Esca III (Lure III) a 1 smeraldo**, **Protezione dal Fuoco III (Fire Protection III) a 1 smeraldo**, **Impalamento III (Impaling III) a 3 smeraldi**. Esca III è il livello massimo, mentre Protezione dal Fuoco III e Impalamento III non sono al livello massimo (IV e V rispettivamente). Postazione #28 occupata, non più libera.
 - La tabella storica sopra risale al 20–23 ottobre e potrebbe non riflettere tutti i cambiamenti successivi; non sostituire i prezzi storici con deduzioni non confermate.
