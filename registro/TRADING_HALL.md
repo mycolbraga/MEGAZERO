@@ -37,3 +37,4 @@ Offerte secondarie note: Silk Touch → anche Respirazione III e Tiro Multiplo I
 - La tabella storica sopra risale al 20–23 ottobre e potrebbe non riflettere tutti i cambiamenti successivi; non sostituire i prezzi storici con deduzioni non confermate.
 
 - **Bibliotecario #19 — offerte confermate il 25/10/2026:** **Impalamento V (Impaling V) a 2 smeraldi** (livello massimo), **Fortuna del Mare I (Luck of the Sea I) a 1 smeraldo**, **Infinità I (Infinity I) a 1 smeraldo** (livello massimo). Prezzo confermato dal giocatore nel messaggio successivo.
+- **Bibliotecario #21 — offerte confermate il 25/10/2026:** **Contraccolpo II (Knockback II) a 1 smeraldo** (livello massimo) e **Carica Rapida I (Quick Charge I) a 1 smeraldo** (livello massimo III). La nota storica su «Quick Charge III bloccato, prezzo da verificare» riguarda un'offerta precedente non assegnata qui a una postazione; non dedurre che sia del bibliotecario #21.
