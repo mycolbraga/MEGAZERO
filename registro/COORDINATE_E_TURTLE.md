@@ -71,3 +71,14 @@ Script originale: [`scripts/turtle/scorteccia.lua`](../scripts/turtle/scorteccia
 - Se manca input attende 2 secondi. Ogni 16 pezzi stampa il conteggio.
 - Controlla il risultato `minecraft:stripped_*_log`; interrompe se inserito un oggetto non valido o se l'operazione fallisce.
 - **Coordinate Turtle scortecciatrice non ancora registrate**, non inventarle.
+
+### Betulle nella nuova farm 1×1 — aggiornamento 25/10/2026
+
+Il programma per betulle è [`scripts/turtle/betulle_nuove_1x1.lua`](../scripts/turtle/betulle_nuove_1x1.lua).
+**NON usare la vecchia geometria del querceto a X1910.**
+
+Coordinate della nuova Turtle: **1903,66,2715 NORD**, cassa dietro **1903,66,2716 SUD**.
+Alberi alle file **X1899 e X1907**, Z **2712,2705,2698,2691**.
+Il giocatore ha precisato il 25 ottobre che le piantine sono a **Y68**, in contrasto col valore **Y67** dedotto nel registro del 23 ottobre: applicata Y68 al nuovo script, da controllare in gioco in modalità `prova` prima di procedere.
+Bone meal e germogli sono prelevati dalla cassa, scarico a **1903,66,2714** verso acqua sotto (Y65).
+**Stato: file archiviato su GitHub, collaudo nel mondo NON confermato.**
