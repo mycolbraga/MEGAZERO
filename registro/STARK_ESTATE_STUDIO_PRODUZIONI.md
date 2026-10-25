@@ -4,7 +4,7 @@
 
 ## PRIORITÀ ALTA — Catena sabbia/ghiaia/arenaria
 
-**Stato aggiornato il 26/10/2026: il giocatore conferma di avere GIÀ costruito due Frantoi (Crusher) di Energized Power.** Non richiedere di costruirli. Restano **non confermati** il loro collegamento ad alimentazione elettrica / RS, la configurazione e il collaudo della catena cobblestone → ghiaia → sabbia. Il circuito di automazione è ancora un progetto, non una linea completa verificata.
+**Stato aggiornato il 26/10/2026: due Frantoi (Crusher) di Energized Power sono stati FABBRICATI ma NON ANCORA PIAZZATI.** Non richiedere di fabbricarli nuovamente. Nessuno dei due è ancora installato, alimentato o collegato a RS; la catena cobblestone → ghiaia → sabbia NON è ancora collaudata. Il circuito di automazione è ancora un progetto, non una linea completa verificata.
 
 `Cobblestone auto (GIÀ PRESENTE, RS) → Crusher Energized Power → Gravel → secondo Crusher → Sand → autocrafting RS di Sandstone / Concrete Powder / cottura Glass`.
 
