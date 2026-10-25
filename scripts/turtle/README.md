@@ -5,7 +5,7 @@
 - `paleoak_3_v4_auto.lua`: ultima versione consegnata per la **farm 2×2, riconversione dell'ex querceto**, attualmente Pale Oak (tre postazioni); modalità prova, giro, avvia.
 - `querceto2.txt`: **codice storico** dell'ex querceto per 8 querce 1×1. **L'impianto originario è stato trasformato nella farm 2×2**; lo script non identifica un'altra farm attiva. Non sovrascrivere.
 - `abeteto_8.lua`: programma storico per 8 abeti 1×1. Non è ancora confermato che sia in uso nella **nuova seconda farm 1×1**.
-- `scorteccia.lua`: **programma originale fornito dal giocatore**, Turtle scortecciatrice dedicata: cassa superiore con tronchi vanilla, ascia nello slot 2, posa/scortecciatura/verifica/raccolta e scarico nella cassa inferiore. Non alterato rispetto all'allegato.
+- `scorteccia.lua`: **VERSIONE OPERATIVA COLLAUDATA IN GIOCO il 25/10/2026**, confermata funzionante dal giocatore. Cassa sopra: tronchi vanilla **e asce di ferro di ricambio**, in qualunque slot; la Turtle prende da sola una nuova ascia quando quella nello slot 2 si rompe, attendendo nuovi ricambi se esauriti. Cassa sotto: uscita dei tronchi scortecciati; slot 3 buffer temporaneo. **NON modificare questa versione funzionante senza richiesta esplicita**. Il sorgente originale del 23/10/2026 rimane recuperabile nella cronologia Git.
 
 La **seconda farm 1×1** ha la struttura già costruita; sono state generate due nuove versioni per la sua configurazione reale, **ma non ancora collaudate nel gioco**:
 
