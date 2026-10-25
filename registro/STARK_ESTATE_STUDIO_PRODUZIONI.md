@@ -4,7 +4,7 @@
 
 ## PRIORITÀ ALTA — Catena sabbia/ghiaia/arenaria
 
-**Stato aggiornato il 26/10/2026: due Frantoi (Crusher) di Energized Power GIÀ PIAZZATI, uno sopra ciascuno dei due nuovi Heat Generator, anch'essi GIÀ PIAZZATI.** Il giocatore ha confermato direttamente questo montaggio verticale. **Da verificare** lava sorgente a contatto con i generatori, reale alimentazione FE dei Frantoi, loro corretto funzionamento, ricette effettive e collegamento a Refined Storage; non dichiarare la linea produttiva collaudata. Non richiedere di costruire o piazzare di nuovo i quattro blocchi. Il circuito di automazione è ancora un progetto, non una linea completa verificata.
+**Stato aggiornato il 26/10/2026: due Frantoi (Crusher) PIAZZATI E GIÀ IN PRODUZIONE, uno sopra ciascuno dei due nuovi Heat Generator dedicati e piazzati.** Confermati dal giocatore con screenshot: primo Frantoio **cobblestone → ghiaia**, secondo **ghiaia → sabbia**; barre energia cariche. **Produzione testata con input in macchina, MA nessuna automazione di ingresso/uscita RS ancora confermata.** Generatori dello Stone Liquefier distinti e non toccati. Non richiedere di ricostruire i due Frantoi o i due generatori; prossimo lavoro è collegare I/O e RS preservando ghiaia per il calcestruzzo.
 
 `Cobblestone auto (GIÀ PRESENTE, RS) → Crusher Energized Power → Gravel → secondo Crusher → Sand → autocrafting RS di Sandstone / Concrete Powder / cottura Glass`.
 
