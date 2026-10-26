@@ -2,6 +2,9 @@
 
 ## 26 ottobre 2026 — Materiali Stark Estate
 
+- **Nuovo script Turtle per abeti 1×1:** creato `scripts/turtle/abeteto_nuove_1x1.lua` a partire dal programma delle betulle recente, con **8 postazioni, bonemeal, lava e scarico**, lavoro a Y68 secondo dato più recente (differenza storica con Y67 da verificare in `prova`). `avvia` cicla con sola pausa 1 s. `abeteto_1x1.lua` storico e `betulle_nuove_1x1.lua` non modificati. **Script NON ancora collaudato nel mondo**.
+## 26 ottobre 2026 — Materiali Stark Estate
+
 - **Confermati OK dal giocatore:** assi di abete **1.084**, lastre di pietra liscia **1.850**, pietra liscia **3.853**, polvere di calcestruzzo verde **3.887**, foglie di abete **184**. Segnati come sistemati; non inferire che tutte le quantità siano già materialmente accumulate in RS, se non confermato.
 
 - **Altri materiali abete confermati OK:** botole 127, lastre 124, scale 60, staccionate 48, tronchi scortecciati 5, pulsanti 2, legno normale 2. **Resta aperta** la produzione dei 617 blocchi di legno di abete scortecciato (`stripped_spruce_wood`), diverso dai 5 tronchi scortecciati (`stripped_spruce_log`).
