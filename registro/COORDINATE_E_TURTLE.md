@@ -26,7 +26,7 @@ Il giocatore conferma il 23/10/2026 che **la vecchia farm del querceto è stata 
 | Tetto Nether | 1079,7,3091 |
 | Monumento oceanico | 1136, Z2752 |
 | Fabbrica Energized Power n. 1 | **X=6008, Y=101, Z=5976**, Flower Forest. Struttura con macchinari (motori a carbone, frantoi, polverizzatori, compressore, trasformatori, caricabatterie, cavi), 8 telai base e 16 blocchi di silicio; quantità censite in chat il 26/10/2026. |
-| Fabbrica Energized Power n. 2 | **X=8293, Y=63, Z=5176**, Forest. Seconda struttura dello stesso tipo individuata il 27/10/2026; macchinari ancora da censire. |
+| Fabbrica Energized Power n. 2 | **X=8293, Y=63, Z=5176**, Forest. Confermata dal giocatore **uguale alla prima** (stessa tipologia di macchinari e allestimento). Censimento della prima come riferimento: 8 motori a carbone, 1 compressore, 3 polverizzatori, 3 frantoi, ~20 trasformatori, ~10 caricabatterie, 8 telai base, 16 blocchi di silicio, ~100 cavi; **le quantità della seconda non sono state contate singolarmente**. |
 | Mob farm aerea | spiaggia 1841,62,2792 → torre 1700,151,2949 |
 | Ex querceto 8 posti (solo riferimento storico) | X 1913,1920,1927,1934; Z 2735/2728. La farm originaria è diventata l'attuale farm alberi 2×2. |
 | Scavo Turtle 32×16 | **COMPLETATO**, confermato il 23/10/2026. Partenza 1890,75,2766; profondità-obiettivo del progetto Y39 (quota finale non nuovamente precisata). |
