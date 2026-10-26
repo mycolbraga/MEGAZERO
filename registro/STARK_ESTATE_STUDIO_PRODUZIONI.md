@@ -62,6 +62,19 @@ Fonti: https://minecraft.wiki/w/Tutorial:Dirt_farming e https://minecraft.wiki/w
 
 Il giocatore conferma che **assi di abete (1.084), lastre di pietra liscia (1.850), pietra liscia (3.853) , polvere di calcestruzzo verde (3.887) e foglie di abete (184) sono OK**. Non riproporre questi cinque materiali come lavori da impostare. La conferma non precisa se siano tutti già fisicamente in RS o predisposti in autocrafting/Step Requester: non inventare lo stato delle scorte. Il fabbisogno è quello della lista `STARK_ESTATE_MONTAGNA_RIPRISTINATA_MATERIALI.md`.
 
+### Altri sette materiali di abete confermati OK — 26/10/2026
+
+Il giocatore conferma **OK** per Stark Estate anche:
+- Botole di abete (`minecraft:spruce_trapdoor`): **127**
+- Lastre di abete (`minecraft:spruce_slab`): **124**
+- Scale di abete (`minecraft:spruce_stairs`): **60**
+- Staccionate di abete (`minecraft:spruce_fence`): **48**
+- Tronchi di abete scortecciati (`minecraft:stripped_spruce_log`): **5**
+- Pulsanti di abete (`minecraft:spruce_button`): **2**
+- Legno di abete normale (`minecraft:spruce_wood`): **2**
+
+Non riproporre queste sette voci come da verificare. **ATTENZIONE:** i 5 singoli `stripped_spruce_log` sono una voce distinta dai **617 `stripped_spruce_wood`**, i quali restano da produrre. "OK" significa confermati sistemati dall'utente, non necessariamente scorte già fisicamente in RS.
+
 ## Stato legno di abete scortecciato — 26/10/2026
 
 - **`minecraft:stripped_spruce_wood`: 617 blocchi necessari, ZERO attualmente disponibili** secondo il giocatore. È un materiale ancora da produrre, non considerarlo completato.
