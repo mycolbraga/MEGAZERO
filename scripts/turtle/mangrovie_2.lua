@@ -2,7 +2,9 @@
 -- Turtle Mining: 1943,65,2715, NORD (-Z). Cassa DIETRO: 1943,65,2716.
 -- Propaguli: 1944,66,2708 e 1944,66,2695. Suolo sotto: Y65.
 -- Raccoglie SOLO blocchi di mangrovia con visita 3D limitata a 13x13.
--- Output alla cassa dietro, NON e' previsto alcuno scarico ad acqua.
+-- SCARICO IN ACQUA: Turtle su 1943,65,2714; acqua sotto 1943,64,2714.
+-- La cassa dietro serve SOLO a rifornire propaguli/Bone Meal/carburante
+-- e a ricevere i secchi vuoti. La raccolta si scarica verso il basso.
 -- Sicurezza: non scava suolo/altri blocchi e non esce dalla zona autorizzata.
 -- PRIMA PROVA: comando 'mangrovie_2 prova'; poi 'giro' e infine 'avvia'.
 -- IMPORTANTE: versione da collaudare IN GIOCO: esplorazione 3D puo'
@@ -15,6 +17,8 @@ if mode ~= "prova" and mode ~= "giro" and mode ~= "avvia" then
 end
 
 local HOME = {x=1943, y=65, z=2715}
+local WATER_OUTLET = {x=1943, y=65, z=2714}
+local WATER_BELOW = {x=1943, y=64, z=2714}
 local TREES = {{x=1944,y=66,z=2708}, {x=1944,y=66,z=2695}}
 local LIMIT_X, LIMIT_Z, LIMIT_Y = 6, 6, 27
 local SAPLING = "minecraft:mangrove_propagule"
@@ -156,27 +160,63 @@ local function chest()
   end
 end
 
+
+-- Dalla HOME avanza di UN blocco verso NORD, sopra la corrente d'acqua.
+-- Il controllo si fa PRIMA di scaricare qualsiasi oggetto.
+local function gotoWaterOutlet()
+  if p.x~=HOME.x or p.y~=HOME.y or p.z~=HOME.z then
+    stop("Scarico in acqua consentito soltanto dalla base")
+  end
+  face(3)
+  step(3)
+  if p.x~=WATER_OUTLET.x or p.y~=WATER_OUTLET.y or p.z~=WATER_OUTLET.z then
+    stop("Posizione punto scarico inattesa")
+  end
+  local ok,block=turtle.inspectDown()
+  if not ok or not block or block.name~="minecraft:water" then
+    face(1); step(1); face(3)
+    stop("Acqua assente sotto "..WATER_BELOW.x..","..WATER_BELOW.y..","..WATER_BELOW.z..
+      ": nessun oggetto scaricato")
+  end
+end
+
+local function returnFromWaterOutlet()
+  if p.x~=WATER_OUTLET.x or p.y~=WATER_OUTLET.y or p.z~=WATER_OUTLET.z then
+    stop("Tentativo di rientro dallo scarico in posizione inattesa")
+  end
+  face(1)
+  step(1)
+  face(3)
+end
+
+-- Esclude dalla raccolta rilasciata in acqua solo consumabili e propaguli.
+-- Eventuali secchi vuoti tornano nella cassa di rifornimento.
 local function unload()
   chest()
   for i=1,16 do
     local item=turtle.getItemDetail(i)
-    if item and not keep(item.name) then
+    if item and item.name=="minecraft:bucket" then
       turtle.select(i)
-      local n=item.count
-      if not turtle.drop() or turtle.getItemCount(i)~=0 then
-        stop("Cassa PIENA: impossibile scaricare "..item.name.." x"..n)
+      if not turtle.drop(item.count) or turtle.getItemCount(i)~=0 then
+        stop("Impossibile restituire i secchi vuoti alla chest")
       end
     end
   end
-  -- Restituisci i secchi vuoti; non servono nella Turtle.
+  gotoWaterOutlet()
+  local problem
   for i=1,16 do
     local item=turtle.getItemDetail(i)
-    if item and item.name=="minecraft:bucket" then
+    if item and not keep(item.name) then
       turtle.select(i)
-      if not turtle.drop() then stop("Non riesco a restituire i secchi") end
+      local ok=turtle.dropDown(item.count)
+      if not ok or turtle.getItemCount(i)~=0 then
+        problem="Scarico in acqua incompleto: "..item.name
+        break
+      end
     end
   end
-  face(3)
+  returnFromWaterOutlet()
+  if problem then stop(problem) end
 end
 
 local function fuelLevel()
@@ -201,19 +241,18 @@ local function refuelLocal()
   end
 end
 
--- Una sola chest condivisa: prelievo controllato, senza fingere che
--- chest.pushItems("front") possa trasferire oggetti direttamente alla Turtle.
--- turtle.suck() preleva nell'ordine della chest: tenere gli INPUT ordinati in
--- testa, e filtrare con Importer RS il raccolto di legno/radici.
+-- Chest SOLO di rifornimento: non vi scarichiamo legno, radici o foglie.
+-- turtle.suck() preleva nell'ordine degli slot della chest: mettere
+-- Bone Meal, propaguli e carburante nella chest, senza altri oggetti.
 local function loadInputs()
-  chest()
-  unload()
+  unload()  -- prima scarica in ACQUA gli eventuali residui del giro precedente
+  chest()   -- dopo lo scarico torna verso SUD per pescare dalla cassa
   refuelLocal()
   local attempts=0
   while countItem(SAPLING)<2 or countItem(BONE)<MIN_BONE or fuelLevel()<MIN_FUEL do
     local slot=freeSlot()
     if not slot then
-      stop("Inventario pieno cercando rifornimenti: svuota la chest output/filtra RS")
+      stop("Inventario pieno: controlla gli oggetti nella cassa rifornimenti")
     end
     turtle.select(slot)
     if turtle.suck(64) then
@@ -424,17 +463,20 @@ end
 
 local function checkChest()
   chest()
-  face(3)
+  gotoWaterOutlet()
+  returnFromWaterOutlet()
+  print("Scarico verificato: acqua sotto "..WATER_BELOW.x..","..
+    WATER_BELOW.y..","..WATER_BELOW.z)
 end
 
 checkChest()
 if mode=="prova" then
-  print("PROVA SENZA SCAVI: chest dietro verificata.")
+  print("PROVA SENZA SCAVI: chest dietro e scarico in acqua verificati.")
   print("Turtle HOME 1943,65,2715 NORD; alberi:")
   for i,t in ipairs(TREES) do
     print(i..": "..t.x..","..t.y..","..t.z.." | area 13x13")
   end
-  print("La prova NON certifica che il corridoio sia libero.")
+  print("La prova NON certifica che il corridoio degli alberi sia libero.")
   local f=fs.open(CHECK,"w")
   f.write("ok"); f.close()
   print("Ora: mangrovie_2 giro | poi mangrovie_2 avvia")
