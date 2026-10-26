@@ -20,7 +20,7 @@ Prima di avviare, controllare coordinate e orientamento della Turtle e usare mod
 
 - **[abeteto_nuove_1x1.lua](abeteto_nuove_1x1.lua): NUOVO script abeti 1×1**, derivato da `betulle_nuove_1x1.lua`, distinto dal precedente `abeteto_1x1.lua` conservato inalterato.
 - Stessa nuova farm da 8 alberi: Turtle **1903,66,2715 NORD**, chest dietro **1903,66,2716**, posizioni alberi X1899/1907 e Z2712/2705/2698/2691.
-- Tronchi di lavoro **Y68 secondo ultima comunicazione 25/10** (Y67 nelle note storiche precedenti): prima eseguire **`abeteto_nuove_1x1 prova`**, che verifica tronchi/piantine davanti alla Turtle. Non cambiare Y arbitrariamente se il test fallisce; diagnosticare la quota.
+- **QUOTA CORRETTA Y67:** Turtle Y66, terreno Y66, primo tronco/germoglio Y67. L'originario Y68 era una trascrizione erronea delle coordinate HUD del giocatore. Script corretto il 26/10 con **UNA salita all'andata e UNA discesa al ritorno**. Prima di tagliare, eseguire **`abeteto_nuove_1x1 prova`**, che verifica piantine/tronchi.
 - Usa SOLO `minecraft:spruce_log`, `minecraft:spruce_wood`, `minecraft:spruce_sapling`, Bone Meal per accelerare la crescita, rifornimento lava automatico e scarico in acqua; non brucia il legno raccolto.
 - `prova` controlla senza scavare/piantare; `giro` fa un giro reale; `avvia` esegue **cicli continui** (1 secondo di intervallo, non i 90 secondi del vecchio programma). **NON COLLAUDATO NEL MONDO.** Prima di provarlo sistemare i germogli di abete e la cassa di rifornimento; non avviare contemporaneamente i programmi di altre specie nella stessa Turtle.
 
