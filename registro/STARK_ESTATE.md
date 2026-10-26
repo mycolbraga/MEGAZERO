@@ -46,6 +46,8 @@ I seguenti file, già generati nelle precedenti conversazioni, sono **recuperabi
 - **Origine del posizionamento visibile in Litematica:** **X=2138, Y=63, Z=2680**, rotazione **CW_90**, specchiatura **NONE**, confermate direttamente da screenshot. L'origine della bounding box/angolo fisico della villa può non coincidere con l'origine Litematica quando vi sono offset o rotazioni; non dedurla senza osservare il posizionamento.
 
 ## Materiali: MONTAGNA_RIPRISTINATA — lista verificata direttamente
+**NUOVO — lista per fasce altimetriche (26/10/2026):** creato e salvato nella Libreria ChatGPT il file `Stark_Estate_Materiali_per_Piano.xlsx`, ricavato direttamente dai 2.117.472 BlockStates della schematic posizionata, verificando gli **882.605 blocchi non-aria**. Otto fogli: guida, riepilogo di 226 ID, 5 fasce e dettaglio per ogni Y. Fasce **PROVVISORIE**, non piani architettonici certificati: base/montagna Y50–97 = 826.216; livello basso Y98–103 = 38.830; livello intermedio Y104–108 = 11.511; alto Y109–112 = 5.553; sommità Y113–117 = 495. Ogni quota reale deriva dall'origine posizionamento Y63 + offset regione Y(-13) + coordinata locale. Le quote si possono correggere usando il foglio `DETTAGLIO Y` senza alterare i conteggi. La montagna e i blocchi già nel mondo non sono automaticamente materiali da procurare.
+
 
 **La versione attualmente posizionata in MegaZero è MONTAGNA_RIPRISTINATA, non la Preview.** La distinta integrale è disponibile qui: **[STARK_ESTATE_MONTAGNA_RIPRISTINATA_MATERIALI.md](STARK_ESTATE_MONTAGNA_RIPRISTINATA_MATERIALI.md)**.
 
