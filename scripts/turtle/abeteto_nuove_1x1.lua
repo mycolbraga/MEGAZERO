@@ -2,8 +2,8 @@
 -- Derivato da betulle_nuove_1x1.lua (25/10): specie abete 1x1, Bone Meal e lava.
 -- NON collaudato in gioco: usare 'prova' prima di 'giro'/'avvia'.
 -- Base X1903 Y66 Z2715, direzione NORD; chest dietro a Z2716.
--- Tronchi X1899/1907, Z2712/2705/2698/2691, Y68 (correzione 25/10).
--- Y68 e' il dato piu' recente (25/10); Y67 era nel registro precedente. Verificare con 'prova'.
+-- Tronchi X1899/1907, Z2712/2705/2698/2691, quota Y67.
+-- Turtle e terra Y66; il primo tronco/germoglio e' Y67. Y68 era la quota HUD del giocatore.
 -- Rifornimento: spruce_sapling, bone_meal, lava_bucket. Scarico acqua Z2714.
 local mode = ({...})[1] or "prova"
 if mode ~= "prova" and mode ~= "giro" and mode ~= "avvia" then
@@ -11,7 +11,7 @@ if mode ~= "prova" and mode ~= "giro" and mode ~= "avvia" then
 end
 
 local HOME_X, HOME_Y, HOME_Z = 1903, 66, 2715
-local WORK_Y = HOME_Y + 2 -- tronchi a Y68
+local WORK_Y = HOME_Y + 1 -- primo tronco a Y67; un solo blocco sopra la Turtle
 local LANE_X = 1903
 local Z_TREES = {2712, 2705, 2698, 2691}
 local WEST_X, EAST_X = 1899, 1907
@@ -340,7 +340,7 @@ local function chopConnectedTree(rootX, rootZ)
     up()
     climbed = climbed + 1
   end
-  -- Torna alla quota iniziale del primo tronco (Y68) lungo la colonna svuotata.
+  -- Torna alla quota iniziale del primo tronco (Y67) lungo la colonna svuotata.
   for _ = 1, climbed do down() end
   if climbed == MAX_TRUNK_HEIGHT then
     fail("Abete troppo alto: raggiunto il limite di 31 tronchi; verifica l'albero")
@@ -400,7 +400,7 @@ local function processTree(label, rootX, rootZ)
 end
 
 
--- Al livello di lavoro (Y68): viale X1903, tronchi a +-4 X.
+-- Al livello di lavoro (Y67): viale X1903, tronchi a +-4 X.
 -- La Turtle si ferma a tre passi dal centro, adiacente al tronco.
 local function pairAt(z, simulation)
   if p.x ~= LANE_X or p.z ~= z or p.y ~= WORK_Y then
@@ -434,7 +434,6 @@ local function backHome()
   if p.z > HOME_Z then fail("Z oltre il punto di partenza") end
   face(1) -- SUD
   forward(HOME_Z - p.z)
-  down() -- Y68 -> Y67
   down() -- Y67 -> Y66
   face(3) -- NORD, chest dietro
 end
@@ -495,8 +494,7 @@ verifyChest()
 if mode == "prova" then
   print("PROVA SICURA: non scavo e non pianto")
   prepareFuel(130)
-  up() -- Y66 -> Y67
-  up() -- Y67 -> Y68, quota tronchi
+  up() -- Y66 -> Y67, quota tronchi
   face(3) -- NORD
   forward(3) -- Z2712 prima coppia
   local good = true
@@ -533,8 +531,7 @@ while true do
   stockBoneMeal()
   prepareFuel(850)
   treesCut = 0
-  up() -- Y66 -> Y67
-  up() -- Y67 -> Y68, quota tronchi
+  up() -- Y66 -> Y67, quota tronchi
   face(3) -- NORD
   forward(3) -- Z2712 prima coppia
   for i, z in ipairs(Z_TREES) do
