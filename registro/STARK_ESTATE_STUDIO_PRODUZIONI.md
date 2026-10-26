@@ -98,3 +98,23 @@ Il giocatore ha confermato **OK per tutti i materiali di betulla tranne le assi*
 
 La conferma OK significa lavoro sistemato secondo il giocatore, senza attribuirgli implicitamente una quantità già fisicamente depositata in RS. Non contrassegnare le assi di betulla come completate fino a nuova conferma.
 
+
+## Vetri Stark Estate — stato confermato 26/10/2026
+
+Il giocatore conferma che **nessuna delle 13 voci vetro e pannelli è stata ancora sistemata** (non equivale a zero inventario RS). Fabbisogno totale dalla distinta:
+
+- Vetro grigio: **954**
+- Pannelli vetro nero: **260**
+- Vetro grigio chiaro: **123**
+- Pannelli vetro grigio: **106**
+- Pannelli vetro verde: **86**
+- Vetro verde: **60**
+- Pannelli vetro verde lime: **35**
+- Pannelli vetro grigio chiaro: **18**
+- Vetro nero: **16**
+- Pannelli vetro ciano: **8**
+- Pannelli vetro azzurro: **5**
+- Vetro ciano: **4**
+- Pannello vetro bianco: **1**
+
+**Tintura grigia:** 1 nero + 1 bianco → 2 grigi. Alternativa nel contenuto 1.21.4: 1 Eyeblossom chiuso → 1 tintura grigia; con Vanilla Backport installata in MC 1.21.1 verificare in JEI la disponibilità della ricetta specifica. Per i soli 954 blocchi di vetro grigio servono 120 coloranti e 960 blocchi di vetro di base (6 di avanzo); i pannelli di vetro grigio sono fabbisogno separato.
