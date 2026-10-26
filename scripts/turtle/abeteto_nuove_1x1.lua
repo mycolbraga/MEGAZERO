@@ -1,5 +1,5 @@
 -- MEGAZERO ABETI NUOVA FARM 1x1 - CC:Tweaked
--- Derivato da abeteto_nuove_1x1.lua nel branch registro/megazero.
+-- Derivato da betulle_nuove_1x1.lua (25/10): specie abete 1x1, Bone Meal e lava.
 -- NON collaudato in gioco: usare 'prova' prima di 'giro'/'avvia'.
 -- Base X1903 Y66 Z2715, direzione NORD; chest dietro a Z2716.
 -- Tronchi X1899/1907, Z2712/2705/2698/2691, Y68 (correzione 25/10).
@@ -321,7 +321,7 @@ local function checkTree(label)
   return false
 end
 
--- ABETI NORMALI 1x1: tronco verticale, senza rami laterali di legno.
+-- ABETI 1x1: tronco verticale, senza rami laterali di legno.
 -- Tagliamo esclusivamente i tronchi sopra la posizione di partenza,
 -- lasciando decadere naturalmente le foglie (la raccolta rimane ad acqua).
 -- Questo e' piu' rapido e sicuro rispetto alla ricerca di rami delle querce.
