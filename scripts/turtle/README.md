@@ -16,6 +16,14 @@ Base X1903 Y66 Z2715 NORD, chest SUD Z2716, alberi X1899/1907 con Z2712/2705/269
 
 Prima di avviare, controllare coordinate e orientamento della Turtle e usare modalità `prova` se disponibile.
 
+## Abeti — nuova versione derivata dal betulleto (26/10/2026)
+
+- **[abeteto_nuove_1x1.lua](abeteto_nuove_1x1.lua): NUOVO script abeti 1×1**, derivato da `betulle_nuove_1x1.lua`, distinto dal precedente `abeteto_1x1.lua` conservato inalterato.
+- Stessa nuova farm da 8 alberi: Turtle **1903,66,2715 NORD**, chest dietro **1903,66,2716**, posizioni alberi X1899/1907 e Z2712/2705/2698/2691.
+- Tronchi di lavoro **Y68 secondo ultima comunicazione 25/10** (Y67 nelle note storiche precedenti): prima eseguire **`abeteto_nuove_1x1 prova`**, che verifica tronchi/piantine davanti alla Turtle. Non cambiare Y arbitrariamente se il test fallisce; diagnosticare la quota.
+- Usa SOLO `minecraft:spruce_log`, `minecraft:spruce_wood`, `minecraft:spruce_sapling`, Bone Meal per accelerare la crescita, rifornimento lava automatico e scarico in acqua; non brucia il legno raccolto.
+- `prova` controlla senza scavare/piantare; `giro` fa un giro reale; `avvia` esegue **cicli continui** (1 secondo di intervallo, non i 90 secondi del vecchio programma). **NON COLLAUDATO NEL MONDO.** Prima di provarlo sistemare i germogli di abete e la cassa di rifornimento; non avviare contemporaneamente i programmi di altre specie nella stessa Turtle.
+
 ## Betulle — nuova farm 1×1 (25/10/2026)
 
 - [betulle_nuove_1x1.lua](betulle_nuove_1x1.lua): adattato dall'abeteto 1×1 **della nuova farm**, non dalla vecchia farm 2×2.
