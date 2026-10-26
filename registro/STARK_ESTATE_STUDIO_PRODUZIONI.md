@@ -60,7 +60,7 @@ Fonti: https://minecraft.wiki/w/Tutorial:Dirt_farming e https://minecraft.wiki/w
 
 ## Materiali Stark Estate confermati OK dal giocatore — 26/10/2026
 
-Il giocatore conferma che **assi di abete (1.084), lastre di pietra liscia (1.850) e pietra liscia (3.853) sono OK**. Non riproporre questi tre come lavori da impostare. La conferma non precisa se siano tutti già fisicamente in RS o predisposti in autocrafting/Step Requester: non inventare lo stato delle scorte. Il fabbisogno è quello della lista `STARK_ESTATE_MONTAGNA_RIPRISTINATA_MATERIALI.md`.
+Il giocatore conferma che **assi di abete (1.084), lastre di pietra liscia (1.850), pietra liscia (3.853) e polvere di calcestruzzo verde (3.887) sono OK**. Non riproporre questi tre come lavori da impostare. La conferma non precisa se siano tutti già fisicamente in RS o predisposti in autocrafting/Step Requester: non inventare lo stato delle scorte. Il fabbisogno è quello della lista `STARK_ESTATE_MONTAGNA_RIPRISTINATA_MATERIALI.md`.
 
 ## Stato legno di abete scortecciato — 26/10/2026
 
