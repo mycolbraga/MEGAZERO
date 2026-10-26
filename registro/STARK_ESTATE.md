@@ -61,7 +61,7 @@ Estrazione verificata direttamente dai dati NBT della schematic: **882.605 blocc
 | Pietra liscia (blocchi) | **3.853** | 3.525 |
 | Arenaria | 3.746 | 0 |
 | Muschio | 3.690 | 1.961 |
-| Assi di betulla | 2.667 | 3 |
+| Assi di betulla | **2.667 — OK confermato 26/10/2026** | 3 |
 | Lastre Pale Oak | 2.559 | 2.550 |
 | Lastre di pietra liscia | **1.850** | 1.799 |
 
