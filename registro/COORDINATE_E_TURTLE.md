@@ -73,6 +73,10 @@ Script attuale: [`scripts/turtle/scorteccia.lua`](../scripts/turtle/scorteccia.l
 - **Il codice prima della modifica resta recuperabile nella cronologia Git**; non sovrascrivere la versione attuale funzionante.
 - **Coordinate Turtle scortecciatrice non ancora registrate**, non inventarle.
 
+### Abeti 1×1 — versione derivata dalle betulle (26/10/2026)
+
+Creato [`scripts/turtle/abeteto_nuove_1x1.lua`](../scripts/turtle/abeteto_nuove_1x1.lua), copiando e adattando **il programma delle betulle più recente**, senza toccare il vecchio `abeteto_1x1.lua`. Geometria invariata: Turtle 1903,66,2715 NORD, chest 1903,66,2716; alberi X1899/1907 a Z2712/2705/2698/2691; `WORK_Y=68` come ultima correzione del 25/10 (valore Y67 nelle note più antiche: **da confermare in prova**). Rifornimento `spruce_sapling`, Bone Meal, lava; scarico in acqua, preserva il legno raccolto; nuova modalità `avvia` a ciclo continuo, pausa 1 s. Stato: **script creato, NON collaudato in partita**. I tre modi sono `prova`, `giro`, `avvia` e serve superare `prova` prima di eseguire gli altri.
+
 ### Betulle nella nuova farm 1×1 — aggiornamento 25/10/2026
 
 Il programma per betulle è [`scripts/turtle/betulle_nuove_1x1.lua`](../scripts/turtle/betulle_nuove_1x1.lua).
