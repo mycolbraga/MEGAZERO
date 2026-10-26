@@ -1,4 +1,7 @@
-# Stark Estate — Materiali quota Y=97
+# Stark Estate — CONTEGGIO GREZZO DEI BLOCCHI alla quota Y97
+
+**ATTENZIONE — NON USARE COME LISTA DEI MATERIALI DA PREPARARE (rettifica 26/10/2026).** Questa tabella conta tutti i blocchi dell'intera regione della schematic alla quota mondiale Y97, **incluso il rilievo preesistente e i blocchi già costruiti**. Non equivale ai materiali mancanti nel posizionamento reale né necessariamente a un intero piano della villa. Il controllo numerico del file NBT non certifica che siano i quantitativi da mettere in inventario. Per la lista reale: impostare Litematica su Single Layer a Y97, aprire **Material List del placement** (non del file), impostare **Render Layers** invece di **All** e aggiornare con **Refresh**; leggere la colonna **Missing**. Verificare in gioco.
+
 
 **Schematic:** `Stark_Estate_MegaZero_MONTAGNA_RIPRISTINATA.litematic` · Origine **X2138, Y63, Z2680** · Rotazione **CW_90**, specchiatura **NONE**.
 
