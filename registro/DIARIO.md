@@ -2,6 +2,9 @@
 
 ## 26 ottobre 2026 — Materiali Stark Estate
 
+- **Tufo per Stark Estate: TUTTO OK (conferma 26/10/2026).** Tutte le 7 voci della distinta sistemate: 35 lastre levigate, 24 scale levigate, 15 blocchi levigati, 10 muretti levigati, 1 mattone cesellato, 1 tufo normale e 1 scala normale. Totale 87 pezzi; non riproporre il tufo come materiale mancante.
+
+
 - **Nuovo script Turtle per abeti 1×1:** creato `scripts/turtle/abeteto_nuove_1x1.lua` a partire dal programma delle betulle recente, con **8 postazioni, bonemeal, lava e scarico**, lavoro **CORRETTO a Y67 (26/10)**: Turtle e terreno Y66, tronco Y67. La prima versione a Y68 era errata perché interpretava come quota del tronco quella HUD del giocatore. `prova` resta obbligatoria. `avvia` cicla con sola pausa 1 s. `abeteto_1x1.lua` storico e `betulle_nuove_1x1.lua` non modificati. **Script NON ancora collaudato nel mondo**.
 ## 26 ottobre 2026 — Materiali Stark Estate
 
