@@ -1,5 +1,9 @@
 # Diario MegaZero
 
+## 26 ottobre 2026 — Materiali Stark Estate
+
+- **Confermati OK dal giocatore:** assi di abete **1.084**, lastre di pietra liscia **1.850**, pietra liscia **3.853**. Segnati come sistemati; non inferire che tutte le quantità siano già materialmente accumulate in RS, se non confermato.
+
 Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare collaudi.
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
