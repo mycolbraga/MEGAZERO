@@ -5,7 +5,9 @@
 -- Coppie di alberi X=1899 e 1907, Z=2712/2705/2698/2691.
 -- Punto di scarico: 1903,66,2714, acqua SOTTO a 1903,65,2714.
 -- Prima fare 'prova': verifica percorso e acqua senza tagli o piantagioni.
--- Variante MOGANO non ancora collaudata nel mondo di gioco.
+-- Variante MOGANO con Bone Meal; NON ancora collaudata in gioco.
+-- Su ogni posizione usiamo Bone Meal al massimo 16 volte per evitare sprechi
+-- se la crescita non riesce per mancanza di spazio.
 -- Nota: gli arboscelli jungle hanno drop inferiore alla media; RS/chest deve
 -- reintegrare le piantine se la raccolta delle foglie non basta.
 
@@ -26,7 +28,11 @@ local dirVectors = {
   [3] = {0, -1}, -- nord (-Z)
 }
 local p = {x = HOME_X, y = HOME_Y, z = HOME_Z, dir = 3}
-local CHECK_FILE = ".nuova_jungle_1x1_prova_ok"
+local CHECK_FILE = ".nuova_jungle_1x1_bonemeal_prova_ok"
+local BONE_MEAL = "minecraft:bone_meal"
+local BONE_MEAL_TARGET = 128
+local MAX_BONE_MEAL_PER_TREE = 16
+local boneMealUsed = 0
 local treesCut = 0
 local fuelAtLeast -- combustibile locale: implementazione piu' sotto
 
@@ -103,6 +109,26 @@ local function selectSapling()
   for slot = 1, 16 do
     local item = turtle.getItemDetail(slot)
     if item and sapling(item.name) then
+      turtle.select(slot)
+      return true
+    end
+  end
+  return false
+end
+
+local function countBoneMeal()
+  local total = 0
+  for slot = 1, 16 do
+    local item = turtle.getItemDetail(slot)
+    if item and item.name == BONE_MEAL then total = total + item.count end
+  end
+  return total
+end
+
+local function selectBoneMeal()
+  for slot = 1, 16 do
+    local item = turtle.getItemDetail(slot)
+    if item and item.name == BONE_MEAL then
       turtle.select(slot)
       return true
     end
@@ -285,6 +311,25 @@ local function waitForSaplings()
   end
 end
 
+-- Alla base prende fino a due stack dalla chest, senza aspettare una scorta piena.
+-- Se e' totalmente esaurito aspetta alla base, non partira' senza fertilizzante.
+local function waitForBoneMeal()
+  while true do
+    local count = countBoneMeal()
+    while count < BONE_MEAL_TARGET do
+      local got = takeFromChest(BONE_MEAL, math.min(64, BONE_MEAL_TARGET - count))
+      if got == 0 then break end
+      count = countBoneMeal()
+    end
+    if count > 0 then
+      print("Bone Meal pronto: " .. count .. "/" .. BONE_MEAL_TARGET)
+      return
+    end
+    print("Attendo Bone Meal nella chest...")
+    sleep(30)
+  end
+end
+
 local function checkTree(label)
   local ok, block = turtle.inspect()
   if ok and block and (jungleLog(block.name) or sapling(block.name)) then
@@ -322,36 +367,79 @@ local function chopConnectedTree(rootX, rootZ)
   end
 end
 
-local function processTree(label, rootX, rootZ)
-  -- Qui la Turtle e' a un blocco dal mogano 1x1, rivolta verso il tronco.
-  -- Raccogli eventuali oggetti vicini (non garantisce tutta la raccolta foglie).
-  turtle.suckDown()
-  local ok, block = turtle.inspect()
-  if ok and sapling(block.name) then
-    return -- non e' ancora cresciuta
+-- Fertilizza solo un arboscello riconosciuto; non applica mai
+-- Bone Meal su altri blocchi. Dopo 16 tentativi rinvia al giro successivo.
+local function growWithBoneMeal(label)
+  local used = 0
+  while used < MAX_BONE_MEAL_PER_TREE do
+    local exists, block = turtle.inspect()
+    if exists and jungleLog(block.name) then return true end
+    if not exists or not sapling(block.name) then
+      print(label .. ": non vedo piantina di mogano; rinvio")
+      return false
+    end
+    if not selectBoneMeal() then
+      print(label .. ": Bone Meal esaurito durante il giro; rinvio")
+      return false
+    end
+    local slot = turtle.getSelectedSlot()
+    local before = turtle.getItemCount(slot)
+    local applied, why = turtle.place()
+    local consumed = before - turtle.getItemCount(slot)
+    if not applied or consumed <= 0 then
+      print(label .. ": Bone Meal non applicato (" .. tostring(why) .. "); rinvio")
+      return false
+    end
+    used = used + consumed
+    boneMealUsed = boneMealUsed + consumed
+    sleep(0.1)
   end
-  if ok and not jungleLog(block.name) then
-    print(label .. ": blocco inatteso " .. block.name .. "; salto")
-    return
-  end
-  if ok and jungleLog(block.name) then
-    local done, why = turtle.dig()
-    if not done then fail(label .. ": impossibile tagliare: " .. tostring(why)) end
-    forward(1) -- occupa temporaneamente il posto del tronco tagliato
-    chopConnectedTree(rootX, rootZ)
-    turtle.suckDown()
-    backward(1)
-    treesCut = treesCut + 1
-  end
-  -- Se la pianta non c'e' o e' stata tagliata, ripiantala.
+  local exists, block = turtle.inspect()
+  if exists and jungleLog(block.name) then return true end
+  print(label .. ": non cresciuto dopo " .. used .. " Bone Meal: controlla spazio/luci")
+  return false
+end
+
+local function plantSapling(label)
   if not selectSapling() then fail(label .. ": mancano le piantine di mogano") end
-  local clear, obstacle = turtle.inspect()
-  if clear then
+  local exists, obstacle = turtle.inspect()
+  if exists then
     fail(label .. ": impossibile piantare, c'e' " .. obstacle.name)
   end
   local planted, why = turtle.place()
   if not planted then fail(label .. ": ripiantagione fallita: " .. tostring(why)) end
   print(label .. ": piantata")
+end
+
+local function processTree(label, rootX, rootZ)
+  -- Albero gia' cresciuto: taglia; arboscello: applica Bone Meal.
+  -- Piazzola vuota: pianta prima, poi prova a far crescere.
+  turtle.suckDown()
+  local exists, block = turtle.inspect()
+  if exists and not (sapling(block.name) or jungleLog(block.name)) then
+    print(label .. ": blocco inatteso " .. block.name .. "; salto")
+    return
+  end
+  if not exists then
+    plantSapling(label)
+    exists, block = turtle.inspect()
+  end
+  if exists and sapling(block.name) then
+    if not growWithBoneMeal(label) then return end
+  end
+  exists, block = turtle.inspect()
+  if not exists or not jungleLog(block.name) then
+    print(label .. ": nessun tronco riconosciuto, non scavo")
+    return
+  end
+  local done, why = turtle.dig()
+  if not done then fail(label .. ": impossibile tagliare: " .. tostring(why)) end
+  forward(1)
+  chopConnectedTree(rootX, rootZ)
+  turtle.suckDown()
+  backward(1)
+  treesCut = treesCut + 1
+  plantSapling(label)
 end
 
 
@@ -420,8 +508,9 @@ local function storeInWater()
   for slot = 1, 16 do
     local item = turtle.getItemDetail(slot)
     if item then
-      -- Teniamo arboscelli di mogano, carbone/carbonella e secchi, non il legno.
+      -- Teniamo arboscelli, Bone Meal, carbone/carbonella e secchi, non il legno.
       local keep = sapling(item.name)
+        or item.name == BONE_MEAL
         or item.name == "minecraft:coal"
         or item.name == "minecraft:charcoal"
         or item.name == "minecraft:lava_bucket"
@@ -482,8 +571,10 @@ end
 print("MOGANO NUOVO 1x1 - raccolta in acqua")
 while true do
   waitForSaplings()
+  waitForBoneMeal()
   prepareFuel(3000)
   treesCut = 0
+  boneMealUsed = 0
   up() -- da Y66 a Y67, quota tronchi
   face(3) -- NORD
   forward(3) -- Z2712 prima coppia
@@ -495,10 +586,11 @@ while true do
   storeInWater()
   print("Giro terminato. Mogani tagliati: " .. treesCut)
   print("Piantine rimaste: " .. countSaplings())
+  print("Bone Meal utilizzato: " .. boneMealUsed .. ", residuo: " .. countBoneMeal())
   if mode == "giro" then
     print("GIRO DI TEST CONCLUSO: Turtle alla base.")
     break
   end
-  print("Attendo 90 secondi...")
-  sleep(90)
+  -- Nessuna pausa fissa: il giro successivo riusa subito il Bone Meal.
+  sleep(0.2)
 end
