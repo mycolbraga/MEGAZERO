@@ -1,5 +1,9 @@
 # Diario MegaZero
 
+## 26 ottobre 2026 — Stark Estate: PRIMO BLOCCO POSATO
+
+- **Cantiere ufficialmente avviato nel mondo:** il giocatore ha mostrato uno screenshot in Litematica e confermato «posato il primo mattone» della Stark Estate, con un elemento decorativo in tufo al centro della posa. Primo blocco fisico confermato; **non** dichiarare ulteriori avanzamenti o percentuali di completamento della villa senza prove.
+
 ## 26 ottobre 2026 — Materiali Stark Estate
 
 - **Tufo per Stark Estate: TUTTO OK (conferma 26/10/2026).** Tutte le 7 voci della distinta sistemate: 35 lastre levigate, 24 scale levigate, 15 blocchi levigati, 10 muretti levigati, 1 mattone cesellato, 1 tufo normale e 1 scala normale. Totale 87 pezzi; non riproporre il tufo come materiale mancante.
