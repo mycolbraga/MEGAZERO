@@ -82,3 +82,19 @@ Non riproporre queste sette voci come da verificare. **ATTENZIONE:** i 5 singoli
 - Il pattern RS può produrre legno scortecciato quando i tronchi scortecciati sono disponibili; Step Requester opzionale per la scorta. Stato di questi specifici pattern/requester **non confermato**.
 
 - **Aggiornamento 26/10/2026:** nessuna scorta di tronchi abete rimasta; terminata la lavorazione delle betulle, il giocatore passerà agli abeti; abete scortecciato ancora da produrre, Turtle scortecciatrice già esistente.
+
+## Materiali betulla confermati OK — 26/10/2026
+
+Il giocatore ha confermato **OK per tutti i materiali di betulla tranne le assi**. Stato della distinta Stark Estate:
+- **OK** — Legno di betulla scortecciato (`minecraft:stripped_birch_wood`): **1.305**
+- **OK** — Foglie di betulla (`minecraft:birch_leaves`): **186**
+- **OK** — Cancelli di betulla (`minecraft:birch_fence_gate`): **62**
+- **OK** — Staccionate di betulla (`minecraft:birch_fence`): **61**
+- **OK** — Tronchi di betulla (`minecraft:birch_log`): **21**
+- **OK** — Botole di betulla (`minecraft:birch_trapdoor`): **20**
+- **OK** — Cartelli sospesi a parete di betulla (`minecraft:birch_wall_hanging_sign`): **3**
+- **OK** — Scale di betulla (`minecraft:birch_stairs`): **1**
+- **ANCORA DA COMPLETARE** — Assi di betulla (`minecraft:birch_planks`): **2.667** (41 stack + 43).
+
+La conferma OK significa lavoro sistemato secondo il giocatore, senza attribuirgli implicitamente una quantità già fisicamente depositata in RS. Non contrassegnare le assi di betulla come completate fino a nuova conferma.
+
