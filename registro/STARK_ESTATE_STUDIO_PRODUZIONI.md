@@ -4,7 +4,7 @@
 
 ## PRIORITÀ ALTA — Catena sabbia/ghiaia/arenaria
 
-**Stato aggiornato il 26/10/2026: due Frantoi (Crusher) PIAZZATI E GIÀ IN PRODUZIONE, uno sopra ciascuno dei due nuovi Heat Generator dedicati e piazzati.** Confermati dal giocatore con screenshot: primo Frantoio **cobblestone → ghiaia**, secondo **ghiaia → sabbia**; barre energia cariche. **Produzione testata con input in macchina, MA nessuna automazione di ingresso/uscita RS ancora confermata.** Generatori dello Stone Liquefier distinti e non toccati. Non richiedere di ricostruire i due Frantoi o i due generatori; prossimo lavoro è collegare I/O e RS preservando ghiaia per il calcestruzzo.
+**Stato aggiornato il 26/10/2026: due Frantoi (Crusher) PIAZZATI E GIÀ IN PRODUZIONE, uno sopra ciascuno dei due nuovi Heat Generator dedicati e piazzati.** Confermati dal giocatore con screenshot: primo Frantoio **cobblestone → ghiaia**, secondo **ghiaia → sabbia**; barre energia cariche. **Entrambi a pieno regime e automatizzati tramite RS (conferma giocatore 26/10/2026):** Crusher 1 Exporter con filtro cobblestone + Importer, Crusher 2 Exporter con filtro ghiaia + Importer; output ghiaia/sabbia al magazzino RS. **Detector ghiaia installato e collaudato:** `Above 500` → segnale `Redstone High` sull'Exporter del Crusher 2. La scorta di ghiaia viene mantenuta attorno a 500, non a 1.944/2.000; fabbisogno di 1.944 per cemento è cumulativo e non target di scorta. Generatori dello Stone Liquefier distinti e non toccati. Non proporre di costruire o collegare nuovamente i due Crusher.
 
 `Cobblestone auto (GIÀ PRESENTE, RS) → Crusher Energized Power → Gravel → secondo Crusher → Sand → autocrafting RS di Sandstone / Concrete Powder / cottura Glass`.
 
@@ -43,9 +43,15 @@ Fonti: https://minecraft.wiki/w/Tutorial:Dirt_farming e https://minecraft.wiki/w
 
 ## Verifiche essenziali prima della costruzione
 
-1. **La macchina Crusher è già posseduta?** Non dichiararla costruita finché il giocatore non lo conferma.
+1. **Crusher e collegamenti RS:** già posseduti, piazzati, configurati e collaudati; nessuna ulteriore verifica di esistenza richiesta.
 2. **Versione precisa Energized Power nel modpack:** per confermare quantità output, consumo FE e disponibilità delle macchine sul Fabric 1.21.1.
 3. **Quali blocchi sono realmente mancanti al placement attuale?** La colonna totale della schematic non equivale alla lista da costruire.
 4. **Produzione di energia/velocità desiderata:** dimensionare il numero di Crusher, impiegando scorte RS e Detector invece di far girare catene ininterrottamente a magazzino pieno.
 
-**Stato: SOLO STUDIO PROGETTUALE**, nessun Crusher o nuova farm dirt dichiarati costruiti.
+**Stato al 26/10/2026:** due Crusher già costruiti, collegati a RS, in produzione; controllo della ghiaia con Detector collaudato. Farm dirt e automazione dell'arenaria ancora da valutare.
+
+## IDEA DA RICORDARE — Scorte automatiche tramite autocrafting RS (26/10/2026)
+
+**Non ancora installata né richiesta come lavoro immediato.** Il giocatore vuole ricordare **Requestify** per produrre automaticamente oggetti (es. fino a **3.746 sandstone**) e mantenere scorte prestabilite senza richiederle dalla Grid. Requestify aggiunge un `Requester`, che lancia ordini di autocrafting; tuttavia la release ufficiale per **Minecraft 1.21.1 è NeoForge**, mentre il mondo **MEGAZERO è Fabric 1.21.1**. Non dichiararla compatibile con l'installazione attuale: verificare una build Fabric prima di proporla.
+
+**Alternativa potenzialmente adatta su Fabric:** [Step Crafter](https://modrinth.com/mod/step-crafter), con **Step Requester** per soglie minime/massime e ricette tramite Refined Storage; Modrinth dichiara supporto Fabric 1.21.1. Verificare versioni specifiche, dipendenze e compatibilità con la release di RS installata, prima di installare. Fonti: [Requestify 1.21.1 (NeoForge)](https://www.curseforge.com/minecraft/mc-mods/rs-requestify/files/all), [Step Crafter (Fabric 1.21.1)](https://modrinth.com/mod/step-crafter/version/JNSyZ1Oz).
