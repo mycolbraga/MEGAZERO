@@ -6,6 +6,8 @@
 
 - **Altri materiali abete confermati OK:** botole 127, lastre 124, scale 60, staccionate 48, tronchi scortecciati 5, pulsanti 2, legno normale 2. **Resta aperta** la produzione dei 617 blocchi di legno di abete scortecciato (`stripped_spruce_wood`), diverso dai 5 tronchi scortecciati (`stripped_spruce_log`).
 
+- **Betulla — 8 voci OK:** legno scortecciato **1.305**, foglie **186**, cancelli **62**, staccionate **61**, tronchi **21**, botole **20**, cartelli sospesi a parete **3**, scale **1**. **Unica voce betulla non ancora OK: 2.667 assi di betulla**. Nessuna scorta effettiva in RS inferita.
+
 Annotare nuovi progressi con **data, modifica, prova e stato**, senza inventare collaudi.
 
 ## 23 ottobre 2026 — Registro GitHub e smelter
