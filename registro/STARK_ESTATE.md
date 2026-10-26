@@ -2,6 +2,8 @@
 
 **Revisione del registro: 23/10/2026.** Villa ispirata alla casa di Tony Stark / Malibu Point Rework, scelta sia per il riferimento cinematografico sia per l'architettura. Mondo di destinazione: **MegaZero, Minecraft Java 1.21.1**, con Litematica.
 
+**STATO CANTIERE — 26/10/2026: COSTRUZIONE INIZIATA.** Il giocatore ha confermato con screenshot la posa del **primo blocco** della Stark Estate in Litematica, su un particolare decorativo in tufo. Non è più soltanto una costruzione pianificata; restano però da realizzare quasi tutti i blocchi della villa e il terreno. Nessun avanzamento percentuale dedotto.
+
 ## File originali e versioni schematic
 
 I seguenti file, già generati nelle precedenti conversazioni, sono **recuperabili nella Libreria ChatGPT** (non confondere le versioni):
