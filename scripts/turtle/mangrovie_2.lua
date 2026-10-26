@@ -20,8 +20,7 @@ local LIMIT_X, LIMIT_Z, LIMIT_Y = 6, 6, 27
 local SAPLING = "minecraft:mangrove_propagule"
 local BONE = "minecraft:bone_meal"
 local MAX_GROW_BONE = 20
-local MIN_BONE = 32
-local TARGET_BONE = 128
+local MIN_BONE = 64
 local MIN_FUEL = 2500
 local CHECK = ".mangrovie_2_prova_ok"
 local p = {x=HOME.x,y=HOME.y,z=HOME.z,dir=3}
@@ -223,19 +222,12 @@ local function loadInputs()
     else
       attempts=attempts+1
       if attempts==1 then
-        print("Attendo propaguli (2), Bone Meal (32+) e carburante dalla chest...")
+        print("Attendo propaguli (2), Bone Meal (64+) e carburante dalla chest...")
       end
       sleep(15)
     end
   end
-  -- Una piccola scorta extra di Bone Meal, senza imporre 2 stack completi.
-  for _=1,3 do
-    if countItem(BONE)>=TARGET_BONE then break end
-    local slot=freeSlot()
-    if not slot then break end
-    turtle.select(slot)
-    if not turtle.suck(64) then break end
-  end
+  -- Non prelevare altro a caso: la cassa puo' contenere anche il raccolto.
   face(3)
   print("Scorte Turtle: "..countItem(SAPLING).." propaguli, "..
     countItem(BONE).." Bone Meal; fuel "..tostring(fuelLevel()))
@@ -397,11 +389,11 @@ local function harvestConnected(t)
       end
     end
   end
-  -- Ora siamo nel posto del propagulo; torniamo nella corsia.
-  if p.x~=t.x or p.y~=t.y or p.z~=t.z then
+  -- Lo stack DFS ha gia' riportato la Turtle al punto di ingresso,
+  -- un blocco a OVEST del propagulo.
+  if p.x~=t.x-1 or p.y~=t.y or p.z~=t.z then
     stop("Errore di ritorno DFS mangrovia")
   end
-  step(2)
   currentTree=nil
   face(0)
   print("Mangrovia Z="..t.z..": visita "..nodes.." blocchi")
