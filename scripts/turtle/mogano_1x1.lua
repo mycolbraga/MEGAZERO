@@ -1,5 +1,5 @@
 -- MEGAZERO MOGANO (JUNGLE) - FARM 8x 1x1
--- Adattamento dall'mogano_1x1.lua; originale INALTERATO.
+-- Variante derivata dal programma per gli abeti; originale lasciato INALTERATO.
 -- Turtle base: 1903,66,2715, guarda NORD. Chest dietro a 1903,66,2716.
 -- Terra = Y66, primo tronco = Y67; la Turtle sale 1 blocco durante il lavoro.
 -- Coppie di alberi X=1899 e 1907, Z=2712/2705/2698/2691.
