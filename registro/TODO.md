@@ -1,6 +1,8 @@
 # Lavori aperti e verifiche
 
-- [ ] **Stark Estate — studio nuove produzioni, NESSUNA ancora costruita:** valutare Crusher Energized Power per cobblestone→gravel→sand, autocrafting sandstone e cemento verde, e possibili metodi di produzione dirt. Conteggi nella [scheda di studio](STARK_ESTATE_STUDIO_PRODUZIONI.md); verificare prima ricette nella versione della mod installata e materiali realmente mancanti. Non considerare completata una nuova farm senza conferma.
+- [x] **Stark Estate — due Crusher per ghiaia e sabbia COMPLETATI (26/10/2026):** Crusher 1 cobblestone→ghiaia, Crusher 2 ghiaia→sabbia, entrambi con Heat Generator dedicato, Exporter e Importer RS configurati e a pieno regime. Detector RS sulla ghiaia collaudato: `Above 500` rivolto all'Exporter del secondo Crusher, configurato su `Redstone High`; il secondo frantoio si alimenta solo oltre 500 ghiaia. Vedi [studio](STARK_ESTATE_STUDIO_PRODUZIONI.md).
+
+- [ ] **DA TENERE A MENTE — stock automatici RS / Requestify (26/10/2026, sola valutazione):** il giocatore vuole poter mantenere automaticamente quantità prefissate (es. 3.746 arenaria) tramite autocrafting RS, senza ordini manuali dalla Grid. **Refined Storage: Requestify** aggiunge il Requester, MA l'edizione Minecraft **1.21.1** pubblicata su CurseForge risulta **NeoForge**, quindi **non installarla sul mondo MegaZero Fabric 1.21.1** senza una build Fabric verificata. **Alternativa da valutare: Step Crafter / Step Requester**, disponibile per Fabric 1.21.1, che supporta soglie di stock e crafting automatico. **Non installato, nessun impianto costruito e nessuna modifica richiesta adesso.** Fonti: https://www.curseforge.com/minecraft/mc-mods/rs-requestify/files/all ; https://modrinth.com/mod/step-crafter .
 
 - [ ] Farm argilla: non ancora costruita (23/10/2026); priorità da stabilire.
 
