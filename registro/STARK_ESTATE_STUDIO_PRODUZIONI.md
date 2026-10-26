@@ -67,3 +67,5 @@ Il giocatore conferma che **assi di abete (1.084), lastre di pietra liscia (1.85
 - **`minecraft:stripped_spruce_wood`: 617 blocchi necessari, ZERO attualmente disponibili** secondo il giocatore. È un materiale ancora da produrre, non considerarlo completato.
 - Ricetta vanilla: `4 stripped_spruce_log -> 3 stripped_spruce_wood`; per coprire la quantità servono **206 crafting = 824 tronchi di abete scortecciati**, ottenendo **618 blocchi** (1 eccedente). I tronchi grezzi dovranno prima essere scortecciati, eventualmente tramite Turtle scortecciatrice già presente; **non è stata confermata la disponibilità dei tronchi in magazzino**.
 - Il pattern RS può produrre legno scortecciato quando i tronchi scortecciati sono disponibili; Step Requester opzionale per la scorta. Stato di questi specifici pattern/requester **non confermato**.
+
+- **Aggiornamento 26/10/2026:** nessuna scorta di tronchi abete rimasta; terminata la lavorazione delle betulle, il giocatore passerà agli abeti; abete scortecciato ancora da produrre, Turtle scortecciatrice già esistente.
