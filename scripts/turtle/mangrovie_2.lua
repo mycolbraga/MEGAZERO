@@ -248,55 +248,150 @@ end
 -- Se mancano combustibili nell'inventario, li cerca nella cassa dietro.
 -- Può prelevare anche 1-2 oggetti di rifornimento prima di trovare carbone/lava;
 -- NON preleva dal raccolto, che viene scaricato soltanto in acqua.
-local function ensureMovementFuel(moves)
+
+-- MEGAZERO: prelievo SELETTIVO copiato dalla farm Pale Oak.
+-- Sceglie lo slot in chest per ID, sposta gli oggetti in slot 1 chest,
+-- e riempie prima le pile gia' aperte della Turtle, senza prelievi ciechi.
+local function pickupSlot(name)
+  for i=1,16 do
+    local item=turtle.getItemDetail(i)
+    if item and item.name==name then
+      local max=item.maxCount or (name=="minecraft:lava_bucket" and 1 or 64)
+      if item.count<max then return i,max-item.count end
+    end
+  end
+  for i=1,16 do
+    if not turtle.getItemDetail(i) then return i,(name=="minecraft:lava_bucket" and 1 or 64) end
+  end
+  return nil,0
+end
+
+local function takeFromChest(itemName, requested)
+  if p.x~=HOME.x or p.y~=HOME.y or p.z~=HOME.z then stop("Prelievo permesso solo a casa") end
+  face(1)
+  local chest=peripheral.wrap("front")
+  if not chest or not chest.list or not chest.pushItems or not chest.size then
+    face(3); stop("Chest non visibile come inventory peripheral")
+  end
+  local contents=chest.list()
+  local source
+  for i=1,chest.size() do
+    if contents[i] and contents[i].name==itemName then source=i; break end
+  end
+  if not source then face(3); return 0 end
+  local toSlot,capacity=pickupSlot(itemName)
+  if not toSlot then face(3); stop("Inventario pieno: impossibile prelevare " .. itemName) end
+  local amount=math.min(requested,capacity,contents[source].count)
+  if amount<=0 then face(3); return 0 end
+  if source~=1 then
+    if contents[1] then
+      local free
+      for i=1,chest.size() do if not contents[i] then free=i; break end end
+      if not free then face(3); stop("Serve uno slot libero nella chest") end
+      local moved=chest.pushItems("front",1,contents[1].count,free)
+      if moved~=contents[1].count then face(3); stop("Non riesco a liberare slot 1 chest") end
+    end
+    local moved=chest.pushItems("front",source,amount,1)
+    if moved~=amount then face(3); stop("Impossibile preparare il prelievo " .. itemName) end
+  end
+  local before=turtle.getItemCount(toSlot)
+  turtle.select(toSlot)
+  local ok,why=turtle.suck(amount)
+  local item=turtle.getItemDetail(toSlot)
+  if not ok or not item or item.name~=itemName or turtle.getItemCount(toSlot)-before~=amount then
+    face(3); stop("Prelievo fallito " .. itemName .. ": " .. tostring(why))
+  end
+  face(3)
+  return amount
+end
+
+
+-- Compatta le pile da 1 item lasciate dalla precedente versione.
+local function compactStacks(name)
+  local old=turtle.getSelectedSlot()
+  for dst=1,16 do
+    local item=turtle.getItemDetail(dst)
+    if item and item.name==name then
+      local cap=item.maxCount or 64
+      for src=dst+1,16 do
+        local more=turtle.getItemDetail(src)
+        if more and more.name==name and turtle.getItemCount(dst)<cap then
+          turtle.select(src)
+          turtle.transferTo(dst,cap-turtle.getItemCount(dst))
+        end
+      end
+    end
+  end
+  turtle.select(old)
+end
+
+local function returnBuckets()
   chest()
-  refuelLocal()
-  local draws=0
-  while fuelLevel()<moves do
-    if draws>=16 then
-      stop("Niente carburante: controlla carbone/carbonella/secchi di lava nella cassa")
+  for i=1,16 do
+    local item=turtle.getItemDetail(i)
+    if item and item.name=="minecraft:bucket" then
+      turtle.select(i)
+      if not turtle.drop(item.count) or turtle.getItemCount(i)~=0 then
+        stop("Impossibile restituire il secchio vuoto")
+      end
     end
-    local slot=freeSlot()
-    if not slot then
-      stop("Inventario pieno: non riesco a pescare carburante dalla cassa")
-    end
-    turtle.select(slot)
-    if not turtle.suck(64) then
-      stop("Carburante insufficiente: metti carbone, carbonella o lava nella cassa dietro")
-    end
-    draws=draws+1
-    refuelLocal()
   end
   face(3)
 end
 
-local function loadInputs()
-  ensureMovementFuel(2) -- evita di rimanere fermo prima dello scarico in acqua
-  unload()  -- prima scarica in ACQUA gli eventuali residui del giro precedente
-  chest()   -- dopo lo scarico torna verso SUD per pescare dalla cassa
+-- Prima consuma carburante gia' nella Turtle; poi prende per NOME
+-- lava, carbone o carbonella dalla chest. Nessun altro item viene aspirato.
+local function ensureMovementFuel(target)
+  if fuelLevel()==math.huge then face(3); return end
+  local limit=turtle.getFuelLimit()
+  if type(limit)=="number" then target=math.min(target,limit) end
   refuelLocal()
-  local attempts=0
-  while countItem(SAPLING)<2 or countItem(BONE)<MIN_BONE or fuelLevel()<MIN_FUEL do
-    local slot=freeSlot()
-    if not slot then
-      stop("Inventario pieno: controlla gli oggetti nella cassa rifornimenti")
+  returnBuckets()
+  while fuelLevel()<target do
+    local got=takeFromChest("minecraft:lava_bucket",1)
+    if got==0 then got=takeFromChest("minecraft:coal",64) end
+    if got==0 then got=takeFromChest("minecraft:charcoal",64) end
+    if got==0 then
+      stop("Carburante insufficiente: rifornisci la chest di lava/carbone")
     end
-    turtle.select(slot)
-    if turtle.suck(64) then
-      attempts=0
-      refuelLocal()
-    else
-      attempts=attempts+1
-      if attempts==1 then
-        print("Attendo propaguli (2), Bone Meal (64+) e carburante dalla chest...")
-      end
-      sleep(15)
+    local before=fuelLevel()
+    refuelLocal()
+    returnBuckets()
+    if fuelLevel()<=before then
+      stop("Carburante prelevato ma non consumato; controlla la Turtle")
     end
   end
-  -- Non prelevare altro a caso: la cassa puo' contenere anche il raccolto.
   face(3)
-  print("Scorte Turtle: "..countItem(SAPLING).." propaguli, "..
-    countItem(BONE).." Bone Meal; fuel "..tostring(fuelLevel()))
+end
+
+local function stockItem(id,target)
+  compactStacks(id)
+  while countItem(id)<target do
+    local n=takeFromChest(id,target-countItem(id))
+    if n==0 then break end
+  end
+end
+
+local function loadInputs()
+  -- Anche se la vecchia versione ha messo 1 Bone Meal per slot,
+  -- li uniamo in stack prima di tentare qualsiasi nuovo prelievo.
+  compactStacks(BONE)
+  compactStacks(SAPLING)
+  ensureMovementFuel(2)
+  unload() -- scarico sempre verso l'acqua, non nella chest
+  while true do
+    stockItem(SAPLING,8)
+    stockItem(BONE,128)
+    ensureMovementFuel(MIN_FUEL)
+    local saplings=countItem(SAPLING)
+    local bones=countItem(BONE)
+    if saplings>=2 and bones>=MIN_BONE then break end
+    print("Attendo rifornimento: propaguli "..saplings.."/2, Bone Meal "..bones.."/"..MIN_BONE)
+    sleep(30)
+  end
+  face(3)
+  print("Scorte: propaguli="..countItem(SAPLING)..
+    " Bone Meal="..countItem(BONE).." fuel="..tostring(fuelLevel()))
 end
 
 local function bonemeal(d)
@@ -490,6 +585,8 @@ end
 
 local function checkChest()
   chest()
+  compactStacks(BONE)
+  compactStacks(SAPLING)
   ensureMovementFuel(2) -- in prova ci sono 1 passo avanti e 1 indietro
   gotoWaterOutlet()
   returnFromWaterOutlet()
