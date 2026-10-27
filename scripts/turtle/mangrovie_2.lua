@@ -261,7 +261,7 @@ local function ensureMovementFuel(moves)
       stop("Inventario pieno: non riesco a pescare carburante dalla cassa")
     end
     turtle.select(slot)
-    if not turtle.suck(1) then
+    if not turtle.suck(64) then
       stop("Carburante insufficiente: metti carbone, carbonella o lava nella cassa dietro")
     end
     draws=draws+1
