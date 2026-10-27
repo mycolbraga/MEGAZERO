@@ -43,7 +43,7 @@ local fertilizer = 0
 
 local function stop(why)
   error(why.." | TURTLE: "..p.x..","..p.y..","..p.z..
-    " direzione "..p.dir..". Rimettila alla base verso NORD prima di ripartire.",0)
+    " direzione "..p.dir..". Riprendi da HOME solo dopo aver verificato posizione e orientamento.",0)
 end
 
 local function face(d)
@@ -244,7 +244,34 @@ end
 -- Chest SOLO di rifornimento: non vi scarichiamo legno, radici o foglie.
 -- turtle.suck() preleva nell'ordine degli slot della chest: mettere
 -- Bone Meal, propaguli e carburante nella chest, senza altri oggetti.
+-- Garantisce carburante PRIMA di ogni movimento dalla base.
+-- Se mancano combustibili nell'inventario, li cerca nella cassa dietro.
+-- Può prelevare anche 1-2 oggetti di rifornimento prima di trovare carbone/lava;
+-- NON preleva dal raccolto, che viene scaricato soltanto in acqua.
+local function ensureMovementFuel(moves)
+  chest()
+  refuelLocal()
+  local draws=0
+  while fuelLevel()<moves do
+    if draws>=16 then
+      stop("Niente carburante: controlla carbone/carbonella/secchi di lava nella cassa")
+    end
+    local slot=freeSlot()
+    if not slot then
+      stop("Inventario pieno: non riesco a pescare carburante dalla cassa")
+    end
+    turtle.select(slot)
+    if not turtle.suck(1) then
+      stop("Carburante insufficiente: metti carbone, carbonella o lava nella cassa dietro")
+    end
+    draws=draws+1
+    refuelLocal()
+  end
+  face(3)
+end
+
 local function loadInputs()
+  ensureMovementFuel(2) -- evita di rimanere fermo prima dello scarico in acqua
   unload()  -- prima scarica in ACQUA gli eventuali residui del giro precedente
   chest()   -- dopo lo scarico torna verso SUD per pescare dalla cassa
   refuelLocal()
@@ -463,6 +490,7 @@ end
 
 local function checkChest()
   chest()
+  ensureMovementFuel(2) -- in prova ci sono 1 passo avanti e 1 indietro
   gotoWaterOutlet()
   returnFromWaterOutlet()
   print("Scarico verificato: acqua sotto "..WATER_BELOW.x..","..
@@ -471,7 +499,7 @@ end
 
 checkChest()
 if mode=="prova" then
-  print("PROVA SENZA SCAVI: chest dietro e scarico in acqua verificati.")
+  print("PROVA SENZA SCAVI: chest dietro, carburante e scarico in acqua verificati.")
   print("Turtle HOME 1943,65,2715 NORD; alberi:")
   for i,t in ipairs(TREES) do
     print(i..": "..t.x..","..t.y..","..t.z.." | area 13x13")
