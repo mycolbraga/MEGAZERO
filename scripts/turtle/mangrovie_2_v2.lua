@@ -634,21 +634,34 @@ local function processTree(t,index)
   walkToStand(t)
   local exists,b=inspect(0)
   if not exists then
+    -- Se il centro e' aria, potrebbe esserci GIA' la mangrovia cresciuta
+    -- sopra: cerca e raccogli PRIMA di piantare un altro propagulo.
+    if harvestConnected(t) then
+      local busy,block=inspect(0)
+      if not busy then
+        plantSeed(label)
+      else
+        print(label..": centro ancora occupato da "..block.name..", non ripianto")
+      end
+      walkHome(t)
+      unload()
+      return
+    end
     plantSeed(label)
     exists,b=inspect(0)
   end
   if exists and b.name==SAPLING then
     if not growSeed(label) then
-      walkHome(t); return
+      walkHome(t)
+      unload()
+      return
     end
   elseif exists and not classification(b.name) then
     stop(label..": ostacolo "..b.name)
   end
   if harvestConnected(t) then
-    -- Solo se il punto del propagulo e' libero; l'albero puo' aver
-    -- lasciato blocchi distaccati, in tal caso non sovrascriverli.
-    local occupied,block=inspect(0)
-    if not occupied then
+    local busy,block=inspect(0)
+    if not busy then
       plantSeed(label)
     else
       print(label..": reimpianto rimandato: "..block.name)
@@ -701,7 +714,7 @@ if mode=="prova" then
   print("Ora: mangrovie_2_v2 giro | poi mangrovie_2_v2 avvia")
   return
 end
-if not fs.exists(CHECK) then error("Prima esegui: mangrovie_2 prova",0) end
+if not fs.exists(CHECK) then error("Prima esegui: mangrovie_2_v2 prova",0) end
 
 while true do
   harvested={logs=0,roots=0,leaves=0,propagules=0}
