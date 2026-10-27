@@ -26,7 +26,6 @@ local DIRT="minecraft:dirt"
 local WATER_BOTTLE="minecraft:potion"
 local EMPTY_BOTTLE="minecraft:glass_bottle"
 local MUD="minecraft:mud"
-local BOTTLE_TARGET=12
 local DIRT_TARGET=64
 
 local function fail(msg)
@@ -94,7 +93,7 @@ end
 
 -- Porta solo l'item cercato nello slot 1 della cassa in ingresso.
 -- Stessa logica di rifornimento selettivo delle farm legname MEGAZERO.
--- E' necessario lasciare almeno uno slot libero nella cassa superiore.
+-- Se la cassa superiore e' piena, usa uno slot Turtle temporaneo.
 local function pullFromTop(name,requested)
   local contents=input.list()
   local source
@@ -127,18 +126,33 @@ local function pullFromTop(name,requested)
   local amount=math.min(requested,capacity,contents[source].count)
   if amount<=0 then return 0 end
 
+  -- Se lo slot 1 contiene altro, lo liberiamo. Quando la cassa
+  -- e' completamente piena usiamo TEMPORANEAMENTE uno slot Turtle,
+  -- evitando l'errore "impossibile liberare slot 1".
+  local parkedSlot,parkedItem
   if source~=1 then
     if contents[1] then
       local empty
       for i=1,input.size() do
         if not contents[i] then empty=i; break end
       end
-      if not empty then
-        fail("Serve almeno 1 slot libero nella cassa SOPRA")
-      end
-      local n=input.pushItems("top",1,contents[1].count,empty)
-      if n~=contents[1].count then
-        fail("Impossibile liberare slot 1 della cassa SOPRA")
+      if empty then
+        local n=input.pushItems("top",1,contents[1].count,empty)
+        if n~=contents[1].count then
+          fail("Non riesco a spostare lo slot 1 nella cassa SOPRA")
+        end
+      else
+        parkedSlot=freeSlot()
+        if not parkedSlot or parkedSlot==destination then
+          fail("Cassa sopra piena: manca uno slot libero per lo scambio")
+        end
+        turtle.select(parkedSlot)
+        local ok,why=turtle.suckUp(contents[1].count)
+        parkedItem=turtle.getItemDetail(parkedSlot)
+        if not ok or not parkedItem or parkedItem.name~=contents[1].name
+          or parkedItem.count~=contents[1].count then
+          fail("Impossibile svuotare temporaneamente slot 1: "..tostring(why))
+        end
       end
     end
     local n=input.pushItems("top",source,amount,1)
@@ -154,6 +168,13 @@ local function pullFromTop(name,requested)
   local gained=turtle.getItemCount(destination)-before
   if not ok or not received or received.name~=name or gained~=amount then
     fail("Rifornimento errato di "..name..": "..tostring(why))
+  end
+  if parkedSlot then
+    turtle.select(parkedSlot)
+    local returned=turtle.dropUp(parkedItem.count)
+    if not returned or turtle.getItemCount(parkedSlot)~=0 then
+      fail("Impossibile restituire alla cassa SOPRA lo stack temporaneo")
+    end
   end
   return gained
 end
@@ -177,12 +198,14 @@ local function restock()
   -- Riserva sempre due slot per gli output della lavorazione.
   if count(DIRT)<DIRT_TARGET then
     while count(DIRT)<DIRT_TARGET do
-      if freeSlots()<2 and count(DIRT)>0 then break end
+      if freeSlots()<3 and count(DIRT)>0 then break end
       if pullFromTop(DIRT,DIRT_TARGET-count(DIRT))==0 then break end
     end
   end
-  while count(WATER_BOTTLE)<BOTTLE_TARGET and freeSlots()>2 do
-    if pullFromTop(WATER_BOTTLE,1)==0 then break end
+  -- UNA SOLA ampolla per ciclo. Finche' esiste gia' un'ampolla
+  -- nell'inventario NON ne prende altre dalla cassa.
+  if count(WATER_BOTTLE)==0 and freeSlots()>=3 then
+    pullFromTop(WATER_BOTTLE,1)
   end
 end
 
@@ -229,7 +252,7 @@ end
 checkWorkArea()
 if mode=="prova" then
   print("PROVA OK: cassa SOPRA, cassa SOTTO, area DAVANTI libera.")
-  print("Nella cassa SOPRA lascia almeno 1 slot libero.")
+  print("Ampolle: una alla volta, terra in scorta fino a 64.")
   print("SOLO terra e AMPOLLE D'ACQUA, non altre pozioni.")
   print("Ora: fango_turtle giro, poi fango_turtle avvia.")
   return
