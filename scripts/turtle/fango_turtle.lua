@@ -142,9 +142,14 @@ local function pullFromTop(name,requested)
           fail("Non riesco a spostare lo slot 1 nella cassa SOPRA")
         end
       else
-        parkedSlot=freeSlot()
-        if not parkedSlot or parkedSlot==destination then
-          fail("Cassa sopra piena: manca uno slot libero per lo scambio")
+        for i=1,16 do
+          if i~=destination and not turtle.getItemDetail(i) then
+            parkedSlot=i
+            break
+          end
+        end
+        if not parkedSlot then
+          fail("Cassa sopra piena: manca uno slot Turtle libero per lo scambio")
         end
         turtle.select(parkedSlot)
         local ok,why=turtle.suckUp(contents[1].count)
