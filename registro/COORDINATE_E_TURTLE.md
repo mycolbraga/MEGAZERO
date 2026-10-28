@@ -24,6 +24,7 @@ Il giocatore conferma il 23/10/2026 che **la vecchia farm del querceto è stata 
 | --- | --- |
 | Stronghold / End Portal | **Stato confermato 23/10/2026:** circa X=1436, Y=23, Z=1044; portale trovato ma **ancora NON attivato**, 0/12 occhi segnalati, **due biblioteche** individuate. Nessun ulteriore avanzamento rispetto all'esplorazione precedente. |
 | Tetto Nether | 1079,7,3091 |
+| **Nether — Bastione del Tesoro, spawner Magma Cube** | **X=-542, Y=47, Z=-376**. Coordinate comunicate e riconfermate dal giocatore il **28/10/2026**. Spawner non distrutto, neutralizzato con blocchi; destinato alla futura farm di Froglight con tre colori di rana. |
 | Monumento oceanico | 1136, Z2752 |
 | **Ingresso miniera rame sotto Stark Estate (Mansion)** | **X=2200, Y=76, Z=2590**; screenshot HUD 28/10/2026, bioma Plains, visuale EST. Accesso alla grotta ricca di rame / granito. |
 | Fabbrica Energized Power n. 1 | **X=6008, Y=101, Z=5976**, Flower Forest. Struttura con macchinari (motori a carbone, frantoi, polverizzatori, compressore, trasformatori, caricabatterie, cavi), 8 telai base e 16 blocchi di silicio; quantità censite in chat il 26/10/2026. |
