@@ -25,6 +25,7 @@ Il giocatore conferma il 23/10/2026 che **la vecchia farm del querceto è stata 
 | Stronghold / End Portal | **Stato confermato 23/10/2026:** circa X=1436, Y=23, Z=1044; portale trovato ma **ancora NON attivato**, 0/12 occhi segnalati, **due biblioteche** individuate. Nessun ulteriore avanzamento rispetto all'esplorazione precedente. |
 | Tetto Nether | 1079,7,3091 |
 | Monumento oceanico | 1136, Z2752 |
+| **Ingresso miniera rame sotto Stark Estate (Mansion)** | **X=2200, Y=76, Z=2590**; screenshot HUD 28/10/2026, bioma Plains, visuale EST. Accesso alla grotta ricca di rame / granito. |
 | Fabbrica Energized Power n. 1 | **X=6008, Y=101, Z=5976**, Flower Forest. Struttura con macchinari (motori a carbone, frantoi, polverizzatori, compressore, trasformatori, caricabatterie, cavi), 8 telai base e 16 blocchi di silicio; quantità censite in chat il 26/10/2026. |
 | Fabbrica Energized Power n. 2 | **X=8293, Y=63, Z=5176**, Forest. Confermata dal giocatore **uguale alla prima** (stessa tipologia di macchinari e allestimento). Censimento della prima come riferimento: 8 motori a carbone, 1 compressore, 3 polverizzatori, 3 frantoi, ~20 trasformatori, ~10 caricabatterie, 8 telai base, 16 blocchi di silicio, ~100 cavi; **le quantità della seconda non sono state contate singolarmente**. |
 | Mob farm aerea | spiaggia 1841,62,2792 → torre 1700,151,2949 |
