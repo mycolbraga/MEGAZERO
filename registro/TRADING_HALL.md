@@ -34,8 +34,9 @@ Offerte secondarie note: Silk Touch → anche Respirazione III e Tiro Multiplo I
 ## Aggiornamento bibliotecari — 29 ottobre 2026
 
 - **Postazione #22 — BIBLIOTECARIO NON PIÙ PRESENTE**, confermato dal giocatore il 29/10/2026. Le precedenti offerte registrate nel censimento del 24/10 (Perforazione IV a 38 smeraldi; Passo Gelato I a 6) sono **solo storiche e non più disponibili da questo bibliotecario**. Non dedurre che la postazione fisica sia stata rimossa, né la causa della scomparsa.
+- **Postazione #26 — BIBLIOTECARIO NON PIÙ PRESENTE**, confermato dal giocatore il 29/10/2026. Le precedenti offerte del 25/10 (Passo Gelato II a 18 smeraldi; Anatema V a 1; Maledizione del Legame I a 1) sono **solo storiche e non più disponibili da questo bibliotecario**. Non dedurre che la postazione fisica sia stata rimossa, né la causa della scomparsa.
 - **Postazione #28 — BIBLIOTECARIO NON PIÙ PRESENTE**, confermato dal giocatore il 29/10/2026. Le precedenti offerte del 25/10 (Esca III a 1, Protezione dal Fuoco III a 1, Impalamento III a 3) sono **solo storiche e non più disponibili da questo bibliotecario**. Non dedurre che la postazione fisica sia stata rimossa, né la causa della scomparsa.
-- **Totale postazioni fisiche:** restano 32 quelle registrate; l'occupazione attuale delle altre postazioni non è stata ricensita. Non considerare #22 e #28 occupate.
+- **Totale postazioni fisiche:** restano 32 quelle registrate; l'occupazione attuale delle altre postazioni non è stata ricensita. Non considerare #22, #26 e #28 occupate.
 
 ## Aggiornamento bibliotecari — 25 ottobre 2026
 
@@ -45,7 +46,7 @@ Offerte secondarie note: Silk Touch → anche Respirazione III e Tiro Multiplo I
 - **Bibliotecario #19 — offerte confermate il 25/10/2026:** **Impalamento V (Impaling V) a 2 smeraldi** (livello massimo), **Fortuna del Mare I (Luck of the Sea I) a 1 smeraldo**, **Infinità I (Infinity I) a 1 smeraldo** (livello massimo). Prezzo confermato dal giocatore nel messaggio successivo.
 - **Bibliotecario #21 — offerte confermate il 25/10/2026:** **Contraccolpo II (Knockback II) a 1 smeraldo** (livello massimo) e **Carica Rapida I (Quick Charge I) a 1 smeraldo** (livello massimo III). La nota storica su «Quick Charge III bloccato, prezzo da verificare» riguarda un'offerta precedente non assegnata qui a una postazione; non dedurre che sia del bibliotecario #21.
 
-- **Bibliotecario #26 — offerte confermate il 25/10/2026:** **Passo Gelato II (Frost Walker II) a 18 smeraldi** (livello massimo), **Anatema V (Smite V) a 1 smeraldo** (livello massimo), **Maledizione del Legame I (Curse of Binding I) a 1 smeraldo** (livello unico). Postazione #26 occupata.
+- **Bibliotecario #26 — OFFERTE STORICHE confermate il 25/10/2026, NON PIÙ DISPONIBILI dal 29/10/2026:** **Passo Gelato II (Frost Walker II) a 18 smeraldi** (livello massimo), **Anatema V (Smite V) a 1 smeraldo** (livello massimo), **Maledizione del Legame I (Curse of Binding I) a 1 smeraldo** (livello unico). **Stato attuale: bibliotecario #26 non più presente.**
 
 - **Bibliotecario #15 — offerte confermate il 25/10/2026:** **Protezione dai Proiettili IV (Projectile Protection IV) a 1 smeraldo** (livello massimo) e **Flagello degli Artropodi I (Bane of Arthropods I) a 1 smeraldo** (livello massimo V). Postazione #15 occupata.
 
