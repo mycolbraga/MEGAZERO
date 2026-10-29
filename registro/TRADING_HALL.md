@@ -31,9 +31,15 @@
 
 Offerte secondarie note: Silk Touch → anche Respirazione III e Tiro Multiplo I a 1; Unbreaking → Depth Strider II a 1; Potenza V → Impaling II a 11 e Curse of Vanishing I a 1; Sharpness V → Protezione Esplosioni IV a 20. Aspetto di Fuoco II: 21→7 dopo cura; Lama Sferzante III: 29→1. Spine III 17 in attesa di cura; Quick Charge III prezzo da verificare; Densità V e Flagello degli Artropodi V visti ma non bloccati. Confermare prezzi attuali prima di aggiornarli.
 
+## Aggiornamento bibliotecari — 29 ottobre 2026
+
+- **Postazione #22 — BIBLIOTECARIO NON PIÙ PRESENTE**, confermato dal giocatore il 29/10/2026. Le precedenti offerte registrate nel censimento del 24/10 (Perforazione IV a 38 smeraldi; Passo Gelato I a 6) sono **solo storiche e non più disponibili da questo bibliotecario**. Non dedurre che la postazione fisica sia stata rimossa, né la causa della scomparsa.
+- **Postazione #28 — BIBLIOTECARIO NON PIÙ PRESENTE**, confermato dal giocatore il 29/10/2026. Le precedenti offerte del 25/10 (Esca III a 1, Protezione dal Fuoco III a 1, Impalamento III a 3) sono **solo storiche e non più disponibili da questo bibliotecario**. Non dedurre che la postazione fisica sia stata rimossa, né la causa della scomparsa.
+- **Totale postazioni fisiche:** restano 32 quelle registrate; l'occupazione attuale delle altre postazioni non è stata ricensita. Non considerare #22 e #28 occupate.
+
 ## Aggiornamento bibliotecari — 25 ottobre 2026
 
-- **Bibliotecario #28 — tre offerte confermate il 25/10/2026:** **Esca III (Lure III) a 1 smeraldo**, **Protezione dal Fuoco III (Fire Protection III) a 1 smeraldo**, **Impalamento III (Impaling III) a 3 smeraldi**. Esca III è il livello massimo, mentre Protezione dal Fuoco III e Impalamento III non sono al livello massimo (IV e V rispettivamente). Postazione #28 occupata, non più libera.
+- **Bibliotecario #28 — OFFERTE STORICHE confermate il 25/10/2026, NON PIÙ DISPONIBILI dal 29/10/2026:** **Esca III (Lure III) a 1 smeraldo**, **Protezione dal Fuoco III (Fire Protection III) a 1 smeraldo**, **Impalamento III (Impaling III) a 3 smeraldi**. Esca III è il livello massimo, mentre Protezione dal Fuoco III e Impalamento III non sono al livello massimo (IV e V rispettivamente). **Stato attuale: bibliotecario #28 non più presente.**
 - La tabella storica sopra risale al 20–23 ottobre e potrebbe non riflettere tutti i cambiamenti successivi; non sostituire i prezzi storici con deduzioni non confermate.
 
 - **Bibliotecario #19 — offerte confermate il 25/10/2026:** **Impalamento V (Impaling V) a 2 smeraldi** (livello massimo), **Fortuna del Mare I (Luck of the Sea I) a 1 smeraldo**, **Infinità I (Infinity I) a 1 smeraldo** (livello massimo). Prezzo confermato dal giocatore nel messaggio successivo.
