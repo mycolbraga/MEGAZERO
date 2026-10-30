@@ -57,3 +57,7 @@ Snapshot: 23 ottobre 2026.
 - Overlay Litematica «Lista Materiali, chunk rimanenti (7)»: risolto.
 - RS: target scorte circa **500 per prodotto**, Detector installati **gradualmente** in base alla necessità; controllo dell'ingresso, non grande impianto di compostaggio. Eventuali eccedenze possono rimanere sul campo e despawnare.
 - Preferenza fornaci tradizionali; Powered Furnace scartata. **Stone Liquefier già installato e funzionante nella stazione tecnica del complesso**: produce lava e riempie secchi (confermato 23/10/2026).
+
+## Aggiornamento 30 ottobre 2026 — Produzione automatica di terra
+
+**CONFERMATA FUNZIONANTE dal giocatore:** catena di produzione terra normale con Refined Storage e Turtle. Il Crusher produce ghiaia da cobblestone; un crafting RS combina 2 terra e 2 ghiaia in 4 terra sterile. La Turtle riceve terra sterile dalla cassa superiore, usa la **zappa a destra** per convertirla in terra normale e il **piccone a sinistra** per raccoglierla; scarica nella cassa inferiore e la terra normale **rientra in Refined Storage**, come confermato esplicitamente. Autocrafting avviato e sistema in funzione. Incremento teorico netto: +2 terra per 2 ghiaia lavorata, a ciclo concluso. Non sono state misurate velocita orarie o scorte di terra effettive.
