@@ -1,6 +1,8 @@
 # Trading Hall
 
-**Stato confermato dal giocatore il 23 ottobre 2026:** **32 postazioni attive**, villager piazzati e zombificatore integrato. **Progetto NON ancora completato:** 72 postazioni totali (+40), mediante due moduli da 20, replicando il modulo centrale e preservando redstone/observer/binari. Non sono state confermate nuove postazioni attive; l'avanzamento dei lavori preparatori non è noto.
+> **Stato aggiornato al 1 novembre 2026:** Trading Hall da **72 postazioni completata**, con meccanismo funzionante secondo il giocatore. La numerazione fisica delle 72 postazioni **è in fase di ricensimento da zero**, perciò le vecchie etichette numeriche riportate più sotto sono **SOLO STORICHE**. La numerazione definitiva, confermata postazione per postazione, si trova in [TRADING_HALL_72_NUMERAZIONE_DEFINITIVA.md](TRADING_HALL_72_NUMERAZIONE_DEFINITIVA.md). Prime conferme: nuova #1 = vecchia #1, nuova #2 = vecchia #32 (Fiamma I).
+
+**Stato storico al 23 ottobre 2026 (superato dallo stato aggiornato sopra):** **32 postazioni attive**, villager piazzati e zombificatore integrato. **Progetto NON ancora completato:** 72 postazioni totali (+40), mediante due moduli da 20, replicando il modulo centrale e preservando redstone/observer/binari. Non sono state confermate nuove postazioni attive; l'avanzamento dei lavori preparatori non è noto.
 
 **Errore risolto:** torce piazzate prima degli observer; mancava impulso iniziale. Ripiazzare torce dopo installazione observer faceva funzionare il circuito. Dei 5 composter, 4 sono meccanici e **non** da convertire in leggii. Botole erroneamente segnate Spruce erano Birch.
 
