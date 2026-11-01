@@ -96,6 +96,30 @@
 
 **Contabilità obiettivo:** 24 libri principali registrati + 15 libri principali ancora da bloccare + 1 doppione = **40 bibliotecari**. Le 48 postazioni attualmente senza incantesimo bloccato restano occupate da villager; il loro futuro mestiere non è ancora assegnato singolarmente nel censimento.
 
+## Piano dei 32 mestieri non bibliotecari — scambi da cercare
+
+**Distribuzione per completare le 72 postazioni:** 40 bibliotecari + 32 altri mestieri. Le **32 professioni non sono ancora associate ai numeri fisici delle postazioni**, che vanno assegnati dal giocatore, senza alterare la numerazione già confermata.
+
+| Quantità | Mestiere | Blocco di lavoro | Scambi prioritari da cercare / sbloccare |
+| ---: | --- | --- | --- |
+| 6 | Contadini | Compostiera | Comprare zucche, angurie, carote, patate e grano dal giocatore; carote dorate da comprare dal villager a Maestro |
+| 4 | Arcieri (Fletcher) | Tavolo da impennatura | Comprare bastoni dal giocatore (32 bastoni = 1 smeraldo, prezzo base); anche filo e piume |
+| 4 | Fabbri di armature | Altoforno | Comprare lingotti di ferro dal giocatore (di solito da apprendista, offerta da verificare); fornire pezzi diversi di armatura di diamante |
+| 3 | Fabbri di attrezzi | Tavolo da forgiatura | Comprare ferro dal giocatore; vendere picconi, asce, pale e zappe di diamante a livelli superiori |
+| 3 | Chierici | Alambicco | Comprare carne marcia, lingotti d'oro, verruche del Nether; vendere perle di Ender e bottiglie di esperienza |
+| 3 | Muratori | Tagliapietre | Comprare palline d'argilla, pietra (non ciottoli), granito, andesite e diorite; vendere quarzo e terracotta decorativa |
+| 2 | Fabbri di armi | Mola | Comprare lingotti di ferro; vendere spade e asce di diamante |
+| 2 | Pastori | Telaio | Comprare lana e coloranti dal giocatore |
+| 2 | Macellai | Affumicatore | Comprare carne cruda, blocchi di kelp essiccato e bacche dolci |
+| 1 | Cartografo | Banco da cartografia | Comprare carta e pannelli di vetro; vendere mappe di esplorazione |
+| 1 | Pescatore | Barile | Comprare filo, carbone e pesce dal giocatore |
+| 1 | Conciatore | Calderone | Comprare cuoio dal giocatore; vendere selle |
+| **32** | **Totale** | | |
+
+**Nota sulle offerte:** quelle dei livelli superiori vanno sbloccate commerciando; non si possono vedere o rerollare tutte al livello Novizio. Prima dello scambio iniziale, quando possibile, valutare le offerte Novizio. Dopo il primo scambio, il mestiere è bloccato. Alcune offerte sono casuali, quindi quattro fabbri di armature non garantiscono necessariamente ogni pezzo di diamante: verificare i pezzi realmente disponibili a Maestro.
+
+**Collegamento alle farm MEGAZERO:** ortaggi/zucche/angurie, legname, ferro, carne marcia, oro, nether wart, argilla/pietra, lana, carne, kelp, bacche, carta, cuoio. Le 4 compostiere già presenti nel circuito originale sono componenti meccanici, **non devono essere sostituite**.
+
 ## Obiettivo 39 incantesimi commerciabili — 15 ancora senza postazione dedicata
 
 **Confronto 01/11/2026:** 24 incantesimi distinti risultano registrati come offerta principale nelle postazioni 1–32. Per completare la collezione dei **39 incantesimi acquistabili dai bibliotecari in Java 1.21.1**, mancano le seguenti **15 postazioni con libro principale bloccato**. Le 48 postazioni senza incantesimo bloccato sono già assegnate a villager; non sono vuote.
