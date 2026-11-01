@@ -50,7 +50,7 @@
 | **33** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **34** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **35** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
-| **36** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **36** | — | **Bibliotecario** | **Flagello degli Artropodi V** | **OFFERTA CONFERMATA DAL GIOCATORE; prezzo e blocco scambio non specificati** |
 | **37** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **38** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **39** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
@@ -152,6 +152,8 @@ Le note storiche di `TRADING_HALL.md` citano **Respirazione III e Tiro Multiplo 
 Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo Felpato (Swift Sneak)** e **Raffica di Vento (Wind Burst)**: sono esclusi dal commercio. L'esperimento opzionale `Villager Trade Rebalance` cambia le offerte; il piano si riferisce alle normali offerte di Java 1.21.1.
 
 ## Storico del cambiamento
+
+- 01/11/2026: **#36** bibliotecario con **Flagello degli Artropodi V**; offerta confermata, prezzo e blocco scambio non ancora specificati.
 
 - 01/11/2026: **frecciai, nuovo tentativo** — il giocatore segnala che i candidati valutati dopo il #48 non hanno scambi interessanti. **Nessuna nuova assegnazione confermata**: #47, #49, #50 restano da definire; #48 con Danno Istantaneo II resta confermato.
 
