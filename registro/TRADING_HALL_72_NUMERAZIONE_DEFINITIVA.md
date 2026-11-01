@@ -66,7 +66,7 @@
 | **49** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **50** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **51** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
-| **52** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **52** | — | **Corazzaio (fabbricante di armature)** | **Set completo di diamante: stivali 15, pantaloni 27, corazza 39, elmo 18 smeraldi** | **OFFERTE MOSTRATE IN ANTEPRIMA; commercio/blocco non confermato** |
 | **53** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **54** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **55** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
@@ -148,6 +148,8 @@ Le note storiche di `TRADING_HALL.md` citano **Respirazione III e Tiro Multiplo 
 Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo Felpato (Swift Sneak)** e **Raffica di Vento (Wind Burst)**: sono esclusi dal commercio. L'esperimento opzionale `Villager Trade Rebalance` cambia le offerte; il piano si riferisce alle normali offerte di Java 1.21.1.
 
 ## Storico del cambiamento
+
+- 01/11/2026: **postazione #52** = corazzaio; dalla schermata mostrata i prezzi per un set completo di armatura di diamante sono stivali **15**, pantaloni **27**, corazza **39**, elmo **18** smeraldi. Non è stato confermato se gli scambi sono bloccati mediante commercio. La presenza di un set intero su #52 permette di considerare gli altri corazzai come eventuali alternative/doppioni, senza cambiarne ancora il piano.
 
 - 01/11/2026: **postazione #48** assegnata a **Frecciaio**, offerta segnalata **Freccia di Danno Istantaneo II**. Non è stato specificato se lo scambio è già bloccato tramite commercio.
 
