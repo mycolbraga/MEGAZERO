@@ -153,6 +153,8 @@ Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo F
 
 ## Storico del cambiamento
 
+- 01/11/2026: **CONCIATORE: pelle di coniglio** — il giocatore conferma lo scambio relativo alla pelle di coniglio per il conciatore, ma **non ha ancora indicato la postazione**. Non attribuire arbitrariamente #70 o #72, né prezzi o blocco degli scambi.
+
 - 01/11/2026: completati **2/2 macellai**: **#65** compra **costolette di maiale crude**, **#67** compra **pollo crudo**. Prezzi e stato blocco non specificati.
 
 - 01/11/2026: postazione **#64** = **cartografo**, offre **mappa delle Trial Chambers**, confermata dal giocatore. Prezzo e stato di blocco commerciale non specificati.
