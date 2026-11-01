@@ -90,6 +90,12 @@
 
 **Stato delle 72 postazioni (01/11/2026): tutte 72 ASSEGNATE a villager, nessuna vuota.** **24 con incantesimo registrato**, **48 assegnate senza incantesimi bloccati** (4, 5, 10, 14, 19, 20, 22, 26 e 33–72). Le professioni e offerte individuali delle 48 senza incantesimo bloccato non sono state specificate: non supporre che siano tutti bibliotecari. Il livello di Fortuna del Mare alla nuova 16 non è stato specificato in questa comunicazione; dalle note storiche la ex 25 aveva Fortuna del Mare III, da riconfermare.
 
+## Piano confermato: 40 bibliotecari + 32 altri mestieri
+
+**Decisione del giocatore (01/11/2026):** mantenere **40 bibliotecari**, anche quando i relativi incantesimi sono già disponibili come offerte secondarie di un altro bibliotecario. Non eliminare dalla lista dei 15 mancanti Respirazione III, Tiro Multiplo I o Protezione dalle Esplosioni IV solo perché risultavano come offerte secondarie storiche. L'obiettivo è un posto dedicato per ognuno dei 39 incantesimi commerciabili, **più un bibliotecario con un duplicato** (quale duplicato scegliere ancora da confermare; Ripristino I è un'opzione, non assegnata). Gli altri 32 posti sono riservati agli altri mestieri.
+
+**Contabilità obiettivo:** 24 libri principali registrati + 15 libri principali ancora da bloccare + 1 doppione = **40 bibliotecari**. Le 48 postazioni attualmente senza incantesimo bloccato restano occupate da villager; il loro futuro mestiere non è ancora assegnato singolarmente nel censimento.
+
 ## Obiettivo 39 incantesimi commerciabili — 15 ancora senza postazione dedicata
 
 **Confronto 01/11/2026:** 24 incantesimi distinti risultano registrati come offerta principale nelle postazioni 1–32. Per completare la collezione dei **39 incantesimi acquistabili dai bibliotecari in Java 1.21.1**, mancano le seguenti **15 postazioni con libro principale bloccato**. Le 48 postazioni senza incantesimo bloccato sono già assegnate a villager; non sono vuote.
