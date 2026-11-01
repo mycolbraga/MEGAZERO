@@ -75,9 +75,9 @@
 | **58** | — | **Chierico** | **Perle di Ender e zampe di coniglio** | **OFFERTE CONFERMATE DAL GIOCATORE; prezzi e stato blocco non specificati** |
 | **59** | — | **Chierico** | **Perle di Ender e zampe di coniglio** | **OFFERTE CONFERMATE DAL GIOCATORE; prezzi e stato blocco non specificati** |
 | **60** | — | **Chierico** | **Perle di Ender e zampe di coniglio** | **OFFERTE CONFERMATE DAL GIOCATORE; prezzi e stato blocco non specificati** |
-| **61** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
-| **62** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
-| **63** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **61** | — | **Muratore** | **Compra andesite → smeraldi** | **OFFERTA CONFERMATA DAL GIOCATORE; prezzi/stato blocco non specificati** |
+| **62** | — | **Muratore** | **Compra granito → smeraldi** | **OFFERTA CONFERMATA DAL GIOCATORE; prezzi/stato blocco non specificati** |
+| **63** | — | **Muratore** | **Compra diorite → smeraldi** | **OFFERTA CONFERMATA DAL GIOCATORE; prezzi/stato blocco non specificati** |
 | **64** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **65** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **66** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
@@ -152,6 +152,8 @@ Le note storiche di `TRADING_HALL.md` citano **Respirazione III e Tiro Multiplo 
 Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo Felpato (Swift Sneak)** e **Raffica di Vento (Wind Burst)**: sono esclusi dal commercio. L'esperimento opzionale `Villager Trade Rebalance` cambia le offerte; il piano si riferisce alle normali offerte di Java 1.21.1.
 
 ## Storico del cambiamento
+
+- 01/11/2026: i **3 muratori** sono stati assegnati: **#61 andesite**, **#62 granito**, **#63 diorite**. Sono gli scambi da cui il villager compra le rispettive pietre; prezzi e blocco dei commerci non comunicati. 3/3 muratori censiti.
 
 - 01/11/2026: assegnati i numeri **#58–60 ai tre chierici**, tutti con offerte perle di Ender e zampe di coniglio. Prezzi e stato blocco commerciale non dichiarati.
 
