@@ -18,7 +18,7 @@
 | **1** | **1** | Bibliotecario | **Saccheggio III** (associazione dal censimento storico; il giocatore ha detto «1 rimane uguale») | **CONFERMATA: invariata** |
 | **2** | **32** | Bibliotecario | **Fiamma I** (il giocatore: «2. ex 32 quello con Fiamma») | **CONFERMATA** |
 | **3** | **2** | Bibliotecario | **Risacca III** | **CONFERMATA** |
-| **4** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **4** | — | **Bibliotecario** | **Tiro Multiplo I** | **OFFERTA CONFERMATA DAL GIOCATORE; prezzo e blocco scambio non specificati** |
 | **5** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **6** | **30** | Bibliotecario | **Ripristino I** | **CONFERMATA** |
 | **7** | **4** | Bibliotecario | **Spine III** | **CONFERMATA** |
@@ -152,6 +152,8 @@ Le note storiche di `TRADING_HALL.md` citano **Respirazione III e Tiro Multiplo 
 Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo Felpato (Swift Sneak)** e **Raffica di Vento (Wind Burst)**: sono esclusi dal commercio. L'esperimento opzionale `Villager Trade Rebalance` cambia le offerte; il piano si riferisce alle normali offerte di Java 1.21.1.
 
 ## Storico del cambiamento
+
+- 01/11/2026: **#4** bibliotecario con **Tiro Multiplo I** (livello unico); prezzo e stato blocco scambio non comunicati.
 
 - 01/11/2026: **#10** bibliotecario con **Passo Gelato II** (livello massimo); prezzo e stato blocco scambio non comunicati.
 
