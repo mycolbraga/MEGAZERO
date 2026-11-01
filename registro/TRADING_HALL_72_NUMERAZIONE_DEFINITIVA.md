@@ -69,7 +69,7 @@
 | **52** | — | **Corazzaio (fabbricante di armature)** | **Set completo di diamante: stivali 15, pantaloni 27, corazza 39, elmo 18 smeraldi** | **OFFERTE MOSTRATE IN ANTEPRIMA; commercio/blocco non confermato** |
 | **53** | — | **Corazzaio (fabbricante di armature)** | **Set completo di diamante: stivali, pantaloni, corazza, elmo (prezzi non comunicati)** | **CONFERMATO DAL GIOCATORE; blocco scambi non specificato** |
 | **54** | — | **Corazzaio (fabbricante di armature)** | **Set completo di diamante: stivali, pantaloni, corazza, elmo (prezzi non comunicati)** | **CONFERMATO DAL GIOCATORE; blocco scambi non specificato** |
-| **55** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **55** | — | **Fabbro di attrezzi** | **Piccone e ascia di diamante (pala non segnalata)** | **CONFERMATO DAL GIOCATORE; prezzi e stato blocco scambi non specificati** |
 | **56** | — | **Fabbro di attrezzi** | **Full kit di attrezzi di diamante (segnalato dal giocatore; singoli pezzi/prezzi da dettagliare)** | **CONFERMATO DAL GIOCATORE; stato scambi bloccati non specificato** |
 | **57** | — | **Fabbro di attrezzi** | **Piccone, ascia e pala di diamante** | **OFFERTE CONFERMATE DAL GIOCATORE; prezzi e scambi bloccati non specificati** |
 | **58** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
@@ -148,6 +148,8 @@ Le note storiche di `TRADING_HALL.md` citano **Respirazione III e Tiro Multiplo 
 Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo Felpato (Swift Sneak)** e **Raffica di Vento (Wind Burst)**: sono esclusi dal commercio. L'esperimento opzionale `Villager Trade Rebalance` cambia le offerte; il piano si riferisce alle normali offerte di Java 1.21.1.
 
 ## Storico del cambiamento
+
+- 01/11/2026: **postazione #55** = terzo **fabbro di attrezzi**: offre **piccone e ascia di diamante**, **pala non segnalata**. Prezzi e stato blocco non confermati. Con #56 e #57, 3/3 fabbri di attrezzi censiti.
 
 - 01/11/2026: **postazione #56** = secondo **fabbro di attrezzi**, con **full kit** di attrezzi di diamante segnalato dal giocatore. Non attribuire prezzi o elenco pezzi non confermati esplicitamente; screenshot inviato a supporto. Stato blocco commerciale non precisato.
 
