@@ -80,9 +80,9 @@
 | **63** | — | **Muratore** | **Compra diorite → smeraldi** | **OFFERTA CONFERMATA DAL GIOCATORE; prezzi/stato blocco non specificati** |
 | **64** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **65** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
-| **66** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **66** | — | **Pastore** | **Lana bianca e marrone** (acquisto lana → smeraldi) | **OFFERTE CONFERMATE DAL GIOCATORE; prezzi/stato blocco non specificati** |
 | **67** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
-| **68** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **68** | — | **Pastore** | **Lana bianca e grigia** (acquisto lana → smeraldi) | **OFFERTE CONFERMATE DAL GIOCATORE; prezzi/stato blocco non specificati** |
 | **69** | — | **Fabbro di armi (armaiolo)** | **Spada di diamante: Indistruttibilità III**; **ascia di diamante: Efficienza II** | **OFFERTE CONFERMATE DAL GIOCATORE; prezzi/stato blocco non specificati** |
 | **70** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **71** | — | **Fabbro di armi (armaiolo)** | **Spada di diamante: Anatema II**; **ascia di diamante: Indistruttibilità II** | **OFFERTE CONFERMATE DAL GIOCATORE; prezzi/stato blocco non specificati** |
@@ -152,6 +152,8 @@ Le note storiche di `TRADING_HALL.md` citano **Respirazione III e Tiro Multiplo 
 Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo Felpato (Swift Sneak)** e **Raffica di Vento (Wind Burst)**: sono esclusi dal commercio. L'esperimento opzionale `Villager Trade Rebalance` cambia le offerte; il piano si riferisce alle normali offerte di Java 1.21.1.
 
 ## Storico del cambiamento
+
+- 01/11/2026: **2 pastori completati**: postazione **#66** (lana bianca e marrone) e **#68** (lana bianca e grigia). Prezzi e stato blocco commerciale non specificati.
 
 - 01/11/2026: nuovi **fabbri di armi** censiti alle postazioni **#69** (spada Indistruttibilità III, ascia Efficienza II) e **#71** (spada Anatema II, ascia Indistruttibilità II). Questi numeri prevalgono sull'ipotesi precedente #64–65, che non era confermata dal giocatore; non attribuire prezzi né assumere scambi già bloccati.
 
