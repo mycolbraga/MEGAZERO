@@ -83,9 +83,9 @@
 | **66** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **67** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **68** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
-| **69** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **69** | — | **Fabbro di armi (armaiolo)** | **Spada di diamante: Indistruttibilità III**; **ascia di diamante: Efficienza II** | **OFFERTE CONFERMATE DAL GIOCATORE; prezzi/stato blocco non specificati** |
 | **70** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
-| **71** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **71** | — | **Fabbro di armi (armaiolo)** | **Spada di diamante: Anatema II**; **ascia di diamante: Indistruttibilità II** | **OFFERTE CONFERMATE DAL GIOCATORE; prezzi/stato blocco non specificati** |
 | **72** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 
 **Stato delle 72 postazioni (01/11/2026): tutte 72 ASSEGNATE a villager, nessuna vuota.** **24 con incantesimo registrato**, **48 senza incantesimi bloccati** (4, 5, 10, 14, 19, 20, 22, 26 e 33–72). Fra queste ultime, **6 contadini identificati:** #43 (mele), #41, #42, #44, #45, #46 (carote d'oro e torta); non è stato specificato se i relativi scambi sono già stati bloccati. Per le altre 42 postazioni senza incantesimi bloccati, mestieri/offerte da registrare. Il livello di Fortuna del Mare alla nuova 16 non è stato specificato in questa comunicazione; dalle note storiche la ex 25 aveva Fortuna del Mare III, da riconfermare.
@@ -152,6 +152,8 @@ Le note storiche di `TRADING_HALL.md` citano **Respirazione III e Tiro Multiplo 
 Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo Felpato (Swift Sneak)** e **Raffica di Vento (Wind Burst)**: sono esclusi dal commercio. L'esperimento opzionale `Villager Trade Rebalance` cambia le offerte; il piano si riferisce alle normali offerte di Java 1.21.1.
 
 ## Storico del cambiamento
+
+- 01/11/2026: nuovi **fabbri di armi** censiti alle postazioni **#69** (spada Indistruttibilità III, ascia Efficienza II) e **#71** (spada Anatema II, ascia Indistruttibilità II). Questi numeri prevalgono sull'ipotesi precedente #64–65, che non era confermata dal giocatore; non attribuire prezzi né assumere scambi già bloccati.
 
 - 01/11/2026: i **3 muratori** sono stati assegnati: **#61 andesite**, **#62 granito**, **#63 diorite**. Sono gli scambi da cui il villager compra le rispettive pietre; prezzi e blocco dei commerci non comunicati. 3/3 muratori censiti.
 
