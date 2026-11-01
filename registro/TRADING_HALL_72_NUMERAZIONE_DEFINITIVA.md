@@ -79,9 +79,9 @@
 | **62** | — | **Muratore** | **Compra granito → smeraldi** | **OFFERTA CONFERMATA DAL GIOCATORE; prezzi/stato blocco non specificati** |
 | **63** | — | **Muratore** | **Compra diorite → smeraldi** | **OFFERTA CONFERMATA DAL GIOCATORE; prezzi/stato blocco non specificati** |
 | **64** | — | **Cartografo** | **Mappa delle Trial Chambers** | **OFFERTA CONFERMATA DAL GIOCATORE; prezzi/stato blocco non specificati** |
-| **65** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **65** | — | **Macellaio** | **Compra costolette di maiale crude → smeraldi** | **OFFERTA CONFERMATA DAL GIOCATORE; prezzo/stato blocco non specificati** |
 | **66** | — | **Pastore** | **Lana bianca e marrone** (acquisto lana → smeraldi) | **OFFERTE CONFERMATE DAL GIOCATORE; prezzi/stato blocco non specificati** |
-| **67** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **67** | — | **Macellaio** | **Compra pollo crudo → smeraldi** | **OFFERTA CONFERMATA DAL GIOCATORE; prezzo/stato blocco non specificati** |
 | **68** | — | **Pastore** | **Lana bianca e grigia** (acquisto lana → smeraldi) | **OFFERTE CONFERMATE DAL GIOCATORE; prezzi/stato blocco non specificati** |
 | **69** | — | **Fabbro di armi (armaiolo)** | **Spada di diamante: Indistruttibilità III**; **ascia di diamante: Efficienza II** | **OFFERTE CONFERMATE DAL GIOCATORE; prezzi/stato blocco non specificati** |
 | **70** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
@@ -152,6 +152,8 @@ Le note storiche di `TRADING_HALL.md` citano **Respirazione III e Tiro Multiplo 
 Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo Felpato (Swift Sneak)** e **Raffica di Vento (Wind Burst)**: sono esclusi dal commercio. L'esperimento opzionale `Villager Trade Rebalance` cambia le offerte; il piano si riferisce alle normali offerte di Java 1.21.1.
 
 ## Storico del cambiamento
+
+- 01/11/2026: completati **2/2 macellai**: **#65** compra **costolette di maiale crude**, **#67** compra **pollo crudo**. Prezzi e stato blocco non specificati.
 
 - 01/11/2026: postazione **#64** = **cartografo**, offre **mappa delle Trial Chambers**, confermata dal giocatore. Prezzo e stato di blocco commerciale non specificati.
 
