@@ -78,7 +78,7 @@
 | **61** | — | **Muratore** | **Compra andesite → smeraldi** | **OFFERTA CONFERMATA DAL GIOCATORE; prezzi/stato blocco non specificati** |
 | **62** | — | **Muratore** | **Compra granito → smeraldi** | **OFFERTA CONFERMATA DAL GIOCATORE; prezzi/stato blocco non specificati** |
 | **63** | — | **Muratore** | **Compra diorite → smeraldi** | **OFFERTA CONFERMATA DAL GIOCATORE; prezzi/stato blocco non specificati** |
-| **64** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **64** | — | **Cartografo** | **Mappa delle Trial Chambers** | **OFFERTA CONFERMATA DAL GIOCATORE; prezzi/stato blocco non specificati** |
 | **65** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **66** | — | **Pastore** | **Lana bianca e marrone** (acquisto lana → smeraldi) | **OFFERTE CONFERMATE DAL GIOCATORE; prezzi/stato blocco non specificati** |
 | **67** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
@@ -152,6 +152,8 @@ Le note storiche di `TRADING_HALL.md` citano **Respirazione III e Tiro Multiplo 
 Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo Felpato (Swift Sneak)** e **Raffica di Vento (Wind Burst)**: sono esclusi dal commercio. L'esperimento opzionale `Villager Trade Rebalance` cambia le offerte; il piano si riferisce alle normali offerte di Java 1.21.1.
 
 ## Storico del cambiamento
+
+- 01/11/2026: postazione **#64** = **cartografo**, offre **mappa delle Trial Chambers**, confermata dal giocatore. Prezzo e stato di blocco commerciale non specificati.
 
 - 01/11/2026: **2 pastori completati**: postazione **#66** (lana bianca e marrone) e **#68** (lana bianca e grigia). Prezzi e stato blocco commerciale non specificati.
 
