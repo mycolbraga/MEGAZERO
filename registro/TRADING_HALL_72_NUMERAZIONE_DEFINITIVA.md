@@ -30,8 +30,25 @@
 | **13** | **7** | Bibliotecario | **Efficienza V** | **CONFERMATA** |
 | **14** | — | — | **Vuota** | **CONFERMATA: VUOTA** |
 | **15** | **8** | Bibliotecario | **Fortuna III** | **CONFERMATA** |
+| **16** | **25** | Bibliotecario | **Fortuna del Mare (livello non specificato in questa rilevazione)** | **CONFERMATA** |
+| **17** | **9** | Bibliotecario | **Tocco di Velluto I (Silk Touch)** | **CONFERMATA** |
+| **18** | **26** | Bibliotecario | **Protezione IV** | **CONFERMATA** |
+| **19** | — | — | **Vuota** | **CONFERMATA: VUOTA** |
+| **20** | — | — | **Vuota** | **CONFERMATA: VUOTA** |
+| **21** | **11** | Bibliotecario | **Indistruttibilità III (Unbreaking III)** | **CONFERMATA** |
+| **22** | — | — | **Vuota** | **CONFERMATA: VUOTA** |
+| **23** | **12** | Bibliotecario | **Potenza V** | **CONFERMATA** |
+| **24** | **21** | Bibliotecario | **Contraccolpo II** | **CONFERMATA** |
+| **25** | **13** | Bibliotecario | **Affilatezza V** | **CONFERMATA** |
+| **26** | — | — | **Vuota** | **CONFERMATA: VUOTA** |
+| **27** | **14** | Bibliotecario | **Aspetto di Fuoco II** | **CONFERMATA** |
+| **28** | **19** | Bibliotecario | **Impalamento V** | **CONFERMATA** |
+| **29** | **15** | Bibliotecario | **Protezione dai Proiettili IV** | **CONFERMATA** |
+| **30** | **18** | Bibliotecario | **Carica Rapida III** | **CONFERMATA** |
+| **31** | **16** | Bibliotecario | **Atterraggio Morbido IV** | **CONFERMATA** |
+| **32** | **17** | Bibliotecario | **Lama Sferzante III** | **CONFERMATA** |
 
-**Da rinumerare: 16–72.** Postazioni 1–15 censite; 4, 5, 10 e 14 confermate vuote. Tutte le altre sono da definire in base alle indicazioni del giocatore.
+**Da rinumerare: 33–72.** Postazioni **1–32 censite**: **24 occupate, 8 vuote** (4, 5, 10, 14, 19, 20, 22 e 26). Le restanti 40 postazioni non sono ancora state censite. Il livello di Fortuna del Mare alla nuova 16 non è stato specificato in questa comunicazione; dalle note storiche la ex 25 aveva Fortuna del Mare III, da riconfermare.
 
 ## Storico del cambiamento
 
@@ -39,5 +56,6 @@
 - Nuova **1 = vecchia 1** (invariata); da censimento del 24/10/2026 vecchia 1: Saccheggio III, prezzo storico 5 smeraldi.
 - Nuova **2 = vecchia 32**, bibliotecario con Fiamma I; prezzo storico 1 smeraldo nelle note di trading, **non riconfermato in questa rinumerazione**.
 - 01/11/2026: aggiunte postazioni 3–15 secondo il giocatore: nuova #3 = ex #2 (Risacca III); #4 vuota; #5 vuota; #6 = ex #30 (Ripristino); #7 = ex #4 (Spine III); #8 = ex #29 (Lealtà III); #9 = ex #5 (Infinità); #10 vuota; #11 = ex #6 (Canalizzazione); #12 = ex #27 (Affinità all’Acqua); #13 = ex #7 (Efficienza V); #14 vuota; #15 = ex #8 (Fortuna III). I livelli I degli incantesimi a livello unico sono esplicitati per chiarezza.
+- 01/11/2026: ricensite le nuove postazioni **16–32** secondo indicazioni dirette del giocatore, incluso Protezione IV come nuova #18 = ex #26. I vecchi riferimenti delle postazioni non prevalgono su questo nuovo censimento. Le nuove #19, #20, #22, #26 sono vuote.
 - **In caso di discordanza** tra vecchie associazioni numeriche e la nuova mappatura, prevale il censimento diretto attuale del giocatore. Non correggere in automatico.
 - Continuare aggiornando questa tabella durante il censimento, senza sovrascrivere le vecchie assegnazioni prima che il giocatore le confermi.
