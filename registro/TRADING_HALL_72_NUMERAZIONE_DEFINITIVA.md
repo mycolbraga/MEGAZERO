@@ -96,6 +96,10 @@
 
 **Contabilità obiettivo:** 24 libri principali registrati + 15 libri principali ancora da bloccare + 1 doppione = **40 bibliotecari**. Le 48 postazioni attualmente senza incantesimo bloccato restano occupate da villager; il loro futuro mestiere non è ancora assegnato singolarmente nel censimento.
 
+## Chierici — offerte controllate (01/11/2026)
+
+**3 su 3 chierici** risultano avere tra le offerte **perle di Ender** e **zampe di coniglio** (confermato dal giocatore). I numeri delle tre postazioni non sono ancora stati comunicati e non vanno dedotti da un ordine ipotizzato. Prezzi e conferma di avvenuto blocco commerciale non ancora registrati.
+
 ## Piano dei 32 mestieri non bibliotecari — scambi da cercare
 
 **Distribuzione per completare le 72 postazioni:** 40 bibliotecari + 32 altri mestieri. Le **32 professioni non sono ancora associate ai numeri fisici delle postazioni**, che vanno assegnati dal giocatore, senza alterare la numerazione già confermata.
