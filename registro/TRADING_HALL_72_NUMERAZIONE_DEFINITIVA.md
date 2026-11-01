@@ -90,6 +90,33 @@
 
 **Stato delle 72 postazioni (01/11/2026): tutte 72 ASSEGNATE a villager, nessuna vuota.** **24 con incantesimo registrato**, **48 assegnate senza incantesimi bloccati** (4, 5, 10, 14, 19, 20, 22, 26 e 33–72). Le professioni e offerte individuali delle 48 senza incantesimo bloccato non sono state specificate: non supporre che siano tutti bibliotecari. Il livello di Fortuna del Mare alla nuova 16 non è stato specificato in questa comunicazione; dalle note storiche la ex 25 aveva Fortuna del Mare III, da riconfermare.
 
+## Obiettivo 39 incantesimi commerciabili — 15 ancora senza postazione dedicata
+
+**Confronto 01/11/2026:** 24 incantesimi distinti risultano registrati come offerta principale nelle postazioni 1–32. Per completare la collezione dei **39 incantesimi acquistabili dai bibliotecari in Java 1.21.1**, mancano le seguenti **15 postazioni con libro principale bloccato**. Le 48 postazioni senza incantesimo bloccato sono già assegnate a villager; non sono vuote.
+
+| N. | Incantesimo da bloccare | Livello massimo | Stato |
+| ---: | --- | :---: | --- |
+| 1 | Flagello degli Artropodi | V | Da bloccare |
+| 2 | Protezione dalle Esplosioni | IV | Da bloccare |
+| 3 | Violazione (Breach, anche detta Breccia) | IV | Da bloccare |
+| 4 | Maledizione del Legame | I | Da bloccare |
+| 5 | Maledizione della Scomparsa | I | Da bloccare |
+| 6 | Densità | V | Da bloccare |
+| 7 | Passo Anfibio | III | Da bloccare |
+| 8 | Protezione dal Fuoco | IV | Da bloccare |
+| 9 | Passo Gelato | II | Da bloccare |
+| 10 | Esca | III | Da bloccare |
+| 11 | Tiro Multiplo | I | Da bloccare |
+| 12 | Perforazione | IV | Da bloccare |
+| 13 | Impatto | II | Da bloccare |
+| 14 | Respirazione | III | Da bloccare |
+| 15 | Anatema | V | Da bloccare |
+
+**ATTENZIONE alla differenza tra offerta principale e offerte secondarie:**
+Le note storiche di `TRADING_HALL.md` citano **Respirazione III e Tiro Multiplo I come offerte secondarie** del vecchio bibliotecario #9 (oggi postazione #17) e **Protezione dalle Esplosioni IV** come offerta secondaria del vecchio #13 (oggi #25). Le relative offerte non sono state riconfermate dopo la rinumerazione, e **non costituiscono nuovi libri principali bloccati**. Possono far risparmiare postazioni dedicate se risultano tuttora acquistabili: verificare in gioco prima di decidere i duplicati.
+
+Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo Felpato (Swift Sneak)** e **Raffica di Vento (Wind Burst)**: sono esclusi dal commercio. L'esperimento opzionale `Villager Trade Rebalance` cambia le offerte; il piano si riferisce alle normali offerte di Java 1.21.1.
+
 ## Storico del cambiamento
 
 - 01/11/2026: il giocatore ha chiesto di **rifare da zero** la numerazione perché la proposta precedente non coincideva con la disposizione reale.
