@@ -24,7 +24,7 @@
 | **7** | **4** | Bibliotecario | **Spine III** | **CONFERMATA** |
 | **8** | **29** | Bibliotecario | **Lealtà III** | **CONFERMATA** |
 | **9** | **5** | Bibliotecario | **Infinità I** | **CONFERMATA** |
-| **10** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **10** | — | **Bibliotecario** | **Passo Gelato II** | **OFFERTA CONFERMATA DAL GIOCATORE; prezzo e blocco scambio non specificati** |
 | **11** | **6** | Bibliotecario | **Canalizzazione I** | **CONFERMATA** |
 | **12** | **27** | Bibliotecario | **Affinità all'Acqua I** | **CONFERMATA** |
 | **13** | **7** | Bibliotecario | **Efficienza V** | **CONFERMATA** |
@@ -152,6 +152,8 @@ Le note storiche di `TRADING_HALL.md` citano **Respirazione III e Tiro Multiplo 
 Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo Felpato (Swift Sneak)** e **Raffica di Vento (Wind Burst)**: sono esclusi dal commercio. L'esperimento opzionale `Villager Trade Rebalance` cambia le offerte; il piano si riferisce alle normali offerte di Java 1.21.1.
 
 ## Storico del cambiamento
+
+- 01/11/2026: **#10** bibliotecario con **Passo Gelato II** (livello massimo); prezzo e stato blocco scambio non comunicati.
 
 - 01/11/2026: **#20** bibliotecario con **Maledizione della Scomparsa I** (livello unico); prezzo e stato blocco scambio non comunicati.
 
