@@ -153,6 +153,8 @@ Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo F
 
 ## Storico del cambiamento
 
+- 01/11/2026: **frecciai, nuovo tentativo** — il giocatore segnala che i candidati valutati dopo il #48 non hanno scambi interessanti. **Nessuna nuova assegnazione confermata**: #47, #49, #50 restano da definire; #48 con Danno Istantaneo II resta confermato.
+
 - 01/11/2026: **CONCIATORE postazione #72**, compra **pelle di coniglio** per smeraldi, confermato dal giocatore. Prezzi e blocco scambi non comunicati.
 
 - 01/11/2026: completati **2/2 macellai**: **#65** compra **costolette di maiale crude**, **#67** compra **pollo crudo**. Prezzi e stato blocco non specificati.
