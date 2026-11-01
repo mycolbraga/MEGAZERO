@@ -34,7 +34,7 @@
 | **17** | **9** | Bibliotecario | **Tocco di Velluto I (Silk Touch)** | **CONFERMATA** |
 | **18** | **26** | Bibliotecario | **Protezione IV** | **CONFERMATA** |
 | **19** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
-| **20** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **20** | — | **Bibliotecario** | **Maledizione della Scomparsa I** | **OFFERTA CONFERMATA DAL GIOCATORE; prezzo e blocco scambio non specificati** |
 | **21** | **11** | Bibliotecario | **Indistruttibilità III (Unbreaking III)** | **CONFERMATA** |
 | **22** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **23** | **12** | Bibliotecario | **Potenza V** | **CONFERMATA** |
@@ -152,6 +152,8 @@ Le note storiche di `TRADING_HALL.md` citano **Respirazione III e Tiro Multiplo 
 Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo Felpato (Swift Sneak)** e **Raffica di Vento (Wind Burst)**: sono esclusi dal commercio. L'esperimento opzionale `Villager Trade Rebalance` cambia le offerte; il piano si riferisce alle normali offerte di Java 1.21.1.
 
 ## Storico del cambiamento
+
+- 01/11/2026: **#20** bibliotecario con **Maledizione della Scomparsa I** (livello unico); prezzo e stato blocco scambio non comunicati.
 
 - 01/11/2026: **#37** bibliotecario con **Maledizione del Legame I**, livello unico; prezzo e stato blocco scambio non specificati.
 
