@@ -62,7 +62,7 @@
 | **45** | — | **Contadino** | **Carote d'oro e torta** | **MESTIERE E OFFERTA SEGNALATI; blocco scambi non specificato** |
 | **46** | — | **Contadino** | **Carote d'oro e torta** | **MESTIERE E OFFERTA SEGNALATI; blocco scambi non specificato** |
 | **47** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
-| **48** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **48** | — | **Frecciaio** | **Freccia di Danno Istantaneo II** | **CONFERMATA DAL GIOCATORE** |
 | **49** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **50** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **51** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
@@ -148,6 +148,9 @@ Le note storiche di `TRADING_HALL.md` citano **Respirazione III e Tiro Multiplo 
 Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo Felpato (Swift Sneak)** e **Raffica di Vento (Wind Burst)**: sono esclusi dal commercio. L'esperimento opzionale `Villager Trade Rebalance` cambia le offerte; il piano si riferisce alle normali offerte di Java 1.21.1.
 
 ## Storico del cambiamento
+
+- 01/11/2026: **postazione #48** assegnata a **Frecciaio**, offerta segnalata **Freccia di Danno Istantaneo II**. Non è stato specificato se lo scambio è già bloccato tramite commercio.
+
 
 - 01/11/2026: il giocatore ha chiesto di **rifare da zero** la numerazione perché la proposta precedente non coincideva con la disposizione reale.
 - Nuova **1 = vecchia 1** (invariata); da censimento del 24/10/2026 vecchia 1: Saccheggio III, prezzo storico 5 smeraldi.
