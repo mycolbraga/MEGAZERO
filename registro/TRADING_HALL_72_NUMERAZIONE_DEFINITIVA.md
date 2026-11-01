@@ -71,7 +71,7 @@
 | **54** | — | **Corazzaio (fabbricante di armature)** | **Set completo di diamante: stivali, pantaloni, corazza, elmo (prezzi non comunicati)** | **CONFERMATO DAL GIOCATORE; blocco scambi non specificato** |
 | **55** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **56** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
-| **57** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **57** | — | **Fabbro di attrezzi** | **Piccone, ascia e pala di diamante** | **OFFERTE CONFERMATE DAL GIOCATORE; prezzi e scambi bloccati non specificati** |
 | **58** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **59** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **60** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
@@ -148,6 +148,8 @@ Le note storiche di `TRADING_HALL.md` citano **Respirazione III e Tiro Multiplo 
 Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo Felpato (Swift Sneak)** e **Raffica di Vento (Wind Burst)**: sono esclusi dal commercio. L'esperimento opzionale `Villager Trade Rebalance` cambia le offerte; il piano si riferisce alle normali offerte di Java 1.21.1.
 
 ## Storico del cambiamento
+
+- 01/11/2026: **postazione #57** = **fabbro di attrezzi**, con **piccone, ascia e pala di diamante**. Prezzi e stato di blocco delle offerte non comunicati. Non confondere con fabbro d'armi.
 
 - 01/11/2026: **postazioni #51 e #53**: entrambi **corazzai** che offrono il set completo di armatura di diamante (elmo, corazza, pantaloni, stivali). Prezzi non comunicati, non dedurre dal #52. **Tutti e quattro i corazzai programmati (#51–54) risultano così individuati**, ciascuno con il set completo.
 
