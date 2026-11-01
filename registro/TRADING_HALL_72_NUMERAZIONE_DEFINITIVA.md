@@ -86,7 +86,7 @@
 | **69** | — | **Fabbro di armi (armaiolo)** | **Spada di diamante: Indistruttibilità III**; **ascia di diamante: Efficienza II** | **OFFERTE CONFERMATE DAL GIOCATORE; prezzi/stato blocco non specificati** |
 | **70** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **71** | — | **Fabbro di armi (armaiolo)** | **Spada di diamante: Anatema II**; **ascia di diamante: Indistruttibilità II** | **OFFERTE CONFERMATE DAL GIOCATORE; prezzi/stato blocco non specificati** |
-| **72** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **72** | — | **Conciatore** | **Compra pelle di coniglio → smeraldi** | **OFFERTA CONFERMATA DAL GIOCATORE; prezzo/stato blocco non specificati** |
 
 **Stato delle 72 postazioni (01/11/2026): tutte 72 ASSEGNATE a villager, nessuna vuota.** **24 con incantesimo registrato**, **48 senza incantesimi bloccati** (4, 5, 10, 14, 19, 20, 22, 26 e 33–72). Fra queste ultime, **6 contadini identificati:** #43 (mele), #41, #42, #44, #45, #46 (carote d'oro e torta); non è stato specificato se i relativi scambi sono già stati bloccati. Per le altre 42 postazioni senza incantesimi bloccati, mestieri/offerte da registrare. Il livello di Fortuna del Mare alla nuova 16 non è stato specificato in questa comunicazione; dalle note storiche la ex 25 aveva Fortuna del Mare III, da riconfermare.
 
@@ -153,7 +153,7 @@ Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo F
 
 ## Storico del cambiamento
 
-- 01/11/2026: **CONCIATORE: pelle di coniglio** — il giocatore conferma lo scambio relativo alla pelle di coniglio per il conciatore, ma **non ha ancora indicato la postazione**. Non attribuire arbitrariamente #70 o #72, né prezzi o blocco degli scambi.
+- 01/11/2026: **CONCIATORE postazione #72**, compra **pelle di coniglio** per smeraldi, confermato dal giocatore. Prezzi e blocco scambi non comunicati.
 
 - 01/11/2026: completati **2/2 macellai**: **#65** compra **costolette di maiale crude**, **#67** compra **pollo crudo**. Prezzi e stato blocco non specificati.
 
