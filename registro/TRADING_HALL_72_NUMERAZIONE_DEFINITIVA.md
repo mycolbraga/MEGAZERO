@@ -55,12 +55,12 @@
 | **38** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **39** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **40** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
-| **41** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
-| **42** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
-| **43** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
-| **44** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
-| **45** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
-| **46** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **41** | — | **Contadino** | **Carote d'oro e torta** | **MESTIERE E OFFERTA SEGNALATI; blocco scambi non specificato** |
+| **42** | — | **Contadino** | **Carote d'oro e torta** | **MESTIERE E OFFERTA SEGNALATI; blocco scambi non specificato** |
+| **43** | — | **Contadino** | **Mele** | **MESTIERE E OFFERTA SEGNALATI; blocco scambi non specificato** |
+| **44** | — | **Contadino** | **Carote d'oro e torta** | **MESTIERE E OFFERTA SEGNALATI; blocco scambi non specificato** |
+| **45** | — | **Contadino** | **Carote d'oro e torta** | **MESTIERE E OFFERTA SEGNALATI; blocco scambi non specificato** |
+| **46** | — | **Contadino** | **Carote d'oro e torta** | **MESTIERE E OFFERTA SEGNALATI; blocco scambi non specificato** |
 | **47** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **48** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **49** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
@@ -88,7 +88,7 @@
 | **71** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **72** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 
-**Stato delle 72 postazioni (01/11/2026): tutte 72 ASSEGNATE a villager, nessuna vuota.** **24 con incantesimo registrato**, **48 assegnate senza incantesimi bloccati** (4, 5, 10, 14, 19, 20, 22, 26 e 33–72). Le professioni e offerte individuali delle 48 senza incantesimo bloccato non sono state specificate: non supporre che siano tutti bibliotecari. Il livello di Fortuna del Mare alla nuova 16 non è stato specificato in questa comunicazione; dalle note storiche la ex 25 aveva Fortuna del Mare III, da riconfermare.
+**Stato delle 72 postazioni (01/11/2026): tutte 72 ASSEGNATE a villager, nessuna vuota.** **24 con incantesimo registrato**, **48 senza incantesimi bloccati** (4, 5, 10, 14, 19, 20, 22, 26 e 33–72). Fra queste ultime, **6 contadini identificati:** #43 (mele), #41, #42, #44, #45, #46 (carote d'oro e torta); non è stato specificato se i relativi scambi sono già stati bloccati. Per le altre 42 postazioni senza incantesimi bloccati, mestieri/offerte da registrare. Il livello di Fortuna del Mare alla nuova 16 non è stato specificato in questa comunicazione; dalle note storiche la ex 25 aveva Fortuna del Mare III, da riconfermare.
 
 ## Piano confermato: 40 bibliotecari + 32 altri mestieri
 
@@ -156,5 +156,6 @@ Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo F
 - 01/11/2026: ricensite le nuove postazioni **16–32** secondo indicazioni dirette del giocatore, incluso Protezione IV come nuova #18 = ex #26. I vecchi riferimenti delle postazioni non prevalgono su questo nuovo censimento. Le nuove #19, #20, #22, #26 sono **assegnate senza incantesimo bloccato**.
 - 01/11/2026: il giocatore conferma «LE ALTRE SONO ASSEGNATE SENZA INCANTESIMI BLOCCATI»: le postazioni **33–72** sono assegnate senza incantesimi bloccati; i mestieri individuali non sono stati specificati.
 - 01/11/2026: **CORREZIONE ESPLICITA** del giocatore «NO ANCHE LE VUOTE SONO ASSEGNATE SENZA INCANTESIMI». Le postazioni #4, #5, #10, #14, #19, #20, #22 e #26 **non sono vuote**: sono assegnate, senza incantesimo bloccato. Totale 72 assegnate, 24 con incantesimo registrato, 48 senza incantesimo bloccato.
+- 01/11/2026: contadini assegnati in via definitiva ai numeri **41, 42, 43, 44, 45, 46**. Il giocatore segnala **#43: mele**, **#41/#42/#44/#45/#46: carote d'oro e torta**. Non è specificato se siano scambi già bloccati o soltanto offerte osservate con la mod di anteprima.
 - **In caso di discordanza** tra vecchie associazioni numeriche e la nuova mappatura, prevale il censimento diretto attuale del giocatore. Non correggere in automatico.
 - Continuare aggiornando questa tabella durante il censimento, senza sovrascrivere le vecchie assegnazioni prima che il giocatore le confermi.
