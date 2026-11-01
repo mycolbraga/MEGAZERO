@@ -72,9 +72,9 @@
 | **55** | — | **Fabbro di attrezzi** | **Piccone e ascia di diamante (pala non segnalata)** | **CONFERMATO DAL GIOCATORE; prezzi e stato blocco scambi non specificati** |
 | **56** | — | **Fabbro di attrezzi** | **Full kit di attrezzi di diamante (segnalato dal giocatore; singoli pezzi/prezzi da dettagliare)** | **CONFERMATO DAL GIOCATORE; stato scambi bloccati non specificato** |
 | **57** | — | **Fabbro di attrezzi** | **Piccone, ascia e pala di diamante** | **OFFERTE CONFERMATE DAL GIOCATORE; prezzi e scambi bloccati non specificati** |
-| **58** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
-| **59** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
-| **60** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **58** | — | **Chierico** | **Perle di Ender e zampe di coniglio** | **OFFERTE CONFERMATE DAL GIOCATORE; prezzi e stato blocco non specificati** |
+| **59** | — | **Chierico** | **Perle di Ender e zampe di coniglio** | **OFFERTE CONFERMATE DAL GIOCATORE; prezzi e stato blocco non specificati** |
+| **60** | — | **Chierico** | **Perle di Ender e zampe di coniglio** | **OFFERTE CONFERMATE DAL GIOCATORE; prezzi e stato blocco non specificati** |
 | **61** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **62** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **63** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
@@ -98,7 +98,7 @@
 
 ## Chierici — offerte controllate (01/11/2026)
 
-**3 su 3 chierici** risultano avere tra le offerte **perle di Ender** e **zampe di coniglio** (confermato dal giocatore). I numeri delle tre postazioni non sono ancora stati comunicati e non vanno dedotti da un ordine ipotizzato. Prezzi e conferma di avvenuto blocco commerciale non ancora registrati.
+**3 su 3 chierici**, nelle postazioni **58, 59 e 60**, risultano avere tra le offerte **perle di Ender** e **zampe di coniglio** (confermato dal giocatore). Prezzi e conferma di avvenuto blocco commerciale non ancora registrati.
 
 ## Piano dei 32 mestieri non bibliotecari — scambi da cercare
 
@@ -152,6 +152,8 @@ Le note storiche di `TRADING_HALL.md` citano **Respirazione III e Tiro Multiplo 
 Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo Felpato (Swift Sneak)** e **Raffica di Vento (Wind Burst)**: sono esclusi dal commercio. L'esperimento opzionale `Villager Trade Rebalance` cambia le offerte; il piano si riferisce alle normali offerte di Java 1.21.1.
 
 ## Storico del cambiamento
+
+- 01/11/2026: assegnati i numeri **#58–60 ai tre chierici**, tutti con offerte perle di Ender e zampe di coniglio. Prezzi e stato blocco commerciale non dichiarati.
 
 - 01/11/2026: **postazione #55** = terzo **fabbro di attrezzi**: offre **piccone e ascia di diamante**, **pala non segnalata**. Prezzi e stato blocco non confermati. Con #56 e #57, 3/3 fabbri di attrezzi censiti.
 
