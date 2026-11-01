@@ -65,9 +65,9 @@
 | **48** | — | **Frecciaio** | **Freccia di Danno Istantaneo II** | **CONFERMATA DAL GIOCATORE** |
 | **49** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **50** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
-| **51** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **51** | — | **Corazzaio (fabbricante di armature)** | **Set completo di diamante: stivali, pantaloni, corazza, elmo (prezzi non comunicati)** | **CONFERMATO DAL GIOCATORE; blocco scambi non specificato** |
 | **52** | — | **Corazzaio (fabbricante di armature)** | **Set completo di diamante: stivali 15, pantaloni 27, corazza 39, elmo 18 smeraldi** | **OFFERTE MOSTRATE IN ANTEPRIMA; commercio/blocco non confermato** |
-| **53** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **53** | — | **Corazzaio (fabbricante di armature)** | **Set completo di diamante: stivali, pantaloni, corazza, elmo (prezzi non comunicati)** | **CONFERMATO DAL GIOCATORE; blocco scambi non specificato** |
 | **54** | — | **Corazzaio (fabbricante di armature)** | **Set completo di diamante: stivali, pantaloni, corazza, elmo (prezzi non comunicati)** | **CONFERMATO DAL GIOCATORE; blocco scambi non specificato** |
 | **55** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **56** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
@@ -148,6 +148,8 @@ Le note storiche di `TRADING_HALL.md` citano **Respirazione III e Tiro Multiplo 
 Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo Felpato (Swift Sneak)** e **Raffica di Vento (Wind Burst)**: sono esclusi dal commercio. L'esperimento opzionale `Villager Trade Rebalance` cambia le offerte; il piano si riferisce alle normali offerte di Java 1.21.1.
 
 ## Storico del cambiamento
+
+- 01/11/2026: **postazioni #51 e #53**: entrambi **corazzai** che offrono il set completo di armatura di diamante (elmo, corazza, pantaloni, stivali). Prezzi non comunicati, non dedurre dal #52. **Tutti e quattro i corazzai programmati (#51–54) risultano così individuati**, ciascuno con il set completo.
 
 - 01/11/2026: **postazione #54** = secondo **corazzaio** con tutte e quattro le parti dell'armatura di diamante. Prezzi NON comunicati: non copiarli dalla postazione #52. Stato blocco tramite commercio non confermato.
 
