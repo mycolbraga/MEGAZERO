@@ -24,7 +24,7 @@ Il giocatore conferma il 23/10/2026 che **la vecchia farm del querceto è stata 
 | --- | --- |
 | Stronghold / End Portal | **Stato confermato 23/10/2026:** circa X=1436, Y=23, Z=1044; portale trovato ma **ancora NON attivato**, 0/12 occhi segnalati, **due biblioteche** individuate. Nessun ulteriore avanzamento rispetto all'esplorazione precedente. |
 | Tetto Nether | 1079,7,3091 |
-| **Farm Wither** | **X=15352, Y=81, Z=11945**. Coordinate comunicate dal giocatore il **06/11/2026**; dimensione e stato di completamento non specificati. |
+| **Farm Wither / Nether Star** | **X=15352, Y=81, Z=11945**. **ATTIVA** — stato confermato dal giocatore il **06/11/2026**; coordinate comunicate lo stesso giorno. |
 | **Nether — Bastione del Tesoro, spawner Magma Cube** | **X=-542, Y=47, Z=-376**. Coordinate comunicate e riconfermate dal giocatore il **28/10/2026**. Spawner non distrutto, neutralizzato con blocchi; destinato alla futura farm di Froglight con tre colori di rana. |
 | Monumento oceanico | 1136, Z2752 |
 | **Ingresso miniera rame sotto Stark Estate (Mansion)** | **X=2200, Y=76, Z=2590**; screenshot HUD 28/10/2026, bioma Plains, visuale EST. Accesso alla grotta ricca di rame / granito. |
