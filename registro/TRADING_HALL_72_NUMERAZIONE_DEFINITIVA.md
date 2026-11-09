@@ -47,7 +47,7 @@
 | **30** | **18** | Bibliotecario | **Carica Rapida III** | **CONFERMATA** |
 | **31** | **16** | Bibliotecario | **Atterraggio Morbido IV** | **CONFERMATA** |
 | **32** | **17** | Bibliotecario | **Lama Sferzante III** | **CONFERMATA** |
-| **33** | — | **Bibliotecario** | **Impatto II (Punch II)** | **OFFERTA TROVATA 09/11/2026; blocco dello scambio NON ancora confermato** |
+| **33** | — | **Bibliotecario** | **Impatto II (Punch II)** | **SCAMBIO BLOCCATO — confermato 09/11/2026** |
 | **34** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **35** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **36** | — | **Bibliotecario** | **Flagello degli Artropodi V** | **OFFERTA CONFERMATA DAL GIOCATORE; prezzo e blocco scambio non specificati** |
@@ -142,7 +142,7 @@
 | 10 | Esca | III | Da bloccare |
 | 11 | Tiro Multiplo | I | Da bloccare |
 | 12 | Perforazione | IV | Da bloccare |
-| 13 | Impatto | II | **Trovato alla postazione 33; blocco da confermare** |
+| 13 | Impatto | II | **BLOCCATO — postazione 33** |
 | 14 | Respirazione | III | Da bloccare |
 | 15 | Anatema | V | Da bloccare |
 
