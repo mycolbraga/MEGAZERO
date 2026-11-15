@@ -16,6 +16,14 @@
 - Il giocatore riferisce uno sviluppo di circa **300 blocchi verso EST (+X)**, e presenza anche verso ovest. **Confini X/Z della caverna non ancora misurati**.
 - Non confondere le coordinate dell'area base con i confini della caverna o delle zone da scavare.
 
+## Orientamento rispetto alla base — confermato dal giocatore (15 novembre 2026)
+- **OVEST (-X):** la caverna prosegue.
+- **EST (+X):** inizia la mineshaft.
+- **NORD (-Z):** parete di roccia.
+- **SUD (+Z):** parete di roccia.
+- Si tratta dell'orientamento **visto dalla base mineraria** (X 2108..2117, Z 2995..3012, Y=-52), non dei confini assoluti dell'intera caverna.
+- Percorsi di uscita, direzione iniziale delle turtle e tracciati minerari **ancora da progettare**.
+
 ## Obiettivo concordato
 - Mettere al lavoro più Mining Turtle per **raccogliere minerali**, non per accumulare pietra, deepslate e altri scarti.
 - Strategia proposta: **gallerie 1×2**, verifica di pareti/soffitto/pavimento, estrazione delle vene riconosciute (inclusi minerali delle mod da identificare), ritorno al tracciato.
