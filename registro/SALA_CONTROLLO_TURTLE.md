@@ -48,6 +48,11 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 - La funzione `dofile("megazero_rete").new("N01", "MINIERA-01")` è disponibile per la futura integrazione nel programma minerario; i metodi `report(stato, dati)`, `heartbeat()` e `heartbeatLoop()` richiedono **integrazione esplicita** nelle operazioni di movimento, ritorno e gestione errori. Non dichiarare operativi avanzamento, posizione, errori o rientro finché i corrispondenti dati non sono inviati dal programma di scavo.
 - **Non installato né testato in Minecraft sulle turtle**; **nessuna modifica** allo script di scavo originale già funzionante. Non sostituisce il programma di scavo e non avvia automaticamente il mining. Restano da realizzare/testare il miner selettivo per le 40 fasce, il ritorno di sicurezza e la gestione chunk.
 
+## Installazione hardware completa alla miniera (15 novembre 2026)
+- L'utente ha comunicato di essere arrivato in miniera con **39 Ender Modem**, da aggiungere a quello già montato su **N01**. Successivamente ha confermato **«fatto»** dopo la richiesta di montarli su tutte le altre Mining Turtle.
+- **Stato dichiarato dall'utente:** tutti i **40 Ender Modem installati** sulle 40 turtle. Installazione software e test di comunicazione sulle turtle **ancora da eseguire**.
+- **Primo passo scelto:** scaricare sulla N01 il modulo `megazero_rete` dal repository; non avviare scavi.
+
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
 - **Parete di Advanced Monitor** colorati; dimensione suggerita iniziale **4×3 = 12 blocchi monitor**, scalabile in futuro. I monitor contigui e correttamente orientati formano uno schermo unico.
