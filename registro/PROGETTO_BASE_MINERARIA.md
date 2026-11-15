@@ -236,6 +236,13 @@ Il prototipo `scripts/turtle/megazero_pilot.lua` **attualmente tratta `water` e 
 - **Preparata v2 (non ancora eseguita in Minecraft):** [`scripts/turtle/megazero_test_acqua_N01_v2.lua`](../scripts/turtle/megazero_test_acqua_N01_v2.lua) con file di stato **separato** `/.megazero_test_acqua_N01_v2`, senza sovrascrivere v1, pilot o startup. Consente di scavare soltanto un elenco esplicito di rocce naturali vanilla nei primi 3 blocchi fuori dal perimetro (inclusa `minecraft:cobbled_deepslate`), mentre impedisce lo scavo di strutture/oggetti sconosciuti e fluidi non attraversabili. Continua a richiedere sorgente d'acqua al quarto blocco e a tentare raccolta, ritorno e deposito del secchio nella cassa sotto. Nessuno scavo nella base. **Da collaudare**.
 - La telemetria mostra `ERRORE` per il test precedente finché un nuovo stato non lo aggiorna o `startup` non riparte; non significa che la turtle sia rimasta lontana: il programma ha dichiarato il rientro avvenuto.
 
+## Collaudo in Minecraft acqua N01 v2 — riuscito (15 novembre 2026)
+- L'utente ha avviato realmente `megazero_test_acqua_N01_v2` sulla N01 e ha inviato screenshot del terminale.
+- Output visibile: `PREPARAZIONE: TEST ACQUA: avanzamento 1/3`, `2/3`, `3/3`; poi `RIENTRO: Sorgente raccolta; rientro in corso` e infine **`BASE: TEST ACQUA OK: sorgente raccolta e secchio scaricato`**.
+- **Esito positivo confermato dal programma:** tre passi di avvicinamento con possibilità di scavare roccia naturale, raccolta della sorgente d'acqua posta al quarto blocco, rientro alla home e scarico del secchio nella cassa inferiore. Nello screenshot non risultano errori. L'esito è basato sul terminale della turtle; non è stato verificato indipendentemente il contenuto fisico della cassa.
+- **Da non estendere impropriamente:** non sono ancora collaudati la bonifica di una corrente continua, la gestione della lava, gli interventi su fluidi provenienti dall'alto o lateralmente, la ripresa automatica dello scavo dopo una bonifica, né il coordinamento di tutte le 40 turtle.
+- **Passo successivo:** pianificare un test controllato per acqua corrente oppure lava su N01, senza intaccare lo startup già installato e mantenendo il rientro sicuro.
+
 ## Punti ancora da definire
 - **Conteggio e coordinate delle 40 turtle definiti:** 10 per lato a distanza di 2 blocchi, ciascuna rivolta verso l'esterno (vedere «Mappa esatta»). Da progettare punti di uscita, settori e percorsi protetti.
 - Documentare il layout **già costruito** di casse, importers, alimentazione/carburante e rete RS; verificarne il comportamento nei test, senza considerarlo già testato.
