@@ -73,7 +73,8 @@ function M.start(agent,cfg,options)
  local dir=DXY[front]
  local side=DXY[left]
  local mode=(options.prova and "_PROVA" or "_LAVORO")
- local PATH="/.megazero_miner_v1_"..cfg.unit..mode
+ local PATH="/.megazero_miner_v1_"..cfg.unit..mode..
+   (options.prova and ("_"..maxDistance.."x"..maxLevels) or "")
  local LATCH="/.megazero_miner_error"
  local fluidi=assert(dofile("/megazero_fluidi"),
    "Modulo fluidi assente: scaricare megazero_fluidi")
