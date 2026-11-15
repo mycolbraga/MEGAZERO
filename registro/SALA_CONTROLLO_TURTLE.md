@@ -53,6 +53,11 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 - **Stato dichiarato dall'utente:** tutti i **40 Ender Modem installati** sulle 40 turtle. Installazione software e test di comunicazione sulle turtle **ancora da eseguire**.
 - **Primo passo scelto:** scaricare sulla N01 il modulo `megazero_rete` dal repository; non avviare scavi.
 
+## Test trasmissione N01 (15 novembre 2026)
+- Screenshot del giocatore dalla turtle N01 in miniera, dopo `megazero_rete N01`: `MEGAZERO - TEST RETE (NON SCAVA)`, `Turtle: MINIERA-01/N01`, `Centrale individuata/ID: 54`, **`Invio Rednet: true`**, heartbeat ogni 20 secondi.
+- **Confermato:** apertura modem della turtle e invio locale Rednet senza errore. **Non confermato:** reale ricezione alla centrale, perché `rednet.send` non fornisce acknowledgement e il programma ha fallback sull'ID 54.
+- **Prossima verifica senza spostarsi:** interrompere il test con Ctrl+T sulla N01 e interrogare `rednet.lookup("megazero.control.v1","megazero-central")` dal prompt Lua dopo aver aperto il modem; se restituisce `54` significa che la centrale ha risposto in rete, `nil` indica nessuna risposta (verificare soprattutto il caricamento dei chunk della base principale).
+
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
 - **Parete di Advanced Monitor** colorati; dimensione suggerita iniziale **4×3 = 12 blocchi monitor**, scalabile in futuro. I monitor contigui e correttamente orientati formano uno schermo unico.
