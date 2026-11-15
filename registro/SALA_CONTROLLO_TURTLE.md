@@ -75,6 +75,12 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 - **Confermato:** l'installatore ha scaricato e avviato il test radio sulla N02 senza errore evidente. N01 era stata avviata prima. Non è ancora stata confermata direttamente la visualizzazione degli stati sul monitor centrale.
 - Si può distribuire lo stesso comando sulle altre **38 turtle** variando la sigla corretta; non avviare il programma minerario. Ogni test resta in esecuzione sulla rispettiva turtle finché non viene interrotto o il computer si spegne.
 
+## Telemetria installata su tutte le 40 Turtle — dichiarazione utente (15 novembre 2026)
+- Dopo il test riuscito su N02 e l'installazione a comando unico delle restanti 38, l'utente ha confermato in chat **«OK FATTO TUTTO»**. Considerare **installazione/avvio manuale del test `megazero_rete` su tutte e 40 le Turtle dichiarati completati** dal giocatore, con modem già montati su tutte.
+- **Non ancora verificato dalla dashboard:** arrivo dei 40 messaggi, correttezza degli ID e persistenza dello stato mentre il giocatore si sposta dalla miniera alla base principale.
+- **Prossimo test unico di integrazione:** tornare alla base principale, visualizzare la dashboard della centrale 54 e verificare quali unità compaiono `PREPARAZIONE` (e quali `MAI COLLEGATA` o `SENZA SEGNALE`), attendendo almeno 20–30 secondi di esecuzione con entrambi i siti caricati. Se alcune risultano `SENZA SEGNALE`, analizzare chunk loading prima di imputare un guasto ai modem.
+- **Attenzione:** gli script di test non hanno un `startup` sulle turtle: dopo reboot o riavvio manuale delle turtle i test non ripartono da soli; il modulo di telemetria sarà integrato nel futuro programma di scavo. **Il mining coordinato per 40 turtle non è ancora scritto o collaudato**.
+
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
 - **Parete di Advanced Monitor** colorati; dimensione suggerita iniziale **4×3 = 12 blocchi monitor**, scalabile in futuro. I monitor contigui e correttamente orientati formano uno schermo unico.
