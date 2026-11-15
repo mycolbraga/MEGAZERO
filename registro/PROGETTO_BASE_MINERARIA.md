@@ -64,15 +64,15 @@
 - **EST (+X):** dal confine est della base **X=2119**, limite indicativo **X=2419**.
 - **OVEST (-X):** dal confine ovest della base **X=2099**, limite indicativo **X=1799**.
 - Questi sono **limiti di calcolo**, non punti di partenza fissati per le turtle dei fronti SUD/EST/OVEST. Le postazioni effettive e le coordinate dei singoli corridoi non sono ancora state comunicate.
-- **Quote di scavo concordate:** dalla quota **Y=-30** scendendo **fino alla bedrock**, in ogni fronte (300 blocchi di lunghezza). **Il limite inferiore è la bedrock reale incontrata**: non assumere una quota Y uniforme scavabile su ogni colonna e non tentare di romperla.
-- **Quota della base:** Y=-52. La turtle di riferimento è a **(2119,-52,2995)** rivolta NORD; percorso protetto di uscita/risalita a Y=-30, schema degli strati e rientro sono **da progettare**. Non riutilizzare la vecchia quota SKY=89 del precedente programma.
+- **Quote di scavo concordate:** dalla quota **Y=0** scendendo **fino alla bedrock**, in ogni fronte (300 blocchi di lunghezza). **Il limite inferiore è la bedrock reale incontrata**: non assumere una quota Y uniforme scavabile su ogni colonna e non tentare di romperla.
+- **Quota della base:** Y=-52. La turtle di riferimento è a **(2119,-52,2995)** rivolta NORD; percorso protetto di uscita/risalita a Y=0, schema degli strati e rientro sono **da progettare**. Non riutilizzare la vecchia quota SKY=89 del precedente programma.
 - **Script di partenza indicato dall'utente:** `scavo_1680_1783_dal_67_in_su(1).lua` (allegato in chat), funzionante secondo l'utente. Riutilizzare la logica di rifornimento lava dalla cassa superiore, scarico dalla inferiore, stato e ritorno; cambiare esclusivamente quanto serve, una volta definite le traiettorie.
 - **Stato:** solo pianificazione dei limiti, nessun programma nuovo scritto o testato in gioco.
 
 ## Punti ancora da definire
 - Contare le turtle effettivamente posizionate e mappare posizione/orientamento individuale, punti di uscita e percorsi protetti (previsione originaria: 8–10 per fronte).
 - Documentare il layout **già costruito** di casse, importers, alimentazione/carburante e rete RS; verificarne il comportamento nei test, senza considerarlo già testato.
-- Definire corsie/settori di ciascuna turtle, percorso protetto di risalita dalla base Y=-52 al primo strato Y=-30, ordine di scavo in discesa fino alla bedrock e rientro (300 blocchi per direzione già scelti).
+- Definire corsie/settori di ciascuna turtle, percorso protetto di risalita dalla base Y=-52 al primo strato Y=0, ordine di scavo in discesa fino alla bedrock e rientro (300 blocchi per direzione già scelti).
 - Elenco dei minerali vanilla e mod da mantenere; trattamento di tutti gli altri drop.
 - Metodo sicuro per scartare gli scarti senza perdere minerali.
 - Strategia effettiva di estrazione dalle pareti esposte vs gallerie nella roccia.
