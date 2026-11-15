@@ -3,16 +3,17 @@
 ## Stato (15 novembre 2026)
 **In progettazione.** Sono state definite le coordinate dell'area destinata alla base; disposizione, numero di turtle, programmi e collegamenti non sono ancora stati stabiliti o verificati in gioco.
 
-## Area della base — dimensioni di progetto 20×20 (15 novembre 2026)
-- **Angolo di riferimento confermato dal giocatore:** **X=2108, Y=-52, Z=2995**. Il precedente messaggio con X=2109 è stato corretto dal giocatore a **X=2108**.
-- **Estensione inclusiva 20×20:** X **2108..2127** (20 blocchi), Z **2995..3014** (20 blocchi), a **Y=-52**.
-- **Angolo opposto:** **X=2127, Y=-52, Z=3014**.
-- **Superficie complessiva:** **400 blocchi**.
-- Rispetto alla base iniziale 10×18 (X2108..2117, Z2995..3012): ampliamento di 10 blocchi verso **EST (+X)** e 2 blocchi verso **SUD (+Z)**, mantenendo fermo l'angolo **2108,2995**.
-- **Motivazione:** 10 turtle con passo di 2 blocchi richiedono un fronte nominale di 20 blocchi. La disponibilità fisica per casse, RS, percorsi e accessi richiede un progetto separato; la base 20×20 non implica ancora un layout risolto.
-- **Stato:** dimensioni fissate per il progetto; non dichiarare lavori già costruiti.
-- **Destinazione:** Mining Turtle, casse di scarico e rifornimento, collegamenti Refined Storage, percorsi e componenti necessari.
-- Nota storica: la Z=3995 indicata inizialmente era un errore; il riferimento corretto è **Z=2995**.
+## Area della base — 20×20 con sviluppo verso OVEST (correzione del 15 novembre 2026)
+- **Angolo di riferimento fornito dal giocatore:** **X=2108, Y=-52, Z=2995** (X=2109 corretto in X=2108).
+- **Correzione successiva:** i 20 blocchi lungo l'asse X si sviluppano verso **OVEST (-X)**, NON verso est.
+- **Nuovo intervallo inclusivo di progetto:** **X=2089..2108** (20 blocchi), **Z=2995..3014** (20 blocchi), quota **Y=-52**.
+- **Angolo opposto calcolato:** **X=2089, Y=-52, Z=3014**.
+- **Superficie:** **20 × 20 = 400 blocchi**.
+- **Importante per la continuità con la prima base:** l'area originaria 10×18 era **X=2108..2117, Z=2995..3012**. Se l'angolo X2108,Z2995 rimane fisso e il nuovo 20×20 si sviluppa verso ovest, il nuovo perimetro **non include la parte X2109..2117 della base originaria**. Non considerare automaticamente la nuova area una semplice estensione senza spostamento: chiarire questa differenza prima di costruire.
+- **Motivazione del dimensionamento:** 10 turtle con passo nominale di 2 blocchi richiedono 20 blocchi di fronte. La disposizione delle casse, RS e dei percorsi rimane da progettare.
+- **Stato:** geometria ricavata dalle correzioni del giocatore; nessuna opera dichiarata costruita.
+- **Destinazione:** Mining Turtle, casse di scarico/rifornimento, collegamenti Refined Storage e componenti necessari.
+- Nota storica: la prima Z=3995 era un errore; il riferimento corretto è **Z=2995**.
 
 ## Contesto della caverna
 - Ingresso alto intorno a **Y=+50**, passaggio osservato a **Y=+24**, fondo intorno a **Y=-52**.
@@ -25,7 +26,7 @@
 - **EST (+X):** inizia la mineshaft.
 - **NORD (-Z):** parete di roccia.
 - **SUD (+Z):** parete di roccia.
-- Si tratta dell'orientamento **visto dalla base mineraria** (base di progetto: X 2108..2127, Z 2995..3014, Y=-52), non dei confini assoluti dell'intera caverna.
+- Si tratta dell'orientamento **visto dalla base mineraria** (base di progetto corretta: X 2089..2108, Z 2995..3014, Y=-52), non dei confini assoluti dell'intera caverna.
 - Percorsi di uscita, direzione iniziale delle turtle e tracciati minerari **ancora da progettare**.
 
 ## Obiettivo concordato
