@@ -40,7 +40,7 @@
 | **23** | **12** | Bibliotecario | **Potenza V** | **CONFERMATA** |
 | **24** | **21** | Bibliotecario | **Contraccolpo II** | **CONFERMATA** |
 | **25** | **13** | Bibliotecario | **Affilatezza V** | **CONFERMATA** |
-| **26** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **26** | — | **Bibliotecario** | **Esca III** | **OFFERTA CONFERMATA 15/11/2026; blocco tramite scambio da verificare** |
 | **27** | **14** | Bibliotecario | **Aspetto di Fuoco II** | **CONFERMATA** |
 | **28** | **19** | Bibliotecario | **Impalamento V** | **CONFERMATA** |
 | **29** | **15** | Bibliotecario | **Protezione dai Proiettili IV** | **CONFERMATA** |
@@ -152,6 +152,8 @@ Le note storiche di `TRADING_HALL.md` citano **Respirazione III e Tiro Multiplo 
 Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo Felpato (Swift Sneak)** e **Raffica di Vento (Wind Burst)**: sono esclusi dal commercio. L'esperimento opzionale `Villager Trade Rebalance` cambia le offerte; il piano si riferisce alle normali offerte di Java 1.21.1.
 
 **Aggiornamento 15/11/2026:** postazione **#5 = Impalamento V**, offerta confermata direttamente dal giocatore. Scambio eseguito e **bloccato**, confermato dal giocatore. È rimosso dall'elenco operativo degli incantesimi ancora da trovare (da 10 a 9, secondo la ricognizione in chat del 15/11). Le tabelle datate 01/11 restano fotografie storiche e non sono state riscritte.
+
+**Aggiornamento 15/11/2026:** postazione **#26 = Esca III**, offerta confermata dal giocatore; blocco tramite commercio ancora da verificare. Esca III non è più da cercare (8 incantesimi ancora da trovare secondo la ricognizione del 15/11).
 
 ## Storico del cambiamento
 
