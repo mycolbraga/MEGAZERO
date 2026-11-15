@@ -181,6 +181,13 @@ Il rientro si può garantire per gli errori **da cui esiste un percorso praticab
 - **Uso soltanto sulla N01**, con il bootstrap in esecuzione: `Ctrl+T` per uscire dallo startup (non mentre la turtle è in movimento), dalla shell `wget https://raw.githubusercontent.com/mycolbraga/MEGAZERO/registro/megazero/scripts/turtle/megazero_pilot.lua megazero_pilot`, quindi `megazero_pilot`. **Non premere Ctrl+T durante il movimento**: l'interruzione forzata può impedire il rientro. Al completamento il test continua a inviare heartbeat; `reboot` riporta lo startup standard (miner disabilitato).
 - **Distribuzione futura senza camminare:** documentazione ufficiale CC:Tweaked segnala il comando `/computercraft view #ID` o l'interfaccia di `/computercraft dump`, per aprire terminali di computer caricati anche da remoto nel mondo single-player con cheats. Da verificare il comportamento nell'installazione Fabric del giocatore; non equivale a tele-installazione né esegue 40 aggiornamenti in batch.
 
+## Esito primo collaudo N01 — riuscito (15 novembre 2026)
+- L'utente ha eseguito realmente `megazero_pilot` sulla **N01** e ha inviato screenshot successivi della dashboard e del terminale.
+- La dashboard centrale 54 ha mostrato transizioni di stato **SCAVO → RIENTRO → BASE** per N01.
+- Il terminale ha riportato `SCAVO: PILOT N01: galleria 2/8`, `4/8`, `6/8`, `8/8`, poi `RIENTRO: Test concluso: rientro alla propria cassa`, infine **`BASE: TEST OK: rientrata`** e `Telemetria attiva`. Nel report erano presenti anche blocchi minerali, fra cui `minecraft:deepslate_iron_ore`.
+- Il giocatore ha confermato **«MI SEMBRA TUTTO OK»**. **Esito positivo secondo l'esecuzione del programma**; non dichiarare come fisicamente ispezionati il deposito nella cassa, la sicurezza in condizioni difficili o il rientro delle altre 39 turtle.
+- **Ancora da sviluppare/collaudare:** programma produttivo minerario selettivo con vene/settori per tutti i 40 robot, gestione di lava/acqua/ostacoli e recupero errori, integrazione definitiva con `megazero_boot`; mantenere lo scavo automatico disabilitato sulle altre turtle. Il pilot N01 NON deve essere distribuito sulle altre turtle perché è vincolato alla sua postazione.
+
 ## Punti ancora da definire
 - **Conteggio e coordinate delle 40 turtle definiti:** 10 per lato a distanza di 2 blocchi, ciascuna rivolta verso l'esterno (vedere «Mappa esatta»). Da progettare punti di uscita, settori e percorsi protetti.
 - Documentare il layout **già costruito** di casse, importers, alimentazione/carburante e rete RS; verificarne il comportamento nei test, senza considerarlo già testato.
