@@ -38,7 +38,7 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 
 ## Avvio automatico configurato (15 novembre 2026)
 - Sul computer centrale CC:Tweaked **ID 54** il giocatore ha creato e salvato il file `startup` tramite `edit startup`, inserendo `shell.run("megazero_control")`.
-- **Confermato dall'utente:** salvataggio effettuato. **Ancora da verificare:** ripartenza automatica dopo `reboot` e comparsa della dashboard sul monitor.
+- **Verifica completata:** dopo il comando `reboot` sul computer centrale **ID 54**, il giocatore ha confermato **sì**, la dashboard MEGAZERO CONTROL si avvia automaticamente e compare sul monitor. Nessuna verifica di comunicazione con una turtle ancora svolta.
 
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
