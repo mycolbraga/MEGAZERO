@@ -36,15 +36,15 @@
 - Non è stato concordato lo svuotamento automatico di intere pozze.
 
 ## Quattro fronti minerari in contemporanea — proposta del giocatore (15 novembre 2026)
-- **Quattro scavi principali simultanei**, una Mining Turtle orientata inizialmente verso ciascun punto cardinale: **NORD (-Z), SUD (+Z), EST (+X), OVEST (-X)**.
+- **Quattro scavi principali contemporanei** nelle direzioni **NORD (-Z), SUD (+Z), EST (+X), OVEST (-X)**. **Il numero di Mining Turtle per ciascuno scavo NON è ancora definito**: quattro scavi non significa quattro turtle.
 - **NORD/SUD:** pareti di roccia già indicate vicino alla base; possibili gallerie nella roccia.
 - **EST:** inizio della mineshaft; tracciato da verificare per evitare di trattare i vuoti della miniera come roccia piena.
 - **OVEST:** la caverna continua; percorso in spazio aperto da pianificare.
-- Sono **quattro direzioni di lavoro concordate come proposta**, non ancora quattro percorsi eseguibili o quattro turtle posizionate. Non assegnare coordinate di partenza o dimensioni dei tunnel senza definirle.
-- Prima del codice: progettare le quattro postazioni e gli accessi separati dentro la base 10×18, gestire vuoti/dislivelli, dimensione dei settori, rientro, rifornimento e scarico RS.
+- Le **quattro direzioni di scavo** sono la proposta del giocatore; numero e disposizione delle turtle, percorsi e dimensioni dei tunnel restano da definire. Non presumere una turtle per direzione.
+- Prima del codice: progettare postazioni e accessi in base al numero effettivo di turtle da scegliere, all'interno della base 10×18; gestire vuoti/dislivelli, dimensione dei settori, rientro, rifornimento e scarico RS.
 
 ## Punti ancora da definire
-- Posizione e orientamento individuale delle quattro turtle nell'area 10×18; punti di uscita e percorso protetto di ciascuna.
+- Numero di turtle per ciascuno dei quattro scavi; posizione e orientamento individuale nell'area 10×18; punti di uscita e percorsi protetti.
 - Layout esatto di casse, importers, alimentazione/carburante e rete RS.
 - Coordinate/quote/limiti dei settori minerari e percorso protetto dalla base.
 - Elenco dei minerali vanilla e mod da mantenere; trattamento di tutti gli altri drop.
