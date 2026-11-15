@@ -70,6 +70,11 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 - L'installatore valida il formato dell'ID, controlla la presenza del modem, scarica il modulo `megazero_rete` solo se non esiste già, **non sovrascrive file preesistenti** e avvia subito il test di telemetria senza alcun movimento/scavo. Non tocca `startup`, l'inventario, lo scavo o i file di stato precedenti.
 - **Non ancora testato sul gioco**; fare la prima prova su N02 prima di distribuirlo alle restanti 38. Il solo invio radio non è la prova della ricezione sulla dashboard. La telemetria eseguita manualmente **non si riavvia automaticamente** al reboot delle turtle; verrà integrata nel futuro programma minerario.
 
+## Installatore verificato in gioco su N02 (15 novembre 2026)
+- Screenshot del giocatore dopo l'esecuzione di `wget run .../scripts/turtle/installa_rete.lua N02`: il terminale della N02 visualizza `MEGAZERO - TEST RETE (NON SCAVA)`, `Turtle: MINIERA-01/N02`, `Centrale individuata/ID: 54`, **`Invio Rednet: true`**; aggiornamento ogni 20 s.
+- **Confermato:** l'installatore ha scaricato e avviato il test radio sulla N02 senza errore evidente. N01 era stata avviata prima. Non è ancora stata confermata direttamente la visualizzazione degli stati sul monitor centrale.
+- Si può distribuire lo stesso comando sulle altre **38 turtle** variando la sigla corretta; non avviare il programma minerario. Ogni test resta in esecuzione sulla rispettiva turtle finché non viene interrotto o il computer si spegne.
+
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
 - **Parete di Advanced Monitor** colorati; dimensione suggerita iniziale **4×3 = 12 blocchi monitor**, scalabile in futuro. I monitor contigui e correttamente orientati formano uno schermo unico.
