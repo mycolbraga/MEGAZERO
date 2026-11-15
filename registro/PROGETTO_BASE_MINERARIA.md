@@ -128,19 +128,26 @@
 - Tunnel di **altezza 2** per corsia, evitando l'escavazione completa del volume; passate a diverse quote da Y=0 verso la bedrock, **distanziate indicativamente 3 blocchi verticali** per osservare i blocchi non scavati di pareti, soffitto e pavimento.
 - Esaminare blocchi laterali all'interno della fascia assegnata, sopra e sotto, e inseguire gli eventuali minerali con visita in profondità **solo entro settore privato**; quando la vena supera il confine, non oltrepassarlo: la porzione adiacente spetta all'altra turtle.
 - Riservare a ciascuna turtle una via di uscita/rientro protetta e stabile che non possa essere distrutta dalla ricerca minerali.
-- Prima risolvere salita da Y=-53 al primo livello Y=0 con le casse SOPRA le turtle e tracciare i rientri alle proprie postazioni.
+- **Uscita confermata:** un passo in avanti a Y=-53 oltre il perimetro, poi salita/discesa dalla posizione esterna. Progettare e implementare il rientro nella postazione senza scavare all'interno.
 - Logiche di rifornimento, scarico, salvataggio dai programmi precedenti; mantenere i drop minerali vanilla/mod e non eliminare item sconosciuti senza whitelist; gestione della lava e degli scarti da definire. Occhio a chunk loading per lavorazioni fino a 300 blocchi dalla base.
 - **Architettura approvata dal giocatore; non è ancora un programma funzionante.** Restano da definire e collaudare le 40 vie di salita da Y=-53 a Y=0, rientri, trattamento dell'acqua/lava, gestione dello stato, caricamento chunk e sicurezza del mining selettivo.
 
-## Spazio libero lungo il perimetro — segnalazione del giocatore (15 novembre 2026)
-- Il giocatore conferma: **«ci sono 2 blocchi d'aria lungo tutto il perimetro»** della base mineraria.
-- La misura precisa di questi 2 blocchi (altezza libera, profondità davanti alle turtle o altra geometria) **non è stata ancora specificata**. Non dare per certa una colonna di risalita fino a Y=0.
-- Tenere conto dello spazio già predisposto quando si definiscono le uscite delle 40 turtle, senza richiedere modifiche alla struttura già realizzata.
+## Uscita sicura dalla base e divieto di scavo interno — confermato dal giocatore (15 novembre 2026)
+- **Chiarimento definitivo:** non esistono strutture davanti alle turtle. Casse, cavi e dispositivi RS sono **all'interno della base**, non sul lato esterno. Ogni turtle ha spazio libero per fare **UN movimento in avanti** e, una volta uscita, può **salire e scendere**.
+- **Regola tassativa:** NON scavare o svolgere lavori all'interno del perimetro in pianta **X=2099..2119 e Z=2995..3015**, **a qualsiasi quota Y**. Le posizioni iniziali (sul bordo a Y=-53) sono consentite soltanto come punti di parcheggio/rientro: non rompere i blocchi della base.
+- **Prima mossa di ciascuna turtle (tutte a Y=-53):**
+  - NORD: da (X,-53,2995) a **(X,-53,2994)**, poi salita/discesa fuori dal perimetro;
+  - OVEST: da (2099,-53,Z) a **(2098,-53,Z)**, poi salita/discesa fuori dal perimetro;
+  - SUD: da (X,-53,3015) a **(X,-53,3016)**, poi salita/discesa fuori dal perimetro;
+  - EST: da (2119,-53,Z) a **(2120,-53,Z)**, poi salita/discesa fuori dal perimetro.
+- Ogni turtle deve usare la propria posizione esterna di uscita come **colonna di movimento verticale**, secondo la geometria dei settori esclusivi approvati; durante rientro/avanzamento proteggere le strutture e non scavare nella base.
+- **Lo spazio per uscita e movimento verticale è confermato dal giocatore**: non richiedere di creare nuove colonne nella base o di modificare casse/cablaggi.
+- Restano da programmare e verificare nel gioco percorsi sicuri, gestione di fluidi, minerali, controllo carburante e rientri. Questo chiarimento risolve la geometria base->esterno, ma non prova già che il codice funzioni.
 
 ## Punti ancora da definire
 - **Conteggio e coordinate delle 40 turtle definiti:** 10 per lato a distanza di 2 blocchi, ciascuna rivolta verso l'esterno (vedere «Mappa esatta»). Da progettare punti di uscita, settori e percorsi protetti.
 - Documentare il layout **già costruito** di casse, importers, alimentazione/carburante e rete RS; verificarne il comportamento nei test, senza considerarlo già testato.
-- Definire corsie/settori di ciascuna turtle, percorso protetto di risalita dalle postazioni Y=-53 al primo strato Y=0, ordine di scavo in discesa fino alla bedrock e rientro (300 blocchi per direzione già scelti).
+- Implementare i settori approvati e il percorso d'accesso confermato (un passo fuori dal perimetro a Y=-53 e poi movimento verticale esterno), le passate da Y=0 alla bedrock e i rientri lungo la propria via d'uscita (300 blocchi per fronte).
 - Elenco dei minerali vanilla e mod da mantenere; trattamento di tutti gli altri drop.
 - Metodo sicuro per scartare gli scarti senza perdere minerali.
 - Progettare come distribuire in modo selettivo la ricerca di vene lungo gallerie e pareti già esposte, senza scavare interamente il volume.
