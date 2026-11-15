@@ -3,7 +3,7 @@
 ## Decisione (15 novembre 2026)
 L'utente ha **approvato** una sala di controllo permanente **nella base principale**, distinta dal sito minerario, per vedere a distanza lo stato delle Mining Turtle senza recarsi a ogni controllo presso la miniera. Ha chiesto esplicitamente che l'infrastruttura sia **riutilizzabile per nuove miniere e, in futuro, altre turtle/farm**.
 
-**Stato attuale:** progettazione di architettura e materiali, niente computer/monitor/modem ancora dichiarati costruiti o collaudati.
+**Stato attuale (aggiornamento confermato dal giocatore, 15 novembre 2026):** **Hardware centrale già montato nella base principale**: Advanced Computer, 4 Advanced Monitor 2×2 e Ender Modem collegato al computer, secondo la conferma «già fatto tutto». Il secondo Ender Modem per una turtle fa parte del kit preparato, ma **non è ancora verificata in chat la sua effettiva installazione/operatività**. Nessun test delle periferiche, della rete o del software ancora concluso. Prossimo passo: sul computer centrale verificare via Lua `peripheral.find("monitor")` e `peripheral.find("modem")`.
 
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
