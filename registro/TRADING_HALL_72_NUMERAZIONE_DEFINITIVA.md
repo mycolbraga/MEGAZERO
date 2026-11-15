@@ -19,7 +19,7 @@
 | **2** | **32** | Bibliotecario | **Fiamma I** (il giocatore: «2. ex 32 quello con Fiamma») | **CONFERMATA** |
 | **3** | **2** | Bibliotecario | **Risacca III** | **CONFERMATA** |
 | **4** | — | **Bibliotecario** | **Tiro Multiplo I** | **OFFERTA CONFERMATA DAL GIOCATORE; prezzo e blocco scambio non specificati** |
-| **5** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
+| **5** | — | **Bibliotecario** | **Impalamento V** | **OFFERTA CONFERMATA 15/11/2026; blocco tramite scambio non specificato** |
 | **6** | **30** | Bibliotecario | **Ripristino I** | **CONFERMATA** |
 | **7** | **4** | Bibliotecario | **Spine III** | **CONFERMATA** |
 | **8** | **29** | Bibliotecario | **Lealtà III** | **CONFERMATA** |
@@ -150,6 +150,8 @@
 Le note storiche di `TRADING_HALL.md` citano **Respirazione III e Tiro Multiplo I come offerte secondarie** del vecchio bibliotecario #9 (oggi postazione #17) e **Protezione dalle Esplosioni IV** come offerta secondaria del vecchio #13 (oggi #25). Le relative offerte non sono state riconfermate dopo la rinumerazione, e **non costituiscono nuovi libri principali bloccati**. Possono far risparmiare postazioni dedicate se risultano tuttora acquistabili: verificare in gioco prima di decidere i duplicati.
 
 Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo Felpato (Swift Sneak)** e **Raffica di Vento (Wind Burst)**: sono esclusi dal commercio. L'esperimento opzionale `Villager Trade Rebalance` cambia le offerte; il piano si riferisce alle normali offerte di Java 1.21.1.
+
+**Aggiornamento 15/11/2026:** postazione **#5 = Impalamento V**, offerta confermata direttamente dal giocatore. Non è ancora specificato se lo scambio sia stato eseguito e bloccato. È rimosso dall'elenco operativo degli incantesimi ancora da trovare (da 10 a 9, secondo la ricognizione in chat del 15/11). Le tabelle datate 01/11 restano fotografie storiche e non sono state riscritte.
 
 ## Storico del cambiamento
 
