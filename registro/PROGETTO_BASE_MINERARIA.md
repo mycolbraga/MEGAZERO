@@ -57,6 +57,17 @@
 - Da questa posizione un eventuale primo avanzamento diritto va verso **X=2119, Y=-52, Z=2994**. Questa è solo geometria, **nessun movimento è ancora stato comandato o testato**.
 - La configurazione delle altre turtle, l'assegnazione dei settori, il programma e la logica di uscita/rientro sono da stabilire. Non inventare ulteriori coordinate di postazioni.
 
+## Lunghezza iniziale dei quattro scavi principali — scelta del giocatore (15 novembre 2026)
+- **Avanzamento massimo iniziale: 300 blocchi per ciascuno dei quattro fronti** NORD, SUD, EST e OVEST. Non implica che ogni turtle scavi lungo la stessa linea o che tutta l'area venga svuotata; sono limiti di avanzamento per le direzioni principali, da ripartire in corsie e settori.
+- **NORD (-Z):** dalla prima turtle nota a **(2119, -52, 2995)**, 300 spostamenti verso nord portano a **Z=2695** (X=2119 per quella linea). Primo blocco davanti: Z=2994.
+- **SUD (+Z):** dal confine sud della base **Z=3015**, limite indicativo **Z=3315**.
+- **EST (+X):** dal confine est della base **X=2119**, limite indicativo **X=2419**.
+- **OVEST (-X):** dal confine ovest della base **X=2099**, limite indicativo **X=1799**.
+- Questi sono **limiti di calcolo**, non punti di partenza fissati per le turtle dei fronti SUD/EST/OVEST. Le postazioni effettive e le coordinate dei singoli corridoi non sono ancora state comunicate.
+- Quota nota della base: Y=-52. La **distribuzione verticale dello scavo** e le quote di transito non sono ancora definite. Non riutilizzare la vecchia quota SKY=89 del precedente programma.
+- **Script di partenza indicato dall'utente:** `scavo_1680_1783_dal_67_in_su(1).lua` (allegato in chat), funzionante secondo l'utente. Riutilizzare la logica di rifornimento lava dalla cassa superiore, scarico dalla inferiore, stato e ritorno; cambiare esclusivamente quanto serve, una volta definite le traiettorie.
+- **Stato:** solo pianificazione dei limiti, nessun programma nuovo scritto o testato in gioco.
+
 ## Punti ancora da definire
 - Contare le turtle effettivamente posizionate e mappare posizione/orientamento individuale, punti di uscita e percorsi protetti (previsione originaria: 8–10 per fronte).
 - Documentare il layout **già costruito** di casse, importers, alimentazione/carburante e rete RS; verificarne il comportamento nei test, senza considerarlo già testato.
