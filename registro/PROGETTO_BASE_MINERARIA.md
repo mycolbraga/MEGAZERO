@@ -112,8 +112,8 @@
 - Si conservano il limite di **300 blocchi di avanzamento per fronte**, l'inizio del lavoro da **Y=0 verso bedrock** e i rientri alle rispettive casse presso la base. L'accesso sicuro da Y=-53 a Y=0 **non è ancora progettato**.
 - **Nessun programma nuovo deve essere generato o avviato** prima di aver definito un assetto coerente per tutte e 40 le turtle.
 
-## Proposta operativa: 40 fasce minerarie indipendenti (15 novembre 2026; da approvare)
-**Questa sezione è una proposta progettuale dell'assistente, NON una geometria ancora confermata o implementata.**
+## Piano approvato: 40 fasce minerarie indipendenti (15 novembre 2026)
+**Il giocatore ha approvato questa suddivisione complessiva il 15 novembre 2026.** È approvata come **architettura di progetto**, non ancora programmata o verificata in Minecraft; i percorsi di accesso e i dettagli di gestione delle vene devono essere progettati prima dell'esecuzione.
 
 ### Geometria 2D per quattro fronti senza sovrapposizione
 - **NORD:** X=2100..2119, Z=2695..2994; 10 corsie da 2 blocchi, ciascuna lunga 300.
@@ -130,7 +130,7 @@
 - Riservare a ciascuna turtle una via di uscita/rientro protetta e stabile che non possa essere distrutta dalla ricerca minerali.
 - Prima risolvere salita da Y=-53 al primo livello Y=0 con le casse SOPRA le turtle e tracciare i rientri alle proprie postazioni.
 - Logiche di rifornimento, scarico, salvataggio dai programmi precedenti; mantenere i drop minerali vanilla/mod e non eliminare item sconosciuti senza whitelist; gestione della lava e degli scarti da definire. Occhio a chunk loading per lavorazioni fino a 300 blocchi dalla base.
-- **Non è ancora un programma funzionante**; la proposta deve essere approvata/corretta prima dell'implementazione coordinata delle 40 turtle.
+- **Architettura approvata dal giocatore; non è ancora un programma funzionante.** Restano da definire e collaudare le 40 vie di salita da Y=-53 a Y=0, rientri, trattamento dell'acqua/lava, gestione dello stato, caricamento chunk e sicurezza del mining selettivo.
 
 ## Punti ancora da definire
 - **Conteggio e coordinate delle 40 turtle definiti:** 10 per lato a distanza di 2 blocchi, ciascuna rivolta verso l'esterno (vedere «Mappa esatta»). Da progettare punti di uscita, settori e percorsi protetti.
