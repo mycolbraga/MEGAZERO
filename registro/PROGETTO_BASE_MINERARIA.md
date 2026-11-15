@@ -3,17 +3,15 @@
 ## Stato (15 novembre 2026)
 **In progettazione.** Sono state definite le coordinate dell'area destinata alla base; disposizione, numero di turtle, programmi e collegamenti non sono ancora stati stabiliti o verificati in gioco.
 
-## Area della base — 20×20 con sviluppo verso OVEST (correzione del 15 novembre 2026)
-- **Angolo di riferimento fornito dal giocatore:** **X=2108, Y=-52, Z=2995** (X=2109 corretto in X=2108).
-- **Correzione successiva:** i 20 blocchi lungo l'asse X si sviluppano verso **OVEST (-X)**, NON verso est.
-- **Nuovo intervallo inclusivo di progetto:** **X=2089..2108** (20 blocchi), **Z=2995..3014** (20 blocchi), quota **Y=-52**.
-- **Angolo opposto calcolato:** **X=2089, Y=-52, Z=3014**.
-- **Superficie:** **20 × 20 = 400 blocchi**.
-- **Importante per la continuità con la prima base:** l'area originaria 10×18 era **X=2108..2117, Z=2995..3012**. Se l'angolo X2108,Z2995 rimane fisso e il nuovo 20×20 si sviluppa verso ovest, il nuovo perimetro **non include la parte X2109..2117 della base originaria**. Non considerare automaticamente la nuova area una semplice estensione senza spostamento: chiarire questa differenza prima di costruire.
-- **Motivazione del dimensionamento:** 10 turtle con passo nominale di 2 blocchi richiedono 20 blocchi di fronte. La disposizione delle casse, RS e dei percorsi rimane da progettare.
-- **Stato:** geometria ricavata dalle correzioni del giocatore; nessuna opera dichiarata costruita.
-- **Destinazione:** Mining Turtle, casse di scarico/rifornimento, collegamenti Refined Storage e componenti necessari.
-- Nota storica: la prima Z=3995 era un errore; il riferimento corretto è **Z=2995**.
+## Area della base — coordinate rilevate dal giocatore (15 novembre 2026)
+- **Primo angolo comunicato:** **X=2099, Y=-52, Z=3015**.
+- **Secondo angolo comunicato:** **X=2119, Y=-25, Z=2995**.
+- **Intervallo coordinate:** **X=2099..2119**, **Y=-52..-25**, **Z=2995..3015**.
+- **Differenza tra le coordinate estreme:** 20 blocchi lungo X, 27 lungo Y, 20 lungo Z.
+- **Conteggio inclusivo dei blocchi:** **21 × 21 blocchi in pianta** (441 posizioni per strato) e **28 livelli Y** se le due coordinate identificano davvero i vertici opposti di un volume. La funzione dell'intervallo verticale, inclusa l'eventuale quota del pavimento, **è da confermare**: non presumere che Y=-25 sia un errore né che tutta la base debba essere scavata su 28 livelli.
+- **Queste coordinate supersedono le ipotesi precedenti** di rettangoli 10×18 o 20×20; tali misure sono ormai solo cronologia, non i confini operativi.
+- **Stato:** angoli comunicati dal giocatore; esatta destinazione dei livelli Y e layout interni non ancora confermati o costruiti.
+- **Destinazione:** Mining Turtle, casse di scarico/rifornimento, collegamenti Refined Storage, percorsi e componenti necessari.
 
 ## Contesto della caverna
 - Ingresso alto intorno a **Y=+50**, passaggio osservato a **Y=+24**, fondo intorno a **Y=-52**.
@@ -26,7 +24,7 @@
 - **EST (+X):** inizia la mineshaft.
 - **NORD (-Z):** parete di roccia.
 - **SUD (+Z):** parete di roccia.
-- Si tratta dell'orientamento **visto dalla base mineraria** (base di progetto corretta: X 2089..2108, Z 2995..3014, Y=-52), non dei confini assoluti dell'intera caverna.
+- Si tratta dell'orientamento **visto dalla base mineraria** (coordinate attuali: X 2099..2119, Z 2995..3015, Y da -52 a -25; uso delle quote ancora da confermare), non dei confini assoluti dell'intera caverna.
 - Percorsi di uscita, direzione iniziale delle turtle e tracciati minerari **ancora da progettare**.
 
 ## Obiettivo concordato
@@ -46,7 +44,7 @@
 - **EST:** inizio della mineshaft; tracciato da verificare per evitare di trattare i vuoti della miniera come roccia piena.
 - **OVEST:** la caverna continua; percorso in spazio aperto da pianificare.
 - Le **quattro direzioni di scavo** e la previsione **8–10 turtle per direzione** sono state indicate dal giocatore; ripartizione esatta, disposizione, percorsi e dimensioni dei tunnel restano da progettare.
-- Prima del codice: verificare **se 32–40 postazioni con casse e RS entrano nell'area di progetto 20×20** o se servono più livelli / ulteriori espansioni. I 20 blocchi di fronte sono una misura nominale per 10 turtle distanziate 2 blocchi, senza margini aggiuntivi. Progettare le postazioni solo dopo aver definito numero e accessi; gestire vuoti/dislivelli, settori, rientro, rifornimento e scarico RS.
+- Prima del codice: verificare **se 32–40 postazioni con casse e RS entrano nel perimetro rilevato (X2099..2119, Z2995..3015: 21×21 blocchi inclusivi)**, ed eventualmente a quali quote Y. Il fronte dista 20 blocchi tra le coordinate estreme; il numero di turtle per settore rimane 8–10 come previsione, non una disposizione già risolta. Progettare le postazioni solo dopo aver definito numero e accessi; gestire vuoti/dislivelli, settori, rientro, rifornimento e scarico RS.
 
 ## Punti ancora da definire
 - Numero definitivo di turtle per fronte (attualmente previsto 8–10); posizione e orientamento individuale, punti di uscita e percorsi protetti.
