@@ -51,6 +51,12 @@
 - Registrare **installazione fisica e collegamenti come completati sulla base della conferma del giocatore**. La fotografia non consente di contare tutte le postazioni né di dimostrare che gli importer/exporter o il sistema di rifornimento funzionino: test operativi ancora da fare.
 - Non proporre di riprogettare o ricostruire l'allestimento già completato se non richiesto; partire dalla configurazione esistente per predisporre i programmi.
 
+## Prima postazione di riferimento — angolo NORD-EST (15 novembre 2026)
+- **Punto di partenza scelto dal giocatore:** **X=2119, Y=-52, Z=2995** (angolo NORD-EST del perimetro).
+- **Orientamento iniziale:** **NORD (-Z)**, esplicitamente indicato dal giocatore («FACING NORD»).
+- Da questa posizione un eventuale primo avanzamento diritto va verso **X=2119, Y=-52, Z=2994**. Questa è solo geometria, **nessun movimento è ancora stato comandato o testato**.
+- La configurazione delle altre turtle, l'assegnazione dei settori, il programma e la logica di uscita/rientro sono da stabilire. Non inventare ulteriori coordinate di postazioni.
+
 ## Punti ancora da definire
 - Contare le turtle effettivamente posizionate e mappare posizione/orientamento individuale, punti di uscita e percorsi protetti (previsione originaria: 8–10 per fronte).
 - Documentare il layout **già costruito** di casse, importers, alimentazione/carburante e rete RS; verificarne il comportamento nei test, senza considerarlo già testato.
