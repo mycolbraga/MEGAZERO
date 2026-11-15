@@ -58,6 +58,12 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 - **Confermato:** apertura modem della turtle e invio locale Rednet senza errore. **Non confermato:** reale ricezione alla centrale, perché `rednet.send` non fornisce acknowledgement e il programma ha fallback sull'ID 54.
 - **Prossima verifica senza spostarsi:** interrompere il test con Ctrl+T sulla N01 e interrogare `rednet.lookup("megazero.control.v1","megazero-central")` dal prompt Lua dopo aver aperto il modem; se restituisce `54` significa che la centrale ha risposto in rete, `nil` indica nessuna risposta (verificare soprattutto il caricamento dei chunk della base principale).
 
+## Test bidirezionale Rednet N01 → centrale 54 confermato (15 novembre 2026)
+- Il giocatore, dalla prima turtle N01 alla miniera, ha eseguito `rednet.lookup("megazero.control.v1","megazero-central")` dopo apertura del modem; risposta **`54`**.
+- **Confermato:** il computer centrale Rednet risponde alle richieste di individuazione dalla miniera; portata di rete e caricamento dei chunk erano sufficienti nel momento del test. Il test di invio precedente su N01 restituiva `Invio Rednet: true`.
+- **Ancora NON confermato:** comparsa dello stato N01 sulla dashboard centrale (l'invio di uno stato non ha acknowledgement applicativo), permanenza del caricamento dei chunk e comunicazione da tutte le altre 39 turtle.
+- Procedura concordata: riavviare `megazero_rete N01` dopo `exit()` da Lua e lasciarlo in esecuzione, quindi configurare le altre turtle durante questa visita alla miniera, evitando viaggi avanti-indietro.
+
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
 - **Parete di Advanced Monitor** colorati; dimensione suggerita iniziale **4×3 = 12 blocchi monitor**, scalabile in futuro. I monitor contigui e correttamente orientati formano uno schermo unico.
