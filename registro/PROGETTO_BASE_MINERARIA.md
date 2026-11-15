@@ -251,6 +251,13 @@ Il prototipo `scripts/turtle/megazero_pilot.lua` **attualmente tratta `water` e 
 - Mantenere rientro e stato persistente `pending` prima di ogni passo, per gestire errori di movimento senza fingere posizione certa dopo un crash. Il test non ha ancora superato una prova reale in Minecraft. **È stato pubblicato e verificato nel repository, senza avviare alcuna turtle**.
 - Procedura per N01: interrompere il bootstrap solo se è alla home, scaricare `wget https://raw.githubusercontent.com/mycolbraga/MEGAZERO/registro/megazero/scripts/turtle/megazero_test_corrente_N01.lua megazero_test_corrente_N01`, poi avviare `megazero_test_corrente_N01` dopo download. Nessuno `Ctrl+T` durante il movimento.
 
+## Collaudo N01 con corrente d'acqua — riuscito (15 novembre 2026)
+- L'utente ha eseguito realmente il programma [`megazero_test_corrente_N01.lua`](../scripts/turtle/megazero_test_corrente_N01.lua) e ha mostrato uno screenshot del terminale della N01.
+- Output verificato nello screenshot: **`PREPARAZIONE: CORRENTE: posizione 1/6`**, **`2/6`**, **`3/6`**, **`4/6`**, poi **`RIENTRO: Sorgente eliminata a Z=2990; torno a casa`**, quindi **`BASE: TEST CORRENTE OK: sorgente eliminata, secchi scaricati`**.
+- **Collaudo positivo secondo i controlli del programma:** N01 ha seguito la corrente fino alla sorgente alla coordinata **X=2119, Y=-53, Z=2990**, ha registrato la raccolta, è rientrata e ha segnalato lo scarico dei secchi nella cassa inferiore. Nessun errore visibile. Non è stata effettuata una verifica indipendente dell'effettivo contenuto della cassa o delle condizioni del blocco dopo il test.
+- **Due test fluidi ora superati:** sorgente diretta al quarto blocco e corrente seguita fino alla sorgente al quinto blocco. **Non ancora testati:** flussi laterali/dall'alto, grandi laghi e sorgenti fuori fascia, lava, bonifica integrata col miner selettivo e ripresa automatica dello scavo. Non applicare ancora a tutte le 40 turtle.
+- Lo script attende `Invio` per ripristinare lo `startup` MEGAZERO. Non alterare il programma di mining senza test e verifiche.
+
 ## Punti ancora da definire
 - **Conteggio e coordinate delle 40 turtle definiti:** 10 per lato a distanza di 2 blocchi, ciascuna rivolta verso l'esterno (vedere «Mappa esatta»). Da progettare punti di uscita, settori e percorsi protetti.
 - Documentare il layout **già costruito** di casse, importers, alimentazione/carburante e rete RS; verificarne il comportamento nei test, senza considerarlo già testato.
