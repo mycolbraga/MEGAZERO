@@ -209,7 +209,23 @@ function M.resolve(side, pos, allowed)
       return "sigillato",name
     end
   end
-  return nil,"Sorgenti rigenerate ripetutamente: richiede isolamento"
+  -- Acqua rigenerata (per esempio sorgenti infinite): chiudere la
+  -- cella, non continuare a consumare secchi all'infinito.
+  local slot,name=solidSlot()
+  if not slot then
+    return nil,"Sorgenti rigenerate: mancano blocchi pieni per isolarle"
+  end
+  local placed,reason=placeAt(side)
+  if not placed then
+    return nil,"Isolamento sorgente rigenerata fallito: "..tostring(reason)
+  end
+  sleep(0.25)
+  local stillFluid=M.peek(side)
+  local exists,block=inspectAt(side)
+  if stillFluid or not exists or type(block)~="table" or block.name~=name then
+    return nil,"Isolamento sorgente rigenerata non confermato"
+  end
+  return "sigillato",name
 end
 
 local args={...}
