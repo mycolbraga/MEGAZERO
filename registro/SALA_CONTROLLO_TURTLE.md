@@ -30,6 +30,12 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 - **Installazione sul computer centrale ID 54**, dalla shell normale (non dal prompt `lua>`): `wget https://raw.githubusercontent.com/mycolbraga/MEGAZERO/registro/megazero/scripts/control/megazero_control.lua megazero_control`, poi `megazero_control`.
 - **Test reale non ancora eseguito**: codice pubblicato e letto dal repository; il funzionamento sul computer CC:Tweaked, l'interfaccia e la rete tra base e miniera richiedono la verifica del giocatore. Nessun client turtle installato o programma di mining modificato. La bozza di mining vecchia resta da NON avviare.
 
+## Primo avvio del software centrale riuscito (15 novembre 2026)
+- Il giocatore ha installato con `wget` e avviato `megazero_control` sul **computer ID 54** della base principale.
+- Screenshot del terminale: **`MEGAZERO CONTROL attivo | Computer ID 54`**, **`In attesa dei messaggi dalle Turtle...`**, **`Ctrl+T per uscire salvando il registro.`**
+- **Confermato:** lo script centrale è partito senza errori visibili e il suo ciclo di ricezione è attivo.
+- **Ancora da verificare:** vista dashboard sul monitor con le 40 postazioni, ricezione effettiva Rednet da una turtle, salvataggio/ripristino stato e caricamento chunk.
+
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
 - **Parete di Advanced Monitor** colorati; dimensione suggerita iniziale **4×3 = 12 blocchi monitor**, scalabile in futuro. I monitor contigui e correttamente orientati formano uno schermo unico.
