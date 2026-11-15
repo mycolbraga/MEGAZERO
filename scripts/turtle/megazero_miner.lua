@@ -45,7 +45,8 @@ local function unsafe(name)
  return false
 end
 local function homeFor(unit)
- local side,number=type(unit)=="string" and unit:match("^([NOSE])(%d%d)$")
+ local side,number
+ if type(unit)=="string" then side,number=unit:match("^([NOSE])(%d%d)$") end
  number=tonumber(number)
  assert(side and number and number>=1 and number<=10,
    "Identificativo non valido, richiesto N/O/S/E + 01..10")
