@@ -64,6 +64,12 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 - **Ancora NON confermato:** comparsa dello stato N01 sulla dashboard centrale (l'invio di uno stato non ha acknowledgement applicativo), permanenza del caricamento dei chunk e comunicazione da tutte le altre 39 turtle.
 - Procedura concordata: riavviare `megazero_rete N01` dopo `exit()` da Lua e lasciarlo in esecuzione, quindi configurare le altre turtle durante questa visita alla miniera, evitando viaggi avanti-indietro.
 
+## Installatore unico per le altre 39 Turtle (15 novembre 2026)
+- Dopo il test positivo `rednet.lookup(...)` della N01, il giocatore ha confermato di aver **riavviato `megazero_rete N01`** e di averla lasciata attiva; la visibilità nella dashboard principale è ancora da verificare.
+- **Pubblicato e verificato nel repository:** [`scripts/turtle/installa_rete.lua`](../scripts/turtle/installa_rete.lua), una procedura di installazione a **comando unico** `wget run https://raw.githubusercontent.com/mycolbraga/MEGAZERO/registro/megazero/scripts/turtle/installa_rete.lua N02` da ripetere sulle altre turtle cambiando la sigla (`N02`–`N10`, `O01`–`O10`, `S01`–`S10`, `E01`–`E10`).
+- L'installatore valida il formato dell'ID, controlla la presenza del modem, scarica il modulo `megazero_rete` solo se non esiste già, **non sovrascrive file preesistenti** e avvia subito il test di telemetria senza alcun movimento/scavo. Non tocca `startup`, l'inventario, lo scavo o i file di stato precedenti.
+- **Non ancora testato sul gioco**; fare la prima prova su N02 prima di distribuirlo alle restanti 38. Il solo invio radio non è la prova della ricezione sulla dashboard. La telemetria eseguita manualmente **non si riavvia automaticamente** al reboot delle turtle; verrà integrata nel futuro programma minerario.
+
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
 - **Parete di Advanced Monitor** colorati; dimensione suggerita iniziale **4×3 = 12 blocchi monitor**, scalabile in futuro. I monitor contigui e correttamente orientati formano uno schermo unico.
