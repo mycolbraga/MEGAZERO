@@ -5,6 +5,12 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 
 **Stato attuale (aggiornamento confermato dal giocatore, 15 novembre 2026):** **Hardware centrale già montato nella base principale**: Advanced Computer, 4 Advanced Monitor 2×2 e Ender Modem collegato al computer, secondo la conferma «già fatto tutto». Il secondo Ender Modem per una turtle fa parte del kit preparato, ma **non è ancora verificata in chat la sua effettiva installazione/operatività**. Nessun test delle periferiche, della rete o del software ancora concluso. Prossimo passo: sul computer centrale verificare via Lua `peripheral.find("monitor")` e `peripheral.find("modem")`.
 
+## Verifica periferiche completata (15 novembre 2026)
+- Screenshot fornito dal giocatore del computer centrale in prompt Lua: eseguito `print("Monitor:", peripheral.find("monitor") ~= nil, "Modem:", peripheral.find("modem") ~= nil)` con output **`Monitor: true Modem: true`**.
+- **Confermato:** il computer riconosce un monitor e un modem come periferiche.
+- **Non ancora provato:** scrittura sul monitor, tipo/portata del modem, comunicazione a distanza con una turtle, software di dashboard e caricamento chunk.
+- Prossima verifica: scrivere una stringa di prova sull'Advanced Monitor dal computer, senza avviare alcuna turtle.
+
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
 - **Parete di Advanced Monitor** colorati; dimensione suggerita iniziale **4×3 = 12 blocchi monitor**, scalabile in futuro. I monitor contigui e correttamente orientati formano uno schermo unico.
