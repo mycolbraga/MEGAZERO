@@ -98,6 +98,13 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 - Riepilogo mostrato: **ATTIVE: 0, ERRORI: 0, OFFLINE: 0**. Le unità in stato PREPARAZIONE non sono conteggiate fra quelle attive in scavo; questo non prova che tutte le 40 unità abbiano comunicato.
 - **Ancora da verificare:** le pagine 2/3 e 3/3 per le altre 24 unità; non considerare il test 40/40 completo prima di questa verifica. **Il giocatore ha poi confermato che il chunk della centrale era già forzato/caricato tramite `/forceload` dagli scavi della Mansion; nessun nuovo comando necessario.**
 
+## Collaudo rete 40/40 confermato dal giocatore (15 novembre 2026)
+- Dopo il controllo delle pagine 1/3, 2/3 e 3/3 della dashboard della centrale CC:Tweaked **ID 54**, il giocatore ha confermato esplicitamente: **«tutte in PREPARAZIONE le turtle»**.
+- **Esito: 40/40 turtle riconosciute sulla dashboard con stato PREPARAZIONE; ricezione degli aggiornamenti Rednet verificata in gioco.** Non è una simulazione: conferma esplicita dell'utente.
+- Tutti i 40 Ender Modem sono installati, i test di telemetria sono avviati, la miniera è coperta dai quattro comandi `/forceload` già accettati, e il chunk della centrale era già caricato grazie ai lavori alla Mansion.
+- **Confine del collaudo:** è completato il sistema di **monitoraggio rete in modalità preparazione**, **non** lo scavo selettivo, i movimenti, il rientro di emergenza, gli aggiornamenti di posizione/progresso effettivi, né il comportamento dopo riavvio delle singole turtle (i test attuali non si autoavviano sulle turtle).
+- **Prossima fase:** integrazione del modulo telemetria nel futuro software di scavo coordinato dei 40 settori, mantenendo il rientro a casa come priorità.
+
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
 - **Parete di Advanced Monitor** colorati; dimensione suggerita iniziale **4×3 = 12 blocchi monitor**, scalabile in futuro. I monitor contigui e correttamente orientati formano uno schermo unico.
