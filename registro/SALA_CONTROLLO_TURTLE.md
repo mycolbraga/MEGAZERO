@@ -12,6 +12,11 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 - **Non ancora provato:** tipo/portata del modem, apertura Rednet, comunicazione con una turtle, software dashboard e caricamento chunk.
 - Prossima verifica: scrivere una stringa di prova sull'Advanced Monitor dal computer, senza avviare alcuna turtle.
 
+## Identificativo centrale (15 novembre 2026)
+- **ID CC:Tweaked del computer centrale comunicato dal giocatore: `54`.**
+- È l'ID da utilizzare nei test di comunicazione fra la prima turtle e la centrale. Per rendere la sala controllo riutilizzabile su più siti, il progetto definitivo non deve dipendere esclusivamente da un numero scritto nel codice: prevedere registrazione/ricerca del server con protocollo.
+- Il giocatore ha fornito il numero `54` dopo il comando di apertura Rednet; la conferma visiva di `RETE: true` non è stata fornita esplicitamente, quindi non considerare la comunicazione con una turtle già testata.
+
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
 - **Parete di Advanced Monitor** colorati; dimensione suggerita iniziale **4×3 = 12 blocchi monitor**, scalabile in futuro. I monitor contigui e correttamente orientati formano uno schermo unico.
