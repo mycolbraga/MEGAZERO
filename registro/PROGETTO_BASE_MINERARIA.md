@@ -284,6 +284,12 @@ Il prototipo `scripts/turtle/megazero_pilot.lua` **attualmente tratta `water` e 
 - **Procedura su N01 da terminale remoto:** quando N01 è ferma alla home interrompere lo startup con Ctrl+T; scaricare `wget https://raw.githubusercontent.com/mycolbraga/MEGAZERO/registro/megazero/scripts/turtle/megazero_miner_integrato_N01.lua megazero_miner_integrato_N01`; poi avviare manualmente `megazero_miner_integrato_N01` **solo dopo download confermato**. Non interrompere durante il movimento. Alla fine lo script attende Invio per tornare allo startup normale. **Nessuna altra turtle va avviata.**
 - **Obiettivo successivo, non ancora implementato:** generalizzare il core miner per tutte le 40 turtle, tutti i settori, le gallerie ai vari livelli Y=0 verso bedrock, inseguimento di vene minerali con confini esclusivi, recupero di correnti complesse e integrazione sotto `megazero_boot` solo dopo test reali.
 
+## Collaudo pilot integrato N01 — esito confermato dall'utente (15 novembre 2026)
+- L'utente ha eseguito realmente `megazero_miner_integrato_N01`; alla richiesta di chiarimento «N01 è tornata alla base con INTEGRATO OK oppure ha mostrato un errore?» ha risposto **«tutto ok»**.
+- **Esito dichiarato dall'utente: test integrato riuscito, nessun errore riportato e rientro alla postazione.** Non è stato fornito in questo scambio uno screenshot del terminale con tutte le righe: non inventare coordinate, tempi o conteggi minerari rilevati.
+- L'utente ha anche riferito **«non ha trovato niente»**: **nessun fluido incontrato durante questa prova**. La prova valida il percorso/scavo di test e rientro, **non la bonifica durante lo stesso ciclo minerario**, né la ricerca selettiva di vene.
+- **Prossimo obiettivo:** implementare e testare il miner selettivo di produzione per tutte le fasce dei quattro fronti, con livelli da Y=0 fino a bedrock, raccolta minerali vanilla/mod, percorsi esclusivi, bonifica, carburante/scarico e rientro a casa. **Non avviare le altre 39 turtle** finché il software non è pronto e testato.
+
 ## Punti ancora da definire
 - **Conteggio e coordinate delle 40 turtle definiti:** 10 per lato a distanza di 2 blocchi, ciascuna rivolta verso l'esterno (vedere «Mappa esatta»). Da progettare punti di uscita, settori e percorsi protetti.
 - Documentare il layout **già costruito** di casse, importers, alimentazione/carburante e rete RS; verificarne il comportamento nei test, senza considerarlo già testato.
