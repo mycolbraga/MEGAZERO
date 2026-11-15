@@ -8,7 +8,8 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 ## Verifica periferiche completata (15 novembre 2026)
 - Screenshot fornito dal giocatore del computer centrale in prompt Lua: eseguito `print("Monitor:", peripheral.find("monitor") ~= nil, "Modem:", peripheral.find("modem") ~= nil)` con output **`Monitor: true Modem: true`**.
 - **Confermato:** il computer riconosce un monitor e un modem come periferiche.
-- **Non ancora provato:** scrittura sul monitor, tipo/portata del modem, comunicazione a distanza con una turtle, software di dashboard e caricamento chunk.
+- **Test display confermato dal giocatore con screenshot:** dal computer centrale è stata scritta la stringa `MEGAZERO CONTROL ONLINE` sul monitor 2×2. **Riconoscimento e scrittura monitor verificati.**
+- **Non ancora provato:** tipo/portata del modem, apertura Rednet, comunicazione con una turtle, software dashboard e caricamento chunk.
 - Prossima verifica: scrivere una stringa di prova sull'Advanced Monitor dal computer, senza avviare alcuna turtle.
 
 ## Architettura riutilizzabile
