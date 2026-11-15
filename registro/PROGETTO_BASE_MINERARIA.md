@@ -69,6 +69,17 @@
 - **Script di partenza indicato dall'utente:** `scavo_1680_1783_dal_67_in_su(1).lua` (allegato in chat), funzionante secondo l'utente. Riutilizzare la logica di rifornimento lava dalla cassa superiore, scarico dalla inferiore, stato e ritorno; cambiare esclusivamente quanto serve, una volta definite le traiettorie.
 - **Stato:** solo pianificazione dei limiti, nessun programma nuovo scritto o testato in gioco.
 
+## Prima bozza programma per NORD-01 (15 novembre 2026)
+- È stata preparata in chat, come **file locale allegabile** (non ancora pubblicato come codice su GitHub), una **bozza non collaudata in Minecraft**: `miniera_nord_01.lua`.
+- **Basata sul file di scavo funzionante fornito dal giocatore:** `scavo_1680_1783_dal_67_in_su(1).lua`. Conserva logiche di scarico nella cassa sotto, rifornimento con lava da quella sopra, stato persistente, rientro e controllo carburante.
+- Prima turtle: **(2119,-52,2995), facing NORD**. Per il modello iniziale si è **assunta provvisoriamente** una striscia completa di **2 blocchi di larghezza** X=2118..2119 e 300 di lunghezza Z=2695..2994; non è ancora una conferma del giocatore sul tipo di galleria.
+- Quote della bozza: Y=0..-58, scendendo dall'alto. La bedrock dell'Overworld Java può comparire a partire da Y=-59; lo strato Y=-59 e quelli sottostanti richiedono gestione distinta e **non sono inclusi** in questa prima bozza.
+- Percorso **ipotizzato, non confermato**: uscita un blocco a nord della base in (2119,-52,2994), salita nello stesso asse fino a Y=0, poi serpentina orizzontale e livelli in discesa. Prima di un test con movimento verificare che la colonna scelta non interferisca con elementi della base.
+- `prova` è non distruttiva (controlla accessibilità inventari sopra/sotto); `test` scava dieci celle del primo livello Y=0 e la colonna di salita iniziale, poi rientra; `avvia` esegue il lavoro esteso.
+- Il programma scarta solo pietre/terra/ghiaia comuni note, preservando gli item non riconosciuti, inclusi gli eventuali drop minerali di mod. Si ferma su lava/acqua, bedrock o parti strutturali protette: **la bonifica automatica della lava non è ancora implementata**.
+- **Validazione fatta fuori dal gioco:** parsing Lua 5.3 e simulazione semplificata delle API, riuscita per il test breve e una versione miniatura del percorso completo; **non equivale a collaudo nel mondo Minecraft**.
+- **Non avviare automaticamente tutti i fronti** finché non sono stati verificati gli accessi, le corsie e il funzionamento della prima turtle.
+
 ## Punti ancora da definire
 - Contare le turtle effettivamente posizionate e mappare posizione/orientamento individuale, punti di uscita e percorsi protetti (previsione originaria: 8–10 per fronte).
 - Documentare il layout **già costruito** di casse, importers, alimentazione/carburante e rete RS; verificarne il comportamento nei test, senza considerarlo già testato.
