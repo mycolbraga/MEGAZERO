@@ -121,6 +121,12 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 - **Stato:** entrambi i file pubblicati e recuperati da GitHub con confronto integrale; **non ancora eseguiti nel gioco**, pertanto non dichiarare funzionante l'avvio automatico sulle 40 turtle senza prima il test N01 e poi l'installazione completa e un reboot.
 - **Nota importante:** l'installer richiede una singola esecuzione locale su ciascuna turtle perché il vecchio test telemetry è solo trasmittente e non ha funzioni di installazione remota; evita di riscrivere 40 startup in futuro.
 
+## Primo riavvio automatico Turtle verificato: N01 (15 novembre 2026)
+- Screenshot del terminale Turtle N01 dopo l'installazione con `installa_startup.lua N01` e riavvio: `MEGAZERO BOOT 1.0 | MINIERA-01/N01`, `CENTRALE: 54`, `MINER: non avviato | telemetria continua`.
+- **Confermato in gioco:** l'installer ha configurato l'avvio automatico sulla N01, il bootstrap è partito dopo reboot e ha attivato la routine di telemetria senza avviare lo scavo.
+- **Non ancora verificato:** persistenza alle successive riaccensioni, visualizzazione dell'heartbeat della N01 sul monitor centrale dopo reboot e startup delle altre **39** turtle. Non attribuire automaticamente il completamento 40/40 a questa prova.
+- **Passo successivo:** installare sulle rimanenti 39 turtle, cambiando esclusivamente l'identificativo nell'argomento di `installa_startup.lua`. Non sovrascrivere file startup già esistenti; l'installatore controlla eventuali collisioni.
+
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
 - **Parete di Advanced Monitor** colorati; dimensione suggerita iniziale **4×3 = 12 blocchi monitor**, scalabile in futuro. I monitor contigui e correttamente orientati formano uno schermo unico.
