@@ -160,6 +160,7 @@ Il rientro si può garantire per gli errori **da cui esiste un percorso praticab
 **Questa condizione prevale su ogni bozza precedente che usa `error()` al fronte di scavo senza rientro.** Il programma `miniera_nord_01.lua` è già superato e non deve essere avviato.
 
 ## Sala di controllo remota alla base principale — decisione approvata (15 novembre 2026)
+- **Specifica permanente multi-sito e lista materiali:** [SALA_CONTROLLO_TURTLE.md](./SALA_CONTROLLO_TURTLE.md) — confermata riutilizzabile per miniere future e potenzialmente altri impianti. Kit minimo: Advanced Computer, 4 Advanced Monitor, 2 Ender Modem; a regime 41 Ender Modem e 12 monitor per 40 turtle. Prima verificare la comunicazione a distanza e il caricamento chunk.
 - **Scelta approvata dal giocatore:** realizzare una **sala di controllo nella base principale**, separata dalla miniera, per controllare a distanza le 40 Mining Turtle senza dover tornare fisicamente al sito minerario ogni volta. Da sviluppare con CC:Tweaked: computer centrale, uno o più monitor, modem e messaggistica `rednet` dalle turtle.
 - Stati proposti per ciascuna turtle: **IN SCAVO**, **IN RIENTRO**, **ALLA BASE**, **ERRORE (rientrata e con causa/coordinate)**, **NON RAGGIUNGIBILE** (mancano aggiornamenti).
 - Dashboard organizzata per **NORD/SUD/EST/OVEST**, 10 turtle per ciascun fronte; eventuali dati: ID univoco, avanzamento, posizione registrata, carburante, errore e ora/istante dell'ultima comunicazione.
