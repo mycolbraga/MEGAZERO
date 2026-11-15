@@ -40,6 +40,14 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 - Sul computer centrale CC:Tweaked **ID 54** il giocatore ha creato e salvato il file `startup` tramite `edit startup`, inserendo `shell.run("megazero_control")`.
 - **Verifica completata:** dopo il comando `reboot` sul computer centrale **ID 54**, il giocatore ha confermato **sì**, la dashboard MEGAZERO CONTROL si avvia automaticamente e compare sul monitor. Nessuna verifica di comunicazione con una turtle ancora svolta.
 
+## Modulo di telemetria delle Turtle preparato (15 novembre 2026)
+- **Pubblicato:** [`scripts/turtle/megazero_rete.lua`](../scripts/turtle/megazero_rete.lua), **versione 1.0**, in forma di programma autonomo per il test radio e di modulo riutilizzabile nel futuro programma minerario.
+- **Installazione futura su ciascuna turtle:** `wget https://raw.githubusercontent.com/mycolbraga/MEGAZERO/registro/megazero/scripts/turtle/megazero_rete.lua megazero_rete`.
+- **Test non distruttivo sulla prima turtle N01 (quando si torna alla cava, non ora):** `megazero_rete N01`. Non si sposta, scava o rifornisce: invia `PREPARAZIONE` e un heartbeat ogni 20 secondi con sito `MINIERA-01`, unità `N01` e livello carburante reale. Si può interrompere con Ctrl+T.
+- Il protocollo coincide con quello della centrale: `megazero.control.v1`, hostname `megazero-central` per `rednet.lookup`, fallback ID **54**. Il codice cerca un modem wireless/Ender sulla turtle, apre Rednet e invia l'aggiornamento. `rednet.send()` non conferma la consegna remota: la prova conclusiva sarà la visualizzazione della turtle sulla dashboard.
+- La funzione `dofile("megazero_rete").new("N01", "MINIERA-01")` è disponibile per la futura integrazione nel programma minerario; i metodi `report(stato, dati)`, `heartbeat()` e `heartbeatLoop()` richiedono **integrazione esplicita** nelle operazioni di movimento, ritorno e gestione errori. Non dichiarare operativi avanzamento, posizione, errori o rientro finché i corrispondenti dati non sono inviati dal programma di scavo.
+- **Non installato né testato in Minecraft sulle turtle**; **nessuna modifica** allo script di scavo originale già funzionante. Non sostituisce il programma di scavo e non avvia automaticamente il mining. Restano da realizzare/testare il miner selettivo per le 40 fasce, il ritorno di sicurezza e la gestione chunk.
+
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
 - **Parete di Advanced Monitor** colorati; dimensione suggerita iniziale **4×3 = 12 blocchi monitor**, scalabile in futuro. I monitor contigui e correttamente orientati formano uno schermo unico.
