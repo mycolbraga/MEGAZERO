@@ -89,7 +89,7 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 - **EST:** `/forceload add 2120 2996 2419 3015` — 40 chunk (X 132..151, Z 187..188).
 - Le quattro fasce includono già i 4 chunk della base delle turtle e hanno 4 intersezioni ai lati: **156 chunk distinti** complessivamente. Non è necessario un quinto comando per la base mineraria.
 - **Base principale:** posizione diversa da quella della miniera; manca la coppia di coordinate. Da aggiungere almeno il chunk che ospita il computer 54, per esempio con `/forceload add ~ ~` quando il giocatore è presso il computer. Controllare l'eventuale monitor oltre un confine di chunk.
-- **Comandi suggeriti, NON ancora confermati eseguiti dall'utente.** Ogni `/forceload add` comprende meno di 256 chunk. Verifica successiva: `/forceload query`. Attenzione al costo prestazionale dei chunk sempre caricati e alla persistenza della forzatura finché non viene rimossa.
+- **Comandi eseguiti e accettati da Minecraft, secondo conferma esplicita dell'utente («si a posto», 15 novembre 2026).** Quattro aree minerarie /forceload attivate; 156 chunk distinti in totale, conteggio derivato dalle coordinate. **Resta da caricare il chunk della centrale ID 54 nella base principale**; il suo forceload NON è ancora confermato. Verifica facoltativa: `/forceload query`. Attenzione al costo prestazionale dei chunk sempre caricati e alla persistenza della forzatura finché non viene rimossa.
 - Documentazione comando: https://minecraft.wiki/w/Commands/forceload
 
 ## Architettura riutilizzabile
