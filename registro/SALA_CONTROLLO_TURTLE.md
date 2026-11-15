@@ -130,7 +130,7 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 ## Installazione startup sulle prime Turtle dei quattro fronti (15 novembre 2026)
 - Confermata prova di startup su **N01** con screenshot del bootstrap attivo.
 - Il giocatore ha richiesto i comandi per **O01**, **S01** ed **E01**, poi ha confermato **«FATTO»**: considerare startup installato anche sulle prime Turtle di questi tre fronti, senza attribuire a tale risposta un test di reboot specifico per ciascuna.
-- **Situazione confermata:** startup installato su **N01, O01, S01, E01**. Non è confermata l'installazione su tutte le altre 36 turtle; la precedente installazione dei moduli `megazero_rete` non equivale allo startup.
+- **Aggiornamento esplicito del giocatore:** **«NO HO FATTO TUTTE E 40»**. Pertanto **startup installato su tutte e 40 le Turtle, 10 per ciascun fronte**, secondo conferma diretta dell'utente. Il test di riavvio con bootstrap e telemetria è documentato con screenshot per N01; non dichiarare individualmente collaudato il riavvio di tutte le altre 39 finché non verificato dalla dashboard dopo un nuovo riavvio.
 - Il futuro programma minerario rimane disabilitato (`miner_autostart=false`), senza avvii di scavo automatici per ora.
 
 ## Architettura riutilizzabile
