@@ -81,6 +81,17 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 - **Prossimo test unico di integrazione:** tornare alla base principale, visualizzare la dashboard della centrale 54 e verificare quali unità compaiono `PREPARAZIONE` (e quali `MAI COLLEGATA` o `SENZA SEGNALE`), attendendo almeno 20–30 secondi di esecuzione con entrambi i siti caricati. Se alcune risultano `SENZA SEGNALE`, analizzare chunk loading prima di imputare un guasto ai modem.
 - **Attenzione:** gli script di test non hanno un `startup` sulle turtle: dopo reboot o riavvio manuale delle turtle i test non ripartono da soli; il modulo di telemetria sarà integrato nel futuro programma di scavo. **Il mining coordinato per 40 turtle non è ancora scritto o collaudato**.
 
+## Piano forceload delle quattro fasce minerarie (15 novembre 2026)
+- Il giocatore ha **scelto esplicitamente `/forceload`**, non chunk loader costruiti fisicamente. Non proporre installazioni o craft di chunk loader.
+- **NORD:** `/forceload add 2100 2695 2119 2994` — 40 chunk (X chunk 131..132, Z chunk 168..187).
+- **SUD:** `/forceload add 2099 3016 2118 3315` — 40 chunk (X 131..132, Z 188..207).
+- **OVEST:** `/forceload add 1799 2995 2098 3014` — 40 chunk (X 112..131, Z 187..188).
+- **EST:** `/forceload add 2120 2996 2419 3015` — 40 chunk (X 132..151, Z 187..188).
+- Le quattro fasce includono già i 4 chunk della base delle turtle e hanno 4 intersezioni ai lati: **156 chunk distinti** complessivamente. Non è necessario un quinto comando per la base mineraria.
+- **Base principale:** posizione diversa da quella della miniera; manca la coppia di coordinate. Da aggiungere almeno il chunk che ospita il computer 54, per esempio con `/forceload add ~ ~` quando il giocatore è presso il computer. Controllare l'eventuale monitor oltre un confine di chunk.
+- **Comandi suggeriti, NON ancora confermati eseguiti dall'utente.** Ogni `/forceload add` comprende meno di 256 chunk. Verifica successiva: `/forceload query`. Attenzione al costo prestazionale dei chunk sempre caricati e alla persistenza della forzatura finché non viene rimossa.
+- Documentazione comando: https://minecraft.wiki/w/Commands/forceload
+
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
 - **Parete di Advanced Monitor** colorati; dimensione suggerita iniziale **4×3 = 12 blocchi monitor**, scalabile in futuro. I monitor contigui e correttamente orientati formano uno schermo unico.
