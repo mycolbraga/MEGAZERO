@@ -7,7 +7,10 @@ local args = {...}
 local unit = args[1]
 local site = args[2] or "MINIERA-01"
 
-local front, n = type(unit) == "string" and unit:match("^([NOSE])(%d%d)$")
+local front, n
+if type(unit) == "string" then
+  front, n = unit:match("^([NOSE])(%d%d)$")
+end
 n = tonumber(n)
 if not front or not n or n < 1 or n > 10 then
   printError("Sigla non valida. Usa N01..N10, O01..O10, S01..S10 o E01..E10.")
