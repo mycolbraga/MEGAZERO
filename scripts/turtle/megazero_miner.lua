@@ -272,6 +272,7 @@ function M.start(agent,cfg,options)
   s.path[#s.path+1]={m=move,d=s.d}
   s.x,s.y,s.z=x,y,z
   s.pending=nil;save()
+  pcall(function() agent:heartbeat() end)
  end
  local function reverseOne()
   assert(not s.pending,"Posizione incerta dopo reboot")
@@ -292,6 +293,7 @@ function M.start(agent,cfg,options)
     s.x,s.y,s.z=s.x+dx,s.y+dy,s.z+dz
     s.path[n]=nil
     s.pending=nil;save()
+    pcall(function() agent:heartbeat() end)
     return
    end
    s.pending=nil;save()
