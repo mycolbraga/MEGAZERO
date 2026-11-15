@@ -105,6 +105,15 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 - **Confine del collaudo:** è completato il sistema di **monitoraggio rete in modalità preparazione**, **non** lo scavo selettivo, i movimenti, il rientro di emergenza, gli aggiornamenti di posizione/progresso effettivi, né il comportamento dopo riavvio delle singole turtle (i test attuali non si autoavviano sulle turtle).
 - **Prossima fase:** integrazione del modulo telemetria nel futuro software di scavo coordinato dei 40 settori, mantenendo il rientro a casa come priorità.
 
+## Problema rilevato: startup assente sulle 40 Turtle (15 novembre 2026)
+- Dopo aver collaudato i 40 collegamenti il giocatore ha giustamente segnalato: **«NON C'È LO STARTUP SULLE TURTLE»**.
+- **Situazione verificata per progetto:** `startup` esiste sul computer centrale **ID 54**, **non è stato predisposto sugli altri 40 computer**. L'installatore `installa_rete.lua` è stato progettato per **non toccare `startup`**; `megazero_rete Nxx` è attualmente soltanto un **test persistente finché il processo rimane attivo**, non un servizio che riparte al reboot.
+- **Conseguenza:** dopo un riavvio della singola turtle la comunicazione cessa; la dashboard segnala `SENZA SEGNALE` dopo il timeout. Il collaudo 40/40 resta valido per il funzionamento corrente, **non certifica la persistenza ai riavvii**.
+- **Decisione architetturale per la soluzione:** predisporre un **bootstrap/starter definitivo e riutilizzabile** su ciascuna turtle che all'accensione carichi **telemetria + logica di lavoro**, con configurazione della sigla e del sito separata dal software. In stato di attesa deve comunicare `PREPARAZIONE`, senza scavare né effettuare movimenti. Il miner deve essere avviato solo secondo le regole di sicurezza concordate e non deve essere rilanciato automaticamente dopo un errore irrisolto.
+- Evitare di creare ora 40 file `startup` improvvisati che eseguano `megazero_rete Nxx` come loop esclusivo: in seguito impedirebbero o complicherebbero l'avvio del software minerario. Il futuro installer unico deve **rilevare e preservare** qualsiasi `startup` preesistente e aggiornare/modificare solo in modo esplicito e non distruttivo.
+- **Limite tecnico importante:** il client `megazero_rete` attuale **trasmette soltanto** e non esegue né riceve comandi di installazione. Non è possibile configurare i file `startup` delle 40 turtle da remoto tramite questa versione; servirà una procedura locale controllata quando il bootstrap è pronto. Preferire una sola operazione per turtle, da fare durante la prossima visita alla miniera.
+- **Stato:** problema documentato, **non ancora risolto né installato sulle turtle**. Non affermare che la persistenza sia stata verificata.
+
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
 - **Parete di Advanced Monitor** colorati; dimensione suggerita iniziale **4×3 = 12 blocchi monitor**, scalabile in futuro. I monitor contigui e correttamente orientati formano uno schermo unico.
