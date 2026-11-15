@@ -133,6 +133,12 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 - **Aggiornamento esplicito del giocatore:** **«NO HO FATTO TUTTE E 40»**. Pertanto **startup installato su tutte e 40 le Turtle, 10 per ciascun fronte**, secondo conferma diretta dell'utente. Il test di riavvio con bootstrap e telemetria è documentato con screenshot per N01; non dichiarare individualmente collaudato il riavvio di tutte le altre 39 finché non verificato dalla dashboard dopo un nuovo riavvio.
 - Il futuro programma minerario rimane disabilitato (`miner_autostart=false`), senza avvii di scavo automatici per ora.
 
+## Dashboard completa su 12 monitor — conferma visiva (15 novembre 2026)
+- Il giocatore ha ampliato autonomamente la parete nella base principale a **12 Advanced Monitor**, come da dimensionamento originale. Ha inviato uno screenshot della dashboard intera visibile senza paginazione.
+- **Conferma visiva sullo schermo della centrale 54:** quadranti NORD, SUD, OVEST, EST, ciascuno con **10 unità in PREPARAZIONE**. Riepilogo: **40 turtle, ATTIVE 0, ERRORI 0, OFFLINE 0**. Le 40 turtle sono visibili contemporaneamente.
+- Il precedente monitor 2×2 aveva mostrato un elenco di 40 unità su 3 pagine; il problema di spazio schermo è quindi **risolto con 12 monitor**. Nessuna modifica allo script centrale necessaria per mostrare i quadranti nel nuovo spazio.
+- **Limite:** questo verifica la dashboard e lo stato di preparazione in quel momento, non lo scavo o il rientro di sicurezza, che restano da sviluppare e collaudare.
+
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
 - **Parete di Advanced Monitor** colorati; dimensione suggerita iniziale **4×3 = 12 blocchi monitor**, scalabile in futuro. I monitor contigui e correttamente orientati formano uno schermo unico.
