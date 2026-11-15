@@ -215,6 +215,12 @@ Il prototipo `scripts/turtle/megazero_pilot.lua` **attualmente tratta `water` e 
 - **Non integra ancora il programma di scavo `megazero_pilot`/la versione definitiva, né lo stato `BONIFICA` nel client/dashboard**: il protocollo centrale attuale non lo riconosce. Da integrare e testare **dopo** il collaudo dei secchi. Una corrente sigillata **non equivale** a un corridoio percorribile, e fonti fuori settore/grandi bacini non sono risolvibili in modo garantito: serve pianificazione del percorso e gestione autonoma delle risorse.
 - **Percorso di download sulla N01:** `wget https://raw.githubusercontent.com/mycolbraga/MEGAZERO/registro/megazero/scripts/turtle/megazero_fluidi.lua megazero_fluidi`. Per la prova, interrompere eventuale test/boot **solo quando N01 è ferma alla base**; non modificare i 40 file `startup`.
 
+## Test N01 modulo fluidi — verifica iniziale riuscita (15 novembre 2026)
+- Screenshot del giocatore dopo `megazero_fluidi N01` sul terminale: **`Scorta: OK`**, **`Secchi vuoti: 3`**, **`Carburante: 12880/20000`**, **`Nessun fluido davanti: nessuna modifica al mondo`**, invito a premere Invio per tornare allo startup.
+- **Confermato:** programma eseguito senza errori visibili, scorta di 3 secchi vuoti presente, valore carburante 12880 sul limite effettivo di 20000 per N01, niente movimenti/scavo/bonifica nel test.
+- **Non confermato:** che siano stati effettivamente prodotti nuovi secchi durante questo specifico test (potrebbero essere già presenti), che sia stato consumato carburante per produrli, prelievo di sorgenti d'acqua/lava, sigillatura di correnti o effettiva ripresa mineraria post-bonifica.
+- Prossimo collaudo: fluidi reali con condizioni controllate e percorso di rientro sicuro, senza assumere che il test senza fluidi validi la logica di bonifica. Il programma definitivo di scavo resta da integrare con il modulo.
+
 ## Punti ancora da definire
 - **Conteggio e coordinate delle 40 turtle definiti:** 10 per lato a distanza di 2 blocchi, ciascuna rivolta verso l'esterno (vedere «Mappa esatta»). Da progettare punti di uscita, settori e percorsi protetti.
 - Documentare il layout **già costruito** di casse, importers, alimentazione/carburante e rete RS; verificarne il comportamento nei test, senza considerarlo già testato.
