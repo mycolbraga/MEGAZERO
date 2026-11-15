@@ -40,7 +40,7 @@
 | **23** | **12** | Bibliotecario | **Potenza V** | **CONFERMATA** |
 | **24** | **21** | Bibliotecario | **Contraccolpo II** | **CONFERMATA** |
 | **25** | **13** | Bibliotecario | **Affilatezza V** | **CONFERMATA** |
-| **26** | — | **Bibliotecario** | **Esca III** | **SCAMBIO BLOCCATO — confermato 15/11/2026** |
+| **26** | — | **Bibliotecario** | **Nessun incantesimo confermato** | **DA RIVERIFICARE — Esca III ritirata dalla registrazione** |
 | **27** | **14** | Bibliotecario | **Aspetto di Fuoco II** | **CONFERMATA** |
 | **28** | **19** | Bibliotecario | **Impalamento V** | **CONFERMATA** |
 | **29** | **15** | Bibliotecario | **Protezione dai Proiettili IV** | **CONFERMATA** |
@@ -153,7 +153,7 @@ Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo F
 
 **Aggiornamento 15/11/2026:** postazione **#5 = Impalamento V**, offerta confermata direttamente dal giocatore. Scambio eseguito e **bloccato**, confermato dal giocatore. È rimosso dall'elenco operativo degli incantesimi ancora da trovare (da 10 a 9, secondo la ricognizione in chat del 15/11). Le tabelle datate 01/11 restano fotografie storiche e non sono state riscritte.
 
-**Aggiornamento 15/11/2026:** postazione **#26 = Esca III**, scambio bloccato confermato dal giocatore. Esca III non è più da cercare (8 incantesimi ancora da trovare secondo la ricognizione del 15/11).
+**Rettifica 16/11/2026:** il giocatore ha chiesto di **togliere Esca III** dalla postazione #26 e dall'elenco dei libri acquisiti. La precedente segnalazione del 15/11 è superata: il #26 rimane con libro da verificare e **Esca III torna tra i mancanti**. Restano **9 incantesimi da trovare** secondo la ricognizione in chat.
 
 ## Storico del cambiamento
 
