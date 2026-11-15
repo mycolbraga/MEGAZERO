@@ -114,6 +114,13 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 - **Limite tecnico importante:** il client `megazero_rete` attuale **trasmette soltanto** e non esegue né riceve comandi di installazione. Non è possibile configurare i file `startup` delle 40 turtle da remoto tramite questa versione; servirà una procedura locale controllata quando il bootstrap è pronto. Preferire una sola operazione per turtle, da fare durante la prossima visita alla miniera.
 - **Stato:** problema documentato, **non ancora risolto né installato sulle turtle**. Non affermare che la persistenza sia stata verificata.
 
+## Installer startup pubblicato — ancora non collaudato (15 novembre 2026)
+- **Modulo permanente:** [`scripts/turtle/megazero_boot.lua`](../scripts/turtle/megazero_boot.lua). A reboot esegue la telemetria automaticamente; è previsto un futuro `/megazero_miner` in formato `return function(agent,config) ... end`, da integrare **solo dopo sviluppo e collaudo del mining**, attualmente non esistente.
+- **Installatore locale unificato:** [`scripts/turtle/installa_startup.lua`](../scripts/turtle/installa_startup.lua). Esempio per N01: `wget run https://raw.githubusercontent.com/mycolbraga/MEGAZERO/registro/megazero/scripts/turtle/installa_startup.lua N01`. Controlla che non esista già `startup` o `startup.lua`, crea config con sigla e sito, boot, `startup.lua`, riavvia la turtle; non modifica lo script di scavo già presente. Prima prova su N01, poi restanti 39. Il giocatore ha comunicato **di essere già in miniera**: procedere in loco.
+- **Modalità avvio attuale** nel file `/megazero_config`: `miner_autostart=false`, perciò all'accensione **solo telemetria e PREPARAZIONE**, **nessuno scavo/movimento**. Configurazione/sblocco del miner SOLO dopo sviluppo sicuro e verifica; nessun avvio automatico miner in caso di errore irrisolto.
+- **Stato:** entrambi i file pubblicati e recuperati da GitHub con confronto integrale; **non ancora eseguiti nel gioco**, pertanto non dichiarare funzionante l'avvio automatico sulle 40 turtle senza prima il test N01 e poi l'installazione completa e un reboot.
+- **Nota importante:** l'installer richiede una singola esecuzione locale su ciascuna turtle perché il vecchio test telemetry è solo trasmittente e non ha funzioni di installazione remota; evita di riscrivere 40 startup in futuro.
+
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
 - **Parete di Advanced Monitor** colorati; dimensione suggerita iniziale **4×3 = 12 blocchi monitor**, scalabile in futuro. I monitor contigui e correttamente orientati formano uno schermo unico.
