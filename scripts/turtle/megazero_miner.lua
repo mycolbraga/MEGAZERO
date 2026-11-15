@@ -1,15 +1,18 @@
--- MEGAZERO MINER v1.0 | 40 Turtle, settori separati, scavo selettivo
+-- MEGAZERO MINER v2.0 | 40 Turtle, gallerie 2x2, vene selettive, scorte e sicurezza
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
--- Gallerie Y -1,-4,...,-58 (testa a Y 0,...,-57), max 300.
+-- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
+-- Spawner scavabili; blocchi tecnici protetti; verificare la quota bedrock reale.
 -- Ritorno fisico per passi inversi; nessun lavoro dentro il perimetro base.
 
 local M = {}
 local DXY = {[0]={0,-1},[1]={1,0},[2]={0,1},[3]={-1,0}}
 local BASE_Y = -53
 local LEVELS={}
-for y=-1,-58,-3 do LEVELS[#LEVELS+1]=y end
+for y=-1,-61,-3 do LEVELS[#LEVELS+1]=y end
 local ORE_WORDS = {":ore_", "_ore"}
+local GRAVITY = { ["minecraft:gravel"]=true, ["minecraft:sand"]=true,
+ ["minecraft:red_sand"]=true }
 local NATURAL = {}
 for _,n in ipairs({
  "stone","deepslate","cobbled_deepslate","cobblestone",
@@ -24,6 +27,7 @@ local function isOre(b)
  if not b or type(b.name)~="string" then return false end
  local n=b.name:lower()
  for _,word in ipairs(ORE_WORDS) do if n:find(word,1,true) then return true end end
+ if n=="minecraft:ancient_debris" then return true end
  if type(b.tags)=="table" then
   for tag,present in pairs(b.tags) do
    if present and type(tag)=="string"
@@ -33,8 +37,14 @@ local function isOre(b)
  end
  return false
 end
+local function isSpawner(b)
+ local n=type(b)=="table" and b.name or tostring(b or "")
+ return type(n)=="string" and (n=="minecraft:spawner" or n:match("[_:]spawner$")~=nil)
+end
 local function unsafe(name)
  local n=tostring(name or "?"):lower()
+ -- Redstone ore e spawner sono scavabili; componenti tecnici restano protetti.
+ if isOre({name=n}) or isSpawner({name=n}) then return false end
  for _,word in ipairs({
  "chest","turtle","computer","modem","cable","machine","pipe",
  "importer","exporter","receiver","transmitter","drawer","monitor",
@@ -73,7 +83,7 @@ function M.start(agent,cfg,options)
  local dir=DXY[front]
  local side=DXY[left]
  local mode=(options.prova and "_PROVA" or "_LAVORO")
- local PATH="/.megazero_miner_v1_"..cfg.unit..mode..
+ local PATH="/.megazero_miner_v2_"..cfg.unit..mode..
    (options.prova and ("_"..maxDistance.."x"..maxLevels) or "")
  local LATCH="/.megazero_miner_error"
  local fluidi=assert(dofile("/megazero_fluidi"),
@@ -102,7 +112,7 @@ function M.start(agent,cfg,options)
  end
  local function atHome()return s.x==hx and s.y==hy and s.z==hz end
  local function inSector(x,y,z)
-  if y < -58 or y > 0 then return false end
+  if y < -61 or y > 0 then return false end
   local dx,dz=x-hx,z-hz
   local forward=dx*dir[1]+dz*dir[2]
   local lateral=dx*side[1]+dz*side[2]
@@ -159,6 +169,22 @@ function M.start(agent,cfg,options)
   for i=1,16 do if turtle.getItemCount(i)==0 then free=free+1 end end
   return free
  end
+ local function compactInventory()
+  -- Unisce stack compatibili prima di giudicare l'inventario pieno.
+  for i=16,1,-1 do
+   local item=turtle.getItemDetail(i)
+   if item then
+    for j=1,i-1 do
+     local target=turtle.getItemDetail(j)
+     if target and item.name==target.name then
+      turtle.select(i)
+      turtle.transferTo(j)
+     end
+     if turtle.getItemCount(i)==0 then break end
+    end
+   end
+  end
+ end
  local function countItem(name)
   local n=0
   for i=1,16 do
@@ -211,7 +237,7 @@ function M.start(agent,cfg,options)
   error("Bonifica fallita: "..tostring(why or result))
  end
  local function prepare(move,x,y,z,first)
-  -- Mai fare scavi o bonifiche dentro la base, a qualsiasi Y.
+  -- Mai scavare o bonificare all'interno della base.
   assert(inSector(x,y,z),"Intervento fuori area o dentro la base vietato")
   if first then
    local exists=inspect(move)
@@ -219,7 +245,10 @@ function M.start(agent,cfg,options)
     "Uscita dalla base ostruita: non rompo infrastrutture")
    return
   end
-  for attempt=1,8 do
+  local freeChecks,digs=0,0
+  -- Niente limite di otto colpi: sabbia e gravel possono cadere a colonne.
+  -- Occorrono tre controlli consecutivi a vuoto prima di avanzare.
+  while digs<256 do
    local f=fluidi.peek(fluidSide(move))
    if f then
     local clear=bonify(move,x,y,z,move=="F")
@@ -229,23 +258,33 @@ function M.start(agent,cfg,options)
     if f.kind=="ACQUA" and not f.source then return end
    end
    local exists,block=inspect(move)
-   if not exists then return end
-   local name=block and block.name or "?"
-   if name=="minecraft:bedrock" then error("BEDROCK IN PERCORSO") end
-   assert(not unsafe(name),"Infrastruttura o blocco protetto: "..name)
-   assert(NATURAL[name] or isOre(block),
-    "Blocco non minerario sconosciuto: "..name)
-   assert(freeSlots()>2,"SCORTE: inventario quasi pieno")
-   local ok,why=dig(move)
-   assert(ok,"Scavo impossibile "..name..": "..tostring(why))
-   sleep(0.15)
+   if not exists then
+    freeChecks=freeChecks+1
+    if freeChecks>=3 then return end
+    sleep(0.15)
+   else
+    freeChecks=0
+    local name=block and block.name or "?"
+    if name=="minecraft:bedrock" then error("BEDROCK IN PERCORSO") end
+    assert(not unsafe(name),"Infrastruttura o blocco protetto: "..name)
+    assert(NATURAL[name] or isOre(block) or isSpawner(block),
+     "Blocco non minerario sconosciuto: "..name)
+    if freeSlots()<=2 then compactInventory() end
+    assert(freeSlots()>2,"SCORTE: inventario quasi pieno")
+    local ok,why=dig(move)
+    assert(ok,"Scavo impossibile "..name..": "..tostring(why))
+    digs=digs+1
+    sleep(GRAVITY[name] and 0.3 or 0.15)
+   end
   end
-  error("Blocco persistente sul percorso")
+  error("Colonna di gravel/sabbia o blocchi troppo lunga: oltre 256 tentativi")
  end
  local function step(move,first,oreOnly)
   local x,y,z=coords(move)
   assert(canOccupy(x,y,z),"Movimento vietato fuori corsia")
   reserveGoing(1)
+  if freeSlots()<=2 then compactInventory() end
+  assert(freeSlots()>2,"SCORTE: inventario quasi pieno")
   if oreOnly then
    local exists,block=inspect(move)
    assert(exists and isOre(block),"Nessun minerale nel ramo")
@@ -255,6 +294,11 @@ function M.start(agent,cfg,options)
    local f=fluidi.peek(fluidSide(move))
    if f then
     assert(bonify(move,x,y,z,false),"Vena aperta su corrente sigillata")
+   end
+   -- Dopo un minerale, gravel/sabbia sovrastanti possono ricadere.
+   local still,b=inspect(move)
+   if still and b and GRAVITY[b.name] then
+    prepare(move,x,y,z,false)
    end
    assert(not inspect(move),"Vena ostruita dopo scavo")
    s.ore=s.ore+1;save()
@@ -392,7 +436,8 @@ function M.start(agent,cfg,options)
     if it.name=="minecraft:bucket" then
      keep=math.min(keepBuckets,it.count);keepBuckets=keepBuckets-keep
     elseif it.name=="minecraft:cobblestone" or
-           it.name=="minecraft:cobbled_deepslate" then
+           it.name=="minecraft:cobbled_deepslate" or
+           it.name=="minecraft:smooth_stone" then
      keep=math.min(keepStone,it.count);keepStone=keepStone-keep
     end
     local count=it.count-keep
@@ -402,6 +447,39 @@ function M.start(agent,cfg,options)
     end
    end
   end
+ end
+ -- La cassa superiore puo' fornire anche secchi vuoti e smooth stone.
+ local function pullFromTop(name,amount)
+  local c=peripheral.wrap("top")
+  assert(c and c.list and c.pushItems and c.size,
+   "Cassa superiore per rifornimento non disponibile")
+  local items=c.list()
+  local found
+  for slot,it in pairs(items) do
+   if it.name==name and it.count>0 then found=slot;break end
+  end
+  if not found then return false end
+  if found~=1 then
+   local chestName=assert(peripheral.getName(c))
+   if items[1] then
+    local free
+    for j=c.size(),2,-1 do if not items[j] then free=j;break end end
+    assert(free,"Cassa superiore senza slot libero per riordinare")
+    assert(c.pushItems(chestName,1,items[1].count,free)==items[1].count,
+     "Impossibile liberare slot 1 nella cassa")
+   end
+   assert(c.pushItems(chestName,found,items[found].count,1)>0,
+    "Impossibile spostare materiale verso lo slot 1")
+  end
+  compactInventory()
+  local slot
+  for i=1,16 do if turtle.getItemCount(i)==0 then slot=i;break end end
+  assert(slot,"Inventario Turtle senza slot per rifornimento")
+  turtle.select(slot)
+  assert(turtle.suckUp(amount),"Prelievo dalla cassa superiore fallito")
+  local got=turtle.getItemDetail(slot)
+  assert(got and got.name==name,"Oggetto inatteso dalla cassa superiore")
+  return true
  end
  local function getLava()
   local c=peripheral.wrap("top")
@@ -437,22 +515,49 @@ function M.start(agent,cfg,options)
  end
  local function supply()
   assert(atHome(),"Rifornimento solo alla propria postazione")
+  compactInventory()
   unload()
-  local ok,why=fluidi.ensureBuckets(3)
-  assert(ok,"Scorta secchi non ottenibile: "..tostring(why))
+  -- Preferisce i secchi vuoti dalla cassa, senza consumare lava inutilmente.
+  local attempts=0
+  while countItem("minecraft:bucket")<3 and attempts<3 do
+   if not pullFromTop("minecraft:bucket",3-countItem("minecraft:bucket")) then break end
+   attempts=attempts+1
+  end
+  if countItem("minecraft:bucket")<3 then
+   local ok,why=fluidi.ensureBuckets(3)
+   assert(ok,"Scorta secchi non ottenibile: "..tostring(why))
+  end
+  -- Preleva smooth stone, se presente, per mantenere 16 blocchi da sigillo.
+  local have=countItem("minecraft:smooth_stone")
+    +countItem("minecraft:cobblestone")
+    +countItem("minecraft:cobbled_deepslate")
+  if have<16 then pullFromTop("minecraft:smooth_stone",16-have) end
   local limit=turtle.getFuelLimit()
   local fuel=turtle.getFuelLevel()
   if type(limit)=="number" and type(fuel)=="number" then
+   -- Non e' un tetto al fuel: si puo' bruciare altra lava per avere secchi.
    local goal=math.min(limit,3500)
    while currentFuel()<goal do getLava() end
   end
-  unload() -- Mantiene 3 secchi, 16 pietre; scarica solo il resto
+  unload() -- Tiene 3 secchi, 16 blocchi; scarica il resto.
  end
  local function carveHead()
   local x,y,z=coords("U")
   if inSector(x,y,z) then
    prepare("U",x,y,z,false)
   end
+ end
+ -- Ogni avanzamento completa anche la seconda colonna della fascia.
+ -- Mantiene una galleria fisicamente larga 2 e alta 2, poi torna all'asse.
+ local function carveWidth()
+  turnTo(left)
+  local x,y,z=coords("F")
+  assert(inSector(x,y,z),"Seconda colonna fuori settore")
+  step("F")
+  carveHead()
+  scanCell()
+  reverseOne()
+  turnTo(front)
  end
  local function processLevel()
   local yTarget=LEVELS[s.level]
@@ -468,12 +573,14 @@ function M.start(agent,cfg,options)
    carveHead() -- tunnel 2 blocchi alto, senza scavare tutto il volume.
    if dist>s.distance then
     scanCell()
+    carveWidth()
     s.distance=dist;save()
     if dist%20==0 then
      detailStatus("SCAVO","LIV "..s.level.."/"..maxLevels..
       ", galleria "..dist.."/"..maxDistance)
     end
    end
+   if freeSlots()<=2 then compactInventory() end
    if freeSlots()<=2 or currentFuel()<#s.path+260 then
     error("SCORTE: rientro per inventario o carburante")
    end
