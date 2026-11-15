@@ -92,6 +92,12 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 - **Comandi eseguiti e accettati da Minecraft, secondo conferma esplicita dell'utente («si a posto», 15 novembre 2026).** Quattro aree minerarie /forceload attivate; 156 chunk distinti in totale, conteggio derivato dalle coordinate. **Resta da caricare il chunk della centrale ID 54 nella base principale**; il suo forceload NON è ancora confermato. Verifica facoltativa: `/forceload query`. Attenzione al costo prestazionale dei chunk sempre caricati e alla persistenza della forzatura finché non viene rimossa.
 - Documentazione comando: https://minecraft.wiki/w/Commands/forceload
 
+## Ricezione sulla dashboard centrale confermata — pagina 1 (15 novembre 2026)
+- Screenshot del monitor della **centrale 54**, sito **MINIERA-01**, **40 unità registrate**, pagina **1/3**.
+- Le 16 unità visibili **E01–E10 e N01–N06** mostrano **PREPARAZIONE** anziché «MAI COLLEGATA»: **ricezione Rednet e aggiornamento della dashboard confermati per queste unità**.
+- Riepilogo mostrato: **ATTIVE: 0, ERRORI: 0, OFFLINE: 0**. Le unità in stato PREPARAZIONE non sono conteggiate fra quelle attive in scavo; questo non prova che tutte le 40 unità abbiano comunicato.
+- **Ancora da verificare:** le pagine 2/3 e 3/3 per le altre 24 unità; non considerare il test 40/40 completo prima di questa verifica. Lo screenshot non conferma esplicitamente l'avvenuto `/forceload` del chunk del computer principale.
+
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
 - **Parete di Advanced Monitor** colorati; dimensione suggerita iniziale **4×3 = 12 blocchi monitor**, scalabile in futuro. I monitor contigui e correttamente orientati formano uno schermo unico.
