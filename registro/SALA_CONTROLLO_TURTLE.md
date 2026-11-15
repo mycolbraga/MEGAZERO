@@ -22,6 +22,14 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 - Stato successivo: **verificare che la turtle riconosca la periferica modem** da Lua, senza muovere/scavare, poi organizzare una prova di invio/ricezione verso il computer centrale CC:Tweaked **ID 54**.
 - **Non è ancora stata verificata la ricezione effettiva dei messaggi** tra miniera e centrale; tenere presenti chunk caricati, computer ricevente in ascolto e l'eventuale uscita dal programma `lua` sul computer centrale.
 
+## Software centrale preparato (15 novembre 2026)
+- **Prima versione pubblicata nel repository:** [`scripts/control/megazero_control.lua`](../scripts/control/megazero_control.lua), con registrazione iniziale di **40 postazioni MINIERA-01**, supporto a più siti e salvataggio dello stato locale.
+- **Protocollo previsto per i futuri client Turtle:** `megazero.control.v1`. Il computer centrale registra l'hostname Rednet `megazero-central` e riceve messaggi versione 1: `{kind="status",version=1,site="MINIERA-01",unit="N01",status="SCAVO",x=...,y=...,z=...,fuel=...,progress=...}`.
+- **Stati supportati:** SCAVO, RIENTRO, BASE, ERRORE, PAUSA, PREPARAZIONE. I 40 placeholder iniziali indicano «MAI COLLEGATA», non guasti. Assenza aggiornamenti da oltre 90 s indicata «SENZA SEGNALE» (non equiparare automaticamente a guasto).
+- **Interfaccia:** 4 quadranti NORD/SUD/OVEST/EST sul monitor 2×2; tocco di una riga per dettagli e tocco del fondo per cambiare sito/pagina. La schermata non invia ordini alle turtle (sola visualizzazione).
+- **Installazione sul computer centrale ID 54**, dalla shell normale (non dal prompt `lua>`): `wget https://raw.githubusercontent.com/mycolbraga/MEGAZERO/registro/megazero/scripts/control/megazero_control.lua megazero_control`, poi `megazero_control`.
+- **Test reale non ancora eseguito**: codice pubblicato e letto dal repository; il funzionamento sul computer CC:Tweaked, l'interfaccia e la rete tra base e miniera richiedono la verifica del giocatore. Nessun client turtle installato o programma di mining modificato. La bozza di mining vecchia resta da NON avviare.
+
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
 - **Parete di Advanced Monitor** colorati; dimensione suggerita iniziale **4×3 = 12 blocchi monitor**, scalabile in futuro. I monitor contigui e correttamente orientati formano uno schermo unico.
