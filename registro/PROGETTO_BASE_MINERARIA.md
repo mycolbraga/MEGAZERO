@@ -101,6 +101,17 @@
 - Il file funzionante fornito dal giocatore **`scavo_1680_1783_dal_67_in_su(1).lua`** è il **riferimento per le parti comuni già funzionanti** (salvataggio avanzamento, rientro, rifornimento lava sopra, scarico sotto), da adattare dopo aver definito il funzionamento dell'intero sistema.
 - **Posizioni di tutte le 40 turtle definite dall'utente:** consultare «Mappa esatta». Nessun nuovo programma minerario selettivo è stato scritto o collaudato.
 
+## Settori esclusivi e corsie iniziali — accordo del giocatore (15 novembre 2026)
+- **Decisione confermata:** ogni turtle deve avere un settore minerario **esclusivo**, senza attraversare quello di altre turtle durante lo scavo, l'esplorazione delle vene o il rientro; i quattro fronti vanno progettati congiuntamente.
+- **Ingresso/uscita:** le 40 turtle, già collocate a Y=-53, sono distanziate di 2 blocchi su ciascun lato. Si può riservare ad ogni postazione un **corridoio iniziale di larghezza 2**, con i due blocchi adiacenti sul lato interno del fronte, senza sovrapporre i corridoi delle vicine:
+  - **NORD:** per ogni turtle a (X,-53,2995), corsia nominale iniziale **X-1..X**, direzione **Z decrescente**. Esempio NORD-01 X=2118..2119.
+  - **OVEST:** per ogni turtle a (2099,-53,Z), corsia nominale iniziale **Z..Z+1**, direzione **X decrescente**. Esempio OVEST-01 Z=2995..2996.
+  - **SUD:** per ogni turtle a (X,-53,3015), corsia nominale iniziale **X..X+1**, direzione **Z crescente**. Esempio SUD-01 X=2099..2100.
+  - **EST:** per ogni turtle a (2119,-53,Z), corsia nominale iniziale **Z-1..Z**, direzione **X crescente**. Esempio EST-01 Z=3014..3015.
+- **Attenzione:** la larghezza **2** definisce SOLO una **proposta di corsia di uscita** basata sull'interasse delle postazioni; **non è ancora la larghezza definitiva dei settori minerari**. Per seguire efficacemente le vene i settori potrebbero dover essere più ampi, con corsie che divergono senza incroci: geometria ancora da definire prima del codice.
+- Si conservano il limite di **300 blocchi di avanzamento per fronte**, l'inizio del lavoro da **Y=0 verso bedrock** e i rientri alle rispettive casse presso la base. L'accesso sicuro da Y=-53 a Y=0 **non è ancora progettato**.
+- **Nessun programma nuovo deve essere generato o avviato** prima di aver definito un assetto coerente per tutte e 40 le turtle.
+
 ## Punti ancora da definire
 - **Conteggio e coordinate delle 40 turtle definiti:** 10 per lato a distanza di 2 blocchi, ciascuna rivolta verso l'esterno (vedere «Mappa esatta»). Da progettare punti di uscita, settori e percorsi protetti.
 - Documentare il layout **già costruito** di casse, importers, alimentazione/carburante e rete RS; verificarne il comportamento nei test, senza considerarlo già testato.
