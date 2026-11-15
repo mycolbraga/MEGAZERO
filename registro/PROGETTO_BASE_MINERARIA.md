@@ -159,6 +159,14 @@ Il rientro si può garantire per gli errori **da cui esiste un percorso praticab
 
 **Questa condizione prevale su ogni bozza precedente che usa `error()` al fronte di scavo senza rientro.** Il programma `miniera_nord_01.lua` è già superato e non deve essere avviato.
 
+## Sala di controllo centralizzata — fattibilità tecnica (proposta 15 novembre 2026)
+- **Possibile con CC:Tweaked**, sfruttando un Computer centrale con Monitor e modem, e la comunicazione via `rednet` con le 40 Mining Turtle.
+- Stati proposti per ciascuna turtle: **IN SCAVO**, **IN RIENTRO**, **ALLA BASE**, **ERRORE (rientrata e con causa/coordinate)**, **NON RAGGIUNGIBILE** (mancano aggiornamenti).
+- Dashboard organizzata per **NORD/SUD/EST/OVEST**, 10 turtle per ciascun fronte; eventuali dati: ID univoco, avanzamento, posizione registrata, carburante, errore e ora/istante dell'ultima comunicazione.
+- Il monitor **non legge automaticamente** le 40 turtle: il software di ogni turtle deve inviare aggiornamenti periodici e segnalazioni esplicite; il computer centrale deve ascoltarli e rendere il cruscotto. Mancanza di segnale non indica automaticamente un guasto fisico: potrebbe essere chunk scaricato, rete non disponibile o turtle non avviata.
+- Per distanze di circa **300 blocchi**: modem wireless ordinari CC:Tweaked non sono affidabili per l'intero settore (portata base 64 blocchi); per copertura diretta si propone un **Ender Modem** su ciascuna turtle e un modem compatibile sulla centrale, salvo altre infrastrutture o impostazioni mod. Verificare che le Mining Turtle abbiano uno slot upgrade libero per il modem e che i chunk siano caricati.
+- **Stato:** funzionalità proposta, NON ancora approvata come acquisto/configurazione, programmata o testata in Minecraft. Da valutare nell'architettura complessiva, non come sostituto del rientro fisico obbligatorio in caso di errore.
+
 ## Punti ancora da definire
 - **Conteggio e coordinate delle 40 turtle definiti:** 10 per lato a distanza di 2 blocchi, ciascuna rivolta verso l'esterno (vedere «Mappa esatta»). Da progettare punti di uscita, settori e percorsi protetti.
 - Documentare il layout **già costruito** di casse, importers, alimentazione/carburante e rete RS; verificarne il comportamento nei test, senza considerarlo già testato.
