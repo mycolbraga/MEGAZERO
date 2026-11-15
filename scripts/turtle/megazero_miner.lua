@@ -78,7 +78,7 @@ function M.start(agent,cfg,options)
  local fluidi=assert(dofile("/megazero_fluidi"),
    "Modulo fluidi assente: scaricare megazero_fluidi")
  local s={x=hx,y=hy,z=hz,d=front,path={},pending=nil,level=1,
-   distance=0,finished=false,ore=0,buckets=0,blocked=0}
+   distance=0,finished=false,ore=0,buckets=0,blocked=0,waterPending=false}
  local function read(p)
   if not fs.exists(p) then return nil end
   local f=assert(fs.open(p,"r"));local v=f.readAll();f.close();return v
@@ -183,7 +183,8 @@ function M.start(agent,cfg,options)
   local f=fluidi.peek(sideName)
   if not f then return true end
   if not f.source and allowFlow and f.kind=="ACQUA" then
-   return true -- corrente passabile; non equivale a sorgente eliminata
+   s.waterPending=true;save()
+   return true -- transitabile, MA bonifica ancora da confermare
   end
   local before=f.kind=="ACQUA" and countItem("minecraft:water_bucket")
     or countItem("minecraft:lava_bucket")
@@ -195,7 +196,9 @@ function M.start(agent,cfg,options)
    local after=f.kind=="ACQUA" and countItem("minecraft:water_bucket")
      or countItem("minecraft:lava_bucket")
    assert(after>before,"Prelievo non confermato nel secchio")
-   s.buckets=s.buckets+1;save()
+   s.buckets=s.buckets+1
+   if f.kind=="ACQUA" then s.waterPending=false end
+   save()
    sleep(0.4)
    assert(not fluidi.peek(sideName),"La sorgente si e' rigenerata")
    return true
@@ -472,6 +475,8 @@ function M.start(agent,cfg,options)
     error("SCORTE: rientro per inventario o carburante")
    end
   end
+  assert(not s.waterPending,
+    "Acqua corrente attraversata senza sorgente rimossa: bonifica incompleta")
   detailStatus("RIENTRO","Livello "..s.level.." completato; ritorno e scarico")
   goHome()
   s.level=s.level+1;s.distance=0;save()
