@@ -36,7 +36,7 @@
 | **19** | — | Da specificare | **Nessun incantesimo bloccato** | **ASSEGNATA, OFFERTA NON BLOCCATA** |
 | **20** | — | **Bibliotecario** | **Maledizione della Scomparsa I** | **OFFERTA CONFERMATA DAL GIOCATORE; prezzo e blocco scambio non specificati** |
 | **21** | **11** | Bibliotecario | **Indistruttibilità III (Unbreaking III)** | **CONFERMATA** |
-| **22** | — | **Bibliotecario** | **Respirazione III** | **OFFERTA CONFERMATA 16/11/2026; blocco tramite scambio da verificare** |
+| **22** | — | **Bibliotecario** | **Respirazione III** | **SCAMBIO BLOCCATO — confermato 16/11/2026** |
 | **23** | **12** | Bibliotecario | **Potenza V** | **CONFERMATA** |
 | **24** | **21** | Bibliotecario | **Contraccolpo II** | **CONFERMATA** |
 | **25** | **13** | Bibliotecario | **Affilatezza V** | **CONFERMATA** |
@@ -155,7 +155,7 @@ Non cercare con i bibliotecari **Velocità delle Anime (Soul Speed)**, **Passo F
 
 **Rettifica 16/11/2026:** il giocatore ha chiesto di **togliere Esca III** dalla postazione #26 e dall'elenco dei libri acquisiti. La precedente segnalazione del 15/11 è superata: il #26 rimane con libro da verificare e **Esca III torna tra i mancanti**. Restano **9 incantesimi da trovare** secondo la ricognizione in chat.
 
-**Aggiornamento 16/11/2026:** postazione **#22 = Respirazione III**, offerta segnalata dal giocatore; scambio non ancora confermato come bloccato. Respirazione III esce dalla lista degli incantesimi ancora da trovare; **8 ancora mancanti**, secondo la ricognizione corrente. Le tabelle datate 01/11 rimangono riferimenti storici.
+**Aggiornamento 16/11/2026:** postazione **#22 = Respirazione III**, scambio **bloccato**, confermato dal giocatore. Respirazione III esce dalla lista degli incantesimi ancora da trovare; **8 ancora mancanti**, secondo la ricognizione corrente. Le tabelle datate 01/11 rimangono riferimenti storici.
 
 ## Storico del cambiamento
 
