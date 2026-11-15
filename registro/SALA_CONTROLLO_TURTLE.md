@@ -17,6 +17,11 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 - È l'ID da utilizzare nei test di comunicazione fra la prima turtle e la centrale. Per rendere la sala controllo riutilizzabile su più siti, il progetto definitivo non deve dipendere esclusivamente da un numero scritto nel codice: prevedere registrazione/ricerca del server con protocollo.
 - Il giocatore ha fornito il numero `54` dopo il comando di apertura Rednet; la conferma visiva di `RETE: true` non è stata fornita esplicitamente, quindi non considerare la comunicazione con una turtle già testata.
 
+## Primo modem sulla turtle — conferma installazione (15 novembre 2026)
+- Il giocatore conferma **Ender Modem già montato** sulla prima turtle mineraria di test, postazione **(2119,-53,2995), facing NORD**.
+- Stato successivo: **verificare che la turtle riconosca la periferica modem** da Lua, senza muovere/scavare, poi organizzare una prova di invio/ricezione verso il computer centrale CC:Tweaked **ID 54**.
+- **Non è ancora stata verificata la ricezione effettiva dei messaggi** tra miniera e centrale; tenere presenti chunk caricati, computer ricevente in ascolto e l'eventuale uscita dal programma `lua` sul computer centrale.
+
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
 - **Parete di Advanced Monitor** colorati; dimensione suggerita iniziale **4×3 = 12 blocchi monitor**, scalabile in futuro. I monitor contigui e correttamente orientati formano uno schermo unico.
