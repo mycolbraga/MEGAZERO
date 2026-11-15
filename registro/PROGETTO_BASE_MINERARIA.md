@@ -1,15 +1,15 @@
 # MEGAZERO — Progetto base mineraria e Mining Turtle
 
 ## Stato (15 novembre 2026)
-**In progettazione.** Sono state definite le coordinate dell'area destinata alla base; disposizione, numero di turtle, programmi e collegamenti non sono ancora stati stabiliti o verificati in gioco.
+**Base fisica allestita (conferma del giocatore e screenshot, 15 novembre 2026):** turtle, casse e collegamenti già piazzati e collegati. Restano da progettare, implementare e verificare i programmi minerari, i percorsi e l'operatività end-to-end. Il numero esatto di turtle installate non è stato comunicato come conteggio verificato.
 
 ## Area della base — coordinate aggiornate e confermate (15 novembre 2026)
 - **Angolo 1:** **X=2099, Y=-52, Z=3015**.
 - **Angolo 2:** **X=2119, Y=-52, Z=2995**. Il precedente **Y=-25 era un errore di trascrizione** corretto esplicitamente dal giocatore: **la quota è sempre Y=-52**.
 - **Intervallo delle coordinate:** X **2099..2119**, Z **2995..3015**, **Y=-52**.
 - **Distanza fra le coordinate estreme:** 20 blocchi su X e 20 su Z. **Contando entrambi gli estremi: 21×21 blocchi** (441 posizioni su un piano). Questo conteggio non equivale a una base scavata su più livelli.
-- Le coordinate effettive comunicate dal giocatore **sostituiscono i precedenti perimetri ipotetici** 10×18 e 20×20; disposizione e percorsi sono ancora da definire.
-- **Stato:** perimetro e quota comunicati; layout di turtle, casse e RS non ancora stabilito.
+- Le coordinate effettive comunicate dal giocatore **sostituiscono i precedenti perimetri ipotetici** 10×18 e 20×20. **Postazioni fisiche già sistemate**; resta da mappare l'esatta disposizione di ogni turtle e i percorsi operativi.
+- **Stato aggiornato:** base allestita e collegata secondo il giocatore; lo screenshot mostra file di postazioni con turtle/casse e collegamenti visibili. La fotografia non permette da sola di verificare funzionalità elettrica/logica di RS, scarico, rifornimento o conteggio totale delle turtle.
 - **Destinazione:** Mining Turtle, casse di scarico/rifornimento, collegamenti Refined Storage, percorsi e componenti necessari.
 
 ## Contesto della caverna
@@ -43,15 +43,21 @@
 - **EST:** inizio della mineshaft; tracciato da verificare per evitare di trattare i vuoti della miniera come roccia piena.
 - **OVEST:** la caverna continua; percorso in spazio aperto da pianificare.
 - Le **quattro direzioni di scavo** e la previsione **8–10 turtle per direzione** sono state indicate dal giocatore; ripartizione esatta, disposizione, percorsi e dimensioni dei tunnel restano da progettare.
-- Prima del codice: verificare **se 32–40 postazioni con casse e RS entrano nel perimetro rilevato (X2099..2119, Z2995..3015: 21×21 blocchi inclusivi)**, ed eventualmente a quali quote Y. Il fronte dista 20 blocchi tra le coordinate estreme; il numero di turtle per settore rimane 8–10 come previsione, non una disposizione già risolta. Progettare le postazioni solo dopo aver definito numero e accessi; gestire vuoti/dislivelli, settori, rientro, rifornimento e scarico RS.
+- **Il posizionamento fisico è stato realizzato dal giocatore** nel perimetro rilevato (X2099..2119, Z2995..3015: 21×21 blocchi inclusivi). Prima del codice servono la mappatura delle postazioni effettive e gli accessi per ciascun fronte; gestire vuoti/dislivelli, settori, rientro, rifornimento e scarico RS.
+
+## Avanzamento in gioco — conferma fotografica (15 novembre 2026)
+- Il giocatore comunica esplicitamente **«GIÀ TUTTO PIAZZATO E COLLEGATO»** e fornisce screenshot dell'interno della base.
+- Visibili più postazioni di turtle, casse collocate sopra e sotto, cablaggi e zona centrale percorribile, con illuminazione installata.
+- Registrare **installazione fisica e collegamenti come completati sulla base della conferma del giocatore**. La fotografia non consente di contare tutte le postazioni né di dimostrare che gli importer/exporter o il sistema di rifornimento funzionino: test operativi ancora da fare.
+- Non proporre di riprogettare o ricostruire l'allestimento già completato se non richiesto; partire dalla configurazione esistente per predisporre i programmi.
 
 ## Punti ancora da definire
-- Numero definitivo di turtle per fronte (attualmente previsto 8–10); posizione e orientamento individuale, punti di uscita e percorsi protetti.
-- Layout esatto di casse, importers, alimentazione/carburante e rete RS.
+- Contare le turtle effettivamente posizionate e mappare posizione/orientamento individuale, punti di uscita e percorsi protetti (previsione originaria: 8–10 per fronte).
+- Documentare il layout **già costruito** di casse, importers, alimentazione/carburante e rete RS; verificarne il comportamento nei test, senza considerarlo già testato.
 - Coordinate/quote/limiti dei settori minerari e percorso protetto dalla base.
 - Elenco dei minerali vanilla e mod da mantenere; trattamento di tutti gli altri drop.
 - Metodo sicuro per scartare gli scarti senza perdere minerali.
 - Strategia effettiva di estrazione dalle pareti esposte vs gallerie nella roccia.
 - Test con una turtle e galleria breve **prima** di estendere il sistema.
 
-**Nota:** nessuna struttura fisica o automazione va considerata già realizzata soltanto perché descritta in questo registro.
+**Nota di stato:** la struttura fisica e i collegamenti sono riportati come **già piazzati e collegati dal giocatore** (screenshot 15 novembre 2026); i **programmi minerari e la loro funzionalità** non sono ancora stati verificati. Non confondere installazione e funzionamento.
