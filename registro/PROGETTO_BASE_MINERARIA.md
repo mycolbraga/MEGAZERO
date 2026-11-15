@@ -112,6 +112,26 @@
 - Si conservano il limite di **300 blocchi di avanzamento per fronte**, l'inizio del lavoro da **Y=0 verso bedrock** e i rientri alle rispettive casse presso la base. L'accesso sicuro da Y=-53 a Y=0 **non è ancora progettato**.
 - **Nessun programma nuovo deve essere generato o avviato** prima di aver definito un assetto coerente per tutte e 40 le turtle.
 
+## Proposta operativa: 40 fasce minerarie indipendenti (15 novembre 2026; da approvare)
+**Questa sezione è una proposta progettuale dell'assistente, NON una geometria ancora confermata o implementata.**
+
+### Geometria 2D per quattro fronti senza sovrapposizione
+- **NORD:** X=2100..2119, Z=2695..2994; 10 corsie da 2 blocchi, ciascuna lunga 300.
+- **SUD:** X=2099..2118, Z=3016..3315; 10 corsie da 2 blocchi, ciascuna lunga 300.
+- **EST:** X=2120..2419, Z=2996..3015; 10 corsie da 2 blocchi, ciascuna lunga 300.
+- **OVEST:** X=1799..2098, Z=2995..3014; 10 corsie da 2 blocchi, ciascuna lunga 300.
+- Questi quattro rettangoli sono disgiunti anche vicino agli angoli della base. **Prima uscita**: 1 blocco in avanti dalla postazione rispettiva a Y=-53.
+- Per ciascuna turtle di base NORD (X,-53,2995) riservare X-1..X; SUD (X,-53,3015) riservare X..X+1; OVEST (2099,-53,Z) riservare Z..Z+1; EST (2119,-53,Z) riservare Z-1..Z. Dimensione di fascia 2 blocchi da confermare con l'utente; nessuna invasione oltre i confini.
+- **Esempio NORD**: N01=2118..2119; N02=2116..2117; N10=2100..2101 (tutte per Z=2695..2994).
+
+### Ricerca selettiva dei minerali proposta
+- Tunnel di **altezza 2** per corsia, evitando l'escavazione completa del volume; passate a diverse quote da Y=0 verso la bedrock, **distanziate indicativamente 3 blocchi verticali** per osservare i blocchi non scavati di pareti, soffitto e pavimento.
+- Esaminare blocchi laterali all'interno della fascia assegnata, sopra e sotto, e inseguire gli eventuali minerali con visita in profondità **solo entro settore privato**; quando la vena supera il confine, non oltrepassarlo: la porzione adiacente spetta all'altra turtle.
+- Riservare a ciascuna turtle una via di uscita/rientro protetta e stabile che non possa essere distrutta dalla ricerca minerali.
+- Prima risolvere salita da Y=-53 al primo livello Y=0 con le casse SOPRA le turtle e tracciare i rientri alle proprie postazioni.
+- Logiche di rifornimento, scarico, salvataggio dai programmi precedenti; mantenere i drop minerali vanilla/mod e non eliminare item sconosciuti senza whitelist; gestione della lava e degli scarti da definire. Occhio a chunk loading per lavorazioni fino a 300 blocchi dalla base.
+- **Non è ancora un programma funzionante**; la proposta deve essere approvata/corretta prima dell'implementazione coordinata delle 40 turtle.
+
 ## Punti ancora da definire
 - **Conteggio e coordinate delle 40 turtle definiti:** 10 per lato a distanza di 2 blocchi, ciascuna rivolta verso l'esterno (vedere «Mappa esatta»). Da progettare punti di uscita, settori e percorsi protetti.
 - Documentare il layout **già costruito** di casse, importers, alimentazione/carburante e rete RS; verificarne il comportamento nei test, senza considerarlo già testato.
