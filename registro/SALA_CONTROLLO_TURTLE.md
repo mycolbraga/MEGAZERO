@@ -127,6 +127,12 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 - **Non ancora verificato:** persistenza alle successive riaccensioni, visualizzazione dell'heartbeat della N01 sul monitor centrale dopo reboot e startup delle altre **39** turtle. Non attribuire automaticamente il completamento 40/40 a questa prova.
 - **Passo successivo:** installare sulle rimanenti 39 turtle, cambiando esclusivamente l'identificativo nell'argomento di `installa_startup.lua`. Non sovrascrivere file startup già esistenti; l'installatore controlla eventuali collisioni.
 
+## Installazione startup sulle prime Turtle dei quattro fronti (15 novembre 2026)
+- Confermata prova di startup su **N01** con screenshot del bootstrap attivo.
+- Il giocatore ha richiesto i comandi per **O01**, **S01** ed **E01**, poi ha confermato **«FATTO»**: considerare startup installato anche sulle prime Turtle di questi tre fronti, senza attribuire a tale risposta un test di reboot specifico per ciascuna.
+- **Situazione confermata:** startup installato su **N01, O01, S01, E01**. Non è confermata l'installazione su tutte le altre 36 turtle; la precedente installazione dei moduli `megazero_rete` non equivale allo startup.
+- Il futuro programma minerario rimane disabilitato (`miner_autostart=false`), senza avvii di scavo automatici per ora.
+
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
 - **Parete di Advanced Monitor** colorati; dimensione suggerita iniziale **4×3 = 12 blocchi monitor**, scalabile in futuro. I monitor contigui e correttamente orientati formano uno schermo unico.
