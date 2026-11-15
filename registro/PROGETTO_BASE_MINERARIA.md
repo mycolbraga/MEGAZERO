@@ -78,7 +78,17 @@
 - `prova` è non distruttiva (controlla accessibilità inventari sopra/sotto); `test` scava dieci celle del primo livello Y=0 e la colonna di salita iniziale, poi rientra; `avvia` esegue il lavoro esteso.
 - Il programma scarta solo pietre/terra/ghiaia comuni note, preservando gli item non riconosciuti, inclusi gli eventuali drop minerali di mod. Si ferma su lava/acqua, bedrock o parti strutturali protette: **la bonifica automatica della lava non è ancora implementata**.
 - **Validazione fatta fuori dal gioco:** parsing Lua 5.3 e simulazione semplificata delle API, riuscita per il test breve e una versione miniatura del percorso completo; **non equivale a collaudo nel mondo Minecraft**.
-- **Non avviare automaticamente tutti i fronti** finché non sono stati verificati gli accessi, le corsie e il funzionamento della prima turtle.
+- **Non avviare questa bozza né tutti i fronti**: la modalità selettiva scelta successivamente e la progettazione coordinata richiedono un programma diverso.
+
+## Decisione su progettazione complessiva delle turtle (15 novembre 2026)
+- L'utente ha scelto esplicitamente **modalità B: estrazione mineraria selettiva**, cioè gallerie e ricerca/raccolta delle vene, **NON sbancamento completo**.
+- L'utente richiede di **progettare insieme tutto il sistema**, non sviluppare ogni turtle isolatamente: i quattro fronti NORD, SUD, EST, OVEST e le previste 8–10 turtle per fronte (32–40 in totale) devono poter operare contemporaneamente senza collisioni, sovrapposizioni, incroci dei percorsi di uscita/rientro o interferenze con le casse della base.
+- Prima di scrivere nuovo codice, definire la **mappa completa delle postazioni reali**, le corsie/settori indipendenti, gli accessi e i percorsi protetti comuni, i limiti delle vene e una politica sicura di precedenza/stop.
+- L'infrastruttura fisica della base è già piazzata e collegata secondo l'utente: **non proporre di ricostruirla da zero**.
+- I limiti generali già concordati restano: 300 blocchi per fronte, quote di estrazione da Y=0 alla bedrock; base a Y=-52.
+- Il file locale **`miniera_nord_01.lua` è una bozza SUPERATA DA NON AVVIARE**: scava completamente un volume 2×300×59 e non implementa l'estrazione selettiva, né il coordinamento delle altre turtle.
+- Il file funzionante fornito dal giocatore **`scavo_1680_1783_dal_67_in_su(1).lua`** è il **riferimento per le parti comuni già funzionanti** (salvataggio avanzamento, rientro, rifornimento lava sopra, scarico sotto), da adattare dopo aver definito il funzionamento dell'intero sistema.
+- **Non inventare coordinate individuali delle altre turtle**: è nota solo la prima in (2119,-52,2995) rivolta NORD. Nessun nuovo programma minerario selettivo è stato scritto o collaudato.
 
 ## Punti ancora da definire
 - Contare le turtle effettivamente posizionate e mappare posizione/orientamento individuale, punti di uscita e percorsi protetti (previsione originaria: 8–10 per fronte).
@@ -86,7 +96,7 @@
 - Definire corsie/settori di ciascuna turtle, percorso protetto di risalita dalla base Y=-52 al primo strato Y=0, ordine di scavo in discesa fino alla bedrock e rientro (300 blocchi per direzione già scelti).
 - Elenco dei minerali vanilla e mod da mantenere; trattamento di tutti gli altri drop.
 - Metodo sicuro per scartare gli scarti senza perdere minerali.
-- Strategia effettiva di estrazione dalle pareti esposte vs gallerie nella roccia.
-- Test con una turtle e galleria breve **prima** di estendere il sistema.
+- Progettare come distribuire in modo selettivo la ricerca di vene lungo gallerie e pareti già esposte, senza scavare interamente il volume.
+- Progettare **tutte le postazioni e i percorsi insieme**, quindi eseguire prove controllate prima di avviare più turtle contemporaneamente.
 
 **Nota di stato:** la struttura fisica e i collegamenti sono riportati come **già piazzati e collegati dal giocatore** (screenshot 15 novembre 2026); i **programmi minerari e la loro funzionalità** non sono ancora stati verificati. Non confondere installazione e funzionamento.
