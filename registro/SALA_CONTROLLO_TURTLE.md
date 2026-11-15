@@ -36,6 +36,10 @@ L'utente ha **approvato** una sala di controllo permanente **nella base principa
 - **Confermato:** lo script centrale è partito senza errori visibili e il suo ciclo di ricezione è attivo.
 - **Ancora da verificare:** vista dashboard sul monitor con le 40 postazioni, ricezione effettiva Rednet da una turtle, salvataggio/ripristino stato e caricamento chunk.
 
+## Avvio automatico configurato (15 novembre 2026)
+- Sul computer centrale CC:Tweaked **ID 54** il giocatore ha creato e salvato il file `startup` tramite `edit startup`, inserendo `shell.run("megazero_control")`.
+- **Confermato dall'utente:** salvataggio effettuato. **Ancora da verificare:** ripartenza automatica dopo `reboot` e comparsa della dashboard sul monitor.
+
 ## Architettura riutilizzabile
 - **Un Computer centrale** (consigliato **Advanced Computer**) nella base principale.
 - **Parete di Advanced Monitor** colorati; dimensione suggerita iniziale **4×3 = 12 blocchi monitor**, scalabile in futuro. I monitor contigui e correttamente orientati formano uno schermo unico.
