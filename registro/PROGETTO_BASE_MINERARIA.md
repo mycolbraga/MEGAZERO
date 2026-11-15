@@ -144,12 +144,28 @@
 - **Lo spazio per uscita e movimento verticale è confermato dal giocatore**: non richiedere di creare nuove colonne nella base o di modificare casse/cablaggi.
 - Restano da programmare e verificare nel gioco percorsi sicuri, gestione di fluidi, minerali, controllo carburante e rientri. Questo chiarimento risolve la geometria base->esterno, ma non prova già che il codice funzioni.
 
+## REQUISITO PRIORITARIO — nessuna turtle abbandonata sul posto (15 novembre 2026)
+**Richiesta esplicita e vincolante del giocatore:** «le turtle non devono mai fermarsi sul posto quando hanno un problema; devono sempre tornare alla base a segnalarlo».
+
+### Comportamento obbligatorio dei nuovi programmi
+1. **Se compare un errore recuperabile** (lava, acqua, blocco non scavabile, settore non percorribile, inventario quasi pieno, scorta carburante in calo, anomalia mineraria o operazione fallita): **interrompere l'estrazione**, salvare l'errore e le coordinate, quindi **rientrare alla propria postazione** tramite percorso sicuro.
+2. **Rientro di emergenza da progettare preventivamente**: traccia reversibile del percorso realmente compiuto (incluse le deviazioni sulle vene), via di uscita protetta, riserva di carburante per la distanza del ritorno + margine, e verifica anticipata dei passaggi critici. Non ripetere tentativi all'infinito nel punto d'errore.
+3. Una volta alla base, **segnalare in modo leggibile il guasto**: turtle identificata, causa, coordinate in cui è comparso, stato del rientro e posizione/avanzamento da riprendere. Visualizzazione minima: terminale e file di stato persistente; eventuale segnale centralizzato via rete RS/monitor è **da progettare e concordare**, non ancora presente.
+4. **Dopo rientro per guasto non riprendere automaticamente a scavare** finché l'anomalia non è stata risolta o autorizzata a essere saltata.
+5. **Non scavare mai nel perimetro interno della base a nessuna quota**, neppure durante recupero. Non danneggiare casse, cavi, altre turtle o vie di transito.
+
+### Limite fisico da gestire apertamente
+Il rientro si può garantire per gli errori **da cui esiste un percorso praticabile e carburante sufficiente**. In caso di guasto non recuperabile (passaggio di ritorno fisicamente bloccato, chunk non caricato, turtle distrutta, gioco arrestato o carburante completamente esaurito) nessun programma può promettere un rientro effettivo. La progettazione deve **minimizzare tali situazioni**, rendere impossibile per quanto possibile l'esaurimento carburante in viaggio, e conservare l'ultimo stato prima di ogni movimento. Non dichiarare come infallibile una logica non ancora testata.
+
+**Questa condizione prevale su ogni bozza precedente che usa `error()` al fronte di scavo senza rientro.** Il programma `miniera_nord_01.lua` è già superato e non deve essere avviato.
+
 ## Punti ancora da definire
 - **Conteggio e coordinate delle 40 turtle definiti:** 10 per lato a distanza di 2 blocchi, ciascuna rivolta verso l'esterno (vedere «Mappa esatta»). Da progettare punti di uscita, settori e percorsi protetti.
 - Documentare il layout **già costruito** di casse, importers, alimentazione/carburante e rete RS; verificarne il comportamento nei test, senza considerarlo già testato.
 - Implementare i settori approvati e il percorso d'accesso confermato (un passo fuori dal perimetro a Y=-53 e poi movimento verticale esterno), le passate da Y=0 alla bedrock e i rientri lungo la propria via d'uscita (300 blocchi per fronte).
 - Elenco dei minerali vanilla e mod da mantenere; trattamento di tutti gli altri drop.
 - Metodo sicuro per scartare gli scarti senza perdere minerali.
+- Implementare e collaudare per tutte e 40 le turtle **rientro di emergenza su errore recuperabile, riserva carburante, tracciamento percorso, file/terminale di allarme in base**, senza arresti volontari sul fronte.
 - Progettare come distribuire in modo selettivo la ricerca di vene lungo gallerie e pareti già esposte, senza scavare interamente il volume.
 - Progettare **tutte le postazioni e i percorsi insieme**, quindi eseguire prove controllate prima di avviare più turtle contemporaneamente.
 
