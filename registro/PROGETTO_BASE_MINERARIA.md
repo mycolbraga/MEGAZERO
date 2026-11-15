@@ -132,6 +132,11 @@
 - Logiche di rifornimento, scarico, salvataggio dai programmi precedenti; mantenere i drop minerali vanilla/mod e non eliminare item sconosciuti senza whitelist; gestione della lava e degli scarti da definire. Occhio a chunk loading per lavorazioni fino a 300 blocchi dalla base.
 - **Architettura approvata dal giocatore; non è ancora un programma funzionante.** Restano da definire e collaudare le 40 vie di salita da Y=-53 a Y=0, rientri, trattamento dell'acqua/lava, gestione dello stato, caricamento chunk e sicurezza del mining selettivo.
 
+## Spazio libero lungo il perimetro — segnalazione del giocatore (15 novembre 2026)
+- Il giocatore conferma: **«ci sono 2 blocchi d'aria lungo tutto il perimetro»** della base mineraria.
+- La misura precisa di questi 2 blocchi (altezza libera, profondità davanti alle turtle o altra geometria) **non è stata ancora specificata**. Non dare per certa una colonna di risalita fino a Y=0.
+- Tenere conto dello spazio già predisposto quando si definiscono le uscite delle 40 turtle, senza richiedere modifiche alla struttura già realizzata.
+
 ## Punti ancora da definire
 - **Conteggio e coordinate delle 40 turtle definiti:** 10 per lato a distanza di 2 blocchi, ciascuna rivolta verso l'esterno (vedere «Mappa esatta»). Da progettare punti di uscita, settori e percorsi protetti.
 - Documentare il layout **già costruito** di casse, importers, alimentazione/carburante e rete RS; verificarne il comportamento nei test, senza considerarlo già testato.
