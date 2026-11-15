@@ -1,7 +1,7 @@
 # MEGAZERO — Progetto base mineraria e Mining Turtle
 
 ## Stato (15 novembre 2026)
-**Base fisica allestita (conferma del giocatore e screenshot, 15 novembre 2026):** turtle, casse e collegamenti già piazzati e collegati. Restano da progettare, implementare e verificare i programmi minerari, i percorsi e l'operatività end-to-end. Il numero esatto di turtle installate non è stato comunicato come conteggio verificato.
+**Base fisica allestita (conferma del giocatore e screenshot, 15 novembre 2026):** turtle, casse e collegamenti già piazzati e collegati. Restano da progettare, implementare e verificare i programmi minerari, i percorsi e l'operatività end-to-end. **Numero confermato dal giocatore: 40 Mining Turtle già installate, 10 per ognuno dei quattro lati.**
 
 ## Area della base — coordinate aggiornate e confermate (15 novembre 2026)
 - **Angolo 1:** **X=2099, Y=-52, Z=3015**.
@@ -38,11 +38,11 @@
 - Non è stato concordato lo svuotamento automatico di intere pozze.
 
 ## Quattro fronti minerari in contemporanea — proposta del giocatore (15 novembre 2026)
-- **Quattro scavi principali contemporanei** nelle direzioni **NORD (-Z), SUD (+Z), EST (+X), OVEST (-X)**. **Previsione dell'utente: 8–10 Mining Turtle per ciascuno dei quattro fronti (32–40 turtle complessive)**. Quantità preliminare, non definitiva.
+- **Quattro scavi principali contemporanei** nelle direzioni **NORD (-Z), SUD (+Z), EST (+X), OVEST (-X)**. **Installazione confermata dall'utente: 10 Mining Turtle per ciascuno dei quattro lati, 40 complessive.**
 - **NORD/SUD:** pareti di roccia già indicate vicino alla base; possibili gallerie nella roccia.
 - **EST:** inizio della mineshaft; tracciato da verificare per evitare di trattare i vuoti della miniera come roccia piena.
 - **OVEST:** la caverna continua; percorso in spazio aperto da pianificare.
-- Le **quattro direzioni di scavo** e la previsione **8–10 turtle per direzione** sono state indicate dal giocatore; ripartizione esatta, disposizione, percorsi e dimensioni dei tunnel restano da progettare.
+- Il giocatore **conferma 10 turtle per lato (NORD/SUD/EST/OVEST)**, già piazzate. Restano da definire e verificare orientamento individuale, corsie, percorsi e dimensioni dei tunnel; non inventare le coordinate delle singole postazioni.
 - **Il posizionamento fisico è stato realizzato dal giocatore** nel perimetro rilevato (X2099..2119, Z2995..3015: 21×21 blocchi inclusivi). Prima del codice servono la mappatura delle postazioni effettive e gli accessi per ciascun fronte; gestire vuoti/dislivelli, settori, rientro, rifornimento e scarico RS.
 
 ## Avanzamento in gioco — conferma fotografica (15 novembre 2026)
@@ -82,7 +82,7 @@
 
 ## Decisione su progettazione complessiva delle turtle (15 novembre 2026)
 - L'utente ha scelto esplicitamente **modalità B: estrazione mineraria selettiva**, cioè gallerie e ricerca/raccolta delle vene, **NON sbancamento completo**.
-- L'utente richiede di **progettare insieme tutto il sistema**, non sviluppare ogni turtle isolatamente: i quattro fronti NORD, SUD, EST, OVEST e le previste 8–10 turtle per fronte (32–40 in totale) devono poter operare contemporaneamente senza collisioni, sovrapposizioni, incroci dei percorsi di uscita/rientro o interferenze con le casse della base.
+- L'utente richiede di **progettare insieme tutto il sistema**, non sviluppare ogni turtle isolatamente: i quattro fronti NORD, SUD, EST, OVEST con **10 turtle installate per fronte (40 in totale)** devono poter operare contemporaneamente senza collisioni, sovrapposizioni, incroci dei percorsi di uscita/rientro o interferenze con le casse della base.
 - Prima di scrivere nuovo codice, definire la **mappa completa delle postazioni reali**, le corsie/settori indipendenti, gli accessi e i percorsi protetti comuni, i limiti delle vene e una politica sicura di precedenza/stop.
 - L'infrastruttura fisica della base è già piazzata e collegata secondo l'utente: **non proporre di ricostruirla da zero**.
 - I limiti generali già concordati restano: 300 blocchi per fronte, quote di estrazione da Y=0 alla bedrock; base a Y=-52.
@@ -91,7 +91,7 @@
 - **Non inventare coordinate individuali delle altre turtle**: è nota solo la prima in (2119,-52,2995) rivolta NORD. Nessun nuovo programma minerario selettivo è stato scritto o collaudato.
 
 ## Punti ancora da definire
-- Contare le turtle effettivamente posizionate e mappare posizione/orientamento individuale, punti di uscita e percorsi protetti (previsione originaria: 8–10 per fronte).
+- **Conteggio confermato: 40 turtle, 10 per lato.** Mappare posizione e orientamento individuale, punti di uscita e percorsi protetti, senza presumere spaziatura o coordinate delle altre 39 turtle.
 - Documentare il layout **già costruito** di casse, importers, alimentazione/carburante e rete RS; verificarne il comportamento nei test, senza considerarlo già testato.
 - Definire corsie/settori di ciascuna turtle, percorso protetto di risalita dalla base Y=-52 al primo strato Y=0, ordine di scavo in discesa fino alla bedrock e rientro (300 blocchi per direzione già scelti).
 - Elenco dei minerali vanilla e mod da mantenere; trattamento di tutti gli altri drop.
