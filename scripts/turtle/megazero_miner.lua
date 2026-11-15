@@ -1,0 +1,534 @@
+-- MEGAZERO MINER v1.0 | 40 Turtle, settori separati, scavo selettivo
+-- Modulo per megazero_boot: return function(agent, config, opzioni)
+-- Non eseguire in automatico prima del collaudo di N01.
+-- Gallerie Y -1,-4,...,-58 (testa a Y 0,...,-57), max 300.
+-- Ritorno fisico per passi inversi; nessun lavoro dentro il perimetro base.
+
+local M = {}
+local DXY = {[0]={0,-1},[1]={1,0},[2]={0,1},[3]={-1,0}}
+local BASE_Y = -53
+local LEVELS={}
+for y=-1,-58,-3 do LEVELS[#LEVELS+1]=y end
+local ORE_WORDS = {":ore_", "_ore"}
+local NATURAL = {}
+for _,n in ipairs({
+ "stone","deepslate","cobbled_deepslate","cobblestone",
+ "tuff","granite","diorite","andesite","dirt","grass_block",
+ "gravel","sand","red_sand","calcite","dripstone_block",
+ "pointed_dripstone","clay","moss_block","mud","packed_mud",
+ "rooted_dirt","coarse_dirt","soul_sand","basalt","smooth_basalt",
+ "blackstone","netherrack","terracotta"
+}) do NATURAL["minecraft:"..n]=true end
+
+local function isOre(b)
+ if not b or type(b.name)~="string" then return false end
+ local n=b.name:lower()
+ for _,word in ipairs(ORE_WORDS) do if n:find(word,1,true) then return true end end
+ if type(b.tags)=="table" then
+  for tag,present in pairs(b.tags) do
+   if present and type(tag)=="string"
+       and (tag:find("ores/",1,true) or tag:find(":ores",1,true)
+        or tag:find(":ore_",1,true)) then return true end
+  end
+ end
+ return false
+end
+local function unsafe(name)
+ local n=tostring(name or "?"):lower()
+ for _,word in ipairs({
+ "chest","turtle","computer","modem","cable","machine","pipe",
+ "importer","exporter","receiver","transmitter","drawer","monitor",
+ "hopper","shulker","barrel","furnace","spawner","pump","storage",
+ "generator","charger","redstone","crafting","door","piston","bedrock",
+ "barrier","command_block","structure_block"
+ }) do if n:find(word,1,true) then return true end end
+ return false
+end
+local function homeFor(unit)
+ local side,number=type(unit)=="string" and unit:match("^([NOSE])(%d%d)$")
+ number=tonumber(number)
+ assert(side and number and number>=1 and number<=10,
+   "Identificativo non valido, richiesto N/O/S/E + 01..10")
+ local i=number-1
+ if side=="N" then return 2119-2*i,BASE_Y,2995,0
+ elseif side=="O" then return 2099,BASE_Y,2995+2*i,3
+ elseif side=="S" then return 2099+2*i,BASE_Y,3015,2
+ else return 2119,BASE_Y,3015-2*i,1 end
+end
+-- Compatibile con il loader /megazero_boot gia' installato.
+function M.start(agent,cfg,options)
+ assert(turtle and type(agent)=="table" and type(cfg)=="table",
+   "Questo miner richiede Turtle, config e agente telemetrico")
+ assert(cfg.site=="MINIERA-01","Sito non previsto da questa versione")
+ options=options or {}
+ local maxDistance=options.distance or 300
+ local maxLevels=options.levels or #LEVELS
+ assert(type(maxDistance)=="number" and maxDistance>=1 and maxDistance<=300
+  and maxDistance%1==0,"Distanza non valida")
+ assert(type(maxLevels)=="number" and maxLevels>=1 and maxLevels<=#LEVELS
+  and maxLevels%1==0,"Numero livelli non valido")
+ local hx,hy,hz,front=homeFor(cfg.unit)
+ local left=(front+3)%4
+ local dir=DXY[front]
+ local side=DXY[left]
+ local mode=(options.prova and "_PROVA" or "_LAVORO")
+ local PATH="/.megazero_miner_v1_"..cfg.unit..mode
+ local LATCH="/.megazero_miner_error"
+ local fluidi=assert(dofile("/megazero_fluidi"),
+   "Modulo fluidi assente: scaricare megazero_fluidi")
+ local s={x=hx,y=hy,z=hz,d=front,path={},pending=nil,level=1,
+   distance=0,finished=false,ore=0,buckets=0,blocked=0}
+ local function read(p)
+  if not fs.exists(p) then return nil end
+  local f=assert(fs.open(p,"r"));local v=f.readAll();f.close();return v
+ end
+ local old=read(PATH)
+ if old then
+  local value=assert(textutils.unserialize(old),"Stato miner corrotto")
+  assert(type(value)=="table" and type(value.path)=="table"
+   and value.x and value.y and value.z and value.d and value.level,
+   "Traccia di scavo non valida")
+  s=value
+ end
+ local function save()
+  local f=assert(fs.open(PATH,"w"))
+  f.write(textutils.serialize(s));f.close()
+ end
+ local function latch(why)
+  local f=fs.open(LATCH,"w")
+  if f then f.write(tostring(why));f.close() end
+ end
+ local function atHome()return s.x==hx and s.y==hy and s.z==hz end
+ local function inSector(x,y,z)
+  if y < -58 or y > 0 then return false end
+  local dx,dz=x-hx,z-hz
+  local forward=dx*dir[1]+dz*dir[2]
+  local lateral=dx*side[1]+dz*side[2]
+  return forward>=1 and forward<=300 and lateral>=0 and lateral<=1
+ end
+ local function canOccupy(x,y,z)
+  return (x==hx and y==hy and z==hz) or inSector(x,y,z)
+ end
+ local function detailStatus(state,detail,problem)
+  pcall(function()
+   agent:report(state,{
+    x=s.x,y=s.y,z=s.z,fuel=turtle.getFuelLevel(),
+    detail=detail,error=problem,
+    progress=math.min(100,math.floor(
+      ((s.level-1)*maxDistance+math.min(maxDistance,s.distance))/
+      (maxLevels*maxDistance)*100))
+   })
+  end)
+  print(state..": "..detail)
+ end
+ local function coords(move)
+  if move=="U" then return s.x,s.y+1,s.z end
+  if move=="D" then return s.x,s.y-1,s.z end
+  local d=DXY[s.d]
+  return s.x+d[1],s.y,s.z+d[2]
+ end
+ local function inspect(move)
+  if move=="U" then return turtle.inspectUp() end
+  if move=="D" then return turtle.inspectDown() end
+  return turtle.inspect()
+ end
+ local function dig(move)
+  if move=="U" then return turtle.digUp() end
+  if move=="D" then return turtle.digDown() end
+  return turtle.dig()
+ end
+ local function fluidSide(move)
+  return move=="U" and "up" or (move=="D" and "down" or "front")
+ end
+ local function currentFuel()
+  local fuel=turtle.getFuelLevel()
+  return type(fuel)=="number" and fuel or math.huge
+ end
+ local function reserveGoing(extra)
+  assert(currentFuel()>=#s.path+(extra or 0)+180,
+   "SCORTE: carburante vicino alla riserva di rientro")
+ end
+ local function reserveReturning()
+  assert(currentFuel()>=#s.path+8,
+   "Carburante non sufficiente al percorso di rientro")
+ end
+ local function freeSlots()
+  local free=0
+  for i=1,16 do if turtle.getItemCount(i)==0 then free=free+1 end end
+  return free
+ end
+ local function countItem(name)
+  local n=0
+  for i=1,16 do
+   local item=turtle.getItemDetail(i)
+   if item and item.name==name then n=n+item.count end
+  end
+  return n
+ end
+ local function turnTo(want)
+  while s.d~=want do
+   local n=(want-s.d)%4==3 and -1 or 1
+   s.pending="TURN";save()
+   local ok=n==-1 and turtle.turnLeft() or turtle.turnRight()
+   assert(ok,"Rotazione impossibile")
+   s.d=(s.d+n+4)%4
+   s.pending=nil;save()
+  end
+ end
+ -- I blocchi rimasti a sigillare le correnti non vanno rimossi subito.
+ local function bonify(move,x,y,z,allowFlow)
+  assert(inSector(x,y,z),"Bonifica fuori fascia")
+  local sideName=fluidSide(move)
+  local f=fluidi.peek(sideName)
+  if not f then return true end
+  if not f.source and allowFlow and f.kind=="ACQUA" then
+   return true -- corrente passabile; non equivale a sorgente eliminata
+  end
+  local before=f.kind=="ACQUA" and countItem("minecraft:water_bucket")
+    or countItem("minecraft:lava_bucket")
+  detailStatus("SCAVO","BONIFICA "..f.kind.." "..x..","..y..","..z)
+  local result,why=fluidi.resolve(sideName,{x=x,y=y,z=z},
+    function(cx,cy,cz) return cx==x and cy==y and cz==z and
+      inSector(cx,cy,cz) end)
+  if result=="raccolto" then
+   local after=f.kind=="ACQUA" and countItem("minecraft:water_bucket")
+     or countItem("minecraft:lava_bucket")
+   assert(after>before,"Prelievo non confermato nel secchio")
+   s.buckets=s.buckets+1;save()
+   sleep(0.4)
+   assert(not fluidi.peek(sideName),"La sorgente si e' rigenerata")
+   return true
+  end
+  if result=="sigillato" then
+   s.blocked=s.blocked+1;save()
+   return false -- lasciare il tappo integro; non scavarlo.
+  end
+  error("Bonifica fallita: "..tostring(why or result))
+ end
+ local function prepare(move,x,y,z,first)
+  -- Mai fare scavi o bonifiche dentro la base, a qualsiasi Y.
+  assert(inSector(x,y,z),"Intervento fuori area o dentro la base vietato")
+  if first then
+   local exists=inspect(move)
+   assert(not exists and not fluidi.peek(fluidSide(move)),
+    "Uscita dalla base ostruita: non rompo infrastrutture")
+   return
+  end
+  for attempt=1,8 do
+   local f=fluidi.peek(fluidSide(move))
+   if f then
+    local clear=bonify(move,x,y,z,move=="F")
+    if not clear then
+     error("Cella sigillata contro una corrente: non puo' essere attraversata")
+    end
+    if f.kind=="ACQUA" and not f.source then return end
+   end
+   local exists,block=inspect(move)
+   if not exists then return end
+   local name=block and block.name or "?"
+   if name=="minecraft:bedrock" then error("BEDROCK IN PERCORSO") end
+   assert(not unsafe(name),"Infrastruttura o blocco protetto: "..name)
+   assert(NATURAL[name] or isOre(block),
+    "Blocco non minerario sconosciuto: "..name)
+   assert(freeSlots()>2,"SCORTE: inventario quasi pieno")
+   local ok,why=dig(move)
+   assert(ok,"Scavo impossibile "..name..": "..tostring(why))
+   sleep(0.15)
+  end
+  error("Blocco persistente sul percorso")
+ end
+ local function step(move,first,oreOnly)
+  local x,y,z=coords(move)
+  assert(canOccupy(x,y,z),"Movimento vietato fuori corsia")
+  reserveGoing(1)
+  if oreOnly then
+   local exists,block=inspect(move)
+   assert(exists and isOre(block),"Nessun minerale nel ramo")
+   local ok,why=dig(move)
+   assert(ok,"Impossibile estrarre minerale: "..tostring(why))
+   sleep(0.1)
+   local f=fluidi.peek(fluidSide(move))
+   if f then
+    assert(bonify(move,x,y,z,false),"Vena aperta su corrente sigillata")
+   end
+   assert(not inspect(move),"Vena ostruita dopo scavo")
+   s.ore=s.ore+1;save()
+  else
+   prepare(move,x,y,z,first)
+  end
+  s.pending="STEP";save()
+  local fn=move=="U" and turtle.up or move=="D" and turtle.down
+    or turtle.forward
+  local ok,why=fn()
+  if not ok then
+   s.pending=nil;save()
+   error("Turtle bloccata: "..tostring(why))
+  end
+  s.path[#s.path+1]={m=move,d=s.d}
+  s.x,s.y,s.z=x,y,z
+  s.pending=nil;save()
+ end
+ local function reverseOne()
+  assert(not s.pending,"Posizione incerta dopo reboot")
+  reserveReturning()
+  local n=#s.path
+  local item=assert(s.path[n],"Percorso di ritorno mancante")
+  local fn,dx,dy,dz
+  if item.m=="F" then
+   turnTo((item.d+2)%4)
+   fn=turtle.forward
+   dx,dy,dz=DXY[s.d][1],0,DXY[s.d][2]
+  elseif item.m=="U" then fn=turtle.down;dx,dy,dz=0,-1,0
+  else fn=turtle.up;dx,dy,dz=0,1,0 end
+  for attempt=1,8 do
+   s.pending="BACK";save()
+   local ok=fn()
+   if ok then
+    s.x,s.y,s.z=s.x+dx,s.y+dy,s.z+dz
+    s.path[n]=nil
+    s.pending=nil;save()
+    return
+   end
+   s.pending=nil;save()
+   sleep(0.35)
+  end
+  error("Rientro bloccato al passo "..n.." a "..s.x..","..s.y..","..s.z)
+ end
+ local function goHome()
+  while #s.path>0 do reverseOne() end
+  assert(atHome(),"Rientro non terminato alla propria postazione")
+  turnTo(front)
+ end
+ local function inspectDir(kind,d)
+  if kind=="U" then return turtle.inspectUp() end
+  if kind=="D" then return turtle.inspectDown() end
+  turnTo(d)
+  return turtle.inspect()
+ end
+ local function dirTarget(kind,d)
+  if kind=="U" then return s.x,s.y+1,s.z end
+  if kind=="D" then return s.x,s.y-1,s.z end
+  return s.x+DXY[d][1],s.y,s.z+DXY[d][2]
+ end
+ local function extractVein()
+  -- DFS selettiva con rientro automatico al nodo di partenza.
+  -- Solo ORE riconosciute, max 32 minerali per punto di ispezione.
+  local seen,remaining={},32
+  local origin=#s.path
+  local function visit()
+   if remaining<=0 then return end
+   local savedDir=s.d
+   local choices={
+    {"F",front},{"F",left},{"F",(front+2)%4},
+    {"F",(left+2)%4},{"U",0},{"D",0}
+   }
+   for _,c in ipairs(choices) do
+    if remaining<=0 then break end
+    local move,d=c[1],c[2]
+    local x,y,z=dirTarget(move,d)
+    local k=x..":"..y..":"..z
+    if inSector(x,y,z) and not seen[k] then
+     seen[k]=true
+     local exists,b=inspectDir(move,d)
+     if exists and isOre(b) then
+      reserveGoing(32)
+      remaining=remaining-1
+      step(move,false,true)
+      visit()
+      reverseOne()
+     end
+    end
+   end
+   turnTo(savedDir)
+  end
+  visit()
+  assert(#s.path==origin,"Uscita da vena non tornata al tunnel")
+  turnTo(front)
+ end
+ local function scanSide()
+  -- Solo lato SINISTRO rispetto alla direzione di lavoro, entro 2 blocchi.
+  turnTo(left)
+  local x,y,z=coords("F")
+  if inSector(x,y,z) then
+   local f=fluidi.peek("front")
+   if f then bonify("F",x,y,z,false) end
+  end
+  turnTo(front)
+ end
+ local function scanCell()
+  turnTo(front)
+  -- Bonifica soffitto e area sinistra prima di estrarre le vene.
+  local x,y,z=coords("U")
+  if inSector(x,y,z) then
+   local f=fluidi.peek("up")
+   if f then bonify("U",x,y,z,false) end
+  end
+  scanSide()
+  extractVein()
+ end
+ local function unload()
+  assert(atHome(),"Scarico solo alla base")
+  local limit=turtle.getFuelLimit()
+  for i=1,16 do
+   local it=turtle.getItemDetail(i)
+   if it and it.name=="minecraft:lava_bucket" and
+      type(limit)=="number" and currentFuel()<limit then
+    turtle.select(i);turtle.refuel(1)
+   end
+  end
+  local keepBuckets=3
+  local keepStone=16
+  for i=1,16 do
+   local it=turtle.getItemDetail(i)
+   if it then
+    local keep=0
+    if it.name=="minecraft:bucket" then
+     keep=math.min(keepBuckets,it.count);keepBuckets=keepBuckets-keep
+    elseif it.name=="minecraft:cobblestone" or
+           it.name=="minecraft:cobbled_deepslate" then
+     keep=math.min(keepStone,it.count);keepStone=keepStone-keep
+    end
+    local count=it.count-keep
+    if count>0 then
+     turtle.select(i)
+     assert(turtle.dropDown(count),"Cassa inferiore piena: scarico incompleto")
+    end
+   end
+  end
+ end
+ local function getLava()
+  local c=peripheral.wrap("top")
+  assert(c and c.list and c.pushItems and c.size,
+    "Cassa superiore per lava non disponibile")
+  local items=c.list()
+  local found
+  for slot,it in pairs(items) do
+   if it.name=="minecraft:lava_bucket" and it.count>0 then found=slot;break end
+  end
+  assert(found,"Secchi lava finiti nella cassa sopra")
+  if found~=1 then
+   local name=assert(peripheral.getName(c))
+   if items[1] then
+    local free
+    for i=c.size(),2,-1 do if not items[i] then free=i;break end end
+    assert(free,"Cassa rifornimento senza slot libero")
+    assert(c.pushItems(name,1,items[1].count,free)==items[1].count,
+      "Non riesco a liberare slot 1 cassa lava")
+   end
+   assert(c.pushItems(name,found,1,1)==1,
+     "Non riesco a spostare lava nello slot 1")
+  end
+  local slot
+  for i=1,16 do if turtle.getItemCount(i)==0 then slot=i;break end end
+  assert(slot,"Slot Turtle esauriti per il carburante")
+  turtle.select(slot)
+  assert(turtle.suckUp(1),"Secchio di lava non prelevato")
+  local it=turtle.getItemDetail(slot)
+  assert(it and it.name=="minecraft:lava_bucket","Oggetto imprevisto dalla cassa")
+  assert(turtle.refuel(1),"Rifornimento fallito")
+  -- Il secchio vuoto rimane nell'inventario finche' serve.
+ end
+ local function supply()
+  assert(atHome(),"Rifornimento solo alla propria postazione")
+  unload()
+  local ok,why=fluidi.ensureBuckets(3)
+  assert(ok,"Scorta secchi non ottenibile: "..tostring(why))
+  local limit=turtle.getFuelLimit()
+  local fuel=turtle.getFuelLevel()
+  if type(limit)=="number" and type(fuel)=="number" then
+   local goal=math.min(limit,3500)
+   while currentFuel()<goal do getLava() end
+  end
+  unload() -- Mantiene 3 secchi, 16 pietre; scarica solo il resto
+ end
+ local function carveHead()
+  local x,y,z=coords("U")
+  if inSector(x,y,z) then
+   prepare("U",x,y,z,false)
+  end
+ end
+ local function processLevel()
+  local yTarget=LEVELS[s.level]
+  assert(yTarget,"Livello non valido")
+  -- HOME -> esterno un solo blocco a Y=-53.
+  turnTo(front)
+  step("F",true)
+  while s.y<yTarget do step("U") end
+  while s.y>yTarget do step("D") end
+  -- Il primo punto esterno conta come 1° blocco della galleria.
+  for dist=1,maxDistance do
+   if dist>1 then turnTo(front);step("F") end
+   carveHead() -- tunnel 2 blocchi alto, senza scavare tutto il volume.
+   if dist>s.distance then
+    scanCell()
+    s.distance=dist;save()
+    if dist%20==0 then
+     detailStatus("SCAVO","LIV "..s.level.."/"..maxLevels..
+      ", galleria "..dist.."/"..maxDistance)
+    end
+   end
+   if freeSlots()<=2 or currentFuel()<#s.path+260 then
+    error("SCORTE: rientro per inventario o carburante")
+   end
+  end
+  detailStatus("RIENTRO","Livello "..s.level.." completato; ritorno e scarico")
+  goHome()
+  s.level=s.level+1;s.distance=0;save()
+  supply()
+ end
+ local function run()
+  assert(not s.pending,
+    "Posizione fisica incerta dopo riavvio: verifica manuale")
+  if #s.path>0 then
+   detailStatus("RIENTRO","Recupero traccia precedente prima di proseguire")
+   goHome()
+   error("Rientro da precedente interruzione: verifica prima di riprendere")
+  end
+  assert(atHome(),"Posizione iniziale diversa dalla postazione")
+  if s.finished then
+   detailStatus("BASE","Lavoro gia' concluso: nessun nuovo scavo")
+   return
+  end
+  supply()
+  while s.level<=maxLevels do
+   detailStatus("SCAVO","Quota "..LEVELS[s.level]..
+    ", settore personale "..cfg.unit)
+   local ok,problem=pcall(processLevel)
+   if not ok then
+    local why=tostring(problem)
+    detailStatus("RIENTRO","Anomalia: ritorno lungo il percorso",why)
+    if #s.path>0 and not s.pending then goHome() end
+    if why:find("SCORTE:",1,true) and atHome() then
+     supply()
+    elseif why:find("BEDROCK IN PERCORSO",1,true) and atHome() then
+     -- Bedrock a un livello impedisce il passaggio: non scavarla.
+     s.level=s.level+1;s.distance=0;save()
+    else
+     error("Scavo interrotto: "..why)
+    end
+   end
+  end
+  s.finished=true;save()
+  detailStatus("BASE","COMPLETATO: "..maxLevels.." quote, ore estratte "..s.ore)
+ end
+ local ok,reason=pcall(run)
+ if not ok then
+  local why=tostring(reason)
+  local returned=false
+  if not s.pending and #s.path>0 then
+   detailStatus("RIENTRO","Problema: rientro di emergenza")
+   local back,msg=pcall(goHome)
+   if not back then why=why.." | RIENTRO NON RIUSCITO: "..tostring(msg) end
+  end
+  returned=atHome() and #s.path==0 and not s.pending
+  latch(why)
+  detailStatus("ERRORE",returned and
+   "Rientrata alla propria base: intervento richiesto" or
+   "ATTENZIONE: rientro non confermato",why)
+  printError(why)
+ end
+end
+
+return function(agent,cfg,options)
+ return M.start(agent,cfg,options)
+end
