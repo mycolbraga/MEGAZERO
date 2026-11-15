@@ -52,20 +52,31 @@
 - Non proporre di riprogettare o ricostruire l'allestimento già completato se non richiesto; partire dalla configurazione esistente per predisporre i programmi.
 
 ## Prima postazione di riferimento — angolo NORD-EST (15 novembre 2026)
-- **Punto di partenza scelto dal giocatore:** **X=2119, Y=-52, Z=2995** (angolo NORD-EST del perimetro).
+- **Prima turtle NORD, angolo NORD-EST:** **X=2119, Y=-53, Z=2995**. La Y=-53 è la posizione effettiva delle turtle comunicata successivamente dall'utente (le coordinate di area della base erano state segnate a Y=-52).
 - **Orientamento iniziale:** **NORD (-Z)**, esplicitamente indicato dal giocatore («FACING NORD»).
-- Da questa posizione un eventuale primo avanzamento diritto va verso **X=2119, Y=-52, Z=2994**. Questa è solo geometria, **nessun movimento è ancora stato comandato o testato**.
-- La configurazione delle altre turtle, l'assegnazione dei settori, il programma e la logica di uscita/rientro sono da stabilire. Non inventare ulteriori coordinate di postazioni.
+- Il primo blocco davanti alla prima turtle NORD è **X=2119, Y=-53, Z=2994**. Solo geometria: nessun movimento verificato.
+- La posizione di tutte le altre 39 turtle e il verso dei quattro lati sono ora comunicati esplicitamente dall'utente (vedere sezione «Mappa esatta»). Restano da progettare percorsi, settori minerari e rientro.
+
+## Mappa esatta delle 40 postazioni — comunicata dal giocatore (15 novembre 2026)
+- **Tutte le turtle sono alla quota Y=-53**, mentre gli angoli dell'area della base erano stati precedentemente comunicati come Y=-52. Non confondere la posizione delle turtle con il riferimento del piano della base.
+- **NORD, facing NORD (-Z), 10 turtle:** da **(2119,-53,2995)** fino a **(2101,-53,2995)**, avanzando di 2 blocchi lungo X decrescente: X = 2119, 2117, 2115, 2113, 2111, 2109, 2107, 2105, 2103, 2101; Z fisso 2995.
+- **OVEST, facing OVEST (-X), 10 turtle:** da **(2099,-53,2995)** fino a **(2099,-53,3013)**, avanzando di 2 blocchi lungo Z crescente: Z = 2995, 2997, 2999, 3001, 3003, 3005, 3007, 3009, 3011, 3013; X fisso 2099.
+- **SUD, facing SUD (+Z), 10 turtle:** da **(2099,-53,3015)** fino a **(2117,-53,3015)**, avanzando di 2 blocchi lungo X crescente: X = 2099, 2101, 2103, 2105, 2107, 2109, 2111, 2113, 2115, 2117; Z fisso 3015.
+- **EST, facing EST (+X), 10 turtle:** da **(2119,-53,3015)** fino a **(2119,-53,2997)**, avanzando di 2 blocchi lungo Z decrescente: Z = 3015, 3013, 3011, 3009, 3007, 3005, 3003, 3001, 2999, 2997; X fisso 2119.
+- **Totale: 40 turtle**, con le quattro postazioni d'angolo assegnate ciascuna a un lato diverso. Tutte le 40 coordinate sono dedotte soltanto dalla progressione esplicita di estremi e passo 2, senza attribuire nuove posizioni arbitrarie.
+- La direzione di scavo iniziale per ogni turtle è rivolta all'esterno del perimetro, non verso il centro.
+- **Attenzione per la progettazione:** con interasse di 2 blocchi, un attraversamento laterale delle vene potrebbe invadere la corsia della turtle adiacente; prima di programmare definire congiuntamente come separare i settori e consentire la raccolta selettiva senza collisioni.
+- **Nessun movimento di prova effettuato** con questa mappa.
 
 ## Lunghezza iniziale dei quattro scavi principali — scelta del giocatore (15 novembre 2026)
 - **Avanzamento massimo iniziale: 300 blocchi per ciascuno dei quattro fronti** NORD, SUD, EST e OVEST. Non implica che ogni turtle scavi lungo la stessa linea o che tutta l'area venga svuotata; sono limiti di avanzamento per le direzioni principali, da ripartire in corsie e settori.
-- **NORD (-Z):** dalla prima turtle nota a **(2119, -52, 2995)**, 300 spostamenti verso nord portano a **Z=2695** (X=2119 per quella linea). Primo blocco davanti: Z=2994.
+- **NORD (-Z):** dalla prima turtle confermata in **(2119, -53, 2995)**, 300 spostamenti verso nord portano a **Z=2695** (X=2119 per quella linea). Primo blocco davanti: Z=2994.
 - **SUD (+Z):** dal confine sud della base **Z=3015**, limite indicativo **Z=3315**.
 - **EST (+X):** dal confine est della base **X=2119**, limite indicativo **X=2419**.
 - **OVEST (-X):** dal confine ovest della base **X=2099**, limite indicativo **X=1799**.
 - Questi sono **limiti di calcolo**, non punti di partenza fissati per le turtle dei fronti SUD/EST/OVEST. Le postazioni effettive e le coordinate dei singoli corridoi non sono ancora state comunicate.
 - **Quote di scavo concordate:** dalla quota **Y=0** scendendo **fino alla bedrock**, in ogni fronte (300 blocchi di lunghezza). **Il limite inferiore è la bedrock reale incontrata**: non assumere una quota Y uniforme scavabile su ogni colonna e non tentare di romperla.
-- **Quota della base:** Y=-52. La turtle di riferimento è a **(2119,-52,2995)** rivolta NORD; percorso protetto di uscita/risalita a Y=0, schema degli strati e rientro sono **da progettare**. Non riutilizzare la vecchia quota SKY=89 del precedente programma.
+- **Coordinate di base precedentemente fornite:** Y=-52; **quota effettiva delle turtle confermata successivamente:** Y=-53. La turtle di riferimento è a **(2119,-53,2995)** rivolta NORD; percorso protetto di uscita/risalita a Y=0, schema degli strati e rientro sono **da progettare**. Non riutilizzare la vecchia quota SKY=89 del precedente programma.
 - **Script di partenza indicato dall'utente:** `scavo_1680_1783_dal_67_in_su(1).lua` (allegato in chat), funzionante secondo l'utente. Riutilizzare la logica di rifornimento lava dalla cassa superiore, scarico dalla inferiore, stato e ritorno; cambiare esclusivamente quanto serve, una volta definite le traiettorie.
 - **Stato:** solo pianificazione dei limiti, nessun programma nuovo scritto o testato in gioco.
 
@@ -88,12 +99,12 @@
 - I limiti generali già concordati restano: 300 blocchi per fronte, quote di estrazione da Y=0 alla bedrock; base a Y=-52.
 - Il file locale **`miniera_nord_01.lua` è una bozza SUPERATA DA NON AVVIARE**: scava completamente un volume 2×300×59 e non implementa l'estrazione selettiva, né il coordinamento delle altre turtle.
 - Il file funzionante fornito dal giocatore **`scavo_1680_1783_dal_67_in_su(1).lua`** è il **riferimento per le parti comuni già funzionanti** (salvataggio avanzamento, rientro, rifornimento lava sopra, scarico sotto), da adattare dopo aver definito il funzionamento dell'intero sistema.
-- **Non inventare coordinate individuali delle altre turtle**: è nota solo la prima in (2119,-52,2995) rivolta NORD. Nessun nuovo programma minerario selettivo è stato scritto o collaudato.
+- **Posizioni di tutte le 40 turtle definite dall'utente:** consultare «Mappa esatta». Nessun nuovo programma minerario selettivo è stato scritto o collaudato.
 
 ## Punti ancora da definire
-- **Conteggio confermato: 40 turtle, 10 per lato.** Mappare posizione e orientamento individuale, punti di uscita e percorsi protetti, senza presumere spaziatura o coordinate delle altre 39 turtle.
+- **Conteggio e coordinate delle 40 turtle definiti:** 10 per lato a distanza di 2 blocchi, ciascuna rivolta verso l'esterno (vedere «Mappa esatta»). Da progettare punti di uscita, settori e percorsi protetti.
 - Documentare il layout **già costruito** di casse, importers, alimentazione/carburante e rete RS; verificarne il comportamento nei test, senza considerarlo già testato.
-- Definire corsie/settori di ciascuna turtle, percorso protetto di risalita dalla base Y=-52 al primo strato Y=0, ordine di scavo in discesa fino alla bedrock e rientro (300 blocchi per direzione già scelti).
+- Definire corsie/settori di ciascuna turtle, percorso protetto di risalita dalle postazioni Y=-53 al primo strato Y=0, ordine di scavo in discesa fino alla bedrock e rientro (300 blocchi per direzione già scelti).
 - Elenco dei minerali vanilla e mod da mantenere; trattamento di tutti gli altri drop.
 - Metodo sicuro per scartare gli scarti senza perdere minerali.
 - Progettare come distribuire in modo selettivo la ricerca di vene lungo gallerie e pareti già esposte, senza scavare interamente il volume.
