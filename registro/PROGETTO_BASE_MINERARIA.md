@@ -267,6 +267,13 @@ Il prototipo `scripts/turtle/megazero_pilot.lua` **attualmente tratta `water` e 
 - **Verifiche fuori dal gioco:** `texluac -p` completato senza errori. Mock Lua di **sorgente laterale X=2118,Z=2991**: sorgente raccolta, rifornimento +1000, N01 tornata a (2119,-53,2995) orientata NORD con stato BASE. Mock di **lava corrente inaccessibile:** nessuna sorgente raccolta, rientro alla home con stato ERRORE. **Non ancora eseguito in Minecraft.**
 - **Installazione remota N01** una volta rientrata allo `startup`: `wget https://raw.githubusercontent.com/mycolbraga/MEGAZERO/registro/megazero/scripts/turtle/megazero_lava_sinistra_N01.lua megazero_lava_sinistra_N01`; avviare separatamente `megazero_lava_sinistra_N01` dopo download. Non premere Ctrl+T durante i movimenti.
 
+## Collaudo lava laterale N01 — riuscito (15 novembre 2026)
+- Screenshot del terminale N01 durante il test [`megazero_lava_sinistra_N01.lua`](../scripts/turtle/megazero_lava_sinistra_N01.lua). Output leggibile: **`PREPARAZIONE: LAVA: prelievo sorgente 2118,-53,2991`**, **`RIENTRO: Sorgente lava prelevata; ritorno alla home`**, **`BASE: TEST LAVA: sorgente raccolta; rientro OK; lava usata come carburante: 1`**.
+- **Esito positivo confermato dal programma in gioco:** N01 ha raggiunto e raccolto una sorgente di lava laterale nel proprio settore a **X=2118, Y=-53, Z=2991**, è rientrata alla postazione e ha consumato **1 secchio di lava raccolta** come carburante. Il risultato deriva dal terminale della turtle; il posizionamento fisico della lava è stato predisposto dal giocatore.
+- **Collaudi fluidi positivi fin qui:** sorgente acqua diretta (4° blocco), acqua corrente fino a sorgente (Z2990), lava laterale con sorgente accessibile (X2118,Z2991).
+- **Non ancora dimostrato:** controllo di grandi laghi o colate irraggiungibili, lava dall'alto/sotto, ripresa dello scavo senza interrompere il programma di produzione, gestione contemporanea delle 40 turtle. Il modulo va ancora integrato nel miner selettivo.
+- Per tornare a `megazero_boot` dopo il test, premere Invio secondo l'output del programma. Nessuna modifica automatica allo startup.
+
 ## Punti ancora da definire
 - **Conteggio e coordinate delle 40 turtle definiti:** 10 per lato a distanza di 2 blocchi, ciascuna rivolta verso l'esterno (vedere «Mappa esatta»). Da progettare punti di uscita, settori e percorsi protetti.
 - Documentare il layout **già costruito** di casse, importers, alimentazione/carburante e rete RS; verificarne il comportamento nei test, senza considerarlo già testato.
