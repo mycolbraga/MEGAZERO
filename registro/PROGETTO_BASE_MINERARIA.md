@@ -159,13 +159,15 @@ Il rientro si può garantire per gli errori **da cui esiste un percorso praticab
 
 **Questa condizione prevale su ogni bozza precedente che usa `error()` al fronte di scavo senza rientro.** Il programma `miniera_nord_01.lua` è già superato e non deve essere avviato.
 
-## Sala di controllo centralizzata — fattibilità tecnica (proposta 15 novembre 2026)
-- **Possibile con CC:Tweaked**, sfruttando un Computer centrale con Monitor e modem, e la comunicazione via `rednet` con le 40 Mining Turtle.
+## Sala di controllo remota alla base principale — decisione approvata (15 novembre 2026)
+- **Scelta approvata dal giocatore:** realizzare una **sala di controllo nella base principale**, separata dalla miniera, per controllare a distanza le 40 Mining Turtle senza dover tornare fisicamente al sito minerario ogni volta. Da sviluppare con CC:Tweaked: computer centrale, uno o più monitor, modem e messaggistica `rednet` dalle turtle.
 - Stati proposti per ciascuna turtle: **IN SCAVO**, **IN RIENTRO**, **ALLA BASE**, **ERRORE (rientrata e con causa/coordinate)**, **NON RAGGIUNGIBILE** (mancano aggiornamenti).
 - Dashboard organizzata per **NORD/SUD/EST/OVEST**, 10 turtle per ciascun fronte; eventuali dati: ID univoco, avanzamento, posizione registrata, carburante, errore e ora/istante dell'ultima comunicazione.
 - Il monitor **non legge automaticamente** le 40 turtle: il software di ogni turtle deve inviare aggiornamenti periodici e segnalazioni esplicite; il computer centrale deve ascoltarli e rendere il cruscotto. Mancanza di segnale non indica automaticamente un guasto fisico: potrebbe essere chunk scaricato, rete non disponibile o turtle non avviata.
 - Per distanze di circa **300 blocchi**: modem wireless ordinari CC:Tweaked non sono affidabili per l'intero settore (portata base 64 blocchi); per copertura diretta si propone un **Ender Modem** su ciascuna turtle e un modem compatibile sulla centrale, salvo altre infrastrutture o impostazioni mod. Verificare che le Mining Turtle abbiano uno slot upgrade libero per il modem e che i chunk siano caricati.
-- **Stato:** funzionalità proposta, NON ancora approvata come acquisto/configurazione, programmata o testata in Minecraft. Da valutare nell'architettura complessiva, non come sostituto del rientro fisico obbligatorio in caso di errore.
+- **Stato:** funzionalità **approvata come requisito di progetto**, NON ancora costruita, programmata o collaudata. Necessario test di comunicazione dalla base principale alla miniera prima di equipaggiare tutte le turtle. Se altri mod/addon cambiano la portata degli Ender Modem, verificarlo in gioco. La sala di controllo non sostituisce il rientro fisico obbligatorio delle turtle alla propria postazione in caso di errore.
+- **Proposte operative da sviluppare:** ID stabile per ogni turtle; heartbeat periodico; visualizzazione dell'ultima comunicazione (distinguere offline da guasto); memoria locale e centrale degli errori, dei percorsi e delle coordinate; eventuali controlli remoti di pausa/ripresa sicura senza modificare il requisito di ritorno in base.
+- **Caricamento chunk:** la comunicazione a distanza non mantiene da sola le turtle attive. Prevedere una strategia di chunk loading nelle zone di lavoro e un servizio di monitoraggio sempre caricato alla base principale.
 
 ## Punti ancora da definire
 - **Conteggio e coordinate delle 40 turtle definiti:** 10 per lato a distanza di 2 blocchi, ciascuna rivolta verso l'esterno (vedere «Mappa esatta»). Da progettare punti di uscita, settori e percorsi protetti.
