@@ -3,14 +3,13 @@
 ## Stato (15 novembre 2026)
 **In progettazione.** Sono state definite le coordinate dell'area destinata alla base; disposizione, numero di turtle, programmi e collegamenti non sono ancora stati stabiliti o verificati in gioco.
 
-## Area della base — coordinate rilevate dal giocatore (15 novembre 2026)
-- **Primo angolo comunicato:** **X=2099, Y=-52, Z=3015**.
-- **Secondo angolo comunicato:** **X=2119, Y=-25, Z=2995**.
-- **Intervallo coordinate:** **X=2099..2119**, **Y=-52..-25**, **Z=2995..3015**.
-- **Differenza tra le coordinate estreme:** 20 blocchi lungo X, 27 lungo Y, 20 lungo Z.
-- **Conteggio inclusivo dei blocchi:** **21 × 21 blocchi in pianta** (441 posizioni per strato) e **28 livelli Y** se le due coordinate identificano davvero i vertici opposti di un volume. La funzione dell'intervallo verticale, inclusa l'eventuale quota del pavimento, **è da confermare**: non presumere che Y=-25 sia un errore né che tutta la base debba essere scavata su 28 livelli.
-- **Queste coordinate supersedono le ipotesi precedenti** di rettangoli 10×18 o 20×20; tali misure sono ormai solo cronologia, non i confini operativi.
-- **Stato:** angoli comunicati dal giocatore; esatta destinazione dei livelli Y e layout interni non ancora confermati o costruiti.
+## Area della base — coordinate aggiornate e confermate (15 novembre 2026)
+- **Angolo 1:** **X=2099, Y=-52, Z=3015**.
+- **Angolo 2:** **X=2119, Y=-52, Z=2995**. Il precedente **Y=-25 era un errore di trascrizione** corretto esplicitamente dal giocatore: **la quota è sempre Y=-52**.
+- **Intervallo delle coordinate:** X **2099..2119**, Z **2995..3015**, **Y=-52**.
+- **Distanza fra le coordinate estreme:** 20 blocchi su X e 20 su Z. **Contando entrambi gli estremi: 21×21 blocchi** (441 posizioni su un piano). Questo conteggio non equivale a una base scavata su più livelli.
+- Le coordinate effettive comunicate dal giocatore **sostituiscono i precedenti perimetri ipotetici** 10×18 e 20×20; disposizione e percorsi sono ancora da definire.
+- **Stato:** perimetro e quota comunicati; layout di turtle, casse e RS non ancora stabilito.
 - **Destinazione:** Mining Turtle, casse di scarico/rifornimento, collegamenti Refined Storage, percorsi e componenti necessari.
 
 ## Contesto della caverna
@@ -24,7 +23,7 @@
 - **EST (+X):** inizia la mineshaft.
 - **NORD (-Z):** parete di roccia.
 - **SUD (+Z):** parete di roccia.
-- Si tratta dell'orientamento **visto dalla base mineraria** (coordinate attuali: X 2099..2119, Z 2995..3015, Y da -52 a -25; uso delle quote ancora da confermare), non dei confini assoluti dell'intera caverna.
+- Si tratta dell'orientamento **visto dalla base mineraria** (coordinate attuali: X 2099..2119, Z 2995..3015, Y=-52), non dei confini assoluti dell'intera caverna.
 - Percorsi di uscita, direzione iniziale delle turtle e tracciati minerari **ancora da progettare**.
 
 ## Obiettivo concordato
