@@ -35,8 +35,16 @@
 - Alle turtle si vorrebbe affidare soltanto la **gestione della lava residua incontrata durante lo scavo**, con arresto sicuro in caso di passaggio non gestibile. Questa funzionalità è **da progettare e collaudare**, non già implementata.
 - Non è stato concordato lo svuotamento automatico di intere pozze.
 
+## Quattro fronti minerari in contemporanea — proposta del giocatore (15 novembre 2026)
+- **Quattro scavi principali simultanei**, una Mining Turtle orientata inizialmente verso ciascun punto cardinale: **NORD (-Z), SUD (+Z), EST (+X), OVEST (-X)**.
+- **NORD/SUD:** pareti di roccia già indicate vicino alla base; possibili gallerie nella roccia.
+- **EST:** inizio della mineshaft; tracciato da verificare per evitare di trattare i vuoti della miniera come roccia piena.
+- **OVEST:** la caverna continua; percorso in spazio aperto da pianificare.
+- Sono **quattro direzioni di lavoro concordate come proposta**, non ancora quattro percorsi eseguibili o quattro turtle posizionate. Non assegnare coordinate di partenza o dimensioni dei tunnel senza definirle.
+- Prima del codice: progettare le quattro postazioni e gli accessi separati dentro la base 10×18, gestire vuoti/dislivelli, dimensione dei settori, rientro, rifornimento e scarico RS.
+
 ## Punti ancora da definire
-- Numero e posizioni individuali delle turtle nell'area 10×18; orientamento di ciascuna.
+- Posizione e orientamento individuale delle quattro turtle nell'area 10×18; punti di uscita e percorso protetto di ciascuna.
 - Layout esatto di casse, importers, alimentazione/carburante e rete RS.
 - Coordinate/quote/limiti dei settori minerari e percorso protetto dalla base.
 - Elenco dei minerali vanilla e mod da mantenere; trattamento di tutti gli altri drop.
