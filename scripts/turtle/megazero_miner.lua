@@ -718,13 +718,14 @@ function M.start(agent,cfg,options)
       ", galleria "..dist.."/"..maxDistance)
     end
    end
-   if freeSlots()<=2 then pruneInventory(false);compactInventory() end
+   if freeSlots()<=4 or currentFuel()<#s.path+260 then pruneInventory(false);compactInventory() end
    if freeSlots()<=2 or currentFuel()<#s.path+260 then
     error("SCORTE: rientro per inventario o carburante")
    end
   end
   assert(not s.waterPending,
     "Acqua corrente attraversata senza sorgente rimossa: bonifica incompleta")
+  pruneInventory(false) -- Non riportare gli scarti alla base dopo una galleria.
   detailStatus("RIENTRO","Livello "..s.level.." completato; ritorno e scarico")
   goHome()
   s.level=s.level+1;s.distance=0;save()
