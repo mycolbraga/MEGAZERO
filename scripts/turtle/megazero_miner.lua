@@ -287,7 +287,12 @@ function M.start(agent,cfg,options)
    s.blocked=s.blocked+1;save()
    return false -- lasciare il tappo integro; non scavarlo.
   end
-  error("Bonifica fallita: "..tostring(why or result))
+  local problem=tostring(why or result)
+  if problem:find("secchio vuoto",1,true) or
+     problem:find("slot libero",1,true) then
+   error("SCORTE: "..problem)
+  end
+  error("Bonifica fallita: "..problem)
  end
  local function prepare(move,x,y,z,first,fluidTransit)
   -- Mai scavare o bonificare all'interno della base.
@@ -359,7 +364,7 @@ function M.start(agent,cfg,options)
   else
    prepare(move,x,y,z,first,fluidTransit)
   end
-  pruneInventory(false)
+  if freeSlots()<=4 then pruneInventory(false) end
   s.pending="STEP";save()
   local fn=move=="U" and turtle.up or move=="D" and turtle.down
     or turtle.forward
@@ -470,7 +475,12 @@ function M.start(agent,cfg,options)
         turnTo(savedDir)
         return true
        end
-       error("Sorgente "..kind.." non raccolta: "..tostring(why or result))
+       local problem=tostring(why or result)
+       if problem:find("secchio vuoto",1,true) or
+          problem:find("slot libero",1,true) then
+        error("SCORTE: "..problem)
+       end
+       error("Sorgente "..kind.." non raccolta: "..problem)
       elseif depth<64 then
        used=used+1
        step(move,false,false,kind)
