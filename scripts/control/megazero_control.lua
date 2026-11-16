@@ -1,4 +1,4 @@
--- MEGAZERO CONTROL 1.3 - PING, OTA e avvio remoto confermato
+-- MEGAZERO CONTROL 1.4 - HOME Y=-51 corretta, OTA e avvio remoto
 -- Avvio remoto solo dopo CHECK_START, ARM_START e conferma esplicita.
 -- Miniera iniziale: 40 Turtle, 10 per fronte, ancora non collegate via software.
 
@@ -87,12 +87,35 @@ local function register(s, u, x, y, z, facing)
   dirty = true
 end
 
+-- Ricostruisce soltanto le HOME canoniche della miniera.
+-- Il database precedente e' persistente: register() da solo non aggiorna i record esistenti.
+local function canonicalHome(unit)
+ local side,suffix=unit:match("^([NOSE])(%d%d)$")
+ local number=tonumber(suffix)
+ if not number or number<1 or number>10 then return nil end
+ local i=number-1
+ if side=="N" then return 2119-2*i,2995 end
+ if side=="O" then return 2099,2995+2*i end
+ if side=="S" then return 2099+2*i,3015 end
+ if side=="E" then return 2119,3015-2*i end
+ return nil
+end
 for i=1,10 do
   local n=string.format("%02d", i)
-  register(MAIN_SITE, "N"..n, 2119-2*(i-1), -53, 2995, "NORD")
-  register(MAIN_SITE, "O"..n, 2099, -53, 2995+2*(i-1), "OVEST")
-  register(MAIN_SITE, "S"..n, 2099+2*(i-1), -53, 3015, "SUD")
-  register(MAIN_SITE, "E"..n, 2119, -53, 3015-2*(i-1), "EST")
+  register(MAIN_SITE, "N"..n, 2119-2*(i-1), -51, 2995, "NORD")
+  register(MAIN_SITE, "O"..n, 2099, -51, 2995+2*(i-1), "OVEST")
+  register(MAIN_SITE, "S"..n, 2099+2*(i-1), -51, 3015, "SUD")
+  register(MAIN_SITE, "E"..n, 2119, -51, 3015-2*(i-1), "EST")
+end
+for _,rec in pairs(db.units) do
+ if rec.site==MAIN_SITE and type(rec.unit)=="string" and
+  type(rec.home)=="table" and rec.home.y==-53 then
+  local hx,hz=canonicalHome(rec.unit)
+  if hx and rec.home.x==hx and rec.home.z==hz then
+   rec.home.y=-51
+   dirty=true
+  end
+ end
 end
 saveDatabase()
 
