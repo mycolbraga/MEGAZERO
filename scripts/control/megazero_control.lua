@@ -1,4 +1,4 @@
--- MEGAZERO CONTROL 1.4 - HOME Y=-51 corretta, OTA e avvio remoto
+-- MEGAZERO CONTROL 1.5 - HOME Y=-51, POS affidabile, OTA e avvio remoto
 -- Avvio remoto solo dopo CHECK_START, ARM_START e conferma esplicita.
 -- Miniera iniziale: 40 Turtle, 10 per fronte, ancora non collegate via software.
 
@@ -117,6 +117,17 @@ for _,rec in pairs(db.units) do
   end
  end
 end
+-- Record storici: una POS registrata durante lo scavo non diventa
+-- una misura reale dopo reboot o riposizionamento manuale.
+for _,rec in pairs(db.units) do
+ if type(rec)=="table" and rec.site==MAIN_SITE and
+    rec.status=="PREPARAZIONE" and rec.position then
+  rec.lastHistoricalPosition=rec.position
+  rec.position=nil
+  rec.positionVerified=false
+  dirty=true
+ end
+end
 saveDatabase()
 
 local validStatus = {
@@ -145,6 +156,12 @@ local function receive(sender, packet, proto)
     rec.position = {
       x=math.floor(packet.x), y=math.floor(packet.y), z=math.floor(packet.z)
     }
+    rec.positionVerified=true
+  elseif state=="PREPARAZIONE" and rec.position then
+    -- Senza nuove coordinate la POS precedente non va mostrata come attuale.
+    rec.lastHistoricalPosition=rec.position
+    rec.position=nil
+    rec.positionVerified=false
   end
   if type(packet.fuel)=="number" then rec.fuel=math.floor(packet.fuel) end
   if type(packet.progress)=="number" then
@@ -348,7 +365,8 @@ local function drawDetail(r,w,h)
     "STATO: "..state,
     "PC TURTLE: "..tostring(r.sender or "mai connessa"),
     "HOME: "..(r.home and (r.home.x..","..r.home.y..","..r.home.z) or "?"),
-    "POS: "..(r.position and (r.position.x..","..r.position.y..","..r.position.z) or "?"),
+    "POS: "..(r.position and (r.position.x..","..r.position.y..","..r.position.z)
+      or "NON VERIFICATA (nessun dato recente)"),
     "CARBURANTE: "..tostring(r.fuel or "?"),
     "AVANZAMENTO: "..(r.progress and (r.progress.."%") or "?"),
     "DETTAGLIO: "..(r.detail or "-"),
