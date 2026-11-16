@@ -27,7 +27,7 @@ if cmd=="attiva" then
  local m=assert(fs.open(minerPath,"r"))
  local header=m.readLine() or ""
  m.close()
- assert(header:find("^%-%- MEGAZERO MINER v2%.1"),
+ assert(header:find("^%-%- MEGAZERO MINER v2%.2"),
   "Miner non v2: aggiornare prima di attivare l'avvio automatico")
 end
 cfg.miner_autostart=(cmd=="attiva")
