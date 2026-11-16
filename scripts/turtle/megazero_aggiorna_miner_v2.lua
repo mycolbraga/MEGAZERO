@@ -1,10 +1,10 @@
--- MEGAZERO | Aggiornamento miner v2.2 da GitHub sulla singola Turtle
+-- MEGAZERO | Aggiornamento miner v2.3 da GitHub sulla singola Turtle
 -- wget run <URL_DI_QUESTO_FILE>
 -- Non avvia scavo, NON modifica autostart, salva backup del codice precedente.
 assert(turtle,"Eseguire su una Turtle")
 local base="https://raw.githubusercontent.com/mycolbraga/MEGAZERO/registro/megazero/scripts/turtle/"
 local items={
- {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.2"},
+ {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.3"},
  {name="megazero_fluidi",remote="megazero_fluidi.lua",prefix="-- MEGAZERO FLUIDI v1.0"},
  {name="megazero_auto",remote="megazero_auto.lua",prefix="-- MEGAZERO | Gestione avvio automatico"}
 }
@@ -36,6 +36,6 @@ for _,v in ipairs(staged) do
  fs.move(v.temp,v.target)
  print("Aggiornato: "..v.target)
 end
-print("MEGAZERO miner v2.2 installato.")
+print("MEGAZERO miner v2.3 installato.")
 print("Startup e miner_autostart NON sono stati modificati.")
 print("Nessuno scavo avviato. Verificare prima di attivare tutte le Turtle.")
