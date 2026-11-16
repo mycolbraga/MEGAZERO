@@ -1,4 +1,4 @@
--- MEGAZERO BOOT 1.0 | Avvio permanente di telemetria e futuro miner
+-- MEGAZERO BOOT 1.1 | rete, miner e ascolto admin opzionale
 -- Startup usa: shell.run("/megazero_boot")
 -- Sicurezza: miner disabilitato fino alla configurazione e ai test.
 -- ATTENZIONE: non programma alcun movimento o scavo autonomamente.
@@ -7,6 +7,7 @@ local CONFIG="/megazero_config"
 local MODULE="/megazero_rete"
 local MINER="/megazero_miner"
 local ERROR_LATCH="/.megazero_miner_error"
+local ADMIN="/megazero_admin_agent"
 
 local function readFile(path)
   local f=fs.open(path,"r")
@@ -35,8 +36,17 @@ assert(good and type(telemetry)=="table"
 
 local agent,err=telemetry.new(cfg.unit,cfg.site,cfg.central or 54)
 assert(agent,err or "Impossibile inizializzare la rete")
+local adminAgent=nil
+local adminPath=fs.exists(ADMIN) and ADMIN or (ADMIN..".lua")
+if fs.exists(adminPath) then
+ local loaded,module=pcall(dofile,adminPath)
+ assert(loaded and type(module)=="table"
+  and type(module.listen)=="function",
+  "Agente admin non caricabile: "..tostring(module))
+ adminAgent=module
+end
 
-print("MEGAZERO BOOT 1.0 | "..cfg.site.."/"..cfg.unit)
+print("MEGAZERO BOOT 1.1 | "..cfg.site.."/"..cfg.unit)
 print("CENTRALE: "..agent.server)
 
 local function report(status,details)
@@ -119,10 +129,21 @@ local function runMiner()
   end
 end
 
+local function adminLoop()
+ if adminAgent then adminAgent.listen(cfg,agent) end
+end
 if minerRequested and minerPresent and not latched then
-  print("MINER: avvio automatico abilitato")
+ print("MINER: avvio automatico abilitato")
+ if adminAgent then
+  parallel.waitForAll(heartbeat,runMiner,adminLoop)
+ else
   parallel.waitForAll(heartbeat,runMiner)
+ end
 else
-  print("MINER: non avviato | telemetria continua")
+ print("MINER: non avviato | telemetria continua")
+ if adminAgent then
+  parallel.waitForAll(heartbeat,adminLoop)
+ else
   heartbeat()
+ end
 end
