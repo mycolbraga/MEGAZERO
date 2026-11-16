@@ -32,7 +32,7 @@ local function saveReplace(path,data,temp)
 end
 local cfg=assert(textutils.unserialize(read(CONFIG)),"Config non valida")
 assert(cfg.unit=="N01" and cfg.site=="MINIERA-01","Unita' inattesa")
-assert(cfg.miner_autostart==true,"Autostart gia' disattivato: non eseguo procedura ripetuta")
+assert(type(cfg.miner_autostart)=="boolean","Autostart non valido")
 local source=read(MINER)
 assert(source:find("^%-%- MEGAZERO MINER v2%.3%.3"),"Miner v2.3.3 richiesto")
 local data=assert(textutils.unserialize(read(CHECKPOINT)),"Checkpoint illeggibile")
