@@ -310,3 +310,19 @@ Il prototipo `scripts/turtle/megazero_pilot.lua` **attualmente tratta `water` e 
 - Progettare **tutte le postazioni e i percorsi insieme**, quindi eseguire prove controllate prima di avviare più turtle contemporaneamente.
 
 **Nota di stato:** la struttura fisica e i collegamenti sono riportati come **già piazzati e collegati dal giocatore** (screenshot 15 novembre 2026); i **programmi minerari e la loro funzionalità** non sono ancora stati verificati. Non confondere installazione e funzionamento.
+
+
+## Miner comune v2 - gallerie 2x2 (16 novembre 2026)
+
+- **Decisione utente:** gallerie fisiche **larghe 2 e alte 2 blocchi**, mantenendo ricerca selettiva delle vene.
+- **Programma aggiornato in posto:** [megazero_miner.lua](../scripts/turtle/megazero_miner.lua) nel branch registro/megazero, 40 identificativi/settori invariati. Usa checkpoint v2 separato.
+- **Spawner:** richiesta esplicita di **distruggerli**; riconosce minecraft:spawner e nomi che terminano con _spawner. Il blocco non viene conservato come drop.
+- **Minerali:** ancient debris riconosciuto; redstone ore non più scambiato per redstone tecnica; minerali mod non garantiti universalmente.
+- **Gravel e sabbia:** fino a 256 scavi per cella con controllo ricadute; gestione gravel/sabbia che può ostruire anche il rientro, solo nella propria fascia.
+- **Gallerie 2x2:** entrambi i blocchi orizzontali scavati per 2 blocchi di altezza; impedita la pre-sigillatura di una cella laterale che il miner scaverebbe subito dopo.
+- **Inventario:** consolidamento stack prima di decidere rientro per solo 2 slot liberi; scarico programmato anche a fine livello. Scarti/pietrame vengono ancora messi nella cassa inferiore, non eliminati.
+- **Rifornimenti:** cassa superiore: secchi di lava, secchi vuoti e smooth stone se presenti; fino a 3 secchi vuoti e 16 blocchi da sigillo conservati. Modulo [megazero_fluidi.lua](../scripts/turtle/megazero_fluidi.lua) aggiornato per usare smooth stone.
+- **Fuel:** obiettivo ordinario 3500, non cap carburante; per ottenere secchi vuoti può bruciare altra lava fino al limite naturale.
+- **Quote:** -1,-4,...,-61 (21 livelli). Non equivale a scavare tutta la bedrock in modo uniforme.
+- **Avvio automatico per Turtle:** script [megazero_auto.lua](../scripts/turtle/megazero_auto.lua) con stato, attiva, disattiva; imposta miner_autostart nel config, senza riavviare o avviare subito il miner. Non è stato abilitato da remoto su nessuna Turtle.
+- **Stato:** v2 pubblicata ma **non collaudata nel mondo**. Restano fluidi complessi, affidabilità mod, caricamento chunk, GPS/verifica reale della posizione, eventuale trattamento scarti e funzionamento 40 Turtle contemporaneamente.
