@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.7 | LAVA senza riordino slot, CTRL+T rientro protetto
+-- MEGAZERO MINER v2.3.8 | Fuel pieno: crea secchi da lava con micro-rientro tracciato
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -804,9 +804,36 @@ function M.start(agent,cfg,options)
    if not pullFromTop("minecraft:bucket",3-countItem("minecraft:bucket")) then break end
    attempts=attempts+1
   end
-  if countItem("minecraft:bucket")<3 then
-   local ok,why=fluidi.ensureBuckets(3)
-   assert(ok,"Scorta secchi non ottenibile: "..tostring(why))
+  -- Se il serbatoio e' pieno, la lava non puo' essere consumata per
+  -- creare secchi vuoti. Usa un breve movimento tracciato avanti/indietro
+  -- nella PROPRIA corsia libera, torna alla HOME e solo dopo si rifornisce.
+  -- Nessun reset quota/distanza; Ctrl+T continua a richiedere il rientro.
+  while countItem("minecraft:bucket")<3 do
+   abortIfStop()
+   local limit=turtle.getFuelLimit()
+   local fuel=turtle.getFuelLevel()
+   assert(type(limit)=="number" and type(fuel)=="number",
+     "Scorta secchi: carburante non numerico; servono secchi dalla cassa sopra")
+   if fuel>=limit then
+    assert(atHome() and #s.path==0 and not s.pending,
+      "Scorta secchi: movimento di consumo fuel consentito SOLO alla HOME")
+    turnTo(front)
+    local busy=turtle.inspect()
+    assert(not busy and not fluidi.peek("front"),
+      "Scorta secchi: prima cella della corsia non libera, niente movimento")
+    detailStatus("PREPARAZIONE","Fuel pieno, liberazione controllata di capacita' per secchi")
+    step("F",true,false)
+    reverseOne()
+    turnTo(front)
+    assert(atHome() and #s.path==0 and not s.pending,
+      "Scorta secchi: rientro di consumo carburante non confermato")
+    assert(currentFuel()<limit,
+      "Scorta secchi: impossibile consumare carburante")
+   end
+   local before=countItem("minecraft:bucket")
+   getLava()
+   assert(countItem("minecraft:bucket")>before,
+     "Scorta secchi: lava consumata ma nessun secchio vuoto creato")
   end
   local limit=turtle.getFuelLimit()
   local fuel=turtle.getFuelLevel()
