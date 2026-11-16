@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.1 | 40 Turtle, gallerie 2x2, fluidi, fuel 10000, scarti selettivi
+-- MEGAZERO MINER v2.2 | 40 Turtle, fluidi confinati, gallerie differite e copertura
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -98,13 +98,14 @@ function M.start(agent,cfg,options)
  local dir=DXY[front]
  local side=DXY[left]
  local mode=(options.prova and "_PROVA" or "_LAVORO")
- local PATH="/.megazero_miner_v21_"..cfg.unit..mode..
+ local PATH="/.megazero_miner_v22_"..cfg.unit..mode..
    (options.prova and ("_"..maxDistance.."x"..maxLevels) or "")
  local LATCH="/.megazero_miner_error"
  local fluidi=assert(dofile("/megazero_fluidi"),
    "Modulo fluidi assente: scaricare megazero_fluidi")
  local s={x=hx,y=hy,z=hz,d=front,path={},pending=nil,level=1,
-   distance=0,finished=false,ore=0,buckets=0,blocked=0,waterPending=false}
+   distance=0,finished=false,ore=0,buckets=0,blocked=0,waterPending=false,
+   incomplete={},retryComplete=false}
  local function read(p)
   if not fs.exists(p) then return nil end
   local f=assert(fs.open(p,"r"));local v=f.readAll();f.close();return v
@@ -117,6 +118,8 @@ function M.start(agent,cfg,options)
    "Traccia di scavo non valida")
   s=value
  end
+ s.incomplete=s.incomplete or {}
+ if s.retryComplete==nil then s.retryComplete=false end
  local function save()
   local f=assert(fs.open(PATH,"w"))
   f.write(textutils.serialize(s));f.close()
@@ -242,17 +245,43 @@ function M.start(agent,cfg,options)
  end
  -- I blocchi rimasti a sigillare le correnti non vanno rimossi subito.
  local traceCurrent -- ricerca sorgente dopo una corrente, definita dopo i movimenti
+ -- Un lago non deve essere prosciugato come se fosse una sola sorgente.
+ -- Evidenza locale di superficie larga: almeno 2 sorgenti dello stesso
+ -- liquido visibili dalle sei facce del punto occupato dalla Turtle.
+ local function lakeEvidence(kind)
+  local old=s.d
+  local n=0
+  for _,dirCode in ipairs({0,1,2,3}) do
+   turnTo(dirCode)
+   local f=fluidi.peek("front")
+   if f and f.source and f.kind==kind then n=n+1 end
+  end
+  local fu=fluidi.peek("up")
+  local fd=fluidi.peek("down")
+  if fu and fu.source and fu.kind==kind then n=n+1 end
+  if fd and fd.source and fd.kind==kind then n=n+1 end
+  turnTo(old)
+  return n>=2
+ end
+ local function markBlocked(reason,kind,x,y,z)
+  error("GALLERIA_INCOMPLETA:"..reason..":"..kind..":"..x..":"..y..":"..z)
+ end
  local function bonify(move,x,y,z,allowFlow)
   assert(inSector(x,y,z),"Bonifica fuori fascia")
   local sideName=fluidSide(move)
   local f=fluidi.peek(sideName)
   if not f then return true end
+  -- Non raccogliere sorgenti che appartengono a distese visibilmente ampie.
+  if f.source and lakeEvidence(f.kind) then
+   markBlocked("LAGO_DA_COPRIRE",f.kind,x,y,z)
+  end
   if not f.source and allowFlow then
    detailStatus("SCAVO","SEGUO CORRENTE "..f.kind.." da "..x..","..y..","..z)
    assert(type(traceCurrent)=="function","Ricerca corrente non inizializzata")
    local found=traceCurrent(f.kind)
-   assert(found,"Sorgente "..f.kind..
-     " non trovata nella propria fascia entro 64 celle: rientro di sicurezza")
+   if not found then
+    markBlocked("CORRENTE_SENZA_SORGENTE_NEL_SETTORE",f.kind,x,y,z)
+   end
    -- Il flusso rimasto dopo il prelievo puo' impiegare vari tick
    -- a svanire, soprattutto con la lava in grandi colonne.
    local timeout=f.kind=="LAVA" and 120 or 15
@@ -261,8 +290,9 @@ function M.start(agent,cfg,options)
     if not fluidi.peek(sideName) then cleared=true;break end
     sleep(1)
    end
-   assert(cleared,
-     "Corrente "..f.kind.." ancora presente dopo il prelievo: verificare sorgenti ulteriori")
+   if not cleared then
+    markBlocked("CORRENTE_PERSISTENTE",f.kind,x,y,z)
+   end
    s.waterPending=false;save()
    return true
   end
@@ -679,6 +709,30 @@ function M.start(agent,cfg,options)
   end
   unload() -- Tiene 3 secchi, 16 blocchi; scarica il resto.
  end
+ -- Crea una superficie di passaggio su liquido sotto la Turtle,
+ -- senza usare secchi. Il blocco di copertura e' sempre nel settore.
+ local function coverLakeFloor()
+  local x,y,z=s.x,s.y-1,s.z
+  if not inSector(x,y,z) then return end
+  local f=fluidi.peek("down")
+  if not f then return end
+  local chosen
+  for i=1,16 do
+   local item=turtle.getItemDetail(i)
+   if item and SEAL_STOCK[item.name] and item.count>0 then
+    turtle.select(i);chosen=item.name;break
+   end
+  end
+  if not chosen then markBlocked("LAGO_SENZA_BLOCCHI",f.kind,x,y,z) end
+  local ok,why=turtle.placeDown()
+  if not ok then markBlocked("LAGO_COPERTURA_FALLITA",f.kind,x,y,z) end
+  local exists,block=turtle.inspectDown()
+  if not exists or not block or block.name~=chosen or fluidi.peek("down") then
+   markBlocked("LAGO_COPERTURA_NON_CONFERMATA",f.kind,x,y,z)
+  end
+  s.blocked=s.blocked+1;save()
+  detailStatus("SCAVO","COPERTURA "..f.kind.." al pavimento "..x..","..y..","..z)
+ end
  local function carveHead()
   local x,y,z=coords("U")
   if inSector(x,y,z) then
@@ -692,6 +746,7 @@ function M.start(agent,cfg,options)
   local x,y,z=coords("F")
   assert(inSector(x,y,z),"Seconda colonna fuori settore")
   step("F")
+  coverLakeFloor()
   carveHead()
   scanCell()
   reverseOne()
@@ -705,9 +760,11 @@ function M.start(agent,cfg,options)
   step("F",true)
   while s.y<yTarget do step("U") end
   while s.y>yTarget do step("D") end
+  coverLakeFloor()
   -- Il primo punto esterno conta come 1° blocco della galleria.
   for dist=1,maxDistance do
    if dist>1 then turnTo(front);step("F") end
+   coverLakeFloor()
    carveHead() -- tunnel 2 blocchi alto, senza scavare tutto il volume.
    if dist>s.distance then
     scanCell()
@@ -745,26 +802,81 @@ function M.start(agent,cfg,options)
    return
   end
   supply()
-  while s.level<=maxLevels do
+  local function attemptLevel(isRetry)
    detailStatus("SCAVO","Quota "..LEVELS[s.level]..
-    ", settore personale "..cfg.unit)
-   local ok,problem=pcall(processLevel)
-   if not ok then
+    ", settore personale "..cfg.unit..(isRetry and " RITENTATIVO" or ""))
+   local attempts=0
+   while attempts<5 do
+    attempts=attempts+1
+    local ok,problem=pcall(processLevel)
+    if ok then
+     s.incomplete[tostring(s.level-1)]=nil
+     save()
+     return true
+    end
     local why=tostring(problem)
-    detailStatus("RIENTRO","Anomalia: ritorno lungo il percorso",why)
-    if #s.path>0 and not s.pending then goHome() end
+    local blocked=why:find("GALLERIA_INCOMPLETA:",1,true)~=nil
+    detailStatus("RIENTRO","Interruzione livello "..s.level..", rientro",why)
+    -- Il punto dell'ostacolo si trova nel messaggio e nel checkpoint.
+    local stoppedX,stoppedY,stoppedZ=s.x,s.y,s.z
+    if #s.path>0 then
+     assert(not s.pending,"Posizione incerta: impossibile pianificare rientro")
+     goHome()
+    end
+    if blocked then
+     local key=tostring(s.level)
+     local entry=s.incomplete[key] or {attempts=0}
+     entry.attempts=entry.attempts+1
+     entry.lastError=why
+     entry.stoppedAt={x=stoppedX,y=stoppedY,z=stoppedZ}
+     s.incomplete[key]=entry
+     detailStatus("BLOCCATO","Galleria "..key..
+       " sospesa; salvata per il recupero",why)
+     s.level=s.level+1;s.distance=0;save()
+     return false
+    end
     if why:find("SCORTE:",1,true) and atHome() then
+     s.distance=0;save()
      supply()
     elseif why:find("BEDROCK IN PERCORSO",1,true) and atHome() then
-     -- Bedrock a un livello impedisce il passaggio: non scavarla.
+     -- Quota non accessibile: non modificare bedrock.
      s.level=s.level+1;s.distance=0;save()
+     return true
     else
      error("Scavo interrotto: "..why)
     end
    end
+   error("Troppi rientri per le scorte sullo stesso livello")
+  end
+  -- Prima completa tutti i livelli non ostacolati.
+  while s.level<=maxLevels do
+   attemptLevel(false)
+  end
+  -- Poi riprova UNA volta le gallerie sospese, non all'infinito.
+  if not s.retryComplete then
+   local deferred={}
+   for level,_ in pairs(s.incomplete) do
+    local n=tonumber(level)
+    if n and n>=1 and n<=maxLevels then deferred[#deferred+1]=n end
+   end
+   table.sort(deferred)
+   for _,level in ipairs(deferred) do
+    s.level=level;s.distance=0;save()
+    attemptLevel(true)
+   end
+   s.retryComplete=true
+   s.level=maxLevels+1;s.distance=0;save()
   end
   s.finished=true;save()
-  detailStatus("BASE","COMPLETATO: "..maxLevels.." quote, ore estratte "..s.ore)
+  local missing=0
+  for _,_ in pairs(s.incomplete) do missing=missing+1 end
+  if missing>0 then
+   detailStatus("INCOMPLETO",missing..
+     " gallerie ancora sospese; nessuna ripetizione automatica infinita")
+  else
+   detailStatus("BASE","COMPLETATO: "..maxLevels..
+     " quote, minerali estratti "..s.ore)
+  end
  end
  local ok,reason=pcall(run)
  if not ok then
