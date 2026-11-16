@@ -1,7 +1,8 @@
 -- MEGAZERO | Gestione avvio automatico PER SINGOLA Turtle
 -- Uso da shell: megazero_auto stato | attiva | disattiva
 -- Non riavvia e non avvia lo scavo: cambia solo /megazero_config.
-local cmd=(...)[1] or "stato"
+local args={...}
+local cmd=args[1] or "stato"
 assert(cmd=="stato" or cmd=="attiva" or cmd=="disattiva",
  "Uso: megazero_auto stato | attiva | disattiva")
 assert(turtle,"Da eseguire direttamente sulla Turtle")
