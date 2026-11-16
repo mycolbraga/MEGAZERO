@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3 | 40 Turtle, copertura laghi nel settore e livelli differiti
+-- MEGAZERO MINER v2.3.1 | stessa traccia v23, recupero automatico sicuro e scarico
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -205,15 +205,32 @@ function M.start(agent,cfg,options)
   end
  end
  local function pruneInventory(atBase)
-  -- 16 blocchi di scavo per sigillare correnti, tutti gli altri scarti
-  -- cadono nel mondo, mai nella cassa collegata a Refined Storage.
-  local reserved=SEAL_TARGET
+  -- Conserva fino a UN SOLO stack di UN SOLO blocco adatto ai sigilli.
+  -- Il resto degli scarti viene espulso nel mondo, mai verso Refined Storage.
   compactInventory()
+  local totals={}
+  for i=1,16 do
+   local it=turtle.getItemDetail(i)
+   if it and SEAL_STOCK[it.name] then
+    totals[it.name]=(totals[it.name] or 0)+it.count
+   end
+  end
+  local chosen,bestCount=nil,0
+  for _,name in ipairs({
+   "minecraft:cobbled_deepslate","minecraft:cobblestone","minecraft:tuff",
+   "minecraft:stone","minecraft:deepslate","minecraft:granite",
+   "minecraft:diorite","minecraft:andesite","minecraft:calcite",
+   "minecraft:blackstone"
+  }) do
+   local count=totals[name] or 0
+   if count>bestCount then chosen,bestCount=name,count end
+  end
+  local reserved=SEAL_TARGET
   for i=1,16 do
    local it=turtle.getItemDetail(i)
    if it and DISCARD[it.name] then
     local keep=0
-    if SEAL_STOCK[it.name] then
+    if it.name==chosen then
      keep=math.min(reserved,it.count)
      reserved=reserved-keep
     end
@@ -827,9 +844,13 @@ function M.start(agent,cfg,options)
   assert(not s.pending,
     "Posizione fisica incerta dopo riavvio: verifica manuale")
   if #s.path>0 then
+   -- Un chunk scaricato puo' riavviare il computer con una galleria aperta.
+   -- Ripercorrere solo la traccia salvata, senza resettare quota o distanza.
    detailStatus("RIENTRO","Recupero traccia precedente prima di proseguire")
    goHome()
-   error("Rientro da precedente interruzione: verifica prima di riprendere")
+   assert(atHome() and #s.path==0 and not s.pending,
+     "Rientro da interruzione non verificato")
+   detailStatus("BASE","Rientro precedente riuscito; scarico e riprendo checkpoint")
   end
   assert(atHome(),"Posizione iniziale diversa dalla postazione")
   if s.finished then
@@ -923,6 +944,13 @@ function M.start(agent,cfg,options)
    if not back then why=why.." | RIENTRO NON RIUSCITO: "..tostring(msg) end
   end
   returned=atHome() and #s.path==0 and not s.pending
+  if returned then
+   -- Anche un errore vero deve tentare lo scarico dopo il rientro.
+   local okUnload,whyUnload=pcall(unload)
+   if not okUnload then
+    why=why.." | SCARICO DOPO ERRORE: "..tostring(whyUnload)
+   end
+  end
   latch(why)
   detailStatus("ERRORE",returned and
    "Rientrata alla propria base: intervento richiesto" or
