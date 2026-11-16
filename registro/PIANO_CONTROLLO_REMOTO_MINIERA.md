@@ -116,3 +116,24 @@ E. **Avvio controllato**: prima un'altra Turtle, poi 2–3, poi un fronte per vo
 F. **Gestione versioni/checkpoint durante lavorazioni lunghe**, audit e UI estesa.
 
 **NOTA:** questo è il piano e non una funzionalità già funzionante. Le fasi B–F richiedono codice nuovo e prove in Minecraft.
+
+
+## Prima implementazione pubblicata - PING remoto (16 novembre 2026)
+
+**File scritti e verificati su GitHub, NON ancora installati/collaudati nel mondo Minecraft:**
+
+- `scripts/turtle/megazero_admin_agent.lua` — AGENT v1.0: ascolta su `megazero.admin.v1` solamente i comandi `PING`/`STATUS` provenienti dall'ID centrale `cfg.central` (54), con target unit/site/computerID espliciti. Risponde con `admin_reply` e `request_id` per ACK legato alla richiesta; riporta fuel, latch, versioni e checkpoint **salvato**, non posizione fisica garantita.
+- `scripts/turtle/megazero_boot.lua` — BOOT v1.1: carica l'agente soltanto se installato e lo esegue parallelamente alla telemetria; **non modifica la logica miner/autostart esistente**. Le Turtle senza agente funzionano ancora con il boot precedente già installato.
+- `scripts/control/megazero_control.lua` — CONTROL v1.1: dashboard 40 Turtle preservata con `PING REMOTO` nella scheda selezionata; legame risposta con ID computer reale, sender Rednet, request_id, unit e sito; mostra versioni, checkpoint ed eventuale errore. Nessun comando che muova Turtle.
+- `scripts/turtle/installa_admin.lua` — installazione locale di agente e boot v1.1 **solo a miner fermo e disabilitato**, con controllo corrispondenza sigla, compilazione Lua, file temporanei e backup boot. Non tocca startup/config/miner e non esegue reboot.
+- `scripts/control/installa_admin_centrale.lua` — sostituisce `/megazero_control` soltanto su computer 54, scaricando/compilando v1.1 e salvando backup; non cancella `/.megazero_control_db`, né modifica startup. Non riavvia da solo.
+
+**Sequenza di collaudo (una azione per volta):**
+
+1. Sul Computer 54: fermare solo il programma della dashboard con Ctrl+T, poi `wget run https://raw.githubusercontent.com/mycolbraga/MEGAZERO/registro/megazero/scripts/control/installa_admin_centrale.lua`. Verificare output; quindi `megazero_control` ripristina la dashboard aggiornata. **N01 resta in scavo indipendentemente dalla UI centrale.**
+2. Su N02: fermare solo il vecchio boot con Ctrl+T; verificare che `miner_autostart=false`; `wget run https://raw.githubusercontent.com/mycolbraga/MEGAZERO/registro/megazero/scripts/turtle/installa_admin.lua N02`; controllare il messaggio e solo successivamente `reboot`. Non attiva scavo.
+3. Dal monitor centrale: toccare N02, poi `TOCCA QUI: PING REMOTO`. Attendere `PING OK` e visualizzare i dati. Se c'e' assenza di ACK, nessuna altra azione avviata, verificare stato, modem, ID, chunk.
+4. Dopo conferma in gioco: estendere installazione locale del ricevitore alle altre Turtle **ferme e con scavo disabilitato**. **N01 non deve essere interrotta ne' aggiornata mentre scava.**
+5. Milestone seguente: realizzare `CHECK_UPDATE`, staged OTA, rollback e autorizzazioni di avvio mirato, senza recuperare materiale esterno al settore e senza azzerare i checkpoint.
+
+**Risultato tecnico della verifica pre-pubblicazione:** cinque file presenti nel branch `registro/megazero`, firme e interfacce coerenti, controlli statici di struttura e delimitatori passati. La compilazione Lua effettiva sara' controllata dagli installatori in CC:Tweaked, poi dal test reale.
