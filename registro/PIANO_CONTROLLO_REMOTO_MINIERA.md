@@ -137,3 +137,30 @@ F. **Gestione versioni/checkpoint durante lavorazioni lunghe**, audit e UI estes
 5. Milestone seguente: realizzare `CHECK_UPDATE`, staged OTA, rollback e autorizzazioni di avvio mirato, senza recuperare materiale esterno al settore e senza azzerare i checkpoint.
 
 **Risultato tecnico della verifica pre-pubblicazione:** cinque file presenti nel branch `registro/megazero`, firme e interfacce coerenti, controlli statici di struttura e delimitatori passati. La compilazione Lua effettiva sara' controllata dagli installatori in CC:Tweaked, poi dal test reale.
+
+
+## Distribuzione OTA fase 2 — agente v1.1 e centrale v1.2 (16 novembre 2026)
+
+**GitHub pubblicato, non ancora provato in gioco:**
+
+- `scripts/turtle/megazero_admin_agent.lua` v1.1: riceve `PING`, `STATUS`, `CHECK_UPDATE`, `PREPARE_UPDATE`, `COMMIT_UPDATE`. La richiesta deve avere sito, sigla, **computer ID preciso** e `request_id`, provenire dal computer centrale configurato (54). La risposta è associata alla richiesta e alla Turtle mittente.
+- Bundle OTA fisso: **miner v2.3.1, fluidi v1.0, megazero_auto** dal commit GitHub `f30c85a2d20b0152a58a77180a48e2606e81d7ce`, non dalla branch mobile. I tre file sono stati verificati via GitHub al commit.
+- Preparazione su Turtle: scarica i tre file e ne controlla **intestazione e compilazione Lua** prima di registrare lo stato `STAGED`; **nessun movimento e nessun cambio di file minerario fino a COMMIT**.
+- Applicazione: solo su Turtle con `miner_autostart=false`, senza error latch e senza checkpoint di lavoro incompleto; crea backup distinti, sostituisce file locali, tenta rollback se un passaggio fallisce; notifica `DONE` solo al completamento.
+- Non sono previsti in questa fase `START`, `ARM_START`, `REBOOT` o comandi shell arbitrari. Il codice OTA NON modifica le coordinate delle Turtle e NON esegue comandi minerari.
+- `scripts/control/megazero_control.lua` v1.2: conserva la dashboard e il suo DB; su ogni dettaglio aggiunge `CONTROLLA VERSIONE`, `PREPARA UPDATE`, `INSTALLA UPDATE` con **seconda conferma entro 15 secondi**, oltre a PING. Le fasi `STAGED/DONE/FAILED` vengono associate alla richiesta e a PC/sigla.
+- `scripts/control/installa_admin_centrale_v12.lua`: aggiorna solo il Computer 54 dalla v1.1 alla v1.2, salva il vecchio codice in `/.megazero_control_backup_1_1`, non modifica né startup né registro. Non riavvia il programma da solo.
+- `scripts/turtle/aggiorna_admin_agente.lua`: per la N02 già collaudata con admin v1.0. Installa v1.1 dopo che il boot è stato fermato, fa backup della v1.0, **non modifica boot, startup o miner** e non fa reboot da solo; N02 richiede riavvio per eseguire il codice nuovo.
+- `scripts/turtle/installa_admin.lua`: per future Turtle non ancora dotate di agente, scarica direttamente admin v1.1 con boot v1.1 in una singola installazione locale, sempre richiedendo `miner_autostart=false`.
+- **N01 è stata lasciata intatta**: il miner v2.3.1 sta scavando o proseguendo l'attività; non installare l'agente né applicare OTA mentre lavora.
+
+**Sequenza operativa per la prima prova OTA:**
+1. Fermare con Ctrl+T solo la dashboard del Computer 54; eseguire `wget run https://raw.githubusercontent.com/mycolbraga/MEGAZERO/registro/megazero/scripts/control/installa_admin_centrale_v12.lua`. Verificare successo, poi `megazero_control`.
+2. Su N02 ferma, fermare soltanto il boot con Ctrl+T; eseguire `wget run https://raw.githubusercontent.com/mycolbraga/MEGAZERO/registro/megazero/scripts/turtle/aggiorna_admin_agente.lua N02`. Verificare, poi `reboot`. N02 resta ferma in PREPARAZIONE.
+3. Dal monitor centrale selezionare N02 e PING: verificare AGENTE 1.1.
+4. Scegliere CONTROLLA VERSIONE: deve indicare aggiornamento possibile e requisito di sicurezza soddisfatto. Poi PREPARA UPDATE: attendere `STAGED`; a quel punto ancora nessun miner installato.
+5. Se lo staging ha avuto successo, confermare INSTALLA UPDATE con due tocchi entro 15s; attendere `DONE`, ripetere PING per verificare miner v2.3.1.
+6. Se manca un ACK o appare errore, **non riavviare né armare lo scavo**. Controllare l'esito e il file staging/backup.
+7. Dopo collaudo OTA su N02, progettare l'avvio remoto mirato e la distribuzione alle restanti Turtle a gruppi; fino a quel momento nessuna partenza remota.
+
+**Limiti noti:** Rednet non è autenticato crittograficamente, ma qui si controllano ID centrale, target PC/unit e request_id; un ambiente con computer ostili richiede autenticazione più forte. La compilazione CC:Tweaked effettiva sarà verificata sugli installatori e sul test N02; i controlli GitHub non equivalgono a un collaudo di scavo. Il rollback si applica al codice OTA, non ripristina movimenti o dati minerari.
