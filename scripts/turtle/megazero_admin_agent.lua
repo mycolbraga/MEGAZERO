@@ -2,11 +2,11 @@
 -- Pacchetti mirati dal PC 54; update consentito solo a Turtle ferma.
 local M={}
 local PROTOCOL="megazero.admin.v1"
-local RELEASE="5b0f265213dfe95b1b44c07620245240073340bd"
+local RELEASE="f6f0628fad7c44f7eb60bd1de4749323ed9c758e"
 local BASE="https://raw.githubusercontent.com/mycolbraga/MEGAZERO/"..RELEASE.."/scripts/turtle/"
-local MARKER="/.megazero_ota232_state"
+local MARKER="/.megazero_ota233_state"
 local PACKAGE={
- {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.3.2"},
+ {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.3.3"},
  {name="megazero_fluidi",remote="megazero_fluidi.lua",prefix="-- MEGAZERO FLUIDI v1.0"},
  {name="megazero_auto",remote="megazero_auto.lua",prefix="-- MEGAZERO | Gestione avvio automatico"}
 }
@@ -32,10 +32,10 @@ local function existing(name)
  return "/"..name
 end
 local function stagePath(name)
- return "/.megazero_stage_232_"..name
+ return "/.megazero_stage_233_"..name
 end
 local function backupPath(name)
- return "/.megazero_ota_backup_232_"..name
+ return "/.megazero_ota_backup_233_"..name
 end
 local function mineInfo(unit)
  local header=firstLine(existing("megazero_miner"))
@@ -105,13 +105,13 @@ local function prepareUpdate(unit)
   verifyFile(temp,item)
  end
  write(MARKER,textutils.serialize({unit=unit,release=RELEASE,
-  fileCount=#PACKAGE,version="2.3.2"}))
+  fileCount=#PACKAGE,version="2.3.3"}))
 end
 local function commitUpdate(unit)
  local data=assert(read(MARKER),"Nessun update preparato")
  local mark=assert(textutils.unserialize(data),"Manifest staging illeggibile")
  assert(mark.unit==unit and mark.release==RELEASE and
-   mark.fileCount==#PACKAGE and mark.version=="2.3.2",
+   mark.fileCount==#PACKAGE and mark.version=="2.3.3",
    "Staging non corrispondente")
  for _,item in ipairs(PACKAGE) do
   verifyFile(stagePath(item.name),item)
@@ -200,11 +200,17 @@ local function checkStart(cfg,telemetry)
  end
  local version=firstLine(existing("megazero_miner"))
  if not version or version:sub(1,#PACKAGE[1].prefix)~=PACKAGE[1].prefix then
-  return false,"Miner non v2.3.2" end
+  return false,"Miner non v2.3.3" end
  local chest=peripheral.wrap("top")
  if not chest or type(chest.list)~="function" or
     type(chest.pushItems)~="function" or type(chest.size)~="function" then
   return false,"Cassa rifornimento superiore non disponibile" end
+ local lower=peripheral.wrap("bottom")
+ if not lower or type(lower.list)~="function" then
+  return false,"Cassa inferiore per scarico non disponibile" end
+ local blocked,block=turtle.inspect()
+ if blocked then
+  return false,"Uscita dalla base ostruita: "..tostring(block and block.name) end
  local available=0
  local items=chest.list()
  if type(items)~="table" then return false,"Cassa superiore illeggibile" end
@@ -316,7 +322,7 @@ function M.listen(cfg,telemetry)
        response.installed=commitUpdate(unit)
        response.accepted=true;response.phase="DONE"
       end
-      response.package_version="2.3.2"
+      response.package_version="2.3.3"
      else
       response.reason="Comando non abilitato su v1.1"
      end
