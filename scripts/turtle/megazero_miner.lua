@@ -341,6 +341,21 @@ function M.start(agent,cfg,options)
     return
    end
    s.pending=nil;save()
+   -- Gravel/sabbia ricaduti su una corsia gia' percorsa: rimuoverli
+   -- SOLO se il prossimo blocco e' ancora dentro il settore autorizzato.
+   local nx,ny,nz=s.x+dx,s.y+dy,s.z+dz
+   if inSector(nx,ny,nz) then
+    local inspectFn=item.m=="U" and turtle.inspectDown or
+      (item.m=="D" and turtle.inspectUp or turtle.inspect)
+    local digFn=item.m=="U" and turtle.digDown or
+      (item.m=="D" and turtle.digUp or turtle.dig)
+    local present,b=inspectFn()
+    if present and b and GRAVITY[b.name] then
+     assert(freeSlots()>0,"Rientro: inventario pieno e gravel nel passaggio")
+     local cleared,reason=digFn()
+     assert(cleared,"Rientro: gravel non eliminabile: "..tostring(reason))
+    end
+   end
    sleep(0.35)
   end
   error("Rientro bloccato al passo "..n.." a "..s.x..","..s.y..","..s.z)
@@ -414,7 +429,9 @@ function M.start(agent,cfg,options)
    local f=fluidi.peek("up")
    if f then bonify("U",x,y,z,false) end
   end
-  scanSide()
+  -- La seconda colonna fa parte della galleria 2x2: non sigillarla
+  -- preventivamente per poi rompere il tappo entrando nella fascia.
+  -- La bonifica avviene quando carveWidth prova ad aprire la cella.
   extractVein()
  end
  local function unload()
