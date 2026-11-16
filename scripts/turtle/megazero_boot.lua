@@ -1,4 +1,4 @@
--- MEGAZERO BOOT 1.1 | rete, miner e ascolto admin opzionale
+-- MEGAZERO BOOT 1.2 | CTRL+T rientro protetto, rete e agente remoto
 -- Startup usa: shell.run("/megazero_boot")
 -- Sicurezza: miner disabilitato fino alla configurazione e ai test.
 -- ATTENZIONE: non programma alcun movimento o scavo autonomamente.
@@ -8,6 +8,8 @@ local MODULE="/megazero_rete"
 local MINER="/megazero_miner"
 local ERROR_LATCH="/.megazero_miner_error"
 local ADMIN="/megazero_admin_agent"
+local manualStopRequested=false
+local function isStopRequested() return manualStopRequested end
 
 local function readFile(path)
   local f=fs.open(path,"r")
@@ -46,7 +48,7 @@ if fs.exists(adminPath) then
  adminAgent=module
 end
 
-print("MEGAZERO BOOT 1.1 | "..cfg.site.."/"..cfg.unit)
+print("MEGAZERO BOOT 1.2 | "..cfg.site.."/"..cfg.unit)
 print("CENTRALE: "..agent.server)
 
 local function report(status,details)
@@ -61,7 +63,7 @@ local minerPresent=fs.exists(MINER) or fs.exists(MINER..".lua")
 local latched=fs.exists(ERROR_LATCH)
 
 if not minerRequested then
-  report("PREPARAZIONE",{detail="Avvio automatico attivo; miner non abilitato"})
+  report("PREPARAZIONE",{detail="Avvio automatico disattivato; miner fermo"})
 elseif latched then
   local cause=readFile(ERROR_LATCH) or "errore precedente non risolto"
   report("ERRORE",{
@@ -111,7 +113,8 @@ local function runMiner()
 
   -- Lo stesso agente telemetrico e' usato dal programma minerario:
   -- gli heartbeat ripetono lo stato reale inviato dal miner.
-  local okMine,why=pcall(miningEntry,agent,cfg)
+  local okMine,why=pcall(miningEntry,agent,cfg,
+    {stopRequested=isStopRequested})
   if not okMine then
     local errorText=tostring(why)
     setErrorLatch(errorText)
@@ -132,13 +135,55 @@ end
 local function adminLoop()
  if adminAgent then adminAgent.listen(cfg,agent) end
 end
+-- Supervisore locale: impedisce a 'terminate' di far esplodere le
+-- coroutine parallele, segnala al miner la richiesta e aspetta il rientro.
+-- NON muove direttamente la Turtle, che usa il checkpoint del miner.
+local function superviseMining()
+ local funcs={heartbeat,runMiner}
+ if adminAgent then funcs[#funcs+1]=adminLoop end
+ local threads={}
+ for i,fn in ipairs(funcs) do
+  threads[i]={co=coroutine.create(fn),filter=nil}
+ end
+ local ev=table.pack()
+ while true do
+  for i,t in ipairs(threads) do
+   if t.co and (t.filter==nil or t.filter==ev[1]) then
+    local ok,nextFilter=coroutine.resume(t.co,table.unpack(ev,1,ev.n))
+    if not ok then error(nextFilter,0) end
+    t.filter=nextFilter
+    if coroutine.status(t.co)=="dead" then
+     t.co=nil
+     if i==2 and manualStopRequested then
+      print("CTRL+T: miner terminato. Nessun reboot automatico.")
+      return
+     end
+    end
+   end
+  end
+  local nextEvent=table.pack(os.pullEventRaw())
+  if nextEvent[1]=="terminate" then
+   if threads[2].co then
+    if not manualStopRequested then
+     manualStopRequested=true
+     print("CTRL+T: RIENTRO RICHIESTO. Non riavviare durante il percorso.")
+    else
+     print("Rientro gia' richiesto: non interrompo il checkpoint.")
+    end
+   else
+    print("Miner gia' terminato. Console disponibile.")
+    return
+   end
+   -- Evento non passato a sleep/rednet e altri worker: non produce
+   -- il classico errore 'Terminated' in tutte le coroutine.
+   nextEvent=table.pack("megazero_stop_requested")
+  end
+  ev=nextEvent
+ end
+end
 if minerRequested and minerPresent and not latched then
  print("MINER: avvio automatico abilitato")
- if adminAgent then
-  parallel.waitForAll(heartbeat,runMiner,adminLoop)
- else
-  parallel.waitForAll(heartbeat,runMiner)
- end
+ superviseMining()
 else
  print("MINER: non avviato | telemetria continua")
  if adminAgent then
