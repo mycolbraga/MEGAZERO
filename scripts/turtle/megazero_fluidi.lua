@@ -11,8 +11,12 @@ local FLUIDS = {
 local SOLIDS = {
   ["minecraft:cobblestone"]=true,
   ["minecraft:cobbled_deepslate"]=true,
-  ["minecraft:smooth_stone"]=true,
   ["minecraft:stone"]=true,
+  ["minecraft:granite"]=true,
+  ["minecraft:diorite"]=true,
+  ["minecraft:andesite"]=true,
+  ["minecraft:calcite"]=true,
+  ["minecraft:blackstone"]=true,
   ["minecraft:deepslate"]=true,
   ["minecraft:tuff"]=true
 }
