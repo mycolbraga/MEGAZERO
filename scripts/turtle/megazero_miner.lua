@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.6 | CTRL+T richiede rientro tracciato, HOME Y=-51
+-- MEGAZERO MINER v2.3.7 | LAVA senza riordino slot, CTRL+T rientro protetto
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -720,37 +720,77 @@ function M.start(agent,cfg,options)
   assert(got and got.name==name,"Oggetto inatteso dalla cassa superiore")
   return true
  end
+ -- Prelievo senza pushItems sulla STESSA cassa (non supportato da tutte
+ -- le casse/mod). SuckUp prende il primo slot accessibile: i materiali che
+ -- lo precedono vengono custoditi temporaneamente e poi restituiti.
  local function getLava()
   local c=peripheral.wrap("top")
-  assert(c and c.list and c.pushItems and c.size,
+  assert(c and type(c.list)=="function",
     "Cassa superiore per lava non disponibile")
-  local items=c.list()
-  local found
-  for slot,it in pairs(items) do
-   if it.name=="minecraft:lava_bucket" and it.count>0 then found=slot;break end
-  end
-  assert(found,"Secchi lava finiti nella cassa sopra")
-  if found~=1 then
-   local name=assert(peripheral.getName(c))
-   if items[1] then
-    local free
-    for i=c.size(),2,-1 do if not items[i] then free=i;break end end
-    assert(free,"Cassa rifornimento senza slot libero")
-    assert(c.pushItems(name,1,items[1].count,free)==items[1].count,
-      "Non riesco a liberare slot 1 cassa lava")
+  local list=assert(c.list(),"Cassa superiore illeggibile")
+  local available=0
+  for _,item in pairs(list) do
+   if item.name=="minecraft:lava_bucket" then
+    available=available+item.count
    end
-   assert(c.pushItems(name,found,1,1)==1,
-     "Non riesco a spostare lava nello slot 1")
   end
-  local slot
-  for i=1,16 do if turtle.getItemCount(i)==0 then slot=i;break end end
-  assert(slot,"Slot Turtle esauriti per il carburante")
-  turtle.select(slot)
-  assert(turtle.suckUp(1),"Secchio di lava non prelevato")
-  local it=turtle.getItemDetail(slot)
-  assert(it and it.name=="minecraft:lava_bucket","Oggetto imprevisto dalla cassa")
-  assert(turtle.refuel(1),"Rifornimento fallito")
-  -- Il secchio vuoto rimane nell'inventario finche' serve.
+  assert(available>0,"Secchi lava finiti nella cassa sopra")
+  local borrowed={}
+  local function restore()
+   local okAll=true
+   for i=#borrowed,1,-1 do
+    local slot=borrowed[i]
+    if turtle.getItemCount(slot)>0 then
+     turtle.select(slot)
+     local ok=turtle.dropUp()
+     if not ok then okAll=false end
+    end
+   end
+   return okAll
+  end
+  -- 15 slot massimo per rimuovere gli oggetti davanti alla lava.
+  -- Uno slot resta sempre riservato al secchio da consumare.
+  local found=false
+  local failure=nil
+  for attempt=1,15 do
+   abortIfStop()
+   local slot
+   for i=1,16 do
+    if turtle.getItemCount(i)==0 then slot=i;break end
+   end
+   if not slot then
+    failure="Inventario Turtle pieno durante prelievo lava"
+    break
+   end
+   turtle.select(slot)
+   -- Leva uno stack intero se non e' lava, solo un secchio se e' lava.
+   -- Non presume l'ordine di list(), che puo' cambiare per l'Exporter.
+   local ok,why=turtle.suckUp(64)
+   if not ok then
+    failure="Prelievo dalla cassa superiore fallito: "..tostring(why)
+    break
+   end
+   local got=turtle.getItemDetail(slot)
+   if not got then
+    failure="Oggetto non trovato dopo il prelievo"
+    break
+   end
+   if got.name=="minecraft:lava_bucket" then
+    local consumed,fuelWhy=turtle.refuel(1)
+    if not consumed then
+     failure="Secchio di lava non consumato: "..tostring(fuelWhy)
+    else
+     found=true
+    end
+    -- Il secchio vuoto rimane nella Turtle per l'uso sui fluidi.
+    break
+   end
+   -- Non perdere mai blocchi/oggetti inattesi, anche se l'Exporter li invia.
+   borrowed[#borrowed+1]=slot
+  end
+  local restored=restore()
+  assert(restored,"Oggetti temporanei da restituire ancora nella Turtle")
+  assert(found,failure or "Impossibile raggiungere lava nella cassa superiore")
  end
  local function supply()
   abortIfStop()
