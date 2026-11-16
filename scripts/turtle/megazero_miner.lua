@@ -725,6 +725,17 @@ function M.start(agent,cfg,options)
   if not inSector(x,y,z) then return end
   local f=fluidi.peek("down")
   if not f then return end
+  -- Una corrente che arriva da altrove non va bloccata a caso.
+  -- La Turtle cerca la sorgente nel proprio settore; in caso contrario
+  -- rinvia il livello, lasciando il flusso alla Turtle responsabile.
+  if not f.source then
+   local clear=bonify("D",x,y,z,true)
+   if not clear or fluidi.peek("down") then
+    markBlocked("CORRENTE_SUL_PAVIMENTO",f.kind,x,y,z)
+   end
+   return
+  end
+  -- Superficie sorgente sotto la galleria: pavimentare senza secchi.
   local chosen
   for i=1,16 do
    local item=turtle.getItemDetail(i)
