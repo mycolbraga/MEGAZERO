@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.3 | checkpoint v23, rientro controllato senza ripartenza
+-- MEGAZERO MINER v2.3.4 | rientro: liberazione prudente dei blocchi naturali
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -457,9 +457,10 @@ function M.start(agent,cfg,options)
    dx,dy,dz=DXY[s.d][1],0,DXY[s.d][2]
   elseif item.m=="U" then fn=turtle.down;dx,dy,dz=0,-1,0
   else fn=turtle.up;dx,dy,dz=0,1,0 end
+  local lastReason="sconosciuto"
   for attempt=1,8 do
    s.pending="BACK";save()
-   local ok=fn()
+   local ok,reason=fn()
    if ok then
     s.x,s.y,s.z=s.x+dx,s.y+dy,s.z+dz
     s.path[n]=nil
@@ -467,25 +468,33 @@ function M.start(agent,cfg,options)
     pcall(function() agent:heartbeat() end)
     return
    end
+   lastReason=tostring(reason or "movimento negato")
    s.pending=nil;save()
-   -- Gravel/sabbia ricaduti su una corsia gia' percorsa: rimuoverli
-   -- SOLO se il prossimo blocco e' ancora dentro il settore autorizzato.
+   -- Solo sulla propria corsia: liberare blocchi naturali che occupano
+   -- un passaggio percorso, mai casse, Turtle, impianti o altre strutture.
    local nx,ny,nz=s.x+dx,s.y+dy,s.z+dz
-   if inSector(nx,ny,nz) then
-    local inspectFn=item.m=="U" and turtle.inspectDown or
-      (item.m=="D" and turtle.inspectUp or turtle.inspect)
-    local digFn=item.m=="U" and turtle.digDown or
-      (item.m=="D" and turtle.digUp or turtle.dig)
-    local present,b=inspectFn()
-    if present and b and GRAVITY[b.name] then
-     assert(freeSlots()>0,"Rientro: inventario pieno e gravel nel passaggio")
-     local cleared,reason=digFn()
-     assert(cleared,"Rientro: gravel non eliminabile: "..tostring(reason))
-    end
+   local inspectFn=item.m=="U" and turtle.inspectDown or
+     (item.m=="D" and turtle.inspectUp or turtle.inspect)
+   local digFn=item.m=="U" and turtle.digDown or
+     (item.m=="D" and turtle.digUp or turtle.dig)
+   local present,block=inspectFn()
+   if present then
+    local name=block and block.name or "sconosciuto"
+    assert(inSector(nx,ny,nz),
+      "RIENTRO: blocco presso la base protetto: "..name)
+    local allowed=block and
+      (GRAVITY[name] or NATURAL[name] or
+        (isOre(block) and not unsafe(name)))
+    assert(allowed,"RIENTRO: blocco NON naturale: "..name)
+    assert(freeSlots()>0,"RIENTRO: inventario pieno davanti a "..name)
+    local cleared,why=digFn()
+    assert(cleared,"RIENTRO: non riesco a scavare "..name..
+      " ("..tostring(why)..")")
    end
    sleep(0.35)
   end
-  error("Rientro bloccato al passo "..n.." a "..s.x..","..s.y..","..s.z)
+  error("Rientro bloccato al passo "..n.." a "..
+    s.x..","..s.y..","..s.z.."; causa movimento: "..lastReason)
  end
  local function goHome()
   while #s.path>0 do reverseOne() end
