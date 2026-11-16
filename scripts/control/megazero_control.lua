@@ -1,5 +1,5 @@
--- MEGAZERO CONTROL 1.1 - Telemetria e PING remoto confermato
--- PING/STATUS non muove, aggiorna o avvia alcuna Turtle.
+-- MEGAZERO CONTROL 1.2 - PING, CHECK e OTA sicuro da centrale
+-- Nessun avvio remoto; OTA disponibile solo per Turtle ferme con miner disabilitato.
 -- Miniera iniziale: 40 Turtle, 10 per fronte, ancora non collegate via software.
 
 local PROTOCOL = "megazero.control.v1"
@@ -134,13 +134,21 @@ local function receive(sender, packet, proto)
   dirty=true
 end
 
-local function sendPing(rec)
+local function sendAdmin(rec,command)
  if type(rec.sender)~="number" then
   rec.adminMessage="Computer ID non conosciuto"
   return
  end
  if not rec.lastSeen or now()-rec.lastSeen>OFFLINE_MS then
-  rec.adminMessage="SENZA SEGNALE: PING non inviato"
+  rec.adminMessage="SENZA SEGNALE: comando non inviato"
+  return
+ end
+ if rec.adminPending and now()-(rec.adminSent or 0)<30000 then
+  rec.adminMessage="Attendi la risposta alla richiesta precedente"
+  return
+ end
+ if command=="COMMIT_UPDATE" and rec.adminStaged~=true then
+  rec.adminMessage="Prima prepara e verifica l'aggiornamento"
   return
  end
  adminSequence=adminSequence+1
@@ -148,17 +156,22 @@ local function sendPing(rec)
  local packet={
   kind="admin_request",version=1,site=rec.site,
   target_unit=rec.unit,target_computer_id=rec.sender,
-  request_id=id,command="PING"
+  request_id=id,command=command
  }
  rec.adminPending=id
+ rec.adminPendingCommand=command
  rec.adminSent=now()
- rec.adminMessage="PING inviato; in attesa di ACK"
+ rec.adminMessage=command..": inviato, attendo conferma"
  local ok=rednet.send(rec.sender,packet,ADMIN_PROTOCOL)
  if not ok then
   rec.adminPending=nil
   rec.adminMessage="Invio Rednet fallito"
  end
  dirty=true
+end
+
+local function sendPing(rec)
+ sendAdmin(rec,"PING")
 end
 
 local function receiveAdmin(sender,packet,proto)
@@ -169,22 +182,42 @@ local function receiveAdmin(sender,packet,proto)
  if not rec or rec.sender~=sender or packet.computer_id~=sender then return end
  if type(rec.adminPending)~="string" or
     packet.request_id~=rec.adminPending then return end
+ local requested=rec.adminPendingCommand
+ if packet.command~=requested then return end
  rec.adminPending=nil
+ rec.adminPendingCommand=nil
  rec.adminLastReply=now()
- if packet.accepted==true and packet.phase=="DONE" then
-  rec.adminMessage="PING OK da computer "..sender
-  rec.adminSnapshot={
-   agent=clean(packet.agent_version or "?",20),
-   boot=clean(packet.boot_version or "?",90),
-   miner=type(packet.miner)=="table" and packet.miner or {},
-   fuel=packet.fuel,autostart=packet.miner_autostart,
-   latch=clean(packet.error_latch or "",120),
-   current_status=clean(packet.current_status or "?",25)
-  }
-  addHistory("PING OK "..rec.site.."/"..rec.unit)
+ if packet.accepted==true and
+   (packet.phase=="DONE" or packet.phase=="STAGED") then
+  if requested=="PREPARE_UPDATE" and packet.phase=="STAGED" then
+   rec.adminStaged=true
+  elseif requested=="COMMIT_UPDATE" and packet.phase=="DONE" then
+   rec.adminStaged=false
+  elseif requested=="CHECK_UPDATE" then
+   rec.adminStaged=packet.staged==true
+  end
+  rec.adminMessage=requested.." "..packet.phase.." | PC "..sender
+  if type(packet.miner)=="table" then
+   rec.adminSnapshot={
+    agent=clean(packet.agent_version or "?",20),
+    boot=clean(packet.boot_version or "?",90),
+    miner=packet.miner,
+    fuel=packet.fuel,autostart=packet.miner_autostart,
+    latch=clean(packet.error_latch or "",120),
+    current_status=clean(packet.current_status or "?",25)
+   }
+  end
+  if requested=="CHECK_UPDATE" then
+   rec.updateAvailable=packet.update_available==true
+   rec.updateAllowed=packet.update_allowed==true
+   rec.updateBlockReason=clean(packet.block_reason or "",100)
+  elseif requested=="COMMIT_UPDATE" then
+   rec.updateAvailable=false
+  end
+  addHistory(requested.." "..packet.phase.." "..rec.site.."/"..rec.unit)
  else
-  rec.adminMessage="PING respinto: "..clean(packet.reason or "causa ignota",70)
-  addHistory("PING NEGATO "..rec.site.."/"..rec.unit)
+  rec.adminMessage=requested.." NEGATO: "..clean(packet.reason or "causa ignota",80)
+  addHistory(requested.." NEGATO "..rec.site.."/"..rec.unit)
  end
  dirty=true
 end
@@ -275,12 +308,22 @@ local function drawDetail(r,w,h)
         ", dist "..tostring(r.adminSnapshot.miner.distance or "?")) or "nessuno") or "-"),
     "ERRORE LATCH: "..(r.adminSnapshot and
       (r.adminSnapshot.latch~="" and r.adminSnapshot.latch or "no") or "-"),
+    "UPDATE: "..(r.adminStaged and "PRONTO, da confermare"
+      or (r.updateAvailable and "DISPONIBILE" or "NON PREPARATO")),
+    "AGGIORNABILE: "..(r.updateAllowed and "SI" or
+      (r.updateBlockReason or "DA VERIFICARE")),
   }
   for i,t in ipairs(info) do
     local y=5+i
     if y>=h-2 then break end
     line(1,y,w,t,i==1 and ink or colors.white)
   end
+  line(1,h-5,w,"TOCCA: CONTROLLA VERSIONE E REQUISITI",colors.black,colors.lightBlue)
+  line(1,h-4,w,"TOCCA: PREPARA UPDATE (NON INSTALLA)",colors.black,colors.lightBlue)
+  local confirm=r.adminConfirmUntil and now()<r.adminConfirmUntil
+  line(1,h-3,w,confirm and
+    "CONFERMA: TOCCA DI NUOVO PER INSTALLARE" or
+    "TOCCA: INSTALLA UPDATE PREPARATO",colors.black,colors.yellow)
   line(1,h-2,w,"TOCCA QUI: PING REMOTO (NON SCAVA)",colors.black,colors.yellow)
   line(1,h-1,w,"TOCCA PER TORNARE",colors.yellow)
 end
@@ -355,11 +398,28 @@ end
 local function onTouch(x,y)
   local w,h=monitor.getSize()
   if selected then
-   if y==h-2 and db.units[selected] then
-    sendPing(db.units[selected])
+   local rec=db.units[selected]
+   if not rec then selected=nil;return end
+   if y==h-2 then
+    sendPing(rec)
+   elseif y==h-5 then
+    sendAdmin(rec,"CHECK_UPDATE")
+   elseif y==h-4 then
+    sendAdmin(rec,"PREPARE_UPDATE")
+   elseif y==h-3 then
+    if not rec.adminStaged then
+     rec.adminMessage="Prima PREPARA UPDATE, attendi STAGED"
+    elseif rec.adminConfirmUntil and now()<rec.adminConfirmUntil then
+     rec.adminConfirmUntil=nil
+     sendAdmin(rec,"COMMIT_UPDATE")
+    else
+     rec.adminConfirmUntil=now()+15000
+     rec.adminMessage="Conferma con un secondo tocco entro 15 secondi"
+    end
    else
     selected=nil
    end
+   dirty=true
    return
   end
   if y>=h-1 then
