@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.8 | Fuel pieno: crea secchi da lava con micro-rientro tracciato
+-- MEGAZERO MINER v2.3.9 | 3 secchi da Regulator, nessun movimento per crearli
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -686,39 +686,81 @@ function M.start(agent,cfg,options)
    end
   end
  end
- -- La cassa superiore fornisce lava e, se presenti, secchi vuoti.
- -- I blocchi da sigillo vengono conservati da quelli scavati.
- local function pullFromTop(name,amount)
+ -- I 3 secchi VUOTI arrivano dal Regulator nella cassa SOPRA.
+ -- Mai spostare oggetti tra slot della STESSA cassa con pushItems.
+ -- suckUp legge dall'inizio della cassa: trattieni temporaneamente gli
+ -- oggetti che precedono i secchi (incluse le lava), poi restituiscili.
+ -- Non bruciare lava per produrre secchi vuoti; nessun movimento.
+ local function pullBucketsFromTop(required)
+  if required<=0 then return end
   local c=peripheral.wrap("top")
-  assert(c and c.list and c.pushItems and c.size,
-   "Cassa superiore per rifornimento non disponibile")
-  local items=c.list()
-  local found
-  for slot,it in pairs(items) do
-   if it.name==name and it.count>0 then found=slot;break end
-  end
-  if not found then return false end
-  if found~=1 then
-   local chestName=assert(peripheral.getName(c))
-   if items[1] then
-    local free
-    for j=c.size(),2,-1 do if not items[j] then free=j;break end end
-    assert(free,"Cassa superiore senza slot libero per riordinare")
-    assert(c.pushItems(chestName,1,items[1].count,free)==items[1].count,
-     "Impossibile liberare slot 1 nella cassa")
+  assert(c and type(c.list)=="function",
+    "Cassa superiore per secchi non disponibile")
+  local listing=assert(c.list(),"Cassa superiore non leggibile")
+  local available=0
+  for _,item in pairs(listing) do
+   if item.name=="minecraft:bucket" then
+    available=available+item.count
    end
-   assert(c.pushItems(chestName,found,items[found].count,1)>0,
-    "Impossibile spostare materiale verso lo slot 1")
   end
+  assert(available>=required,
+    "Regulator: mancano "..required.." secchi vuoti nella cassa sopra (trovati "..available..")")
   compactInventory()
-  local slot
-  for i=1,16 do if turtle.getItemCount(i)==0 then slot=i;break end end
-  assert(slot,"Inventario Turtle senza slot per rifornimento")
-  turtle.select(slot)
-  assert(turtle.suckUp(amount),"Prelievo dalla cassa superiore fallito")
-  local got=turtle.getItemDetail(slot)
-  assert(got and got.name==name,"Oggetto inatteso dalla cassa superiore")
-  return true
+  local borrowed,acquired={},0
+  local failure=nil
+  for attempt=1,15 do
+   if stopRequested() then failure=RETURN_REQUESTED;break end
+   local slot
+   for i=1,16 do
+    if turtle.getItemCount(i)==0 then slot=i;break end
+   end
+   if not slot then
+    failure="Slot Turtle esauriti durante prelievo secchi"
+    break
+   end
+   turtle.select(slot)
+   local ok,why=turtle.suckUp(64)
+   if not ok then
+    failure="Prelievo secchi dalla cassa fallito: "..tostring(why)
+    break
+   end
+   local got=turtle.getItemDetail(slot)
+   if not got then
+    failure="Oggetto non trovato dopo prelievo secchi"
+    break
+   end
+   if got.name=="minecraft:bucket" then
+    local keep=math.min(required-acquired,got.count)
+    local extra=got.count-keep
+    acquired=acquired+keep
+    if extra>0 then
+     turtle.select(slot)
+     if not turtle.dropUp(extra) then
+      failure="Impossibile restituire secchi vuoti in eccesso"
+      break
+     end
+    end
+    if acquired>=required then break end
+   else
+    borrowed[#borrowed+1]=slot
+   end
+  end
+  -- Restituisce i materiali non richiesti alla cassa SOPRA, anche se
+  -- il prelievo si interrompe. Non usa la cassa di scarico inferiore.
+  local restored=true
+  for i=#borrowed,1,-1 do
+   local slot=borrowed[i]
+   if turtle.getItemCount(slot)>0 then
+    turtle.select(slot)
+    if not turtle.dropUp() then restored=false end
+   end
+  end
+  assert(restored,
+    "Cassa superiore piena: materiale temporaneo ancora nella Turtle, NON riavviare")
+  if failure==RETURN_REQUESTED then error(RETURN_REQUESTED,0) end
+  assert(not failure,failure or "Prelievo secchi fallito")
+  assert(acquired>=required,
+    "Impossibile raggiungere i secchi vuoti nella cassa superiore: controllare Regulator")
  end
  -- Prelievo senza pushItems sulla STESSA cassa (non supportato da tutte
  -- le casse/mod). SuckUp prende il primo slot accessibile: i materiali che
@@ -798,43 +840,10 @@ function M.start(agent,cfg,options)
   assert(atHome(),"Rifornimento solo alla propria postazione")
   compactInventory()
   unload()
-  -- Preferisce i secchi vuoti dalla cassa, senza consumare lava inutilmente.
-  local attempts=0
-  while countItem("minecraft:bucket")<3 and attempts<3 do
-   if not pullFromTop("minecraft:bucket",3-countItem("minecraft:bucket")) then break end
-   attempts=attempts+1
-  end
-  -- Se il serbatoio e' pieno, la lava non puo' essere consumata per
-  -- creare secchi vuoti. Usa un breve movimento tracciato avanti/indietro
-  -- nella PROPRIA corsia libera, torna alla HOME e solo dopo si rifornisce.
-  -- Nessun reset quota/distanza; Ctrl+T continua a richiedere il rientro.
-  while countItem("minecraft:bucket")<3 do
-   abortIfStop()
-   local limit=turtle.getFuelLimit()
-   local fuel=turtle.getFuelLevel()
-   assert(type(limit)=="number" and type(fuel)=="number",
-     "Scorta secchi: carburante non numerico; servono secchi dalla cassa sopra")
-   if fuel>=limit then
-    assert(atHome() and #s.path==0 and not s.pending,
-      "Scorta secchi: movimento di consumo fuel consentito SOLO alla HOME")
-    turnTo(front)
-    local busy=turtle.inspect()
-    assert(not busy and not fluidi.peek("front"),
-      "Scorta secchi: prima cella della corsia non libera, niente movimento")
-    detailStatus("PREPARAZIONE","Fuel pieno, liberazione controllata di capacita' per secchi")
-    step("F",true,false)
-    reverseOne()
-    turnTo(front)
-    assert(atHome() and #s.path==0 and not s.pending,
-      "Scorta secchi: rientro di consumo carburante non confermato")
-    assert(currentFuel()<limit,
-      "Scorta secchi: impossibile consumare carburante")
-   end
-   local before=countItem("minecraft:bucket")
-   getLava()
-   assert(countItem("minecraft:bucket")>before,
-     "Scorta secchi: lava consumata ma nessun secchio vuoto creato")
-  end
+  -- Scorta regolata di 3 secchi VUOTI, mai derivata dal carburante.
+  pullBucketsFromTop(3-countItem("minecraft:bucket"))
+  assert(countItem("minecraft:bucket")>=3,
+    "Scorta secchi insufficiente dopo il prelievo dalla cassa superiore")
   local limit=turtle.getFuelLimit()
   local fuel=turtle.getFuelLevel()
   if type(limit)=="number" and type(fuel)=="number" then
