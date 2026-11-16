@@ -1,7 +1,7 @@
 -- MEGAZERO | Avvia SOLO Turtle riparate dalla mancanza lava | v1.0 | PC54
 -- Eseguire con dashboard FERMA:
 -- wget run <URL> verifica  => solo CHECK_START, NON MUOVE
--- wget run <URL> avvia     => CHECK_START, ARM_START, START delle 40
+-- wget run <URL> avvia     => CHECK_START, ARM_START, START delle 15
 -- Non aggiorna software, non modifica posizioni, non altera il DB.
 assert(not turtle and os.getComputerID()==54,"Questo comando richiede la CENTRALE PC 54")
 local a={...}
@@ -122,7 +122,7 @@ local function checkResponse(p,job)
  if type(p.miner)~="table" or
   type(p.miner.version)~="string" or
   not p.miner.version:find("^%-%- MEGAZERO MINER v2%.3%.7") then
-  return false,"miner non v2.3.6"
+  return false,"miner non v2.3.7"
  end
  if p.miner.saved then
   return false,"checkpoint inatteso su "..tostring(job.unit)
@@ -204,7 +204,7 @@ while now()<untilAt do
 end
 local n=0
 for _ in pairs(ack) do n=n+1 end
-print("RISPOSTE STARTING: "..n.."/40")
+print("RISPOSTE STARTING: "..n.."/15")
 print("STARTING indica autorizzazione e reboot, NON scavo gia' confermato.")
 if #sendErrors>0 then printErrors(sendErrors) end
 if #negatives>0 then printErrors(negatives) end
