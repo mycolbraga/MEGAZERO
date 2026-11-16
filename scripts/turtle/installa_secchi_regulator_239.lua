@@ -22,7 +22,8 @@ end
 local configPath="/megazero_config"
 local cfg=assert(textutils.unserialize(read(configPath)),"Config non valida")
 local unit=cfg.unit
-local side,num=type(unit)=="string" and unit:match("^([NOSE])(%d%d)$")
+local side,num
+if type(unit)=="string" then side,num=unit:match("^([NOSE])(%d%d)$") end
 num=tonumber(num)
 assert(cfg.site=="MINIERA-01" and side and num and num>=1 and num<=10,
  "Questa non e' una Turtle del sito MINIERA-01")
@@ -50,6 +51,8 @@ for _,m in ipairs(oldModules) do
  assert(m.original:sub(1,#m.before)==m.before,
   "Modulo sconosciuto, STOP: "..m.name)
  if m.original:sub(1,#m.after)~=m.after then allUpdated=false end
+ if m.name=="megazero_auto" and
+    not m.original:find("Miner non v2.3.9",1,true) then allUpdated=false end
 end
 if allUpdated then
  print(unit.." gia' aggiornata: miner 2.3.9, agente 1.6")
