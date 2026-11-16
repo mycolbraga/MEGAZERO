@@ -396,3 +396,14 @@ I quattro rettangoli coprono tutti i 2x300 blocchi delle 10 Turtle per fronte (o
 **Verifica:** `/forceload query` nel Sovramondo. Se si ottiene un conteggio superiore a 156 possono esserci chunk precedentemente forzati altrove. I comandi NON sono stati eseguiti su Minecraft tramite GitHub e finche' l'utente non ne conferma l'esito i chunk non vanno considerati caricati.
 
 **Limite:** la regione centrale della dashboard Computer 54 e' in una posizione diversa e non nota qui; il suo chunk va caricato separatamente per monitoraggio continuativo se non e' gia' gestito. `/forceload` resta valido in mondo attivo, non mantiene il gioco in esecuzione quando e' chiuso.
+
+
+## Primo blocco sconosciuto N01: mossy cobblestone (16 novembre 2026)
+
+- Dal monitor del Computer 54 il giocatore ha mostrato `ERRORE`, N01 in base `2119,-53,2995`, carburante `14018`, avanzamento `9%`, errore `Blocco non minerario sconosciuto`. Ha poi precisato **mossy cobblestone** (`minecraft:mossy_cobblestone`).
+- **Fix v2.3.2 nel miner unico:** aggiunto `minecraft:mossy_cobblestone` a `NATURAL` (blocco minerario scavabile) e a `DISCARD` (materiale comune da espellere senza occupare lo storage). Non sono stati autorizzati automaticamente tutti gli altri blocchi delle strutture o blocchi mod sconosciuti: la protezione resta attiva.
+- **Checkpoint:** path invariato `/.megazero_miner_v23_<UNIT>_LAVORO`; non azzerare progressi, non resettare manualmente questo file.
+- **Installatore locale:** `megazero_aggiorna_miner_v2.lua` aggiornato per scaricare e verificare v2.3.2, con backup nuovo `.backup_pre_v232`. `megazero_auto.lua` aggiornato al controllo versione v2.3.2.
+- **Sblocco specifico N01:** `megazero_sblocca_mossy_N01.lua` archivia il solo latch con errore `minecraft:mossy_cobblestone`, dopo controllo di unit/config, v2.3.2, path vuoto, `pending=nil` e salvataggio base N01. Non esegue movimento o reboot. Questa è una verifica del checkpoint, non una misura GPS della posizione reale.
+- **OTA da centrale:** agente v1.1 aggiornato al bundle miner v2.3.2, fluidi v1.0 e auto da commit fisso `5b0f265213dfe95b1b44c07620245240073340bd`; preparazione/installazione solo con miner fermo e disabilitato, mai su N01 durante lo scavo. N02 non è ancora stata aggiornata con la v1.1 dell'agente dopo il PING della v1.0.
+- **Stato:** file pubblicati, controlli statici e intestazioni al commit di rilascio verificati. **Non ancora testato in gioco**: installazione, sblocco e ripresa dopo questo errore.
