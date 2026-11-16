@@ -182,3 +182,19 @@ F. **Gestione versioni/checkpoint durante lavorazioni lunghe**, audit e UI estes
 10. **Rischio residuo:** Ctrl+T durante una move/turn può lasciare `pending` e posizione incerta; in tal caso la utility rifiuta il rientro automatico. Nessuno script può validare fisicamente coordinate/orientamento se il checkpoint è incoerente. Non riavviare né azzerare il checkpoint per ignorare tale errore.
 
 **Stato reale:** l'ultima conferma dell'utente era che N01 stava scavando con miner v2.3.2 e N02 aveva completato OTA v2.3.2 con agente v1.1. Gli upgrade v1.3/v1.2 e v2.3.3 sono sul repository ma nessuna installazione nel mondo è stata ancora confermata.
+
+
+## Correzione confermata della quota HOME: Y=-51 (16 novembre 2026)
+
+Confronto delle postazioni ancora ferme (N02): la HOME delle 40 Turtle è a **Y=-51**, non a -53. Non confondere questa quota reale con quella storica presente nei vecchi programmi.
+
+- Miner unico `scripts/turtle/megazero_miner.lua` **v2.3.5**: `BASE_Y=-51` per tutti i fronti N/O/S/E; X/Z delle 40 HOME invariati. Usa sempre `/.megazero_miner_v23_<UNIT>_LAVORO` per il checkpoint, compatibile con precedente versione.
+- `scripts/turtle/megazero_auto.lua` richiede ora miner v2.3.5 prima di abilitare autostart, senza avviare o muovere la Turtle.
+- `scripts/turtle/megazero_aggiorna_miner_v2.lua` allineato a v2.3.5: installa versione correggendo la HOME, ma non sposta la Turtle né cambia autostart.
+- Dashboard `scripts/control/megazero_control.lua` **v1.4**: registrazioni nuove a Y=-51. **Migra anche i record già presenti su disco**, solo quando le coordinate X/Z coincidono con la griglia canonica e Y=-53. Salva la stessa base dati, senza cancellare telemetria, storici o stati.
+- `scripts/control/installa_admin_centrale_v14.lua` consente upgrade da v1.2 oppure v1.3 a v1.4 con backup del vecchio codice.
+- Agente admin `scripts/turtle/megazero_admin_agent.lua` **v1.3**: tutti i controlli HOME usano Y=-51; OTA bloccato al commit `bcb8cde9124f9eb1b1537ce311c127355d91c5e9` e al miner v2.3.5. Rimangono check + arm + conferma per avvio remoto.
+- Aggiornamento agente N02: `scripts/turtle/aggiorna_admin_agente_v13.lua` (v1.1/v1.2 -> v1.3), da eseguire a Turtle ferma. Nuova installazione amministratore su boot 1.0: `scripts/turtle/installa_admin.lua` ora agente v1.3.
+- N01 con boot già 1.1 può installare solo l'agente dopo il riposizionamento mediante `scripts/turtle/installa_solo_admin_N01.lua`.
+- **N01 non è ancora alla postazione**: ultimo dump riferito dall'utente: **2119,-53,2994**, mentre HOME corretta attesa **2119,-51,2995**. L'utente ha chiesto di cancellare l'avanzamento e ripartire in gruppo. Non fare partire N01 prima di riposizionarla fisicamente e verificare il dump. Il precedente reset del checkpoint dichiarava “alla base” sulla base dei soli dati salvati; non era una posizione fisica verificata.
+- **Nessun programma nuovo è ancora installato nel mondo da questi commit**, e nessuna delle 40 Turtle è stata avviata da questa modifica. Non confondere GitHub aggiornato con la versione caricata sul singolo computer.
