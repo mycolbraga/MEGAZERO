@@ -1,8 +1,10 @@
--- MEGAZERO CONTROL 1.0 - Centrale multi-miniera CC:Tweaked
--- SOLO MONITORAGGIO: non muove alcuna Turtle.
+-- MEGAZERO CONTROL 1.1 - Telemetria e PING remoto confermato
+-- PING/STATUS non muove, aggiorna o avvia alcuna Turtle.
 -- Miniera iniziale: 40 Turtle, 10 per fronte, ancora non collegate via software.
 
 local PROTOCOL = "megazero.control.v1"
+local ADMIN_PROTOCOL = "megazero.admin.v1"
+local adminSequence = 0
 local HOSTNAME = "megazero-central"
 local DATA_FILE = "/.megazero_control_db"
 local MAIN_SITE = "MINIERA-01"
@@ -96,7 +98,7 @@ saveDatabase()
 
 local validStatus = {
   SCAVO=true, RIENTRO=true, BASE=true, ERRORE=true,
-  PAUSA=true, PREPARAZIONE=true
+  PAUSA=true, PREPARAZIONE=true, BLOCCATO=true, INCOMPLETO=true
 }
 local function receive(sender, packet, proto)
   if proto ~= PROTOCOL or type(packet) ~= "table" then return end
@@ -130,6 +132,61 @@ local function receive(sender, packet, proto)
     addHistory(s.."/"..u.." "..state.." "..(rec.error or ""))
   end
   dirty=true
+end
+
+local function sendPing(rec)
+ if type(rec.sender)~="number" then
+  rec.adminMessage="Computer ID non conosciuto"
+  return
+ end
+ if not rec.lastSeen or now()-rec.lastSeen>OFFLINE_MS then
+  rec.adminMessage="SENZA SEGNALE: PING non inviato"
+  return
+ end
+ adminSequence=adminSequence+1
+ local id=tostring(os.getComputerID()).."-"..tostring(now()).."-"..tostring(adminSequence)
+ local packet={
+  kind="admin_request",version=1,site=rec.site,
+  target_unit=rec.unit,target_computer_id=rec.sender,
+  request_id=id,command="PING"
+ }
+ rec.adminPending=id
+ rec.adminSent=now()
+ rec.adminMessage="PING inviato; in attesa di ACK"
+ local ok=rednet.send(rec.sender,packet,ADMIN_PROTOCOL)
+ if not ok then
+  rec.adminPending=nil
+  rec.adminMessage="Invio Rednet fallito"
+ end
+ dirty=true
+end
+
+local function receiveAdmin(sender,packet,proto)
+ if proto~=ADMIN_PROTOCOL or type(packet)~="table" then return end
+ if packet.kind~="admin_reply" or packet.version~=1 then return end
+ if packet.site~=MAIN_SITE or type(packet.unit)~="string" then return end
+ local rec=db.units[unitKey(packet.site,packet.unit)]
+ if not rec or rec.sender~=sender or packet.computer_id~=sender then return end
+ if type(rec.adminPending)~="string" or
+    packet.request_id~=rec.adminPending then return end
+ rec.adminPending=nil
+ rec.adminLastReply=now()
+ if packet.accepted==true and packet.phase=="DONE" then
+  rec.adminMessage="PING OK da computer "..sender
+  rec.adminSnapshot={
+   agent=clean(packet.agent_version or "?",20),
+   boot=clean(packet.boot_version or "?",90),
+   miner=type(packet.miner)=="table" and packet.miner or {},
+   fuel=packet.fuel,autostart=packet.miner_autostart,
+   latch=clean(packet.error_latch or "",120),
+   current_status=clean(packet.current_status or "?",25)
+  }
+  addHistory("PING OK "..rec.site.."/"..rec.unit)
+ else
+  rec.adminMessage="PING respinto: "..clean(packet.reason or "causa ignota",70)
+  addHistory("PING NEGATO "..rec.site.."/"..rec.unit)
+ end
+ dirty=true
 end
 
 local function siteNames()
@@ -166,6 +223,8 @@ local function stateOf(rec)
     ERRORE={"ERRORE",colors.red},
     PAUSA={"PAUSA",colors.yellow},
     PREPARAZIONE={"PREPARAZIONE",colors.yellow},
+    BLOCCATO={"BLOCCATO",colors.orange},
+    INCOMPLETO={"INCOMPLETO",colors.orange},
   }
   local v=labels[rec.status]
   if v then return v[1],v[2] end
@@ -205,12 +264,24 @@ local function drawDetail(r,w,h)
     "DETTAGLIO: "..(r.detail or "-"),
     "ERRORE: "..(r.error or "-"),
     "ULTIMO CONTATTO: "..(r.lastSeen and (math.floor(math.max(0,now()-r.lastSeen)/1000).."s fa") or "mai"),
+    "CONTROLLO REMOTO: "..(r.adminPending and now()-(r.adminSent or 0)>15000
+      and "NESSUNA RISPOSTA dopo 15s" or (r.adminMessage or "Da verificare")),
+    "AGENTE: "..(r.adminSnapshot and r.adminSnapshot.agent or "-"),
+    "VERSIONE MINER: "..(r.adminSnapshot and
+      (r.adminSnapshot.miner.version or "-") or "-"),
+    "CHECKPOINT: "..(r.adminSnapshot and
+      (r.adminSnapshot.miner.saved and
+       ("liv "..tostring(r.adminSnapshot.miner.level or "?")..
+        ", dist "..tostring(r.adminSnapshot.miner.distance or "?")) or "nessuno") or "-"),
+    "ERRORE LATCH: "..(r.adminSnapshot and
+      (r.adminSnapshot.latch~="" and r.adminSnapshot.latch or "no") or "-"),
   }
   for i,t in ipairs(info) do
     local y=5+i
     if y>=h-2 then break end
     line(1,y,w,t,i==1 and ink or colors.white)
   end
+  line(1,h-2,w,"TOCCA QUI: PING REMOTO (NON SCAVA)",colors.black,colors.yellow)
   line(1,h-1,w,"TOCCA PER TORNARE",colors.yellow)
 end
 
@@ -282,8 +353,15 @@ local function nextSite()
 end
 
 local function onTouch(x,y)
-  if selected then selected=nil;return end
   local w,h=monitor.getSize()
+  if selected then
+   if y==h-2 and db.units[selected] then
+    sendPing(db.units[selected])
+   else
+    selected=nil
+   end
+   return
+  end
   if y>=h-1 then
     if w<48 or h<32 or site~=MAIN_SITE then
       local pages=math.max(1,math.ceil(#unitsOf(site)/math.max(1,h-8)))
@@ -309,7 +387,8 @@ local timer=os.startTimer(5)
 while true do
   local event,a,b,c=os.pullEventRaw()
   if event=="rednet_message" then
-    receive(a,b,c)
+    if c==PROTOCOL then receive(a,b,c)
+    elseif c==ADMIN_PROTOCOL then receiveAdmin(a,b,c) end
     draw()
   elseif event=="monitor_touch" and a==peripheral.getName(monitor) then
     onTouch(b,c)
