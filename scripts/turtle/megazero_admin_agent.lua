@@ -1,12 +1,12 @@
--- MEGAZERO ADMIN AGENT v1.5 | OTA miner 2.3.7 con rifornimento lava corretto
+-- MEGAZERO ADMIN AGENT v1.6 | Miner 2.3.9 e secchi vuoti da Regulator
 -- Pacchetti mirati dal PC 54; update consentito solo a Turtle ferma.
 local M={}
 local PROTOCOL="megazero.admin.v1"
-local RELEASE="19a011e1a1467fe2e338f0ccee412a7172bd7ee0"
+local RELEASE="4a0c5f39f512e071958a9e8b042085755100efef"
 local BASE="https://raw.githubusercontent.com/mycolbraga/MEGAZERO/"..RELEASE.."/scripts/turtle/"
-local MARKER="/.megazero_ota237_state"
+local MARKER="/.megazero_ota239_state"
 local PACKAGE={
- {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.3.7"},
+ {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.3.9"},
  {name="megazero_fluidi",remote="megazero_fluidi.lua",prefix="-- MEGAZERO FLUIDI v1.0"},
  {name="megazero_auto",remote="megazero_auto.lua",prefix="-- MEGAZERO | Gestione avvio automatico"}
 }
@@ -32,10 +32,10 @@ local function existing(name)
  return "/"..name
 end
 local function stagePath(name)
- return "/.megazero_stage_237_"..name
+ return "/.megazero_stage_239_"..name
 end
 local function backupPath(name)
- return "/.megazero_ota_backup_237_"..name
+ return "/.megazero_ota_backup_239_"..name
 end
 local function mineInfo(unit)
  local header=firstLine(existing("megazero_miner"))
@@ -105,13 +105,13 @@ local function prepareUpdate(unit)
   verifyFile(temp,item)
  end
  write(MARKER,textutils.serialize({unit=unit,release=RELEASE,
-  fileCount=#PACKAGE,version="2.3.7"}))
+  fileCount=#PACKAGE,version="2.3.9"}))
 end
 local function commitUpdate(unit)
  local data=assert(read(MARKER),"Nessun update preparato")
  local mark=assert(textutils.unserialize(data),"Manifest staging illeggibile")
  assert(mark.unit==unit and mark.release==RELEASE and
-   mark.fileCount==#PACKAGE and mark.version=="2.3.7",
+   mark.fileCount==#PACKAGE and mark.version=="2.3.9",
    "Staging non corrispondente")
  for _,item in ipairs(PACKAGE) do
   verifyFile(stagePath(item.name),item)
@@ -200,13 +200,12 @@ local function checkStart(cfg,telemetry)
  end
  local version=firstLine(existing("megazero_miner"))
  if not version or version:sub(1,#PACKAGE[1].prefix)~=PACKAGE[1].prefix then
-  return false,"Miner non v2.3.7" end
+  return false,"Miner non v2.3.9" end
  local boot=firstLine(existing("megazero_boot"))
  if not boot or not boot:find("^%-%- MEGAZERO BOOT 1%.2") then
   return false,"BOOT non v1.2" end
  local chest=peripheral.wrap("top")
- if not chest or type(chest.list)~="function" or
-    type(chest.pushItems)~="function" or type(chest.size)~="function" then
+ if not chest or type(chest.list)~="function" then
   return false,"Cassa rifornimento superiore non disponibile" end
  local lower=peripheral.wrap("bottom")
  if not lower or type(lower.list)~="function" then
@@ -214,11 +213,19 @@ local function checkStart(cfg,telemetry)
  local blocked,block=turtle.inspect()
  if blocked then
   return false,"Uscita dalla base ostruita: "..tostring(block and block.name) end
- local available=0
+ local available,buckets=0,0
  local items=chest.list()
  if type(items)~="table" then return false,"Cassa superiore illeggibile" end
  for _,item in pairs(items) do
-  if item.name=="minecraft:lava_bucket" then available=available+item.count end
+  if item.name=="minecraft:lava_bucket" then available=available+item.count
+  elseif item.name=="minecraft:bucket" then buckets=buckets+item.count end
+ end
+ for i=1,16 do
+  local it=turtle.getItemDetail(i)
+  if it and it.name=="minecraft:bucket" then buckets=buckets+it.count end
+ end
+ if buckets<3 then
+  return false,"Regulator: servono 3 secchi vuoti tra cassa sopra e Turtle, disponibili "..buckets
  end
  local fuel=turtle.getFuelLevel()
  if type(fuel)=="number" and fuel<10000 and available<1 then
@@ -260,7 +267,7 @@ function M.listen(cfg,telemetry)
  local selfID=os.getComputerID()
  local seen={}
  local arm=nil
- print("ADMIN AGENT v1.5 | "..unit.." | PC "..central)
+ print("ADMIN AGENT v1.6 | "..unit.." | PC "..central)
  while true do
   local sender,request=rednet.receive(PROTOCOL)
   if sender==central and type(request)=="table" and
@@ -274,7 +281,7 @@ function M.listen(cfg,telemetry)
     local command=request.command
     response={kind="admin_reply",version=1,site=site,unit=unit,
      computer_id=selfID,request_id=request.request_id,command=command,
-     accepted=false,phase="FAILED",agent_version="1.5"}
+     accepted=false,phase="FAILED",agent_version="1.6"}
     local ok,err=pcall(function()
      if command=="PING" or command=="STATUS" or command=="CHECK_UPDATE" or command=="CHECK_START" then
       local latch=read("/.megazero_miner_error")
@@ -325,7 +332,7 @@ function M.listen(cfg,telemetry)
        response.installed=commitUpdate(unit)
        response.accepted=true;response.phase="DONE"
       end
-      response.package_version="2.3.7"
+      response.package_version="2.3.9"
      else
       response.reason="Comando non abilitato su v1.1"
      end
