@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.5 | HOME Y=-51 per tutte le 40 Turtle
+-- MEGAZERO MINER v2.3.6 | CTRL+T richiede rientro tracciato, HOME Y=-51
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -121,6 +121,15 @@ function M.start(agent,cfg,options)
  end
  s.incomplete=s.incomplete or {}
  if s.retryComplete==nil then s.retryComplete=false end
+ -- BOOT 1.2 intercetta Ctrl+T e passa un flag, senza terminare il programma.
+ local RETURN_REQUESTED="MEGAZERO_RETURN_REQUESTED"
+ local function stopRequested()
+  return type(options.stopRequested)=="function" and
+    options.stopRequested()==true
+ end
+ local function abortIfStop()
+  if stopRequested() then error(RETURN_REQUESTED,0) end
+ end
  local function save()
   local f=assert(fs.open(PATH,"w"))
   f.write(textutils.serialize(s));f.close()
@@ -298,6 +307,7 @@ function M.start(agent,cfg,options)
   error("GALLERIA_INCOMPLETA:"..reason..":"..kind..":"..x..":"..y..":"..z)
  end
  local function bonify(move,x,y,z,allowFlow)
+  abortIfStop()
   assert(inSector(x,y,z),"Bonifica fuori fascia")
   local sideName=fluidSide(move)
   local f=fluidi.peek(sideName)
@@ -318,6 +328,7 @@ function M.start(agent,cfg,options)
    local timeout=f.kind=="LAVA" and 120 or 15
    local cleared=false
    for sec=1,timeout do
+    abortIfStop()
     if not fluidi.peek(sideName) then cleared=true;break end
     sleep(1)
    end
@@ -368,6 +379,7 @@ function M.start(agent,cfg,options)
   -- Niente limite di otto colpi: sabbia e gravel possono cadere a colonne.
   -- Occorrono tre controlli consecutivi a vuoto prima di avanzare.
   while digs<256 do
+   abortIfStop()
    local f=fluidi.peek(fluidSide(move))
    if f then
     if fluidTransit and f.kind==fluidTransit and not f.source then return end
@@ -403,6 +415,7 @@ function M.start(agent,cfg,options)
   error("Colonna di gravel/sabbia o blocchi troppo lunga: oltre 256 tentativi")
  end
  local function step(move,first,oreOnly,fluidTransit)
+  abortIfStop()
   local x,y,z=coords(move)
   assert(canOccupy(x,y,z),"Movimento vietato fuori corsia")
   reserveGoing(1)
@@ -524,6 +537,7 @@ function M.start(agent,cfg,options)
   local originLength=#s.path
   local buckets=kind=="ACQUA" and "minecraft:water_bucket" or "minecraft:lava_bucket"
   local function visit(depth)
+   abortIfStop()
    if depth>64 or used>=64 then return false end
    local savedDir=s.d
    local choices={{"F",front},{"F",left},{"F",(front+1)%4},
@@ -587,6 +601,7 @@ function M.start(agent,cfg,options)
   local seen,remaining={},32
   local origin=#s.path
   local function visit()
+   abortIfStop()
    if remaining<=0 then return end
    local savedDir=s.d
    local choices={
@@ -617,6 +632,7 @@ function M.start(agent,cfg,options)
   turnTo(front)
  end
  local function scanSide()
+  abortIfStop()
   -- Solo lato SINISTRO rispetto alla direzione di lavoro, entro 2 blocchi.
   turnTo(left)
   local x,y,z=coords("F")
@@ -627,6 +643,7 @@ function M.start(agent,cfg,options)
   turnTo(front)
  end
  local function scanCell()
+  abortIfStop()
   turnTo(front)
   -- Bonifica soffitto e area sinistra prima di estrarre le vene.
   local x,y,z=coords("U")
@@ -736,6 +753,7 @@ function M.start(agent,cfg,options)
   -- Il secchio vuoto rimane nell'inventario finche' serve.
  end
  local function supply()
+  abortIfStop()
   assert(atHome(),"Rifornimento solo alla propria postazione")
   compactInventory()
   unload()
@@ -754,7 +772,10 @@ function M.start(agent,cfg,options)
   if type(limit)=="number" and type(fuel)=="number" then
    -- Non e' un tetto al fuel: si puo' bruciare altra lava per avere secchi.
    local goal=math.min(limit,10000)
-   while currentFuel()<goal do getLava() end
+   while currentFuel()<goal do
+    abortIfStop()
+    getLava()
+   end
   end
   unload() -- Tiene 3 secchi e fino a SEAL_TARGET blocchi dallo scavo.
  end
@@ -814,6 +835,7 @@ function M.start(agent,cfg,options)
   turnTo(front)
  end
  local function processLevel()
+  abortIfStop()
   local yTarget=LEVELS[s.level]
   assert(yTarget,"Livello non valido")
   -- HOME -> esterno un solo blocco a Y=-51.
@@ -824,6 +846,7 @@ function M.start(agent,cfg,options)
   coverLakeFloor()
   -- Il primo punto esterno conta come 1° blocco della galleria.
   for dist=1,maxDistance do
+   abortIfStop()
    if dist>1 then turnTo(front);step("F") end
    coverLakeFloor()
    carveHead() -- tunnel 2 blocchi alto, senza scavare tutto il volume.
@@ -893,6 +916,9 @@ function M.start(agent,cfg,options)
      return true
     end
     local why=tostring(problem)
+    if why:find(RETURN_REQUESTED,1,true) then
+     error(RETURN_REQUESTED,0)
+    end
     local blocked=why:find("GALLERIA_INCOMPLETA:",1,true)~=nil
     detailStatus("RIENTRO","Interruzione livello "..s.level..", rientro",why)
     -- Il punto dell'ostacolo si trova nel messaggio e nel checkpoint.
@@ -956,7 +982,59 @@ function M.start(agent,cfg,options)
      " quote, minerali estratti "..s.ore)
   end
  end
+ -- Disabilita avvio automatico SOLO DOPO rientro confermato.
+ local function disarmAutostart()
+  local configPath="/megazero_config"
+  local raw=assert(read(configPath),"Config assente")
+  local disk=assert(textutils.unserialize(raw),"Config non leggibile")
+  assert(disk.unit==cfg.unit and disk.site==cfg.site,"Identita' config diversa")
+  if disk.miner_autostart==false then return true end
+  local tmp="/.megazero_ctrl_t_cfg.new"
+  local bak="/.megazero_ctrl_t_cfg.last"
+  assert(not fs.exists(tmp),"Config di arresto temporanea gia' presente")
+  disk.miner_autostart=false
+  local f=assert(fs.open(tmp,"w"));f.write(textutils.serialize(disk));f.close()
+  if fs.exists(bak) then fs.delete(bak) end
+  fs.copy(configPath,bak)
+  fs.delete(configPath)
+  local ok,why=pcall(fs.move,tmp,configPath)
+  if not ok then
+   if fs.exists(bak) then fs.copy(bak,configPath) end
+   error("Impossibile disattivare autostart: "..tostring(why))
+  end
+  return true
+ end
  local ok,reason=pcall(run)
+ if not ok and tostring(reason):find(RETURN_REQUESTED,1,true) then
+  detailStatus("RIENTRO","CTRL+T ricevuto: termino operazioni e rientro")
+  local backOK,backError=false,nil
+  if s.pending then
+   backError="checkpoint con operazione pendente: non posso supporre la posizione"
+  else
+   backOK,backError=pcall(goHome)
+  end
+  local returned=backOK and atHome() and #s.path==0 and not s.pending
+  if returned then
+   local unloadOK,unloadError=pcall(unload)
+   local disableOK,disableError=pcall(disarmAutostart)
+   if disableOK then
+    local msg=unloadOK and "CTRL+T: HOME raggiunta, scarico concluso, autostart OFF" or
+      ("CTRL+T: HOME raggiunta, SCARICO DA VERIFICARE: "..tostring(unloadError))
+    detailStatus("BASE",msg)
+    print("Rientro concluso. Console pronta: puoi eseguire reboot dalla HOME.")
+    return
+   end
+   latch("HOME raggiunta ma autostart non disabilitato: "..tostring(disableError))
+   detailStatus("ERRORE","HOME raggiunta, ma configurazione arresto non salvata",
+     tostring(disableError))
+   return
+  end
+  local why="CTRL+T: RIENTRO NON RIUSCITO: "..tostring(backError)
+  latch(why)
+  detailStatus("ERRORE","Rientro non confermato: movimento fermato",why)
+  printError(why)
+  return
+ end
  if not ok then
   local why=tostring(reason)
   local returned=false
