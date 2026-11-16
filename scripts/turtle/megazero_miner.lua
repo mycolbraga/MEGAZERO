@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.2 | v23 checkpoint, mossy cobblestone scavabile e scarto
+-- MEGAZERO MINER v2.3.3 | checkpoint v23, rientro controllato senza ripartenza
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -850,9 +850,22 @@ function M.start(agent,cfg,options)
    goHome()
    assert(atHome() and #s.path==0 and not s.pending,
      "Rientro da interruzione non verificato")
-   detailStatus("BASE","Rientro precedente riuscito; scarico e riprendo checkpoint")
+   if not options.rientroOnly then
+    detailStatus("BASE","Rientro precedente riuscito; scarico e riprendo checkpoint")
+   end
   end
   assert(atHome(),"Posizione iniziale diversa dalla postazione")
+  if options.rientroOnly then
+   -- Scavo FERMO: soltanto rientro sulla traccia, nessun nuovo livello.
+   -- Non cambiare distanza, quota o lo stato del completamento.
+   local unloaded,whyUnload=pcall(unload)
+   if unloaded then
+    detailStatus("BASE","Rientro controllato completato; miner fermo")
+   else
+    detailStatus("BASE","Alla base; scarico rimandato: "..tostring(whyUnload))
+   end
+   return
+  end
   if s.finished then
    detailStatus("BASE","Lavoro gia' concluso: nessun nuovo scavo")
    return
