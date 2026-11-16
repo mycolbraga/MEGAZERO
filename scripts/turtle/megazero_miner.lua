@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.4 | rientro: liberazione prudente dei blocchi naturali
+-- MEGAZERO MINER v2.3.5 | HOME Y=-51 per tutte le 40 Turtle
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -7,7 +7,7 @@
 
 local M = {}
 local DXY = {[0]={0,-1},[1]={1,0},[2]={0,1},[3]={-1,0}}
-local BASE_Y = -53
+local BASE_Y = -51
 local LEVELS={}
 for y=-1,-61,-3 do LEVELS[#LEVELS+1]=y end
 local ORE_WORDS = {":ore_", "_ore"}
@@ -816,7 +816,7 @@ function M.start(agent,cfg,options)
  local function processLevel()
   local yTarget=LEVELS[s.level]
   assert(yTarget,"Livello non valido")
-  -- HOME -> esterno un solo blocco a Y=-53.
+  -- HOME -> esterno un solo blocco a Y=-51.
   turnTo(front)
   step("F",true)
   while s.y<yTarget do step("U") end
