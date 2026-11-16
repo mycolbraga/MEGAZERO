@@ -252,10 +252,17 @@ function M.start(agent,cfg,options)
    assert(type(traceCurrent)=="function","Ricerca corrente non inizializzata")
    local found=traceCurrent(f.kind)
    assert(found,"Sorgente "..f.kind..
-     " non trovata nella propria fascia entro 12 celle: rientro di sicurezza")
-   sleep(0.5)
-   assert(not fluidi.peek(sideName),
-     "La corrente "..f.kind.." persiste dopo aver raccolto la sorgente")
+     " non trovata nella propria fascia entro 64 celle: rientro di sicurezza")
+   -- Il flusso rimasto dopo il prelievo puo' impiegare vari tick
+   -- a svanire, soprattutto con la lava in grandi colonne.
+   local timeout=f.kind=="LAVA" and 120 or 15
+   local cleared=false
+   for sec=1,timeout do
+    if not fluidi.peek(sideName) then cleared=true;break end
+    sleep(1)
+   end
+   assert(cleared,
+     "Corrente "..f.kind.." ancora presente dopo il prelievo: verificare sorgenti ulteriori")
    s.waterPending=false;save()
    return true
   end
@@ -297,7 +304,7 @@ function M.start(agent,cfg,options)
   while digs<256 do
    local f=fluidi.peek(fluidSide(move))
    if f then
-    if fluidTransit and not f.source then return end
+    if fluidTransit and f.kind==fluidTransit and not f.source then return end
     local clear=bonify(move,x,y,z,true)
     if not clear then
      error("Cella sigillata contro una corrente: non puo' essere attraversata")
@@ -426,7 +433,7 @@ function M.start(agent,cfg,options)
  end
  -- Adattamento della prova corrente N01 al motore di tutte le Turtle.
  -- Segue soltanto le celle che contengono il fluido cercato, senza
- -- scavare deviazioni, per massimo 12 celle e 8 passi di profondita'.
+ -- scavare deviazioni, fino a 64 celle/64 passi nella fascia riservata.
  -- Cerca davanti, sui lati, dietro, sopra e sotto; resta nel settore.
  -- Al termine torna esattamente al punto da cui la corrente era stata vista.
  traceCurrent=function(kind)
@@ -436,12 +443,12 @@ function M.start(agent,cfg,options)
   local originLength=#s.path
   local buckets=kind=="ACQUA" and "minecraft:water_bucket" or "minecraft:lava_bucket"
   local function visit(depth)
-   if depth>8 or used>=12 then return false end
+   if depth>64 or used>=64 then return false end
    local savedDir=s.d
    local choices={{"F",front},{"F",left},{"F",(front+1)%4},
      {"F",(front+2)%4},{"U",0},{"D",0}}
    for _,entry in ipairs(choices) do
-    if used>=12 then break end
+    if used>=64 then break end
     local move,d=entry[1],entry[2]
     local x,y,z=dirTarget(move,d)
     local key=x..":"..y..":"..z
@@ -464,9 +471,9 @@ function M.start(agent,cfg,options)
         return true
        end
        error("Sorgente "..kind.." non raccolta: "..tostring(why or result))
-      elseif depth<8 then
+      elseif depth<64 then
        used=used+1
-       step(move,false,false,true)
+       step(move,false,false,kind)
        local found=visit(depth+1)
        reverseOne()
        if found then
@@ -573,7 +580,8 @@ function M.start(agent,cfg,options)
    end
   end
  end
- -- La cassa superiore puo' fornire anche secchi vuoti e smooth stone.
+ -- La cassa superiore fornisce lava e, se presenti, secchi vuoti.
+ -- I blocchi da sigillo vengono conservati da quelli scavati.
  local function pullFromTop(name,amount)
   local c=peripheral.wrap("top")
   assert(c and c.list and c.pushItems and c.size,
