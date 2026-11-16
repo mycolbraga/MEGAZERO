@@ -500,6 +500,9 @@ function M.start(agent,cfg,options)
      local f=fluidi.peek(sideName)
      if f and f.kind==kind then
       if f.source then
+       if lakeEvidence(kind) then
+        markBlocked("LAGO_DA_COPRIRE",kind,x,y,z)
+       end
        local old=countItem(buckets)
        local result,why=fluidi.resolve(sideName,{x=x,y=y,z=z},
         function(cx,cy,cz) return cx==x and cy==y and cz==z and
@@ -737,7 +740,7 @@ function M.start(agent,cfg,options)
    markBlocked("LAGO_COPERTURA_NON_CONFERMATA",f.kind,x,y,z)
   end
   s.blocked=s.blocked+1;save()
-  detailStatus("SCAVO","COPERTURA "..f.kind.." al pavimento "..x..","..y..","..z)
+  detailStatus("SCAVO","BLOCCO DI COPERTURA "..f.kind.." in "..x..","..y..","..z)
  end
  local function carveHead()
   local x,y,z=coords("U")
