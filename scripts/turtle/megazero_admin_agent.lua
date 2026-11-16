@@ -76,7 +76,8 @@ end
 local function checkBundle()
  local ready=true
  for _,item in ipairs(PACKAGE) do
-  if firstLine(existing(item.name))~=item.prefix then ready=false end
+  local line=firstLine(existing(item.name))
+  if not line or line:sub(1,#item.prefix)~=item.prefix then ready=false end
  end
  return ready
 end
