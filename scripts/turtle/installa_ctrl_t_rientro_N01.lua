@@ -1,4 +1,4 @@
--- MEGAZERO | N01: installa boot 1.2 + miner 2.3.6 (SOLO TEST)
+-- MEGAZERO | N01: installa boot 1.2 + miner 2.3.6 + agente 1.4 (SOLO N01)
 -- Non muove la Turtle. Disattiva autostart. Conserva checkpoint/latch.
 assert(turtle and os.getComputerID()==12,"Solo N01 PC 12")
 local configPath="/megazero_config"
@@ -19,7 +19,13 @@ local items={
   commit="f19ed26ed61f09b91d86e52997a983884540c793"},
  {name="megazero_miner",head="-- MEGAZERO MINER v2.3.5",
   newhead="-- MEGAZERO MINER v2.3.6",
-  commit="16cfa71fd77e18e24d66a58e2b2fedac6a190d48"}
+  commit="16cfa71fd77e18e24d66a58e2b2fedac6a190d48"},
+ {name="megazero_admin_agent",head="-- MEGAZERO ADMIN AGENT v1.3",
+  newhead="-- MEGAZERO ADMIN AGENT v1.4",
+  commit="8dc24180d0dc2e5d93d14e80620d9a6ae99f01a2"},
+ {name="megazero_auto",head="-- MEGAZERO | Gestione avvio automatico",
+  newhead="-- MEGAZERO | Gestione avvio automatico",
+  commit="ca6cccd75323b6bcd38d8bdc3d51db628d556f2f"}
 }
 local backups={}
 for _,it in ipairs(items) do
@@ -82,7 +88,7 @@ if not ok then
  end
  error("Installazione annullata e rollback tentato: "..tostring(err),0)
 end
-print("N01: BOOT 1.2 + MINER 2.3.6 INSTALLATI.")
+print("N01: BOOT 1.2 + MINER 2.3.6 + AGENTE 1.4 INSTALLATI.")
 print("Autostart DISATTIVO: reboot NON avvia lo scavo.")
 print("Checkpoint e latch CONSERVATI. Nessun movimento.")
-print("Agente v1.3 non aggiornato: test rientro prima di uso generale.")
+print("Agente v1.4 installato per compatibilita' con avvio remoto.")
