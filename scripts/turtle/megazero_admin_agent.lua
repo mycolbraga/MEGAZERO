@@ -2,11 +2,11 @@
 -- Pacchetti mirati dal PC 54; update consentito solo a Turtle ferma.
 local M={}
 local PROTOCOL="megazero.admin.v1"
-local RELEASE="f30c85a2d20b0152a58a77180a48e2606e81d7ce"
+local RELEASE="5b0f265213dfe95b1b44c07620245240073340bd"
 local BASE="https://raw.githubusercontent.com/mycolbraga/MEGAZERO/"..RELEASE.."/scripts/turtle/"
-local MARKER="/.megazero_ota231_state"
+local MARKER="/.megazero_ota232_state"
 local PACKAGE={
- {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.3.1"},
+ {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.3.2"},
  {name="megazero_fluidi",remote="megazero_fluidi.lua",prefix="-- MEGAZERO FLUIDI v1.0"},
  {name="megazero_auto",remote="megazero_auto.lua",prefix="-- MEGAZERO | Gestione avvio automatico"}
 }
@@ -32,10 +32,10 @@ local function existing(name)
  return "/"..name
 end
 local function stagePath(name)
- return "/.megazero_stage_231_"..name
+ return "/.megazero_stage_232_"..name
 end
 local function backupPath(name)
- return "/.megazero_ota_backup_231_"..name
+ return "/.megazero_ota_backup_232_"..name
 end
 local function mineInfo(unit)
  local header=firstLine(existing("megazero_miner"))
@@ -105,13 +105,13 @@ local function prepareUpdate(unit)
   verifyFile(temp,item)
  end
  write(MARKER,textutils.serialize({unit=unit,release=RELEASE,
-  fileCount=#PACKAGE,version="2.3.1"}))
+  fileCount=#PACKAGE,version="2.3.2"}))
 end
 local function commitUpdate(unit)
  local data=assert(read(MARKER),"Nessun update preparato")
  local mark=assert(textutils.unserialize(data),"Manifest staging illeggibile")
  assert(mark.unit==unit and mark.release==RELEASE and
-   mark.fileCount==#PACKAGE and mark.version=="2.3.1",
+   mark.fileCount==#PACKAGE and mark.version=="2.3.2",
    "Staging non corrispondente")
  for _,item in ipairs(PACKAGE) do
   verifyFile(stagePath(item.name),item)
@@ -207,7 +207,7 @@ function M.listen(cfg,telemetry)
        response.installed=commitUpdate(unit)
        response.accepted=true;response.phase="DONE"
       end
-      response.package_version="2.3.1"
+      response.package_version="2.3.2"
      else
       response.reason="Comando non abilitato su v1.1"
      end
