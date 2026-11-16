@@ -374,3 +374,25 @@ Il prototipo `scripts/turtle/megazero_pilot.lua` **attualmente tratta `water` e 
 - **Sblocco N01:** `megazero_sblocca_rientro_N01.lua` e' uno script monouso: richiede miner v2.3.1, checkpoint v23 valido, traccia vuota, pending assente, home N01 (2119,-53,2995), autostart gia' abilitato e LATCH dal solo errore di recupero noto; archivia il latch invece di cancellarlo. NON riavvia la Turtle e NON cambia il checkpoint.
 - **Chunk:** per N01, settore X=2118..2119, Z=2695..2995, la fascia attraversa esattamente **20 chunk** nel piano XZ. Possibile caricamento con `/forceload add 2118 2695 2119 2995` in Overworld, **solo se utente decide di usare comandi/permessi**; rimozione selettiva `/forceload remove 2118 2695 2119 2995`. Non estendere indiscriminatamente a 40 Turtle senza calcolare costo e forma dei corridoi.
 - **Non ancora verificato in Minecraft:** download v2.3.1, esecuzione script sblocco, primo ciclo riuscito, gestione effettiva dei laghi e caricamento persistente. Le verifiche fatte qui sono di struttura/codice GitHub, non runtime CC:Tweaked.
+
+
+## Caricamento permanente chunk per TUTTE le 40 Turtle (16 novembre 2026)
+
+**Requisito essenziale e prioritario:** tutti i settori di scavo di tutte le Turtle devono essere forceloaded prima di avviare i lavori; non basta solo il corridoio N01. Un Ender Modem NON mantiene attivi i chunk e la telemetria non sostituisce la simulazione dei chunk.
+
+I quattro rettangoli coprono tutti i 2x300 blocchi delle 10 Turtle per fronte (ogni operazione forza 40 chunk e copre tutta la quota verticale della colonna):
+
+- NORD N01–N10: X 2100..2119, Z 2695..2994, chunk (131..132, 168..187)
+  `/forceload add 2100 2695 2119 2994`
+- OVEST O01–O10: X 1799..2098, Z 2995..3014, chunk (112..131, 187..188)
+  `/forceload add 1799 2995 2098 3014`
+- SUD S01–S10: X 2099..2118, Z 3016..3315, chunk (131..132, 188..207)
+  `/forceload add 2099 3016 2118 3315`
+- EST E01–E10: X 2120..2419, Z 2996..3015, chunk (132..151, 187..188)
+  `/forceload add 2120 2996 2419 3015`
+
+**Totale 156 chunk XZ distinti** (160 contati nelle quattro aree, 4 chunk in comune); comprende i quattro chunk della base mineraria. Il limite di Java Edition per una singola operazione `/forceload add` e' 256 chunk, quindi le quattro operazioni sono ammissibili. Eseguire nel **Sovramondo**, nella **chat Minecraft con comandi autorizzati**, non nel prompt della Turtle.
+
+**Verifica:** `/forceload query` nel Sovramondo. Se si ottiene un conteggio superiore a 156 possono esserci chunk precedentemente forzati altrove. I comandi NON sono stati eseguiti su Minecraft tramite GitHub e finche' l'utente non ne conferma l'esito i chunk non vanno considerati caricati.
+
+**Limite:** la regione centrale della dashboard Computer 54 e' in una posizione diversa e non nota qui; il suo chunk va caricato separatamente per monitoraggio continuativo se non e' gia' gestito. `/forceload` resta valido in mondo attivo, non mantiene il gioco in esecuzione quando e' chiuso.
