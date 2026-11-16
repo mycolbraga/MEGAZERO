@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.1 | stessa traccia v23, recupero automatico sicuro e scarico
+-- MEGAZERO MINER v2.3.2 | v23 checkpoint, mossy cobblestone scavabile e scarto
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -16,7 +16,7 @@ local GRAVITY = { ["minecraft:gravel"]=true, ["minecraft:sand"]=true,
 -- Solo scarti vanilla certi; NON buttare minerali, mod sconosciute o flint.
 local DISCARD = {}
 for _,n in ipairs({
- "stone","cobblestone","deepslate","cobbled_deepslate","tuff",
+ "stone","cobblestone","mossy_cobblestone","deepslate","cobbled_deepslate","tuff",
  "granite","diorite","andesite","calcite","dripstone_block",
  "pointed_dripstone","gravel","sand","red_sand","dirt",
  "coarse_dirt","rooted_dirt","grass_block","netherrack",
@@ -31,7 +31,7 @@ for _,n in ipairs({"cobblestone","cobbled_deepslate","stone","deepslate",
 end
 local NATURAL = {}
 for _,n in ipairs({
- "stone","deepslate","cobbled_deepslate","cobblestone",
+ "stone","deepslate","cobbled_deepslate","cobblestone","mossy_cobblestone",
  "tuff","granite","diorite","andesite","dirt","grass_block",
  "gravel","sand","red_sand","calcite","dripstone_block",
  "pointed_dripstone","clay","moss_block","mud","packed_mud",
