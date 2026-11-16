@@ -1,5 +1,5 @@
--- MEGAZERO CONTROL 1.2 - PING, CHECK e OTA sicuro da centrale
--- Nessun avvio remoto; OTA disponibile solo per Turtle ferme con miner disabilitato.
+-- MEGAZERO CONTROL 1.3 - PING, OTA e avvio remoto confermato
+-- Avvio remoto solo dopo CHECK_START, ARM_START e conferma esplicita.
 -- Miniera iniziale: 40 Turtle, 10 per fronte, ancora non collegate via software.
 
 local PROTOCOL = "megazero.control.v1"
@@ -112,6 +112,12 @@ local function receive(sender, packet, proto)
   local rec = db.units[k] or {site=s, unit=u}
   local prevState, prevError = rec.status, rec.error
   rec.status, rec.sender, rec.lastSeen = state, sender, now()
+  if rec.startRemoteState and state=="SCAVO" then
+    rec.startRemoteState="SCAVO CONFERMATO"
+  end
+  if state=="SCAVO" or state=="RIENTRO" then
+    rec.startAllowed=false
+  end
   if type(packet.x)=="number" and type(packet.y)=="number" and type(packet.z)=="number" then
     rec.position = {
       x=math.floor(packet.x), y=math.floor(packet.y), z=math.floor(packet.z)
@@ -151,6 +157,16 @@ local function sendAdmin(rec,command)
   rec.adminMessage="Prima prepara e verifica l'aggiornamento"
   return
  end
+ if command=="ARM_START" and rec.startAllowed~=true then
+  rec.adminMessage="Prima controlla i requisiti di avvio"
+  return
+ end
+ if command=="START" and (not rec.startArmId or not rec.startArmExpires
+    or now()>rec.startArmExpires) then
+  rec.adminMessage="Autorizzazione scaduta: ripetere ARM_START"
+  rec.startArmId=nil
+  return
+ end
  adminSequence=adminSequence+1
  local id=tostring(os.getComputerID()).."-"..tostring(now()).."-"..tostring(adminSequence)
  local packet={
@@ -158,6 +174,7 @@ local function sendAdmin(rec,command)
   target_unit=rec.unit,target_computer_id=rec.sender,
   request_id=id,command=command
  }
+ if command=="START" then packet.arm_id=rec.startArmId end
  rec.adminPending=id
  rec.adminPendingCommand=command
  rec.adminSent=now()
@@ -188,7 +205,22 @@ local function receiveAdmin(sender,packet,proto)
  rec.adminPendingCommand=nil
  rec.adminLastReply=now()
  if packet.accepted==true and
-   (packet.phase=="DONE" or packet.phase=="STAGED") then
+   (packet.phase=="DONE" or packet.phase=="STAGED" or
+    packet.phase=="ARMED" or packet.phase=="STARTING") then
+  if requested=="CHECK_START" and packet.phase=="DONE" then
+   rec.startAllowed=packet.start_allowed==true
+   rec.startReason=clean(packet.start_reason or "",130)
+   rec.startArmId=nil
+   rec.startArmExpires=nil
+  elseif requested=="ARM_START" and packet.phase=="ARMED" then
+   rec.startArmId=packet.arm_id
+   rec.startArmExpires=now()+18000
+  elseif requested=="START" and packet.phase=="STARTING" then
+   rec.startArmId=nil
+   rec.startAllowed=false
+   rec.startArmExpires=nil
+   rec.startRemoteState="AVVIO RICHIESTO: aspetto SCAVO"
+  end
   if requested=="PREPARE_UPDATE" and packet.phase=="STAGED" then
    rec.adminStaged=true
   elseif requested=="COMMIT_UPDATE" and packet.phase=="DONE" then
@@ -213,6 +245,8 @@ local function receiveAdmin(sender,packet,proto)
    rec.updateBlockReason=clean(packet.block_reason or "",100)
   elseif requested=="COMMIT_UPDATE" then
    rec.updateAvailable=false
+   rec.startAllowed=false
+   rec.startArmId=nil
   end
   addHistory(requested.." "..packet.phase.." "..rec.site.."/"..rec.unit)
  else
@@ -312,12 +346,20 @@ local function drawDetail(r,w,h)
       or (r.updateAvailable and "DISPONIBILE" or "NON PREPARATO")),
     "AGGIORNABILE: "..(r.updateAllowed and "SI" or
       (r.updateBlockReason or "DA VERIFICARE")),
+    "AVVIO REMOTO: "..(r.startRemoteState or (r.startAllowed and
+      "REQUISITI OK, posizione fisica da confermare" or
+      (r.startReason or "DA CONTROLLARE"))),
   }
   for i,t in ipairs(info) do
     local y=5+i
-    if y>=h-2 then break end
+    if y>=h-7 then break end
     line(1,y,w,t,i==1 and ink or colors.white)
   end
+  line(1,h-7,w,"TOCCA: CONTROLLA REQUISITI AVVIO (NON MUOVE)",colors.black,colors.lightBlue)
+  local armed=r.startArmId and r.startArmExpires and now()<=r.startArmExpires
+  line(1,h-6,w,armed and
+    "CONFERMA AVVIO TURTLE ENTRO 18 SECONDI" or
+    "TOCCA: ARMA AVVIO REMOTO",colors.black,colors.yellow)
   line(1,h-5,w,"TOCCA: CONTROLLA VERSIONE E REQUISITI",colors.black,colors.lightBlue)
   line(1,h-4,w,"TOCCA: PREPARA UPDATE (NON INSTALLA)",colors.black,colors.lightBlue)
   local confirm=r.adminConfirmUntil and now()<r.adminConfirmUntil
@@ -402,6 +444,16 @@ local function onTouch(x,y)
    if not rec then selected=nil;return end
    if y==h-2 then
     sendPing(rec)
+   elseif y==h-7 then
+    rec.startAllowed=false
+    rec.startArmId=nil
+    sendAdmin(rec,"CHECK_START")
+   elseif y==h-6 then
+    if rec.startArmId and rec.startArmExpires and now()<=rec.startArmExpires then
+     sendAdmin(rec,"START")
+    else
+     sendAdmin(rec,"ARM_START")
+    end
    elseif y==h-5 then
     sendAdmin(rec,"CHECK_UPDATE")
    elseif y==h-4 then
