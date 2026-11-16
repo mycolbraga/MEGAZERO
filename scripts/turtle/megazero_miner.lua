@@ -322,7 +322,7 @@ function M.start(agent,cfg,options)
      problem:find("slot libero",1,true) then
    error("SCORTE: "..problem)
   end
-  error("Bonifica fallita: "..problem)
+  markBlocked("BONIFICA_FALLITA",f.kind,x,y,z)
  end
  local function prepare(move,x,y,z,first,fluidTransit)
   -- Mai scavare o bonificare all'interno della base.
@@ -342,9 +342,12 @@ function M.start(agent,cfg,options)
     if fluidTransit and f.kind==fluidTransit and not f.source then return end
     local clear=bonify(move,x,y,z,true)
     if not clear then
-     error("Cella sigillata contro una corrente: non puo' essere attraversata")
+     markBlocked("FLUIDO_SIGILLATO_SUL_PERCORSO",f.kind,x,y,z)
     end
-    if f.kind=="ACQUA" and not f.source then return end
+    if not f.source then
+     local still=fluidi.peek(fluidSide(move))
+     if still then markBlocked("CORRENTE_NON_SPARITA",f.kind,x,y,z) end
+    end
    end
    local exists,block=inspect(move)
    if not exists then
@@ -382,7 +385,10 @@ function M.start(agent,cfg,options)
    sleep(0.1)
    local f=fluidi.peek(fluidSide(move))
    if f then
-    assert(bonify(move,x,y,z,false),"Vena aperta su corrente sigillata")
+    local cleared=bonify(move,x,y,z,false)
+    if not cleared then
+     markBlocked("FLUIDO_SIGILLATO_IN_VENA",f.kind,x,y,z)
+    end
    end
    -- Dopo un minerale, gravel/sabbia sovrastanti possono ricadere.
    local still,b=inspect(move)
@@ -510,7 +516,7 @@ function M.start(agent,cfg,options)
           problem:find("slot libero",1,true) then
         error("SCORTE: "..problem)
        end
-       error("Sorgente "..kind.." non raccolta: "..problem)
+       markBlocked("SORGENTE_NON_RACCOLTA",kind,x,y,z)
       elseif depth<64 then
        used=used+1
        step(move,false,false,kind)
