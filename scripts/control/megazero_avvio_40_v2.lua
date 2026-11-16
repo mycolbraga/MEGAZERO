@@ -113,19 +113,19 @@ local function checkResponse(p,job)
  if p.agent_version~="1.4" then return false,"agente diverso da 1.4" end
  if type(p.boot_version)~="string" or
   not p.boot_version:find("^%-%- MEGAZERO BOOT 1%.2") then
-  return false,"boot non v1.1"
+  return false,"boot non v1.2"
  end
  if type(p.miner)~="table" or
   type(p.miner.version)~="string" or
   not p.miner.version:find("^%-%- MEGAZERO MINER v2%.3%.6") then
-  return false,"miner non v2.3.5"
+  return false,"miner non v2.3.6"
  end
  -- N01 ha gia' un checkpoint creato durante il collaudo Ctrl+T, con
  -- ritorno GPS HOME confermato. NON eliminarlo o iniziare da zero.
  -- Le altre 39 devono invece essere senza checkpoint per questa ripartenza.
  if p.miner.saved then
   if job.unit~="N01" then
-   return false,"checkpoint inatteso su "..tostring(p.unit)..": non avvio"
+   return false,"checkpoint inatteso su "..tostring(job.unit)..": non avvio"
   end
   if p.miner.checkpoint_invalid or p.miner.pending or p.miner.finished or
      p.miner.path_count~=0 or
