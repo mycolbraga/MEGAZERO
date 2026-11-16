@@ -1,12 +1,12 @@
--- MEGAZERO ADMIN AGENT v1.2 | OTA e avvio remoto a doppia autorizzazione
+-- MEGAZERO ADMIN AGENT v1.3 | OTA e avvio remoto a doppia autorizzazione
 -- Pacchetti mirati dal PC 54; update consentito solo a Turtle ferma.
 local M={}
 local PROTOCOL="megazero.admin.v1"
-local RELEASE="f6f0628fad7c44f7eb60bd1de4749323ed9c758e"
+local RELEASE="bcb8cde9124f9eb1b1537ce311c127355d91c5e9"
 local BASE="https://raw.githubusercontent.com/mycolbraga/MEGAZERO/"..RELEASE.."/scripts/turtle/"
-local MARKER="/.megazero_ota233_state"
+local MARKER="/.megazero_ota235_state"
 local PACKAGE={
- {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.3.3"},
+ {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.3.5"},
  {name="megazero_fluidi",remote="megazero_fluidi.lua",prefix="-- MEGAZERO FLUIDI v1.0"},
  {name="megazero_auto",remote="megazero_auto.lua",prefix="-- MEGAZERO | Gestione avvio automatico"}
 }
@@ -32,10 +32,10 @@ local function existing(name)
  return "/"..name
 end
 local function stagePath(name)
- return "/.megazero_stage_233_"..name
+ return "/.megazero_stage_235_"..name
 end
 local function backupPath(name)
- return "/.megazero_ota_backup_233_"..name
+ return "/.megazero_ota_backup_235_"..name
 end
 local function mineInfo(unit)
  local header=firstLine(existing("megazero_miner"))
@@ -105,13 +105,13 @@ local function prepareUpdate(unit)
   verifyFile(temp,item)
  end
  write(MARKER,textutils.serialize({unit=unit,release=RELEASE,
-  fileCount=#PACKAGE,version="2.3.3"}))
+  fileCount=#PACKAGE,version="2.3.5"}))
 end
 local function commitUpdate(unit)
  local data=assert(read(MARKER),"Nessun update preparato")
  local mark=assert(textutils.unserialize(data),"Manifest staging illeggibile")
  assert(mark.unit==unit and mark.release==RELEASE and
-   mark.fileCount==#PACKAGE and mark.version=="2.3.3",
+   mark.fileCount==#PACKAGE and mark.version=="2.3.5",
    "Staging non corrispondente")
  for _,item in ipairs(PACKAGE) do
   verifyFile(stagePath(item.name),item)
@@ -161,10 +161,10 @@ local function homeFor(unit)
  n=tonumber(n)
  assert(side and n and n>=1 and n<=10,"Sigla Turtle sconosciuta")
  local i=n-1
- if side=="N" then return 2119-2*i,-53,2995 end
- if side=="O" then return 2099,-53,2995+2*i end
- if side=="S" then return 2099+2*i,-53,3015 end
- return 2119,-53,3015-2*i
+ if side=="N" then return 2119-2*i,-51,2995 end
+ if side=="O" then return 2099,-51,2995+2*i end
+ if side=="S" then return 2099+2*i,-51,3015 end
+ return 2119,-51,3015-2*i
 end
 local function checkStart(cfg,telemetry)
  local raw=read("/megazero_config")
@@ -200,7 +200,7 @@ local function checkStart(cfg,telemetry)
  end
  local version=firstLine(existing("megazero_miner"))
  if not version or version:sub(1,#PACKAGE[1].prefix)~=PACKAGE[1].prefix then
-  return false,"Miner non v2.3.3" end
+  return false,"Miner non v2.3.5" end
  local chest=peripheral.wrap("top")
  if not chest or type(chest.list)~="function" or
     type(chest.pushItems)~="function" or type(chest.size)~="function" then
@@ -257,7 +257,7 @@ function M.listen(cfg,telemetry)
  local selfID=os.getComputerID()
  local seen={}
  local arm=nil
- print("ADMIN AGENT v1.2 | "..unit.." | PC "..central)
+ print("ADMIN AGENT v1.3 | "..unit.." | PC "..central)
  while true do
   local sender,request=rednet.receive(PROTOCOL)
   if sender==central and type(request)=="table" and
@@ -271,7 +271,7 @@ function M.listen(cfg,telemetry)
     local command=request.command
     response={kind="admin_reply",version=1,site=site,unit=unit,
      computer_id=selfID,request_id=request.request_id,command=command,
-     accepted=false,phase="FAILED",agent_version="1.2"}
+     accepted=false,phase="FAILED",agent_version="1.3"}
     local ok,err=pcall(function()
      if command=="PING" or command=="STATUS" or command=="CHECK_UPDATE" or command=="CHECK_START" then
       local latch=read("/.megazero_miner_error")
@@ -322,7 +322,7 @@ function M.listen(cfg,telemetry)
        response.installed=commitUpdate(unit)
        response.accepted=true;response.phase="DONE"
       end
-      response.package_version="2.3.3"
+      response.package_version="2.3.5"
      else
       response.reason="Comando non abilitato su v1.1"
      end
