@@ -127,6 +127,11 @@ for _,rec in pairs(db.units) do
   rec.positionVerified=false
   dirty=true
  end
+ if type(rec)=="table" and rec.site==MAIN_SITE and
+    rec.status=="PREPARAZIONE" and rec.progress~=nil then
+  rec.progress=nil
+  dirty=true
+ end
 end
 saveDatabase()
 
@@ -166,6 +171,8 @@ local function receive(sender, packet, proto)
   if type(packet.fuel)=="number" then rec.fuel=math.floor(packet.fuel) end
   if type(packet.progress)=="number" then
     rec.progress=math.max(0,math.min(100,math.floor(packet.progress)))
+  elseif state=="PREPARAZIONE" then
+    rec.progress=nil
   end
   if type(packet.detail)=="string" then rec.detail=clean(packet.detail,160) end
   if type(packet.error)=="string" then
