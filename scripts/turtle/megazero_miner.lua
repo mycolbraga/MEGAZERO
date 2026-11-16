@@ -753,7 +753,7 @@ function M.start(agent,cfg,options)
   local found=false
   local failure=nil
   for attempt=1,15 do
-   abortIfStop()
+   if stopRequested() then failure=RETURN_REQUESTED;break end
    local slot
    for i=1,16 do
     if turtle.getItemCount(i)==0 then slot=i;break end
@@ -790,6 +790,7 @@ function M.start(agent,cfg,options)
   end
   local restored=restore()
   assert(restored,"Oggetti temporanei da restituire ancora nella Turtle")
+  if failure==RETURN_REQUESTED then error(RETURN_REQUESTED,0) end
   assert(found,failure or "Impossibile raggiungere lava nella cassa superiore")
  end
  local function supply()
