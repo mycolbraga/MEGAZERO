@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.2 | 40 Turtle, fluidi confinati, gallerie differite e copertura
+-- MEGAZERO MINER v2.3 | 40 Turtle, copertura laghi nel settore e livelli differiti
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -23,6 +23,7 @@ for _,n in ipairs({
  "basalt","smooth_basalt","blackstone","soul_sand"
 }) do DISCARD["minecraft:"..n]=true end
 -- Scorta per bloccare i fluidi presa SOLO dallo scavo.
+local SEAL_TARGET=64 -- uno stack di pietre raccolte per coperture e sigilli
 local SEAL_STOCK={}
 for _,n in ipairs({"cobblestone","cobbled_deepslate","stone","deepslate",
  "tuff","granite","diorite","andesite","calcite","blackstone"}) do
@@ -98,7 +99,7 @@ function M.start(agent,cfg,options)
  local dir=DXY[front]
  local side=DXY[left]
  local mode=(options.prova and "_PROVA" or "_LAVORO")
- local PATH="/.megazero_miner_v22_"..cfg.unit..mode..
+ local PATH="/.megazero_miner_v23_"..cfg.unit..mode..
    (options.prova and ("_"..maxDistance.."x"..maxLevels) or "")
  local LATCH="/.megazero_miner_error"
  local fluidi=assert(dofile("/megazero_fluidi"),
@@ -206,7 +207,7 @@ function M.start(agent,cfg,options)
  local function pruneInventory(atBase)
   -- 16 blocchi di scavo per sigillare correnti, tutti gli altri scarti
   -- cadono nel mondo, mai nella cassa collegata a Refined Storage.
-  local reserved=16
+  local reserved=SEAL_TARGET
   compactInventory()
   for i=1,16 do
    local it=turtle.getItemDetail(i)
@@ -245,23 +246,36 @@ function M.start(agent,cfg,options)
  end
  -- I blocchi rimasti a sigillare le correnti non vanno rimossi subito.
  local traceCurrent -- ricerca sorgente dopo una corrente, definita dopo i movimenti
- -- Un lago non deve essere prosciugato come se fosse una sola sorgente.
- -- Evidenza locale di superficie larga: almeno 2 sorgenti dello stesso
- -- liquido visibili dalle sei facce del punto occupato dalla Turtle.
+ -- Non raccogliere sorgenti che sono parte di piu' celle dello stesso fluido.
+ -- Valutazione prudenziale locale: i grandi laghi non sono mappabili
+ -- interamente dall'ispezione di una sola cella; se bloccati, differire.
  local function lakeEvidence(kind)
+  -- Classificazione prudenziale: almeno due facce con lo stesso fluido,
+  -- di cui una sorgente. Basta anche una sola seconda faccia corrente.
+  -- Non si entra nel liquido, si osservano soltanto blocchi adiacenti.
   local old=s.d
   local n=0
+  local sources=0
   for _,dirCode in ipairs({0,1,2,3}) do
    turnTo(dirCode)
    local f=fluidi.peek("front")
-   if f and f.source and f.kind==kind then n=n+1 end
+   if f and f.kind==kind then
+    n=n+1
+    if f.source then sources=sources+1 end
+   end
   end
   local fu=fluidi.peek("up")
   local fd=fluidi.peek("down")
-  if fu and fu.source and fu.kind==kind then n=n+1 end
-  if fd and fd.source and fd.kind==kind then n=n+1 end
+  if fu and fu.kind==kind then
+   n=n+1
+   if fu.source then sources=sources+1 end
+  end
+  if fd and fd.kind==kind then
+   n=n+1
+   if fd.source then sources=sources+1 end
+  end
   turnTo(old)
-  return n>=2
+  return sources>=1 and n>=2
  end
  local function markBlocked(reason,kind,x,y,z)
   error("GALLERIA_INCOMPLETA:"..reason..":"..kind..":"..x..":"..y..":"..z)
@@ -271,7 +285,7 @@ function M.start(agent,cfg,options)
   local sideName=fluidSide(move)
   local f=fluidi.peek(sideName)
   if not f then return true end
-  -- Non raccogliere sorgenti che appartengono a distese visibilmente ampie.
+  -- Distese sospette: mai raccogliere un lago come fonte isolata.
   if f.source and lakeEvidence(f.kind) then
    markBlocked("LAGO_DA_COPRIRE",f.kind,x,y,z)
   end
@@ -611,7 +625,7 @@ function M.start(agent,cfg,options)
    end
   end
   local keepBuckets=3
-  local keepStone=16
+  local keepStone=SEAL_TARGET
   for i=1,16 do
    local it=turtle.getItemDetail(i)
    if it then
@@ -716,7 +730,7 @@ function M.start(agent,cfg,options)
    local goal=math.min(limit,10000)
    while currentFuel()<goal do getLava() end
   end
-  unload() -- Tiene 3 secchi, 16 blocchi; scarica il resto.
+  unload() -- Tiene 3 secchi e fino a SEAL_TARGET blocchi dallo scavo.
  end
  -- Crea una superficie di passaggio su liquido sotto la Turtle,
  -- senza usare secchi. Il blocco di copertura e' sempre nel settore.
@@ -725,9 +739,9 @@ function M.start(agent,cfg,options)
   if not inSector(x,y,z) then return end
   local f=fluidi.peek("down")
   if not f then return end
-  -- Una corrente che arriva da altrove non va bloccata a caso.
-  -- La Turtle cerca la sorgente nel proprio settore; in caso contrario
-  -- rinvia il livello, lasciando il flusso alla Turtle responsabile.
+  -- Corrente sotto al percorso: NON coprirla alla cieca,
+  -- potrebbe provenire dal settore di un'altra Turtle.
+  -- Cerca la sorgente solo nel proprio settore; se irrisolta, differisce.
   if not f.source then
    local clear=bonify("D",x,y,z,true)
    if not clear or fluidi.peek("down") then
@@ -735,7 +749,8 @@ function M.start(agent,cfg,options)
    end
    return
   end
-  -- Superficie sorgente sotto la galleria: pavimentare senza secchi.
+  -- Superficie sorgente sotto la galleria: coprire con pietra dello scavo,
+  -- senza prelevare secchi e senza uscire dal settore.
   local chosen
   for i=1,16 do
    local item=turtle.getItemDetail(i)
