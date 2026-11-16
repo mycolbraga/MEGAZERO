@@ -1,4 +1,4 @@
--- MEGAZERO | Bootstrap admin v1.2 su Turtle ferma | NON avvia scavo
+-- MEGAZERO | Bootstrap admin v1.3 su Turtle ferma | NON avvia scavo
 -- Uso: wget run <URL> N02
 assert(turtle,"Esegui questo installatore su una Turtle, non sulla centrale")
 local args={...}
@@ -41,7 +41,7 @@ local function fetch(remote,prefix)
  return content
 end
 print("Bootstrap amministrativo "..unit.." (MINER FERMO)")
-local newAgent=fetch("megazero_admin_agent.lua","-- MEGAZERO ADMIN AGENT v1.2")
+local newAgent=fetch("megazero_admin_agent.lua","-- MEGAZERO ADMIN AGENT v1.3")
 local newBoot=fetch("megazero_boot.lua","-- MEGAZERO BOOT 1.1")
 local function write(path,body)
  local f=assert(fs.open(path,"w"),"Impossibile scrivere "..path)
@@ -64,6 +64,6 @@ if not ok then
  print("Se necessario, controlla i file .new e backup prima di riprovare")
  return
 end
-print("AGENTE v1.2 e BOOT v1.1 installati su "..unit)
+print("AGENTE v1.3 e BOOT v1.1 installati su "..unit)
 print("STARTUP e CONFIG INALTERATI, miner_autostart=false")
 print("Nessun movimento. Esegui REBOOT solo quando vuoi avviare l'ascolto.")
