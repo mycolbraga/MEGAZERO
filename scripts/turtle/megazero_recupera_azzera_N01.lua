@@ -8,6 +8,7 @@ local CONFIG="/megazero_config"
 local CHECKPOINT="/.megazero_miner_v23_N01_LAVORO"
 local BACKUP_CP="/.megazero_N01_rescue_original"
 local BACKUP_CONFIG="/.megazero_N01_rescue_config"
+local BACKUP_LATCH="/.megazero_N01_rescue_latch_original"
 local ARCHIVE="/.megazero_N01_rescue_reset_checkpoint"
 local STAGED_CP="/.megazero_N01_rescue_staged"
 local STAGED_CONFIG="/.megazero_N01_rescue_config_staged"
@@ -44,8 +45,18 @@ local last=data.path[#data.path]
 assert(type(last)=="table" and last.m=="F" and last.d==3,
  "Ultimo passo non corrisponde: STOP")
 assert(data.level==4 and data.distance==9,"Avanzamento diverso: STOP")
-assert(not fs.exists("/.megazero_miner_error"),"Errore miner presente: STOP")
+-- La diagnosi ha confermato l'unico latch atteso: pending TURN.
+-- Qualsiasi altra causa di arresto resta bloccante.
+local latchPath="/.megazero_miner_error"
+local knownLatch=nil
+if fs.exists(latchPath) then
+ knownLatch=read(latchPath)
+ assert(knownLatch:find("Posizione fisica incerta dopo riavvio: verifica manuale",1,true)
+  and not knownLatch:find("RIENTRO NON RIUSCITO",1,true),
+  "Errore miner diverso da pending TURN: STOP")
+end
 assert(not fs.exists(BACKUP_CP) and not fs.exists(BACKUP_CONFIG) and
+ not fs.exists(BACKUP_LATCH) and
  not fs.exists(ARCHIVE) and not fs.exists(STAGED_CP) and
  not fs.exists(STAGED_CONFIG) and not fs.exists(MARKER),
  "Procedura gia' iniziata o backup presente: NON ripetere")
@@ -60,6 +71,12 @@ assert(type(miner)=="function","Miner non valido")
 -- In caso di interruzione o reboot, N01 non riparte da sola.
 fs.copy(CHECKPOINT,BACKUP_CP)
 fs.copy(CONFIG,BACKUP_CONFIG)
+if knownLatch then
+ fs.copy(latchPath,BACKUP_LATCH)
+ assert(read(BACKUP_LATCH)==knownLatch,"Backup errore non verificato")
+ fs.delete(latchPath)
+ print("Errore pending TURN archiviato, recupero autorizzato.")
+end
 cfg.miner_autostart=false
 saveReplace(CONFIG,textutils.serialize(cfg),STAGED_CONFIG)
 
