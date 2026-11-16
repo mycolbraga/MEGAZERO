@@ -1,4 +1,4 @@
--- MEGAZERO ADMIN AGENT v1.1 | PING, CHECK, PREPARE, COMMIT: NON SCAVA
+-- MEGAZERO ADMIN AGENT v1.2 | OTA e avvio remoto a doppia autorizzazione
 -- Pacchetti mirati dal PC 54; update consentito solo a Turtle ferma.
 local M={}
 local PROTOCOL="megazero.admin.v1"
@@ -154,6 +154,91 @@ local function commitUpdate(unit)
  return #PACKAGE
 end
 
+-- Controllo per l'avvio remoto, SENZA muovere la Turtle.
+-- Le coordinate reali/orientamento non possono essere provati senza GPS.
+local function homeFor(unit)
+ local side,n=unit:match("^([NOSE])(%d%d)$")
+ n=tonumber(n)
+ assert(side and n and n>=1 and n<=10,"Sigla Turtle sconosciuta")
+ local i=n-1
+ if side=="N" then return 2119-2*i,-53,2995 end
+ if side=="O" then return 2099,-53,2995+2*i end
+ if side=="S" then return 2099+2*i,-53,3015 end
+ return 2119,-53,3015-2*i
+end
+local function checkStart(cfg,telemetry)
+ local raw=read("/megazero_config")
+ local ok,diskCfg=pcall(textutils.unserialize,raw or "")
+ if not ok or type(diskCfg)~="table" then
+  return false,"Configurazione su disco non valida" end
+ if diskCfg.unit~=cfg.unit or diskCfg.site~=cfg.site then
+  return false,"Identita' config discordante" end
+ if diskCfg.miner_autostart~=false or cfg.miner_autostart~=false then
+  return false,"Avvio miner gia' abilitato" end
+ if telemetry.status~="PREPARAZIONE" and telemetry.status~="BASE" then
+  return false,"Stato non autorizzato: "..tostring(telemetry.status) end
+ if fs.exists("/.megazero_miner_error") then
+  return false,"Errore miner non risolto" end
+ if fs.exists(MARKER) then
+  return false,"Aggiornamento OTA ancora preparato" end
+ local cp=mineInfo(cfg.unit)
+ if cp.checkpoint_invalid then return false,"Checkpoint non leggibile" end
+ if cp.saved then
+  if cp.finished then return false,"Lavoro gia' completato" end
+  if cp.pending or cp.path_count~=0 then
+   return false,"Traccia attiva o posizione incerta" end
+  local hx,hy,hz=homeFor(cfg.unit)
+  if cp.saved_x~=hx or cp.saved_y~=hy or cp.saved_z~=hz then
+   return false,"Checkpoint non alla propria base" end
+ end
+ for _,name in ipairs({"megazero_miner","megazero_fluidi","megazero_auto"}) do
+  local path=existing(name)
+  if not fs.exists(path) then return false,"Modulo mancante: "..name end
+  local source=read(path)
+  local fn,err=load(source or "","="..name)
+  if not fn then return false,"Modulo non compilabile: "..name.." "..tostring(err) end
+ end
+ local version=firstLine(existing("megazero_miner"))
+ if not version or version:sub(1,#PACKAGE[1].prefix)~=PACKAGE[1].prefix then
+  return false,"Miner non v2.3.2" end
+ local chest=peripheral.wrap("top")
+ if not chest or type(chest.list)~="function" or
+    type(chest.pushItems)~="function" or type(chest.size)~="function" then
+  return false,"Cassa rifornimento superiore non disponibile" end
+ local available=0
+ local items=chest.list()
+ if type(items)~="table" then return false,"Cassa superiore illeggibile" end
+ for _,item in pairs(items) do
+  if item.name=="minecraft:lava_bucket" then available=available+item.count end
+ end
+ local fuel=turtle.getFuelLevel()
+ if type(fuel)=="number" and fuel<10000 and available<1 then
+  return false,"Manca lava nella cassa superiore" end
+ return true,"Controlli base e rifornimento superati: posizione fisica non verificata"
+end
+local function enableAutostart(cfg)
+ local path="/megazero_config"
+ local raw=assert(read(path),"Configurazione assente")
+ local diskCfg=assert(textutils.unserialize(raw),"Configurazione non leggibile")
+ assert(diskCfg.unit==cfg.unit and diskCfg.site==cfg.site and
+   diskCfg.miner_autostart==false,"Configurazione cambiata: avvio vietato")
+ local temp="/.megazero_remote_start_config.new"
+ assert(not fs.exists(temp),"Config temporanea gia' presente")
+ diskCfg.miner_autostart=true
+ write(temp,textutils.serialize(diskCfg))
+ local before=assert(read(path),"Config originale non leggibile")
+ local backup="/.megazero_remote_start_config.backup"
+ if fs.exists(backup) then fs.delete(backup) end
+ fs.copy(path,backup)
+ fs.delete(path)
+ local ok,why=pcall(fs.move,temp,path)
+ if not ok then
+  if fs.exists(backup) then fs.copy(backup,path) end
+  error("Config remoto non applicata: "..tostring(why))
+ end
+ return true
+end
+
 function M.listen(cfg,telemetry)
  assert(type(cfg)=="table" and type(telemetry)=="table",
   "Agente remoto richiede configurazione e rete")
@@ -165,7 +250,8 @@ function M.listen(cfg,telemetry)
   "Sito o centrale inattesi")
  local selfID=os.getComputerID()
  local seen={}
- print("ADMIN AGENT v1.1 | "..unit.." | PC "..central)
+ local arm=nil
+ print("ADMIN AGENT v1.2 | "..unit.." | PC "..central)
  while true do
   local sender,request=rednet.receive(PROTOCOL)
   if sender==central and type(request)=="table" and
@@ -179,9 +265,9 @@ function M.listen(cfg,telemetry)
     local command=request.command
     response={kind="admin_reply",version=1,site=site,unit=unit,
      computer_id=selfID,request_id=request.request_id,command=command,
-     accepted=false,phase="FAILED",agent_version="1.1"}
+     accepted=false,phase="FAILED",agent_version="1.2"}
     local ok,err=pcall(function()
-     if command=="PING" or command=="STATUS" or command=="CHECK_UPDATE" then
+     if command=="PING" or command=="STATUS" or command=="CHECK_UPDATE" or command=="CHECK_START" then
       local latch=read("/.megazero_miner_error")
       response.miner=mineInfo(unit)
       response.boot_version=firstLine(existing("megazero_boot")) or "?"
@@ -189,6 +275,12 @@ function M.listen(cfg,telemetry)
       response.error_latch=latch and latch:sub(1,160) or nil
       response.current_status=telemetry.status
       response.fuel=turtle.getFuelLevel()
+      if command=="CHECK_START" then
+       local allowed,reason=checkStart(cfg,telemetry)
+       response.start_allowed=allowed
+       response.start_reason=reason
+       response.start_requires_physical_check=true
+      end
       if command=="CHECK_UPDATE" then
        response.update_available=not checkBundle()
        response.staged=fs.exists(MARKER)
@@ -197,6 +289,23 @@ function M.listen(cfg,telemetry)
        response.block_reason=reason
       end
       response.accepted=true;response.phase="DONE"
+     elseif command=="ARM_START" then
+      local allowed,reason=checkStart(cfg,telemetry)
+      assert(allowed,reason)
+      arm={id=request.request_id,expiry=os.epoch("utc")+20000}
+      response.accepted=true;response.phase="ARMED"
+      response.arm_id=arm.id
+      response.expires_in=20
+     elseif command=="START" then
+      assert(arm and os.epoch("utc")<=arm.expiry,
+       "Autorizzazione scaduta: ripetere ARM_START")
+      assert(type(request.arm_id)=="string" and request.arm_id==arm.id,
+       "Autorizzazione avvio non corrispondente")
+      arm=nil
+      local allowed,reason=checkStart(cfg,telemetry)
+      assert(allowed,reason)
+      enableAutostart(cfg)
+      response.accepted=true;response.phase="STARTING"
      elseif command=="PREPARE_UPDATE" or command=="COMMIT_UPDATE" then
       local allowed,reason=checkStopped(cfg,telemetry)
       assert(allowed,reason)
@@ -219,6 +328,12 @@ function M.listen(cfg,telemetry)
     seen[request.request_id]=response
    end
    rednet.send(central,response,PROTOCOL)
+   if response.accepted==true and response.phase=="STARTING"
+      and response.command=="START" then
+    -- Invio ACK prima del reboot. STARTING non equivale a scavo confermato.
+    sleep(2)
+    os.reboot()
+   end
   end
  end
 end
