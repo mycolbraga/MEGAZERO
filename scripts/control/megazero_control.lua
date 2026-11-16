@@ -1,9 +1,15 @@
--- MEGAZERO CONTROL 1.5 - HOME Y=-51, POS affidabile, OTA e avvio remoto
+-- MEGAZERO CONTROL 1.6 - GPS passivo in tempo reale, HOME Y=-51, OTA e avvio remoto
 -- Avvio remoto solo dopo CHECK_START, ARM_START e conferma esplicita.
 -- Miniera iniziale: 40 Turtle, 10 per fronte, ancora non collegate via software.
 
 local PROTOCOL = "megazero.control.v1"
 local ADMIN_PROTOCOL = "megazero.admin.v1"
+local GPS_PROTOCOL = "megazero.gps.passive.v1"
+local GPS_ANCHORS={
+ G1={2097,108,2713},G2={2100,108,2713},
+ G3={2100,108,2716},G4={2100,111,2716}
+}
+local gpsFrames={}
 local adminSequence = 0
 local HOSTNAME = "megazero-central"
 local DATA_FILE = "/.megazero_control_db"
@@ -303,6 +309,70 @@ local function receiveAdmin(sender,packet,proto)
  dirty=true
 end
 
+-- GPS PASSIVO: le Turtle inviano la telemetria normale al PC54.
+-- Ogni host misura la distanza dello STESSO pacchetto radio.
+-- Nessuna lettura GPS puo' provocare stop, error latch o comandi Turtle.
+local function receiveGPS(sender,p,proto)
+ if proto~=GPS_PROTOCOL or type(p)~="table" or
+   p.kind~="gps_range" or p.version~=1 then return end
+ local anchor=GPS_ANCHORS[p.anchor]
+ if not anchor or p.x~=anchor[1] or p.y~=anchor[2] or
+    p.z~=anchor[3] then return end
+ if type(p.unit)~="string" or not p.unit:match("^[NOSE]%d%d$") or
+    type(p.turtle_id)~="number" or type(p.frame_id)~="number" or
+    type(p.distance)~="number" or p.distance~=p.distance or
+    p.distance<0 or p.distance>50000 then return end
+ local rec=db.units[unitKey(MAIN_SITE,p.unit)]
+ if not rec or rec.sender~=p.turtle_id then return end
+ local key=tostring(p.turtle_id)..":"..tostring(p.frame_id)
+ local t=now()
+ local frame=gpsFrames[key]
+ if not frame or t-frame.created>6500 then
+  frame={created=t,unit=p.unit,measure={}}
+  gpsFrames[key]=frame
+ end
+ if frame.unit~=p.unit then return end
+ frame.measure[p.anchor]=p
+ local g1,g2,g3,g4=frame.measure.G1,frame.measure.G2,
+                         frame.measure.G3,frame.measure.G4
+ if not (g1 and g2 and g3 and g4) then return end
+ local a,b,c,d=g1.distance,g2.distance,g3.distance,g4.distance
+ -- Quattro host a 3 blocchi sugli assi: risolve tre differenze di sfere.
+ -- Coordinate relative a G1; evita perdita di precisione dai valori assoluti.
+ local x=2097+(9+a*a-b*b)/6
+ local z=2713+(9+b*b-c*c)/6
+ local y=108+(9+c*c-d*d)/6
+ -- Il margine permette piccole imprecisioni radio; misure incoerenti
+ -- vengono ignorate, mai usate per comandare o bloccare le Turtle.
+ local ax=math.floor(x+0.5)
+ local ay=math.floor(y+0.5)
+ local az=math.floor(z+0.5)
+ local expected=math.sqrt((ax-2097)^2+(ay-108)^2+(az-2713)^2)
+ if math.abs(expected-a)>1.5 or
+    math.abs(math.sqrt((ax-2100)^2+(ay-108)^2+(az-2713)^2)-b)>1.5 or
+    math.abs(math.sqrt((ax-2100)^2+(ay-108)^2+(az-2716)^2)-c)>1.5 or
+    math.abs(math.sqrt((ax-2100)^2+(ay-111)^2+(az-2716)^2)-d)>1.5 then
+  gpsFrames[key]=nil
+  return
+ end
+ rec.gps={x=ax,y=ay,z=az,seen=t}
+ if type(g1.miner_x)=="number" and type(g1.miner_y)=="number" and
+    type(g1.miner_z)=="number" then
+  local dx=ax-g1.miner_x
+  local dy=ay-g1.miner_y
+  local dz=az-g1.miner_z
+  rec.gps.delta=math.sqrt(dx*dx+dy*dy+dz*dz)
+ else
+  rec.gps.delta=nil
+ end
+ gpsFrames[key]=nil
+ -- Elimina soltanto le misurazioni parziali vecchie.
+ for k,v in pairs(gpsFrames) do
+  if t-v.created>6500 then gpsFrames[k]=nil end
+ end
+ dirty=true
+end
+
 local function siteNames()
   local list,seen={},{}
   for _,r in pairs(db.units) do
@@ -372,8 +442,14 @@ local function drawDetail(r,w,h)
     "STATO: "..state,
     "PC TURTLE: "..tostring(r.sender or "mai connessa"),
     "HOME: "..(r.home and (r.home.x..","..r.home.y..","..r.home.z) or "?"),
-    "POS: "..(r.position and (r.position.x..","..r.position.y..","..r.position.z)
-      or "NON VERIFICATA (nessun dato recente)"),
+    "POS MINER: "..(r.position and (r.position.x..","..r.position.y..","..r.position.z)
+      or "NON VERIFICATA"),
+    "POS GPS: "..(r.gps and
+      (r.gps.x..","..r.gps.y..","..r.gps.z..
+       " | "..(math.floor(math.max(0,now()-r.gps.seen)/1000)).."s fa") or
+      "NESSUNA LETTURA"),
+    "SCARTO GPS: "..(r.gps and r.gps.delta and
+      (string.format("%.1f",r.gps.delta).." blocchi (solo avviso)") or "-"),
     "CARBURANTE: "..tostring(r.fuel or "?"),
     "AVANZAMENTO: "..(r.progress and (r.progress.."%") or "?"),
     "DETTAGLIO: "..(r.detail or "-"),
@@ -548,7 +624,8 @@ while true do
   local event,a,b,c=os.pullEventRaw()
   if event=="rednet_message" then
     if c==PROTOCOL then receive(a,b,c)
-    elseif c==ADMIN_PROTOCOL then receiveAdmin(a,b,c) end
+    elseif c==ADMIN_PROTOCOL then receiveAdmin(a,b,c)
+    elseif c==GPS_PROTOCOL then receiveGPS(a,b,c) end
     draw()
   elseif event=="monitor_touch" and a==peripheral.getName(monitor) then
     onTouch(b,c)
