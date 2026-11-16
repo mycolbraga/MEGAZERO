@@ -351,3 +351,14 @@ Il prototipo `scripts/turtle/megazero_pilot.lua` **attualmente tratta `water` e 
 - **Aggiornamento e attivazione:** `megazero_aggiorna_miner_v2.lua` e `megazero_auto.lua` allineati a v2.2; non e' stato acceso nessun miner da remoto.
 - **Verifica statica:** coordinate orizzontali di tutti i 40 settori (24.000 celle) simulate con le formule di `homeFor`/`inSector`: nessuna sovrapposizione e nessuna cella in base. Non e' un test in Minecraft.
 - **Stato reale:** script pubblicato, **non collaudato in gioco**. La diagnosi dei laghi e' euristica, non prova che ogni lago venga coperto. Assenza di test multi-Turtle contemporaneo, di GPS e di gestione chunk.
+
+
+## Miner v2.3 - sicurezza laghi e prima partenza controllata N01 (16 novembre 2026)
+
+- **v2.3 pubblicata in posto:** scripts/turtle/megazero_miner.lua, sempre miner UNICO per 40 Turtle; checkpoint nuovi `/.megazero_miner_v23_<UNIT>_LAVORO` per non leggere i salvataggi v2.2.
+- **Distinzione dei liquidi:** ora riconosce conservativamente come distesa collegata un punto con almeno una sorgente e almeno due facce adiacenti occupate dallo stesso liquido, comprese correnti. Non e' un rilevamento matematicamente certo di TUTTI i laghi: una sorgente sulla riva potrebbe non presentare abbastanza dati osservabili.
+- **Copertura:** i laghi sorgente SOTTO la posizione nella galleria possono essere pavimentati con blocchi solidi raccolti scavando, evitando i secchi. Se la copertura non riesce, il livello viene registrato come incompleto; i laghi frontalmente non raggiungibili con copertura sicura vengono rinviati anziche' forzati o prosciugati. NON dichiarare implementata la copertura completa dei laghi frontali e grandi.
+- **Scorta da copertura:** ora fino a 64 blocchi idonei raccolti dal normale scavo; nessun prelievo di smooth stone dalla cassa.
+- **Correnti esterne:** l'inseguimento delle sorgenti resta confinato al settore personale (mai oltre). Se la sorgente non e' raggiungibile nel settore, salva coordinate/tipo ostacolo, rientra e prova quota successiva; alla fine un solo giro di recupero. Le altre Turtle non vengono avviate automaticamente da questa modifica.
+- **Installazione:** megazero_aggiorna_miner_v2.lua e megazero_auto.lua allineati alla versione v2.3. Installatore NON avvia o riavvia; per avviare N01 serve azione esplicita sulla N01 (`megazero_auto attiva` e `reboot`) dopo che ha scaricato gli script e superato il controllo sintattico.
+- **Stato:** nessuna Turtle avviata tramite GitHub; v2.3 NON ancora collaudata in gioco. Avviare solo N01 e osservare i primi movimenti, quota, rifornimento, scarti e rientro. Se un lago non e' copribile, deve sospendere la galleria, senza insistere all'infinito.
