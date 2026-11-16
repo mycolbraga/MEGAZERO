@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.0 | 40 Turtle, gallerie 2x2, vene selettive, scorte e sicurezza
+-- MEGAZERO MINER v2.1 | 40 Turtle, gallerie 2x2, fluidi, fuel 10000, scarti selettivi
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -13,6 +13,21 @@ for y=-1,-61,-3 do LEVELS[#LEVELS+1]=y end
 local ORE_WORDS = {":ore_", "_ore"}
 local GRAVITY = { ["minecraft:gravel"]=true, ["minecraft:sand"]=true,
  ["minecraft:red_sand"]=true }
+-- Solo scarti vanilla certi; NON buttare minerali, mod sconosciute o flint.
+local DISCARD = {}
+for _,n in ipairs({
+ "stone","cobblestone","deepslate","cobbled_deepslate","tuff",
+ "granite","diorite","andesite","calcite","dripstone_block",
+ "pointed_dripstone","gravel","sand","red_sand","dirt",
+ "coarse_dirt","rooted_dirt","grass_block","netherrack",
+ "basalt","smooth_basalt","blackstone","soul_sand"
+}) do DISCARD["minecraft:"..n]=true end
+-- Scorta per bloccare i fluidi presa SOLO dallo scavo.
+local SEAL_STOCK={}
+for _,n in ipairs({"cobblestone","cobbled_deepslate","stone","deepslate",
+ "tuff","granite","diorite","andesite","calcite","blackstone"}) do
+ SEAL_STOCK["minecraft:"..n]=true
+end
 local NATURAL = {}
 for _,n in ipairs({
  "stone","deepslate","cobbled_deepslate","cobblestone",
@@ -83,7 +98,7 @@ function M.start(agent,cfg,options)
  local dir=DXY[front]
  local side=DXY[left]
  local mode=(options.prova and "_PROVA" or "_LAVORO")
- local PATH="/.megazero_miner_v2_"..cfg.unit..mode..
+ local PATH="/.megazero_miner_v21_"..cfg.unit..mode..
    (options.prova and ("_"..maxDistance.."x"..maxLevels) or "")
  local LATCH="/.megazero_miner_error"
  local fluidi=assert(dofile("/megazero_fluidi"),
@@ -185,6 +200,28 @@ function M.start(agent,cfg,options)
    end
   end
  end
+ local function pruneInventory(atBase)
+  -- 16 blocchi di scavo per sigillare correnti, tutti gli altri scarti
+  -- cadono nel mondo, mai nella cassa collegata a Refined Storage.
+  local reserved=16
+  compactInventory()
+  for i=1,16 do
+   local it=turtle.getItemDetail(i)
+   if it and DISCARD[it.name] then
+    local keep=0
+    if SEAL_STOCK[it.name] then
+     keep=math.min(reserved,it.count)
+     reserved=reserved-keep
+    end
+    local excess=it.count-keep
+    if excess>0 then
+     turtle.select(i)
+     local ok=atBase and turtle.drop(excess) or turtle.dropDown(excess)
+     assert(ok,"Impossibile espellere materiale comune "..it.name)
+    end
+   end
+  end
+ end
  local function countItem(name)
   local n=0
   for i=1,16 do
@@ -204,14 +241,23 @@ function M.start(agent,cfg,options)
   end
  end
  -- I blocchi rimasti a sigillare le correnti non vanno rimossi subito.
+ local traceCurrent -- ricerca sorgente dopo una corrente, definita dopo i movimenti
  local function bonify(move,x,y,z,allowFlow)
   assert(inSector(x,y,z),"Bonifica fuori fascia")
   local sideName=fluidSide(move)
   local f=fluidi.peek(sideName)
   if not f then return true end
-  if not f.source and allowFlow and f.kind=="ACQUA" then
-   s.waterPending=true;save()
-   return true -- transitabile, MA bonifica ancora da confermare
+  if not f.source and allowFlow then
+   detailStatus("SCAVO","SEGUO CORRENTE "..f.kind.." da "..x..","..y..","..z)
+   assert(type(traceCurrent)=="function","Ricerca corrente non inizializzata")
+   local found=traceCurrent(f.kind)
+   assert(found,"Sorgente "..f.kind..
+     " non trovata nella propria fascia entro 12 celle: rientro di sicurezza")
+   sleep(0.5)
+   assert(not fluidi.peek(sideName),
+     "La corrente "..f.kind.." persiste dopo aver raccolto la sorgente")
+   s.waterPending=false;save()
+   return true
   end
   local before=f.kind=="ACQUA" and countItem("minecraft:water_bucket")
     or countItem("minecraft:lava_bucket")
@@ -236,7 +282,7 @@ function M.start(agent,cfg,options)
   end
   error("Bonifica fallita: "..tostring(why or result))
  end
- local function prepare(move,x,y,z,first)
+ local function prepare(move,x,y,z,first,fluidTransit)
   -- Mai scavare o bonificare all'interno della base.
   assert(inSector(x,y,z),"Intervento fuori area o dentro la base vietato")
   if first then
@@ -251,7 +297,8 @@ function M.start(agent,cfg,options)
   while digs<256 do
    local f=fluidi.peek(fluidSide(move))
    if f then
-    local clear=bonify(move,x,y,z,move=="F")
+    if fluidTransit and not f.source then return end
+    local clear=bonify(move,x,y,z,true)
     if not clear then
      error("Cella sigillata contro una corrente: non puo' essere attraversata")
     end
@@ -269,7 +316,7 @@ function M.start(agent,cfg,options)
     assert(not unsafe(name),"Infrastruttura o blocco protetto: "..name)
     assert(NATURAL[name] or isOre(block) or isSpawner(block),
      "Blocco non minerario sconosciuto: "..name)
-    if freeSlots()<=2 then compactInventory() end
+    if freeSlots()<=2 then pruneInventory(false);compactInventory() end
     assert(freeSlots()>2,"SCORTE: inventario quasi pieno")
     local ok,why=dig(move)
     assert(ok,"Scavo impossibile "..name..": "..tostring(why))
@@ -279,11 +326,11 @@ function M.start(agent,cfg,options)
   end
   error("Colonna di gravel/sabbia o blocchi troppo lunga: oltre 256 tentativi")
  end
- local function step(move,first,oreOnly)
+ local function step(move,first,oreOnly,fluidTransit)
   local x,y,z=coords(move)
   assert(canOccupy(x,y,z),"Movimento vietato fuori corsia")
   reserveGoing(1)
-  if freeSlots()<=2 then compactInventory() end
+  if freeSlots()<=2 then pruneInventory(false);compactInventory() end
   assert(freeSlots()>2,"SCORTE: inventario quasi pieno")
   if oreOnly then
    local exists,block=inspect(move)
@@ -303,8 +350,9 @@ function M.start(agent,cfg,options)
    assert(not inspect(move),"Vena ostruita dopo scavo")
    s.ore=s.ore+1;save()
   else
-   prepare(move,x,y,z,first)
+   prepare(move,x,y,z,first,fluidTransit)
   end
+  pruneInventory(false)
   s.pending="STEP";save()
   local fn=move=="U" and turtle.up or move=="D" and turtle.down
     or turtle.forward
@@ -376,6 +424,67 @@ function M.start(agent,cfg,options)
   if kind=="D" then return s.x,s.y-1,s.z end
   return s.x+DXY[d][1],s.y,s.z+DXY[d][2]
  end
+ -- Adattamento della prova corrente N01 al motore di tutte le Turtle.
+ -- Segue soltanto le celle che contengono il fluido cercato, senza
+ -- scavare deviazioni, per massimo 12 celle e 8 passi di profondita'.
+ -- Cerca davanti, sui lati, dietro, sopra e sotto; resta nel settore.
+ -- Al termine torna esattamente al punto da cui la corrente era stata vista.
+ traceCurrent=function(kind)
+  local seen={}
+  local used=0
+  local originX,originY,originZ=s.x,s.y,s.z
+  local originLength=#s.path
+  local buckets=kind=="ACQUA" and "minecraft:water_bucket" or "minecraft:lava_bucket"
+  local function visit(depth)
+   if depth>8 or used>=12 then return false end
+   local savedDir=s.d
+   local choices={{"F",front},{"F",left},{"F",(front+1)%4},
+     {"F",(front+2)%4},{"U",0},{"D",0}}
+   for _,entry in ipairs(choices) do
+    if used>=12 then break end
+    local move,d=entry[1],entry[2]
+    local x,y,z=dirTarget(move,d)
+    local key=x..":"..y..":"..z
+    if inSector(x,y,z) and not seen[key] then
+     seen[key]=true
+     if move=="F" then turnTo(d) end
+     local sideName=fluidSide(move)
+     local f=fluidi.peek(sideName)
+     if f and f.kind==kind then
+      if f.source then
+       local old=countItem(buckets)
+       local result,why=fluidi.resolve(sideName,{x=x,y=y,z=z},
+        function(cx,cy,cz) return cx==x and cy==y and cz==z and
+          inSector(cx,cy,cz) end)
+       if result=="raccolto" then
+        assert(countItem(buckets)>old,"Secchio pieno non confermato")
+        s.buckets=s.buckets+1;save()
+        detailStatus("SCAVO","SORGENTE "..kind.." raccolta a "..key)
+        turnTo(savedDir)
+        return true
+       end
+       error("Sorgente "..kind.." non raccolta: "..tostring(why or result))
+      elseif depth<8 then
+       used=used+1
+       step(move,false,false,true)
+       local found=visit(depth+1)
+       reverseOne()
+       if found then
+        turnTo(savedDir)
+        return true
+       end
+      end
+     end
+    end
+   end
+   turnTo(savedDir)
+   return false
+  end
+  local found=visit(0)
+  assert(s.x==originX and s.y==originY and s.z==originZ
+    and #s.path==originLength,"Ricerca corrente non rientrata all'origine")
+  return found
+ end
  local function extractVein()
   -- DFS selettiva con rientro automatico al nodo di partenza.
   -- Solo ORE riconosciute, max 32 minerali per punto di ispezione.
@@ -427,15 +536,16 @@ function M.start(agent,cfg,options)
   local x,y,z=coords("U")
   if inSector(x,y,z) then
    local f=fluidi.peek("up")
-   if f then bonify("U",x,y,z,false) end
+   if f then bonify("U",x,y,z,true) end
   end
   -- La seconda colonna fa parte della galleria 2x2: non sigillarla
   -- preventivamente per poi rompere il tappo entrando nella fascia.
-  -- La bonifica avviene quando carveWidth prova ad aprire la cella.
+  -- La bonifica avviene quando carveWidth apre la seconda colonna.
   extractVein()
  end
  local function unload()
   assert(atHome(),"Scarico solo alla base")
+  pruneInventory(true)
   local limit=turtle.getFuelLimit()
   for i=1,16 do
    local it=turtle.getItemDetail(i)
@@ -452,9 +562,7 @@ function M.start(agent,cfg,options)
     local keep=0
     if it.name=="minecraft:bucket" then
      keep=math.min(keepBuckets,it.count);keepBuckets=keepBuckets-keep
-    elseif it.name=="minecraft:cobblestone" or
-           it.name=="minecraft:cobbled_deepslate" or
-           it.name=="minecraft:smooth_stone" then
+    elseif SEAL_STOCK[it.name] then
      keep=math.min(keepStone,it.count);keepStone=keepStone-keep
     end
     local count=it.count-keep
@@ -544,16 +652,11 @@ function M.start(agent,cfg,options)
    local ok,why=fluidi.ensureBuckets(3)
    assert(ok,"Scorta secchi non ottenibile: "..tostring(why))
   end
-  -- Preleva smooth stone, se presente, per mantenere 16 blocchi da sigillo.
-  local have=countItem("minecraft:smooth_stone")
-    +countItem("minecraft:cobblestone")
-    +countItem("minecraft:cobbled_deepslate")
-  if have<16 then pullFromTop("minecraft:smooth_stone",16-have) end
   local limit=turtle.getFuelLimit()
   local fuel=turtle.getFuelLevel()
   if type(limit)=="number" and type(fuel)=="number" then
    -- Non e' un tetto al fuel: si puo' bruciare altra lava per avere secchi.
-   local goal=math.min(limit,3500)
+   local goal=math.min(limit,10000)
    while currentFuel()<goal do getLava() end
   end
   unload() -- Tiene 3 secchi, 16 blocchi; scarica il resto.
@@ -597,7 +700,7 @@ function M.start(agent,cfg,options)
       ", galleria "..dist.."/"..maxDistance)
     end
    end
-   if freeSlots()<=2 then compactInventory() end
+   if freeSlots()<=2 then pruneInventory(false);compactInventory() end
    if freeSlots()<=2 or currentFuel()<#s.path+260 then
     error("SCORTE: rientro per inventario o carburante")
    end
