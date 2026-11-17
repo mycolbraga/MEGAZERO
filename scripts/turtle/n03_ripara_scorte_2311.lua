@@ -56,7 +56,7 @@ for _,m in ipairs(oldModules) do
     not m.original:find("Miner non v2.3.11",1,true) then allUpdated=false end
 end
 if allUpdated then
- print(unit.." gia' aggiornata: miner 2.3.10, agente 1.7")
+ print(unit.." gia' aggiornata: miner 2.3.11, agente 1.8")
  print("Nessuna operazione. Stato autostart NON modificato.")
  return
 end
