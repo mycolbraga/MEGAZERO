@@ -48,4 +48,21 @@ for _,item in ipairs(errors) do
   " | AVANZAMENTO: "..tostring(r.progress or "?"))
 end
 print("")
+print("RIEPILOGO PER CAUSA:")
+local groups={}
+for _,item in ipairs(errors) do
+ local r=item.r
+ local key=text(r.error~="" and r.error or r.detail)
+ local g=groups[key] or {n=0,names={}}
+ g.n=g.n+1;g.names[#g.names+1]=item.unit
+ groups[key]=g
+end
+local keys={}
+for k in pairs(groups) do keys[#keys+1]=k end
+table.sort(keys,function(a,b) return groups[a].n>groups[b].n end)
+for _,key in ipairs(keys) do
+ local g=groups[key]
+ print(g.n.."x "..key:sub(1,115))
+ print("  "..table.concat(g.names,", "))
+end
 print("FINE DIAGNOSI: nessuna Turtle modificata.")
