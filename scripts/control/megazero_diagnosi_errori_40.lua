@@ -2,6 +2,13 @@
 -- Usa il registro della dashboard: non invia comandi e non muove Turtle.
 assert(not turtle and os.getComputerID()==54,
  "Esegui SOLO sulla centrale PC54")
+-- Cattura l'output della diagnosi per visualizzarlo in pagine navigabili.
+local lines={}
+local function print(...)
+ local pieces={}
+ for i=1,select("#",...) do pieces[#pieces+1]=tostring(select(i,...)) end
+ lines[#lines+1]=table.concat(pieces,"\t")
+end
 local args={...}
 local full=args[1]=="tutti"
 local f=assert(fs.open("/.megazero_control_db","r"),
@@ -86,3 +93,47 @@ end
 print("")
 print("NESSUN COMANDO INVIATO. CHECKPOINT INVARIATI.")
 print("Per dettaglio completo: stesso comando con 'tutti'.")
+
+-- Conserva l'intero resoconto, poi mostralo in pagine con avanti/indietro.
+local reportPath="/megazero_diagnosi_40.txt"
+local saved=fs.open(reportPath,"w")
+if saved then
+ saved.write(table.concat(lines,"\n"))
+ saved.close()
+end
+local w,h=term.getSize()
+local wrapped={}
+for _,line in ipairs(lines) do
+ if line=="" then
+  wrapped[#wrapped+1]=""
+ else
+  while #line>w do
+   wrapped[#wrapped+1]=line:sub(1,w)
+   line=line:sub(w+1)
+  end
+  wrapped[#wrapped+1]=line
+ end
+end
+local pageSize=math.max(1,h-3)
+local totalPages=math.max(1,math.ceil(#wrapped/pageSize))
+local page=1
+while true do
+ term.clear()
+ term.setCursorPos(1,1)
+ _G.print(("DIAGNOSI MEGAZERO   %d/%d"):format(page,totalPages))
+ local first=(page-1)*pageSize+1
+ for i=first,math.min(#wrapped,first+pageSize-1) do
+  _G.print(wrapped[i])
+ end
+ term.setCursorPos(1,h)
+ term.clearLine()
+ term.write("Invio=avanti  P=indietro  Q=esci")
+ local answer=read()
+ if answer=="q" or answer=="Q" then break end
+ if answer=="p" or answer=="P" then
+  page=math.max(1,page-1)
+ else
+  page=math.min(totalPages,page+1)
+ end
+end
+_G.print("Resoconto salvato: "..reportPath)
