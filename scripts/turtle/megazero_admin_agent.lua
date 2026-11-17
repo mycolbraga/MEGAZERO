@@ -1,14 +1,16 @@
--- MEGAZERO ADMIN AGENT v1.12 | OTA sicuro da HOME con checkpoint conservato
+-- MEGAZERO ADMIN AGENT v1.13 | OTA sicuro da HOME con checkpoint conservato
 -- Pacchetti mirati dal PC 54; update consentito solo a Turtle ferma.
 local M={}
 local PROTOCOL="megazero.admin.v1"
-local RELEASE="fc7a6e1158cf35a53daf88a36c065f09a84a0f1a"
+local RELEASE="c37afdcbbce975ff722a968794e52ba19fdc87c1"
 local BASE="https://raw.githubusercontent.com/mycolbraga/MEGAZERO/"..RELEASE.."/scripts/turtle/"
-local MARKER="/.megazero_ota2315_state"
+local MARKER="/.megazero_ota2316_state"
 local PACKAGE={
- {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.3.15"},
- {name="megazero_fluidi",remote="megazero_fluidi.lua",prefix="-- MEGAZERO FLUIDI v1.0"},
- {name="megazero_auto",remote="megazero_auto.lua",prefix="-- MEGAZERO | Gestione avvio automatico"}
+ {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.3.16"},
+ {name="megazero_fluidi",remote="megazero_fluidi.lua",prefix="-- MEGAZERO FLUIDI v1.1"},
+ {name="megazero_auto",remote="megazero_auto.lua",prefix="-- MEGAZERO | Gestione avvio automatico"},
+ {name="megazero_admin_agent",remote="megazero_admin_agent.lua",
+  prefix="-- MEGAZERO ADMIN AGENT v1.13"}
 }
 
 local function read(path)
@@ -32,10 +34,10 @@ local function existing(name)
  return "/"..name
 end
 local function stagePath(name)
- return "/.megazero_stage_2315_"..name
+ return "/.megazero_stage_2316_"..name
 end
 local function backupPath(name)
- return "/.megazero_ota_backup_2315_"..name
+ return "/.megazero_ota_backup_2316_"..name
 end
 local function mineInfo(unit)
  local header=firstLine(existing("megazero_miner"))
@@ -58,77 +60,90 @@ local function mineInfo(unit)
  end
  return summary
 end
+-- Un update DI SOFTWARE non richiede HOME o checkpoint vuoto.
+-- Richiede pero' miner realmente fermo e autostart spento sul disco.
 local function checkStopped(cfg,telemetry)
  if telemetry.status=="SCAVO" or telemetry.status=="RIENTRO" then
-  return false,"Turtle impegnata in scavo/rientro" end
- -- Il miner puo' avere autostart attivo ma essere terminato con ERRORE.
- if cfg.miner_autostart==true and telemetry.status~="ERRORE" then
-  return false,"Miner ancora abilitato: non posso provare sia fermo" end
- local cp=mineInfo(cfg.unit)
- if cp.checkpoint_invalid or cp.pending or (cp.path_count and cp.path_count>0) then
-  return false,"Checkpoint pendente o illeggibile" end
- if cp.finished then return false,"Lavoro gia' finito" end
- local side,n=cfg.unit:match("^([NOSE])(%d%d)$")
- n=tonumber(n)
- if not side or not n or n<1 or n>10 then return false,"Unita non valida" end
- local k=n-1
- local x0,y0,z0,d0
- if side=="N" then x0,y0,z0,d0=2119-2*k,-51,2995,0
- elseif side=="O" then x0,y0,z0,d0=2099,-51,2995+2*k,3
- elseif side=="S" then x0,y0,z0,d0=2099+2*k,-51,3015,2
- else x0,y0,z0,d0=2119,-51,3015-2*k,1 end
- if cp.saved then
-  local c=read("/.megazero_miner_v23_"..cfg.unit.."_LAVORO")
-  local ok,state=pcall(textutils.unserialize,c or "")
-  if not ok or type(state)~="table" or type(state.path)~="table" or
-   state.pending~=nil or #state.path~=0 or state.x~=x0 or
-   state.y~=y0 or state.z~=z0 or state.d~=d0 then
-   return false,"Checkpoint non alla propria HOME" end
+  return false,"Turtle in movimento"
  end
- local x,y,z=gps.locate(4,false)
- if type(x)~="number" or math.abs(x-x0)>0.25 or
-   math.abs(y-y0)>0.25 or math.abs(z-z0)>0.25 then
-  return false,"GPS HOME non verificata" end
- local err=read("/.megazero_miner_error")
- if err then
-  local allowed={"Slot 1 riempito dal Regulator","Uscita dalla base ostruita",
-    "Regulator:","Scorta secchi","Prelievo secchi",
-    "spostare lava nello slot 1","Impossibile raggiungere i secchi vuoti",
-    "Blocco non minerario sconosciuto: minecraft:verdant_froglight",
-    "Blocco non minerario sconosciuto: minecraft:pearlescent_froglight",
-    "Blocco non minerario sconosciuto: minecraft:ochre_froglight"}
-  local found=false
-  for _,reason in ipairs(allowed) do
-   if err:find(reason,1,true) then found=true;break end
+ local raw=read("/megazero_config")
+ local ok,disk=pcall(textutils.unserialize,raw or "")
+ if not ok or type(disk)~="table" or
+    disk.unit~=cfg.unit or disk.site~=cfg.site then
+  return false,"Configurazione su disco non valida"
+ end
+ if disk.miner_autostart~=false or cfg.miner_autostart~=false then
+  return false,"Autostart abilitato: non posso provare miner fermo"
+ end
+ local cp=mineInfo(cfg.unit)
+ if cp.checkpoint_invalid then return false,"Checkpoint non leggibile" end
+ return true,"Aggiornamento file consentito; checkpoint intatto"
+end
+-- L'agente puo installare release future senza nuovo bootstrap locale:
+-- PC54 autorizzato indica lo SHA e le tre versioni previste.
+-- Download solo dal repository noto, a file fissi; Lua compilato e verificato.
+local function targetPackage(request)
+ local release=RELEASE
+ local minerVersion="2.3.16"
+ local fluidVersion="1.1"
+ local agentVersion="1.13"
+ if type(request)=="table" and request.release~=nil then
+  assert(type(request.release)=="string" and
+   #request.release==40 and request.release:match("^[0-9a-f]+$"),
+   "SHA release non valido")
+  local function version(v)
+   return type(v)=="string" and #v<=15 and
+    v:match("^%d+%.%d+%.?%d*$")~=nil
   end
-  if not found then return false,"Errore non previsto: controllare la Turtle" end
+  assert(version(request.package_version),"Versione miner non valida")
+  assert(version(request.fluid_version),"Versione fluidi non valida")
+  assert(version(request.agent_target_version),"Versione agente non valida")
+  release=request.release
+  minerVersion=request.package_version
+  fluidVersion=request.fluid_version
+  agentVersion=request.agent_target_version
+ end
+ local p={
+  {name="megazero_miner",remote="megazero_miner.lua",
+    prefix="-- MEGAZERO MINER v"..minerVersion},
+  {name="megazero_fluidi",remote="megazero_fluidi.lua",
+    prefix="-- MEGAZERO FLUIDI v"..fluidVersion},
+  {name="megazero_auto",remote="megazero_auto.lua",
+    prefix="-- MEGAZERO | Gestione avvio automatico"},
+  {name="megazero_admin_agent",remote="megazero_admin_agent.lua",
+    prefix="-- MEGAZERO ADMIN AGENT v"..agentVersion}
+ }
+ return release,minerVersion,p
+end
+local function checkBundle(request)
+ local _,_,items=targetPackage(request)
+ for _,item in ipairs(items) do
+  local header=firstLine(existing(item.name))
+  if not header or header:sub(1,#item.prefix)~=item.prefix then
+   return false
+  end
  end
  return true
-end
-local function checkBundle()
- local ready=true
- for _,item in ipairs(PACKAGE) do
-  local line=firstLine(existing(item.name))
-  if not line or line:sub(1,#item.prefix)~=item.prefix then ready=false end
- end
- return ready
 end
 local function verifyFile(path,item)
  local source=assert(read(path),"File mancante "..path)
  assert(source:sub(1,#item.prefix)==item.prefix,
-   "Versione inattesa: "..item.name)
+  "Versione inattesa: "..item.name)
  local compiled,why=load(source,"="..item.remote)
  assert(compiled,"Lua non valido "..item.name..": "..tostring(why))
  return source
 end
-local function prepareUpdate(unit)
- assert(not fs.exists(MARKER),"Pacchetto precedente gia' preparato")
- for _,item in ipairs(PACKAGE) do
-  local response,why=http.get(BASE..item.remote)
+local function prepareUpdate(unit,request)
+ local release,version,items=targetPackage(request)
+ assert(not fs.exists(MARKER),"Pacchetto precedente gia preparato")
+ local base="https://raw.githubusercontent.com/mycolbraga/MEGAZERO/"..
+  release.."/scripts/turtle/"
+ for _,item in ipairs(items) do
+  local response,why=http.get(base..item.remote)
   assert(response,"Download "..item.remote.." fallito: "..tostring(why))
   local data=response.readAll();response.close()
   assert(type(data)=="string" and data:sub(1,#item.prefix)==item.prefix,
-    "Versione download inattesa: "..item.remote)
+   "Versione download inattesa: "..item.remote)
   local compiled,err=load(data,"="..item.remote)
   assert(compiled,"Sintassi download errata: "..tostring(err))
   local temp=stagePath(item.name)
@@ -136,81 +151,83 @@ local function prepareUpdate(unit)
   write(temp,data)
   verifyFile(temp,item)
  end
- write(MARKER,textutils.serialize({unit=unit,release=RELEASE,
-  fileCount=#PACKAGE,version="2.3.15"}))
+ write(MARKER,textutils.serialize({
+  unit=unit,release=release,version=version,items=items
+ }))
 end
 local function commitUpdate(unit)
  local data=assert(read(MARKER),"Nessun update preparato")
- local mark=assert(textutils.unserialize(data),"Manifest staging illeggibile")
- assert(mark.unit==unit and mark.release==RELEASE and
-   mark.fileCount==#PACKAGE and mark.version=="2.3.15",
-   "Staging non corrispondente")
- for _,item in ipairs(PACKAGE) do
+ local mark=assert(textutils.unserialize(data),"Staging illeggibile")
+ assert(mark.unit==unit and type(mark.release)=="string" and
+  #mark.release==40 and type(mark.items)=="table" and
+  #mark.items==4,"Staging non corrispondente")
+ local items=mark.items
+ for k,base in ipairs(PACKAGE) do
+  local item=items[k]
+  assert(item and item.name==base.name and item.remote==base.remote and
+   type(item.prefix)=="string" and
+   item.prefix:find("^%-%- MEGAZERO "),
+   "Staging inatteso: "..base.name)
   verifyFile(stagePath(item.name),item)
-  assert(not fs.exists(backupPath(item.name)),
-    "Backup OTA gia esistente: "..backupPath(item.name))
  end
  local cpPath="/.megazero_miner_v23_"..unit.."_LAVORO"
  local cpRaw=read(cpPath)
  local configPath="/megazero_config"
  local cfgRaw=assert(read(configPath),"Config assente")
- local cfg=assert(textutils.unserialize(cfgRaw),"Config illeggibile")
- assert(cfg.unit==unit and cfg.site=="MINIERA-01","Config non corrisponde")
+ local cfg=assert(textutils.unserialize(cfgRaw),"Config non leggibile")
+ assert(cfg.unit==unit and cfg.site=="MINIERA-01","Config diversa")
+ assert(cfg.miner_autostart==false,"Autostart attivo: OTA vietato")
  local errPath="/.megazero_miner_error"
  local errRaw=read(errPath)
- local backupDir="/.megazero_ota2315_backup_"..unit
- assert(not fs.exists(backupDir),"Backup OTA precedente presente")
+ local backupDir="/.megazero_ota2316_backup_"..unit.."_"..
+  mark.release:sub(1,10)
+ assert(not fs.exists(backupDir),"Backup release gia presente")
  fs.makeDir(backupDir)
  write(backupDir.."/megazero_config",cfgRaw)
  if cpRaw then write(backupDir.."/checkpoint",cpRaw) end
  if errRaw then write(backupDir.."/megazero_miner_error",errRaw) end
  local originals={}
- for _,item in ipairs(PACKAGE) do
+ for _,item in ipairs(items) do
   local target=existing(item.name)
   local existed=fs.exists(target)
-  local backup=backupPath(item.name)
+  local backup=backupDir.."/"..item.name
   originals[#originals+1]={target=target,backup=backup,existed=existed}
   if existed then fs.copy(target,backup) end
  end
- -- Disarma il boot al prossimo riavvio; mai riavviare durante l'OTA.
- local temp=configPath..".ota2315.tmp"
- assert(not fs.exists(temp),"File config temporaneo OTA gia presente")
+ local temp=configPath..".ota2316.tmp"
+ assert(not fs.exists(temp),"Config temporanea gia presente")
  cfg.miner_autostart=false
  write(temp,textutils.serialize(cfg))
  local ok,why=pcall(function()
   fs.delete(configPath);fs.move(temp,configPath)
-  for k,item in ipairs(PACKAGE) do
-   local v=originals[k]
-   if fs.exists(v.target) then fs.delete(v.target) end
-   fs.move(stagePath(item.name),v.target)
-   verifyFile(v.target,item)
+  for k,item in ipairs(items) do
+   local old=originals[k]
+   if fs.exists(old.target) then fs.delete(old.target) end
+   fs.move(stagePath(item.name),old.target)
+   verifyFile(old.target,item)
   end
-  assert(read(cpPath)==cpRaw,"Checkpoint cambiato durante OTA")
-  if errRaw then fs.delete(errPath) end
+  assert(read(cpPath)==cpRaw,"Checkpoint modificato durante OTA")
+  assert(read(errPath)==errRaw,"Errore precedente modificato durante OTA")
  end)
  if not ok then
   local recovered=true
-  for _,v in ipairs(originals) do
+  for _,old in ipairs(originals) do
    local good=pcall(function()
-    if fs.exists(v.target) then fs.delete(v.target) end
-    if v.existed then fs.copy(v.backup,v.target) end
+    if fs.exists(old.target) then fs.delete(old.target) end
+    if old.existed then fs.copy(old.backup,old.target) end
    end)
    if not good then recovered=false end
   end
   local good=pcall(function()
    if fs.exists(configPath) then fs.delete(configPath) end
    fs.copy(backupDir.."/megazero_config",configPath)
-   if errRaw then
-    if fs.exists(errPath) then fs.delete(errPath) end
-    fs.copy(backupDir.."/megazero_miner_error",errPath)
-   end
   end)
   if not good then recovered=false end
   error("OTA fallito; ripristino "..(recovered and "OK" or "DA VERIFICARE")..
    ": "..tostring(why))
  end
  fs.delete(MARKER)
- return #PACKAGE
+ return #items,mark.version
 end
 
 -- Controllo per l'avvio remoto, SENZA muovere la Turtle.
@@ -259,7 +276,7 @@ local function checkStart(cfg,telemetry)
  end
  local version=firstLine(existing("megazero_miner"))
  if not version or version:sub(1,#PACKAGE[1].prefix)~=PACKAGE[1].prefix then
-  return false,"Miner non v2.3.15" end
+  return false,"Miner non v2.3.16" end
  local boot=firstLine(existing("megazero_boot"))
  if not boot or not boot:find("^%-%- MEGAZERO BOOT 1%.2") then
   return false,"BOOT non v1.2" end
@@ -326,7 +343,7 @@ function M.listen(cfg,telemetry)
  local selfID=os.getComputerID()
  local seen={}
  local arm=nil
- print("ADMIN AGENT v1.12 | "..unit.." | PC "..central)
+ print("ADMIN AGENT v1.13 | "..unit.." | PC "..central)
  while true do
   local sender,request=rednet.receive(PROTOCOL)
   if sender==central and type(request)=="table" and
@@ -340,7 +357,7 @@ function M.listen(cfg,telemetry)
     local command=request.command
     response={kind="admin_reply",version=1,site=site,unit=unit,
      computer_id=selfID,request_id=request.request_id,command=command,
-     accepted=false,phase="FAILED",agent_version="1.12"}
+     accepted=false,phase="FAILED",agent_version="1.13"}
     local ok,err=pcall(function()
      if command=="PING" or command=="STATUS" or command=="CHECK_UPDATE" or command=="CHECK_START" then
       local latch=read("/.megazero_miner_error")
@@ -357,7 +374,7 @@ function M.listen(cfg,telemetry)
        response.start_requires_physical_check=true
       end
       if command=="CHECK_UPDATE" then
-       response.update_available=not checkBundle()
+       response.update_available=not checkBundle(request)
        response.staged=fs.exists(MARKER)
        local allowed,reason=checkStopped(cfg,telemetry)
        response.update_allowed=allowed
@@ -385,17 +402,17 @@ function M.listen(cfg,telemetry)
       local allowed,reason=checkStopped(cfg,telemetry)
       assert(allowed,reason)
       if command=="PREPARE_UPDATE" then
-       prepareUpdate(unit)
+       prepareUpdate(unit,request)
        response.accepted=true;response.phase="STAGED"
       else
-       response.installed=commitUpdate(unit)
+       response.installed,response.package_version=commitUpdate(unit)
        cfg.miner_autostart=false
-       local e=read("/.megazero_miner_error")
-       if e then fs.delete("/.megazero_miner_error") end
-       telemetry:report("BASE",{detail="OTA completato; HOME ferma; checkpoint invariato"})
+       telemetry:report("PREPARAZIONE",{
+        detail="OTA installata; autostart OFF, checkpoint ed errori conservati"
+       })
        response.accepted=true;response.phase="DONE"
       end
-      response.package_version="2.3.15"
+      response.package_version=response.package_version or "2.3.16"
      else
       response.reason="Comando non abilitato su v1.1"
      end
