@@ -1,4 +1,4 @@
--- MEGAZERO FLUIDI v1.1 | Modulo bonifica + collaudo fermo N01
+-- MEGAZERO FLUIDI v1.2 | Modulo bonifica + collaudo fermo N01
 -- Uso sul terminale N01: megazero_fluidi N01
 -- Uso come modulo futuro: local fluidi = dofile("/megazero_fluidi")
 -- NON muove, NON scava, NON crea fluidi. Gestisce solo la faccia ispezionata.
@@ -171,7 +171,7 @@ local function solidSlot()
 end
 
 
--- Prima opzione di bonifica: chiudere una sorgente/corrente con pietra.
+-- Seconda opzione: sigillare se la raccolta della sorgente non basta.
 -- Non scava e non muove la Turtle. La cella e' ammessa SOLO dal chiamante.
 -- La pietra sigillata resta un blocco reale: la galleria NON e' completa.
 function M.seal(side,pos,allowed)
@@ -205,7 +205,9 @@ function M.resolve(side, pos, allowed)
     return nil,"Cella non autorizzata: protezione settore/base"
   end
   local collected=0
-  for attempt=1,5 do
+  -- Due raccolte massime per cella: se la sorgente si rigenera,
+  -- usa il tappo anziche consumare tutti e tre i secchi di scorta.
+  for attempt=1,2 do
     local fluid=M.peek(side)
     if not fluid then
       return collected>0 and "raccolto" or "libero",collected
@@ -217,6 +219,12 @@ function M.resolve(side, pos, allowed)
       local placed,reason=placeAt(side)
       if not placed then
         return nil,"Prelievo "..before.." non riuscito: "..tostring(reason)
+      end
+      local expected=before=="ACQUA" and "minecraft:water_bucket"
+        or "minecraft:lava_bucket"
+      local picked=turtle.getItemDetail(turtle.getSelectedSlot())
+      if not picked or picked.name~=expected then
+        return nil,"Prelievo sorgente non confermato: "..before
       end
       collected=collected+1
       sleep(0.25)
