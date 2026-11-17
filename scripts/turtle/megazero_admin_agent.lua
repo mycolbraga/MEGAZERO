@@ -1,4 +1,4 @@
--- MEGAZERO ADMIN AGENT v1.19 | OTA sicuro da HOME con checkpoint conservato
+-- MEGAZERO ADMIN AGENT v1.20 | OTA sicuro da HOME con checkpoint conservato
 -- Pacchetti mirati dal PC 54; update consentito solo a Turtle ferma.
 local M={}
 local PROTOCOL="megazero.admin.v1"
@@ -6,11 +6,11 @@ local RELEASE="daa87ad51ac89f14490ac9d769a3f31d0b170962"
 local BASE="https://raw.githubusercontent.com/mycolbraga/MEGAZERO/"..RELEASE.."/scripts/turtle/"
 local MARKER="/.megazero_ota2316_state"
 local PACKAGE={
- {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.3.19"},
- {name="megazero_fluidi",remote="megazero_fluidi.lua",prefix="-- MEGAZERO FLUIDI v1.2"},
+ {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.3.21"},
+ {name="megazero_fluidi",remote="megazero_fluidi.lua",prefix="-- MEGAZERO FLUIDI v1.3"},
  {name="megazero_auto",remote="megazero_auto.lua",prefix="-- MEGAZERO | Gestione avvio automatico"},
  {name="megazero_admin_agent",remote="megazero_admin_agent.lua",
-  prefix="-- MEGAZERO ADMIN AGENT v1.19"}
+  prefix="-- MEGAZERO ADMIN AGENT v1.20"}
 }
 
 local function read(path)
@@ -85,9 +85,9 @@ end
 -- Download solo dal repository noto, a file fissi; Lua compilato e verificato.
 local function targetPackage(request)
  local release=RELEASE
- local minerVersion="2.3.19"
- local fluidVersion="1.2"
- local agentVersion="1.19"
+ local minerVersion="2.3.21"
+ local fluidVersion="1.3"
+ local agentVersion="1.20"
  if type(request)=="table" and request.release~=nil then
   assert(type(request.release)=="string" and
    #request.release==40 and request.release:match("^[0-9a-f]+$"),
@@ -288,7 +288,7 @@ local function checkStart(cfg,telemetry)
  end
  local version=firstLine(existing("megazero_miner"))
  if not version or version:sub(1,#PACKAGE[1].prefix)~=PACKAGE[1].prefix then
-  return false,"Miner non v2.3.19" end
+  return false,"Miner non v2.3.21" end
  local boot=firstLine(existing("megazero_boot"))
  if not boot or not boot:find("^%-%- MEGAZERO BOOT 1%.2") then
   return false,"BOOT non v1.2" end
@@ -373,7 +373,7 @@ function M.listen(cfg,telemetry)
  local selfID=os.getComputerID()
  local seen={}
  local arm=nil
- print("ADMIN AGENT v1.19 | "..unit.." | PC "..central)
+ print("ADMIN AGENT v1.20 | "..unit.." | PC "..central)
  while true do
   local sender,request=rednet.receive(PROTOCOL)
   if sender==central and type(request)=="table" and
@@ -388,7 +388,7 @@ function M.listen(cfg,telemetry)
     local command=request.command
     response={kind="admin_reply",version=1,site=site,unit=unit,
      computer_id=selfID,request_id=request.request_id,command=command,
-     accepted=false,phase="FAILED",agent_version="1.19"}
+     accepted=false,phase="FAILED",agent_version="1.20"}
     local ok,err=pcall(function()
      if command=="PING" or command=="STATUS" or command=="CHECK_UPDATE" or command=="CHECK_START" then
       local latch=read("/.megazero_miner_error")
@@ -538,7 +538,7 @@ function M.listen(cfg,telemetry)
        })
        response.accepted=true;response.phase="DONE"
       end
-      response.package_version=response.package_version or "2.3.19"
+      response.package_version=response.package_version or "2.3.21"
      else
       response.reason="Comando non abilitato su v1.2"
      end
@@ -554,7 +554,7 @@ function M.listen(cfg,telemetry)
     local good,msg=pcall(recoveryAction)
     local result={kind="admin_reply",version=1,site=site,unit=unit,
      computer_id=selfID,request_id=request.request_id,
-     command="RECOVER_HOME",agent_version="1.19",
+     command="RECOVER_HOME",agent_version="1.20",
      accepted=good,phase=good and "DONE" or "FAILED",
      reason=tostring(msg):sub(1,180)}
     if not good then
