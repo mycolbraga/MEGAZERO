@@ -1,4 +1,4 @@
--- MEGAZERO FLUIDI v1.0 | Modulo bonifica + collaudo fermo N01
+-- MEGAZERO FLUIDI v1.1 | Modulo bonifica + collaudo fermo N01
 -- Uso sul terminale N01: megazero_fluidi N01
 -- Uso come modulo futuro: local fluidi = dofile("/megazero_fluidi")
 -- NON muove, NON scava, NON crea fluidi. Gestisce solo la faccia ispezionata.
@@ -168,6 +168,32 @@ local function solidSlot()
       return i,item.name
     end
   end
+end
+
+
+-- Prima opzione di bonifica: chiudere una sorgente/corrente con pietra.
+-- Non scava e non muove la Turtle. La cella e' ammessa SOLO dal chiamante.
+-- La pietra sigillata resta un blocco reale: la galleria NON e' completa.
+function M.seal(side,pos,allowed)
+ if type(pos)~="table" or type(allowed)~="function" or
+    not allowed(pos.x,pos.y,pos.z) then
+  return nil,"Cella fuori settore: non sigillo"
+ end
+ local fluid=M.peek(side)
+ if not fluid then return "libero" end
+ local _,name=solidSlot()
+ if not name then return nil,"SCORTE: manca pietra per sigillare "..fluid.kind end
+ local placed,why=placeAt(side)
+ if not placed then
+  return nil,"Sigillatura "..fluid.kind.." fallita: "..tostring(why)
+ end
+ sleep(0.25)
+ local remains=M.peek(side)
+ local exists,block=inspectAt(side)
+ if remains or not exists or not block or block.name~=name then
+  return nil,"Sigillatura non confermata per "..fluid.kind
+ end
+ return "sigillato",name
 end
 
 -- Il chiamante deve autorizzare le coordinate fisiche della cella.
