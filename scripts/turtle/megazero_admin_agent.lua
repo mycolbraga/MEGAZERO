@@ -2,7 +2,7 @@
 -- Pacchetti mirati dal PC 54; update consentito solo a Turtle ferma.
 local M={}
 local PROTOCOL="megazero.admin.v1"
-local RELEASE="c37afdcbbce975ff722a968794e52ba19fdc87c1"
+local RELEASE="4bb89a27fa95fe062a0741e6bbfaedffa9266061"
 local BASE="https://raw.githubusercontent.com/mycolbraga/MEGAZERO/"..RELEASE.."/scripts/turtle/"
 local MARKER="/.megazero_ota2316_state"
 local PACKAGE={
@@ -54,6 +54,7 @@ local function mineInfo(unit)
    summary.pending=v.pending~=nil
    summary.finished=v.finished==true
    summary.saved_x=v.x;summary.saved_y=v.y;summary.saved_z=v.z
+    summary.saved_d=v.d
   else
    summary.checkpoint_invalid=true
   end
@@ -258,15 +259,24 @@ local function checkStart(cfg,telemetry)
  if fs.exists(MARKER) then
   return false,"Aggiornamento OTA ancora preparato" end
  local cp=mineInfo(cfg.unit)
- if cp.checkpoint_invalid then return false,"Checkpoint non leggibile" end
- if cp.saved then
-  if cp.finished then return false,"Lavoro gia' completato" end
-  if cp.pending or cp.path_count~=0 then
-   return false,"Traccia attiva o posizione incerta" end
-  local hx,hy,hz=homeFor(cfg.unit)
-  if cp.saved_x~=hx or cp.saved_y~=hy or cp.saved_z~=hz then
-   return false,"Checkpoint non alla propria base" end
- end
+ if cp.checkpoint_invalid or not cp.saved then
+  return false,"Checkpoint assente/non leggibile" end
+ if cp.finished then return false,"Lavoro gia' completato" end
+ if cp.pending or cp.path_count~=0 then
+  return false,"Traccia attiva o posizione incerta" end
+ local hx,hy,hz=homeFor(cfg.unit)
+ if cp.saved_x~=hx or cp.saved_y~=hy or cp.saved_z~=hz then
+  return false,"Checkpoint non alla propria base" end
+ local side=cfg.unit:sub(1,1)
+ local facing=side=="N" and 0 or side=="O" and 3 or
+   side=="S" and 2 or 1
+ if cp.saved_d~=facing then
+  return false,"Orientamento del checkpoint non HOME" end
+ local x,y,z=gps.locate(4,false)
+ if type(x)~="number" or type(y)~="number" or
+   type(z)~="number" or math.abs(x-hx)>0.25 or
+   math.abs(y-hy)>0.25 or math.abs(z-hz)>0.25 then
+  return false,"GPS HOME non verificata" end
  for _,name in ipairs({"megazero_miner","megazero_fluidi","megazero_auto"}) do
   local path=existing(name)
   if not fs.exists(path) then return false,"Modulo mancante: "..name end
@@ -306,7 +316,7 @@ local function checkStart(cfg,telemetry)
  local fuel=turtle.getFuelLevel()
  if type(fuel)=="number" and fuel<10000 and available<1 then
   return false,"Manca lava nella cassa superiore" end
- return true,"Controlli base e rifornimento superati: posizione fisica non verificata"
+ return true,"GPS e checkpoint HOME verificati, scorte pronte"
 end
 local function enableAutostart(cfg)
  local path="/megazero_config"
