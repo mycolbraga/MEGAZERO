@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.9 | 3 secchi da Regulator, nessun movimento per crearli
+-- MEGAZERO MINER v2.3.10 | 3 secchi da Regulator via slot 1 verificato
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -686,154 +686,112 @@ function M.start(agent,cfg,options)
    end
   end
  end
- -- I 3 secchi VUOTI arrivano dal Regulator nella cassa SOPRA.
- -- Mai spostare oggetti tra slot della STESSA cassa con pushItems.
- -- suckUp legge dall'inizio della cassa: trattieni temporaneamente gli
- -- oggetti che precedono i secchi (incluse le lava), poi restituiscili.
- -- Non bruciare lava per produrre secchi vuoti; nessun movimento.
- local function pullBucketsFromTop(required)
-  if required<=0 then return end
-  local c=peripheral.wrap("top")
-  assert(c and type(c.list)=="function",
-    "Cassa superiore per secchi non disponibile")
-  local listing=assert(c.list(),"Cassa superiore non leggibile")
-  local available=0
-  for _,item in pairs(listing) do
-   if item.name=="minecraft:bucket" then
-    available=available+item.count
+ -- Prelievo da cassa superiore verificato su N01:
+ -- pushItems della cassa VERSO SE STESSA funziona (PUSH 1, RITORNO 1).
+ -- Sposta il solo articolo richiesto nello slot 1, preleva con suckUp,
+ -- quindi rimette l'eventuale contenuto originale dello slot 1.
+ -- Non scarica oggetti nella Turtle, non sposta la Turtle e non crea secchi.
+ local function pullFromTop(name,amount)
+  if amount<=0 then return end
+  local chest=peripheral.wrap("top")
+  assert(chest and type(chest.list)=="function" and
+   type(chest.size)=="function" and type(chest.pushItems)=="function",
+   "Cassa superiore senza interfaccia trasferimenti")
+  local chestName=assert(peripheral.getName(chest),
+   "Nome periferica cassa superiore assente")
+  local label=name=="minecraft:bucket" and "secchi vuoti" or
+   (name=="minecraft:lava_bucket" and "secchi lava" or name)
+  local remaining=amount
+  while remaining>0 do
+   abortIfStop()
+   local contents=assert(chest.list(),"Cassa superiore non leggibile")
+   local source=nil
+   for i=1,chest.size() do
+    local item=contents[i]
+    if item and item.name==name and item.count>0 then
+     source=i;break
+    end
    end
-  end
-  assert(available>=required,
-    "Regulator: mancano "..required.." secchi vuoti nella cassa sopra (trovati "..available..")")
-  compactInventory()
-  local borrowed,acquired={},0
-  local failure=nil
-  for attempt=1,15 do
-   if stopRequested() then failure=RETURN_REQUESTED;break end
-   local slot
+   assert(source,"Regulator: mancano "..remaining.." "..label.." nella cassa superiore")
+   local requested=math.min(remaining,contents[source].count)
+   local park=nil
+   if source~=1 then
+    if contents[1] then
+     for i=chest.size(),2,-1 do
+      if not contents[i] then park=i;break end
+     end
+     assert(park,"Cassa rifornimenti piena: serve 1 slot libero per "..label)
+     local n=chest.pushItems(chestName,1,contents[1].count,park)
+     assert(n==contents[1].count,
+      "Non riesco a liberare lo slot 1: lasciato "..tostring(n))
+    end
+    local moved=chest.pushItems(chestName,source,requested,1)
+    if moved~=requested then
+     if park then
+      local now=chest.list()
+      local inOne=now[1]
+      if inOne and inOne.name==name then
+       chest.pushItems(chestName,1,inOne.count,source)
+      end
+      local inPark=chest.list()[park]
+      if inPark then chest.pushItems(chestName,park,inPark.count,1) end
+     end
+     error("Non riesco a portare "..label.." nello slot 1: "..tostring(moved),0)
+    end
+   end
+   local slot=nil
    for i=1,16 do
     if turtle.getItemCount(i)==0 then slot=i;break end
    end
-   if not slot then
-    failure="Slot Turtle esauriti durante prelievo secchi"
-    break
+   -- Nel ramo di errore lo slot parcheggiato viene ripristinato PRIMA
+   -- di uscire: nessun blocco/combustibile viene scaricato nella Turtle.
+   local ok,problem=false,nil
+   if slot then
+    turtle.select(slot)
+    local sucked,why=turtle.suckUp(requested)
+    local got=turtle.getItemDetail(slot)
+    ok=sucked and got and got.name==name and got.count==requested
+    if not ok then
+     problem="suckUp: "..tostring(why).." | oggetto "..tostring(got and got.name)..
+      " x"..tostring(got and got.count)
+    end
+   else
+    problem="Inventario Turtle senza uno slot libero"
    end
-   turtle.select(slot)
-   local ok,why=turtle.suckUp(64)
-   if not ok then
-    failure="Prelievo secchi dalla cassa fallito: "..tostring(why)
-    break
-   end
-   local got=turtle.getItemDetail(slot)
-   if not got then
-    failure="Oggetto non trovato dopo prelievo secchi"
-    break
-   end
-   if got.name=="minecraft:bucket" then
-    local keep=math.min(required-acquired,got.count)
-    local extra=got.count-keep
-    acquired=acquired+keep
-    if extra>0 then
-     turtle.select(slot)
-     if not turtle.dropUp(extra) then
-      failure="Impossibile restituire secchi vuoti in eccesso"
-      break
+   -- Ripristina eventuali resti nello slot sorgente.
+   local restored=true
+   if source~=1 then
+    local now=chest.list()
+    local inOne=now[1]
+    if inOne and inOne.name==name then
+     local moved=chest.pushItems(chestName,1,inOne.count,source)
+     if moved~=inOne.count then restored=false end
+    end
+    if park then
+     local inPark=chest.list()[park]
+     if inPark then
+      local moved=chest.pushItems(chestName,park,inPark.count,1)
+      if moved~=inPark.count then restored=false end
      end
     end
-    if acquired>=required then break end
-   else
-    borrowed[#borrowed+1]=slot
    end
+   assert(restored,
+    "Cassa superiore da verificare: impossibile ripristinare gli slot")
+   assert(ok,"Prelievo "..label.." fallito: "..tostring(problem))
+   remaining=remaining-requested
   end
-  -- Restituisce i materiali non richiesti alla cassa SOPRA, anche se
-  -- il prelievo si interrompe. Non usa la cassa di scarico inferiore.
-  local restored=true
-  for i=#borrowed,1,-1 do
-   local slot=borrowed[i]
-   if turtle.getItemCount(slot)>0 then
-    turtle.select(slot)
-    if not turtle.dropUp() then restored=false end
-   end
-  end
-  assert(restored,
-    "Cassa superiore piena: materiale temporaneo ancora nella Turtle, NON riavviare")
-  if failure==RETURN_REQUESTED then error(RETURN_REQUESTED,0) end
-  assert(not failure,failure or "Prelievo secchi fallito")
-  assert(acquired>=required,
-    "Impossibile raggiungere i secchi vuoti nella cassa superiore: controllare Regulator")
  end
- -- Prelievo senza pushItems sulla STESSA cassa (non supportato da tutte
- -- le casse/mod). SuckUp prende il primo slot accessibile: i materiali che
- -- lo precedono vengono custoditi temporaneamente e poi restituiti.
+ local function pullBucketsFromTop(required)
+  pullFromTop("minecraft:bucket",required)
+ end
  local function getLava()
-  local c=peripheral.wrap("top")
-  assert(c and type(c.list)=="function",
-    "Cassa superiore per lava non disponibile")
-  local list=assert(c.list(),"Cassa superiore illeggibile")
-  local available=0
-  for _,item in pairs(list) do
-   if item.name=="minecraft:lava_bucket" then
-    available=available+item.count
-   end
-  end
-  assert(available>0,"Secchi lava finiti nella cassa sopra")
-  local borrowed={}
-  local function restore()
-   local okAll=true
-   for i=#borrowed,1,-1 do
-    local slot=borrowed[i]
-    if turtle.getItemCount(slot)>0 then
-     turtle.select(slot)
-     local ok=turtle.dropUp()
-     if not ok then okAll=false end
-    end
-   end
-   return okAll
-  end
-  -- 15 slot massimo per rimuovere gli oggetti davanti alla lava.
-  -- Uno slot resta sempre riservato al secchio da consumare.
-  local found=false
-  local failure=nil
-  for attempt=1,15 do
-   if stopRequested() then failure=RETURN_REQUESTED;break end
-   local slot
-   for i=1,16 do
-    if turtle.getItemCount(i)==0 then slot=i;break end
-   end
-   if not slot then
-    failure="Inventario Turtle pieno durante prelievo lava"
-    break
-   end
-   turtle.select(slot)
-   -- Leva uno stack intero se non e' lava, solo un secchio se e' lava.
-   -- Non presume l'ordine di list(), che puo' cambiare per l'Exporter.
-   local ok,why=turtle.suckUp(64)
-   if not ok then
-    failure="Prelievo dalla cassa superiore fallito: "..tostring(why)
-    break
-   end
-   local got=turtle.getItemDetail(slot)
-   if not got then
-    failure="Oggetto non trovato dopo il prelievo"
-    break
-   end
-   if got.name=="minecraft:lava_bucket" then
-    local consumed,fuelWhy=turtle.refuel(1)
-    if not consumed then
-     failure="Secchio di lava non consumato: "..tostring(fuelWhy)
-    else
-     found=true
-    end
-    -- Il secchio vuoto rimane nella Turtle per l'uso sui fluidi.
-    break
-   end
-   -- Non perdere mai blocchi/oggetti inattesi, anche se l'Exporter li invia.
-   borrowed[#borrowed+1]=slot
-  end
-  local restored=restore()
-  assert(restored,"Oggetti temporanei da restituire ancora nella Turtle")
-  if failure==RETURN_REQUESTED then error(RETURN_REQUESTED,0) end
-  assert(found,failure or "Impossibile raggiungere lava nella cassa superiore")
+  pullFromTop("minecraft:lava_bucket",1)
+  local slot=turtle.getSelectedSlot()
+  local got=turtle.getItemDetail(slot)
+  assert(got and got.name=="minecraft:lava_bucket",
+   "Prelievo lava inatteso: nessun rifornimento")
+  local ok,reason=turtle.refuel(1)
+  assert(ok,"Rifornimento lava fallito: "..tostring(reason))
  end
  local function supply()
   abortIfStop()
@@ -847,7 +805,7 @@ function M.start(agent,cfg,options)
   local limit=turtle.getFuelLimit()
   local fuel=turtle.getFuelLevel()
   if type(limit)=="number" and type(fuel)=="number" then
-   -- Non e' un tetto al fuel: si puo' bruciare altra lava per avere secchi.
+   -- La lava e' usata solo per rifornire carburante quando serve.
    local goal=math.min(limit,10000)
    while currentFuel()<goal do
     abortIfStop()
