@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.20 | Froglight scavabili, resto protetto
+-- MEGAZERO MINER v2.3.21 | Froglight scavabili, resto protetto
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -341,7 +341,19 @@ function M.start(agent,cfg,options)
   local allowed=function(cx,cy,cz)
    return cx==x and cy==y and cz==z and inSector(cx,cy,cz)
   end
-  -- ORDINE: raccolta della SORGENTE con secchio -> sigillo della
+  -- ACQUA: sorgente raccoglibile se possibile; corrente attraversabile.
+  -- Non piazzare pietra in una cella obbligatoria della galleria 2x2.
+  if f.kind=="ACQUA" then
+   if f.source then
+    local taken=fluidi.tryCollectWaterSource(face,{x=x,y=y,z=z},allowed)
+    if taken then
+     s.buckets=s.buckets+1;save()
+     detailStatus("SCAVO","SORGENTE ACQUA raccolta a "..x..","..y..","..z)
+    end
+   end
+   return true
+  end
+  -- LAVA: raccolta della SORGENTE con secchio -> sigillo della
   -- corrente residua -> tentativo di continuare SOLO se la cella e'
   -- libera. Non togliere un tappo mentre il fluido puo rigenerarsi.
   local result,detail=fluidi.resolve(face,{x=x,y=y,z=z},allowed)
@@ -407,12 +419,13 @@ function M.start(agent,cfg,options)
    if sealed then
     local exists,block=inspect(move)
     if exists and block and (sealed==true or block.name==sealed) then
-     if move=="U" and s.waterSeals[key]==true and
-        type(sealed)=="string" and block.name==sealed then
-      -- Solo nel pozzo verticale: riapre un tappo d'ACQUA
-      -- registrato da QUESTA Turtle. Non rompe tappi di lava.
-      -- La corrente verra' attraversata senza ostruire la corsia.
-      local ok,why=turtle.digUp()
+     if s.waterSeals[key]==true and
+        type(sealed)=="string" and block.name==sealed and
+        SEAL_STOCK[sealed]==true then
+      -- Riapre solo un proprio tappo d'ACQUA identificato dal
+      -- checkpoint e dallo stesso blocco, in ogni direzione.
+      -- Non rompe sigilli di lava, strutture o blocchi ignoti.
+      local ok,why=dig(move)
       assert(ok,"Riapertura sigillo acqua fallita: "..tostring(why))
       s.seals[key]=nil;s.waterSeals[key]=nil;save()
       sleep(0.15)
@@ -425,14 +438,17 @@ function M.start(agent,cfg,options)
     end
    end
    local f=fluidi.peek(fluidSide(move))
-   if f then
-    -- Pozzo verticale di accesso: l'acqua che cade da livelli sopra
-    -- e' attraversabile. Sigillarla qui bloccherebbe l'unica salita.
-    -- LAVA non attraversabile: resta gestita dalla bonifica sicura.
-    if move=="U" and f.kind=="ACQUA" then
+   if f and f.kind=="ACQUA" then
+    bonify(move,x,y,z,true) -- prova la sorgente, non sigilla l'acqua
+    local existsNow,blockNow=inspect(move)
+    if not existsNow or (blockNow and blockNow.name=="minecraft:water") then
      return
     end
-    if fluidTransit and f.kind==fluidTransit and not f.source then return end
+    -- Se la cella e' cambiata, rifare la verifica: lava mai ignorata.
+    f=fluidi.peek(fluidSide(move))
+   end
+   if f then
+    -- LAVA sempre bonificata; anche le correnti sono bloccanti.
     fluidAttempts=fluidAttempts+1
     if fluidAttempts>4 then
      markBlocked("FLUIDO_PERSISTENTE",f.kind,x,y,z)
@@ -451,15 +467,15 @@ function M.start(agent,cfg,options)
     local name=block and block.name or "?"
     -- L'acqua/lava puo' apparire fra peek() e inspect() mentre
     -- scorrono le correnti. Non trattarla come blocco solido sconosciuto.
-    if name=="minecraft:water" or name=="minecraft:lava" then
-     local kind=name=="minecraft:water" and "ACQUA" or "LAVA"
-     if move=="U" and kind=="ACQUA" then
-      -- Salita nel proprio pozzo: corrente d'acqua attraversabile.
-      return
-     end
+    if name=="minecraft:water" then
+     bonify(move,x,y,z,true)
+     -- Tutta l'acqua e' attraversabile: avanti, sopra e sotto.
+     local still,b=inspect(move)
+     if not still or (b and b.name=="minecraft:water") then return end
+    elseif name=="minecraft:lava" then
      fluidAttempts=fluidAttempts+1
      if fluidAttempts>4 then
-      markBlocked("FLUIDO_INSTABILE",kind,x,y,z)
+      markBlocked("FLUIDO_INSTABILE","LAVA",x,y,z)
      end
      bonify(move,x,y,z,true)
     else
@@ -504,12 +520,18 @@ function M.start(agent,cfg,options)
     -- Dopo un minerale puo apparire lichen, altro blocco o un fluido.
     prepare(move,x,y,z,false)
    end
-   assert(not inspect(move),"Vena ostruita dopo pulizia")
+   local present,afterBlock=inspect(move)
+   assert(not present or (afterBlock and afterBlock.name=="minecraft:water"),
+    "Vena ostruita dopo pulizia")
    s.ore=s.ore+1;save()
   else
    prepare(move,x,y,z,first,fluidTransit)
   end
   if freeSlots()<=4 then pruneInventory(false) end
+  -- Verifica finale: acqua ammessa, lava vietata anche appena sopraggiunta.
+  local justBefore=fluidi.peek(fluidSide(move))
+  assert(not justBefore or justBefore.kind~="LAVA",
+   "LAVA davanti al movimento: bonifica obbligatoria")
   s.pending="STEP";save()
   local fn=move=="U" and turtle.up or move=="D" and turtle.down
     or turtle.forward
@@ -911,6 +933,8 @@ function M.start(agent,cfg,options)
   if not inSector(x,y,z) then return end
   local f=fluidi.peek("down")
   if not f then return end
+  -- L'acqua sotto al percorso non deve essere sigillata o fermare il lavoro.
+  if f.kind=="ACQUA" then return end
   -- Corrente sotto al percorso: NON coprirla alla cieca,
   -- potrebbe provenire dal settore di un'altra Turtle.
   -- Cerca la sorgente solo nel proprio settore; se irrisolta, differisce.
