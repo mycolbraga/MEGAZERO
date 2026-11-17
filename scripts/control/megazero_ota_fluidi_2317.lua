@@ -106,7 +106,7 @@ local function outErrors(errors)
  for _,e in ipairs(errors) do printError(e) end
 end
 
-local RELEASE="b43027cbcfe6c1e04d591cda47cc6ec315c069d5"
+local RELEASE="54be9559be5fbcf9378d64244ba21d4ec6bf33fb"
 local extra={
  release=RELEASE,package_version="2.3.17",
  fluid_version="1.2",agent_target_version="1.16"
