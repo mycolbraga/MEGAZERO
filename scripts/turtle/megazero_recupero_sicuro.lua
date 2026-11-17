@@ -1,4 +1,4 @@
--- MEGAZERO RECUPERO GPS v1.0 | rientro sul percorso salvato, NO NUOVO SCAVO
+-- MEGAZERO RECUPERO GPS v1.1 | rientro sul percorso salvato, NO NUOVO SCAVO
 -- Eseguito solo dall'agente amministrativo, mai come startup.
 local M={}
 local V={{0,-1},{1,0},{0,1},{-1,0}}
@@ -253,5 +253,64 @@ function M.run(cfg,agent)
   cp.y==hy and cp.z==hz and cp.d==hd,"Rientro HOME non verificato")
  agent:report("PREPARAZIONE",{detail=unit.." tornata HOME | pronto per reset"})
  return "HOME GPS OK; passi recuperati="..done.."; backup="..backupDir
+end
+
+function M.homeReady(cfg)
+ assert(type(cfg)=="table" and cfg.site=="MINIERA-01" and
+  type(cfg.unit)=="string","Sito reset non valido")
+ local raw=read("/megazero_config")
+ local disk=raw and textutils.unserialize(raw)
+ if type(disk)~="table" or disk.unit~=cfg.unit or
+  disk.site~=cfg.site or disk.miner_autostart~=false or
+  cfg.miner_autostart~=false then
+  return false,"Config/autostart non coerente"
+ end
+ local hx,hy,hz,hd=home(cfg.unit)
+ local cpPath="/.megazero_miner_v23_"..cfg.unit.."_LAVORO"
+ local cpRaw=read(cpPath)
+ local cp=cpRaw and textutils.unserialize(cpRaw)
+ if type(cp)~="table" or type(cp.path)~="table" then
+  return false,"Checkpoint mancante o illeggibile"
+ end
+ if cp.pending~=nil or #cp.path>0 or cp.x~=hx or
+  cp.y~=hy or cp.z~=hz or cp.d~=hd then
+  return false,"Turtle non rientrata nel checkpoint"
+ end
+ local x,y,z=gps.locate(4,false)
+ if type(x)~="number" or type(y)~="number" or
+  type(z)~="number" or not samePoint(hx,hy,hz,x,y,z) then
+  return false,"GPS non conferma la HOME"
+ end
+ return true,"GPS/checkpoint HOME confermati"
+end
+function M.resetZero(cfg)
+ local allowed,reason=M.homeReady(cfg)
+ assert(allowed,reason)
+ local unit=cfg.unit
+ local cpPath="/.megazero_miner_v23_"..unit.."_LAVORO"
+ local prefix="/.megazero_reset_zero_backup_"..unit.."_"
+ local n=1
+ while fs.exists(prefix..n) and n<99 do n=n+1 end
+ local backupDir=prefix..n
+ assert(not fs.exists(backupDir),"Backup reset esauriti")
+ fs.makeDir(backupDir)
+ write(backupDir.."/checkpoint",assert(read(cpPath)))
+ write(backupDir.."/config",assert(read("/megazero_config")))
+ local errPath="/.megazero_miner_error"
+ local errorRaw=read(errPath)
+ if errorRaw then write(backupDir.."/errore",errorRaw) end
+ local hx,hy,hz,hd=home(unit)
+ local fresh={x=hx,y=hy,z=hz,d=hd,path={},pending=nil,
+  level=1,distance=0,finished=false,ore=0,buckets=0,blocked=0,
+  waterPending=false,incomplete={},completedLevels={},
+  retryComplete=false}
+ write(cpPath,textutils.serialize(fresh))
+ local cp=assert(textutils.unserialize(assert(read(cpPath))))
+ assert(cp.x==hx and cp.y==hy and cp.z==hz and cp.d==hd and
+  cp.level==1 and cp.distance==0 and #cp.path==0 and
+  cp.finished==false,"Reset checkpoint non verificato")
+ if errorRaw then fs.delete(errPath) end
+ assert(read(errPath)==nil,"Errore precedente non cancellato")
+ return "LIV 1 DIST 0 | BACKUP "..backupDir
 end
 return M
