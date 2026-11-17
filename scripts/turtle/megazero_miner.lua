@@ -128,14 +128,18 @@ function M.start(agent,cfg,options)
  end
  s.incomplete=s.incomplete or {}
  if s.retryComplete==nil then s.retryComplete=false end
+ local migrated=false
  if type(s.completedLevels)~="table" then
+  migrated=true
   s.completedLevels={}
   local reached=s.retryComplete and maxLevels or math.min(maxLevels,s.level-1)
   for n=1,reached do
    if s.incomplete[tostring(n)]==nil then s.completedLevels[tostring(n)]=true end
   end
  end
- if s.finished and next(s.incomplete)~=nil then s.finished=false end
+ if s.finished and next(s.incomplete)~=nil then
+  s.finished=false;migrated=true
+ end
  -- BOOT 1.2 intercetta Ctrl+T e passa un flag, senza terminare il programma.
  local RETURN_REQUESTED="MEGAZERO_RETURN_REQUESTED"
  local function stopRequested()
@@ -149,6 +153,7 @@ function M.start(agent,cfg,options)
   local f=assert(fs.open(PATH,"w"))
   f.write(textutils.serialize(s));f.close()
  end
+ if migrated then save() end
  local function latch(why)
   local f=fs.open(LATCH,"w")
   if f then f.write(tostring(why));f.close() end
