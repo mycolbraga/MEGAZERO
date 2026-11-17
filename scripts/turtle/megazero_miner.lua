@@ -130,6 +130,7 @@ function M.start(agent,cfg,options)
  -- Tappi piazzati su celle della galleria: non scavarli alla cieca.
  -- Persistono nel checkpoint anche dopo rientri e riavvii.
  s.seals=s.seals or {}
+ local migrated=false
  -- Versioni precedenti: ricostruisce il tipo dei tappi gia' piazzati
  -- usando SOLTANTO il loro errore registrato nel checkpoint.
  s.waterSeals=s.waterSeals or {}
@@ -147,7 +148,6 @@ function M.start(agent,cfg,options)
  end
  if migratedWater then migrated=true end
  if s.retryComplete==nil then s.retryComplete=false end
- local migrated=false
  if type(s.completedLevels)~="table" then
   migrated=true
   s.completedLevels={}
