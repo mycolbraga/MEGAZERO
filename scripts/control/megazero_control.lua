@@ -1,4 +1,4 @@
--- MEGAZERO CONTROL 1.6 - GPS passivo in tempo reale, HOME Y=-51, OTA e avvio remoto
+-- MEGAZERO CONTROL 1.7 - GPS passivo in tempo reale, HOME Y=-51, OTA e avvio remoto
 -- Avvio remoto solo dopo CHECK_START, ARM_START e conferma esplicita.
 -- Miniera iniziale: 40 Turtle, 10 per fronte, ancora non collegate via software.
 
@@ -34,6 +34,10 @@ local selected = nil
 local page = 1
 local touchRows = {}
 local dirty = false
+local stopSession=nil
+local stopConfirmUntil=0
+local stopError=nil
+local stopSeq=0
 
 local function now()
   return os.epoch("utc")
@@ -194,6 +198,10 @@ local function receive(sender, packet, proto)
 end
 
 local function sendAdmin(rec,command)
+ if stopSession and (command=="ARM_START" or command=="START") then
+  rec.adminMessage="STOP GENERALE attivo: non posso avviare Turtle"
+  return
+ end
  if type(rec.sender)~="number" then
   rec.adminMessage="Computer ID non conosciuto"
   return
@@ -250,6 +258,33 @@ local function receiveAdmin(sender,packet,proto)
  if packet.site~=MAIN_SITE or type(packet.unit)~="string" then return end
  local rec=db.units[unitKey(packet.site,packet.unit)]
  if not rec or rec.sender~=sender or packet.computer_id~=sender then return end
+ -- Risposte STOP e audit indipendenti dalle richieste individuali.
+ if stopSession and packet.site==MAIN_SITE then
+  local job=stopSession.jobs[packet.unit]
+  if job and job.id==sender then
+   if packet.command=="STOP_ALL" and packet.request_id==job.stop_id then
+    if packet.accepted==true and
+      (packet.phase=="STOPPING" or packet.phase=="STOPPED") then
+     job.ack=true;job.failed=nil;job.ack_phase=packet.phase
+    else
+     job.failed=clean(packet.reason or "STOP rifiutato",100)
+    end
+    dirty=true
+    return
+   elseif packet.command=="RESET_AUDIT" and
+      packet.request_id==job.audit_id then
+    local a=packet.reset_audit
+    if packet.accepted==true and packet.phase=="DONE" and
+       type(a)=="table" and a.ready_home==true and
+       a.gps_home==true and a.path_count==0 and a.pending==nil then
+     job.home=true
+    end
+    job.audit_id=nil
+    dirty=true
+    return
+   end
+  end
+ end
  if type(rec.adminPending)~="string" or
     packet.request_id~=rec.adminPending then return end
  local requested=rec.adminPendingCommand
@@ -397,6 +432,77 @@ local function unitsOf(s)
   return result
 end
 
+local function stopCounts()
+ local ack,home,failed=0,0,0
+ if stopSession then
+  for _,job in pairs(stopSession.jobs) do
+   if job.ack then ack=ack+1 end
+   if job.home then home=home+1 end
+   if job.failed then failed=failed+1 end
+  end
+ end
+ return ack,home,failed
+end
+
+local function startFleetStop()
+ local units=unitsOf(MAIN_SITE)
+ if #units~=40 then
+  stopError="STOP NON INVIATO: elenco non 40/40"
+  return
+ end
+ local used={}
+ for _,r in ipairs(units) do
+  if type(r.sender)~="number" or used[r.sender] then
+   stopError="STOP NON INVIATO: ID mancanti/duplicati"
+   return
+  end
+  used[r.sender]=true
+ end
+ stopSession={started=now(),jobs={}}
+ stopError=nil
+ for _,r in ipairs(units) do
+  stopSeq=stopSeq+1
+  local id="STOP54-"..now().."-"..stopSeq
+  local packet={
+   kind="admin_request",version=1,site=MAIN_SITE,
+   target_unit=r.unit,target_computer_id=r.sender,
+   request_id=id,command="STOP_ALL",
+   stop_token="MEGAZERO_STOP_ALL_40"
+  }
+  local job={id=r.sender,packet=packet,stop_id=id,tries=1,
+    last_send=now(),ack=false,home=false,failed=nil}
+  stopSession.jobs[r.unit]=job
+  rednet.send(job.id,packet,ADMIN_PROTOCOL)
+ end
+ addHistory("FERMA TUTTO richiesto per 40 Turtle dal monitor")
+ print("STOP GENERALE: 40 ordini inviati; attendo ACK e HOME GPS")
+end
+
+local function stopTick()
+ if not stopSession then return end
+ for unit,job in pairs(stopSession.jobs) do
+  if not job.ack and not job.failed and job.tries<4 and
+      now()-job.last_send>=5000 then
+   rednet.send(job.id,job.packet,ADMIN_PROTOCOL)
+   job.tries=job.tries+1
+   job.last_send=now()
+  end
+  -- Audit GPS + checkpoint HOME dopo l'arresto; non richiede scavo.
+  if job.ack and not job.home and
+     (not job.last_audit or now()-job.last_audit>=15000) then
+   stopSeq=stopSeq+1
+   local id="STOPAUDIT54-"..now().."-"..stopSeq
+   job.audit_id=id;job.last_audit=now()
+   local request={
+    kind="admin_request",version=1,site=MAIN_SITE,
+    target_unit=unit,target_computer_id=job.id,
+    request_id=id,command="RESET_AUDIT"
+   }
+   rednet.send(job.id,request,ADMIN_PROTOCOL)
+  end
+ end
+end
+
 local function stateOf(rec)
   if not rec.lastSeen then return "MAI COLLEGATA",colors.gray end
   if now()-rec.lastSeen > OFFLINE_MS then return "SENZA SEGNALE",colors.orange end
@@ -516,6 +622,21 @@ local function draw()
   line(1,2,w,"SITO: "..site.."  TURTLE: "..#units,colors.white)
   line(1,3,w,"ATTIVE: "..active.."  ERRORI: "..errors.."  OFFLINE: "..missing,
     errors>0 and colors.red or colors.lightGray)
+  if site==MAIN_SITE then
+   local label
+   if stopSession then
+    local ack,home,fail=stopCounts()
+    label="FERMA TUTTO | ACK "..ack.."/40 | HOME GPS "..home.."/40
+    if fail>0 then label=label.." | NEGATI "..fail end
+   elseif stopConfirmUntil>now() then
+    label="CONFERMA FERMA TUTTO: TOCCA ANCORA ENTRO 10s"
+   elseif stopError then
+    label=stopError.." | TOCCA PER RIPROVARE"
+   else
+    label="[ FERMA TUTTO ]  RIENTRO CONTROLLATO DELLE 40"
+   end
+   line(1,4,w,label,colors.white,colors.red)
+  end
   if selected and db.units[selected] then
     drawDetail(db.units[selected],w,h)
   elseif w>=48 and h>=32 and site==MAIN_SITE then
@@ -538,14 +659,15 @@ local function draw()
       end
     end
   else
-    local rows=math.max(1,h-8)
+    local first=site==MAIN_SITE and 5 or 4
+    local rows=math.max(1,h-first-3)
     local pages=math.max(1,math.ceil(#units/rows))
     page=math.min(page,pages)
-    line(1,4,w,"ELENCO "..#units.." | PAGINA "..page.."/"..pages,colors.black,colors.lightBlue)
+    line(1,first,w,"ELENCO "..#units.." | PAGINA "..page.."/"..pages,colors.black,colors.lightBlue)
     for i=1,rows do
       local r=units[(page-1)*rows+i]
       if not r then break end
-      row(1,4+i,w,r)
+      row(1,first+i,w,r)
     end
   end
   line(1,h-1,w,selected and "TOCCA: INDIETRO" or "TOCCA RIGA: DETTAGLIO",colors.gray)
@@ -563,6 +685,18 @@ end
 
 local function onTouch(x,y)
   local w,h=monitor.getSize()
+  if site==MAIN_SITE and y==4 then
+   if not stopSession then
+    if now()<stopConfirmUntil then
+     stopConfirmUntil=0
+     startFleetStop()
+    else
+     stopConfirmUntil=now()+10000
+     stopError=nil
+    end
+   end
+   return
+  end
   if selected then
    local rec=db.units[selected]
    if not rec then selected=nil;return end
@@ -631,6 +765,7 @@ while true do
     onTouch(b,c)
     draw()
   elseif event=="timer" and a==timer then
+    stopTick()
     saveDatabase()
     draw()
     timer=os.startTimer(5)
