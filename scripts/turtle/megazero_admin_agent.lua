@@ -1,4 +1,4 @@
--- MEGAZERO ADMIN AGENT v1.15 | OTA sicuro da HOME con checkpoint conservato
+-- MEGAZERO ADMIN AGENT v1.16 | OTA sicuro da HOME con checkpoint conservato
 -- Pacchetti mirati dal PC 54; update consentito solo a Turtle ferma.
 local M={}
 local PROTOCOL="megazero.admin.v1"
@@ -10,7 +10,7 @@ local PACKAGE={
  {name="megazero_fluidi",remote="megazero_fluidi.lua",prefix="-- MEGAZERO FLUIDI v1.1"},
  {name="megazero_auto",remote="megazero_auto.lua",prefix="-- MEGAZERO | Gestione avvio automatico"},
  {name="megazero_admin_agent",remote="megazero_admin_agent.lua",
-  prefix="-- MEGAZERO ADMIN AGENT v1.15"}
+  prefix="-- MEGAZERO ADMIN AGENT v1.16"}
 }
 
 local function read(path)
@@ -87,7 +87,7 @@ local function targetPackage(request)
  local release=RELEASE
  local minerVersion="2.3.16"
  local fluidVersion="1.1"
- local agentVersion="1.15"
+ local agentVersion="1.16"
  if type(request)=="table" and request.release~=nil then
   assert(type(request.release)=="string" and
    #request.release==40 and request.release:match("^[0-9a-f]+$"),
@@ -341,14 +341,14 @@ local function enableAutostart(cfg)
  return true
 end
 
-local RECOVERY_SHA="75c1ecd739a61db5341395dfc51d69141be5cc9c"
+local RECOVERY_SHA="5e6441b79b82617b09793e499c9aafa39bfe90f7"
 local function loadRecovery()
  local url="https://raw.githubusercontent.com/mycolbraga/MEGAZERO/"..
   RECOVERY_SHA.."/scripts/turtle/megazero_recupero_sicuro.lua"
  local h,why=http.get(url)
  assert(h,"Download recupero fallito: "..tostring(why))
  local source=h.readAll();h.close()
- assert(source:sub(1,#"-- MEGAZERO RECUPERO GPS v1.1")=="-- MEGAZERO RECUPERO GPS v1.1",
+ assert(source:sub(1,#"-- MEGAZERO RECUPERO GPS v1.2")=="-- MEGAZERO RECUPERO GPS v1.2",
   "Sorgente recupero inattesa")
  local code,err=load(source,"=megazero_recupero_sicuro")
  assert(code,"Sintassi recupero invalida: "..tostring(err))
@@ -371,7 +371,7 @@ function M.listen(cfg,telemetry)
  local selfID=os.getComputerID()
  local seen={}
  local arm=nil
- print("ADMIN AGENT v1.15 | "..unit.." | PC "..central)
+ print("ADMIN AGENT v1.16 | "..unit.." | PC "..central)
  while true do
   local sender,request=rednet.receive(PROTOCOL)
   if sender==central and type(request)=="table" and
@@ -386,7 +386,7 @@ function M.listen(cfg,telemetry)
     local command=request.command
     response={kind="admin_reply",version=1,site=site,unit=unit,
      computer_id=selfID,request_id=request.request_id,command=command,
-     accepted=false,phase="FAILED",agent_version="1.15"}
+     accepted=false,phase="FAILED",agent_version="1.16"}
     local ok,err=pcall(function()
      if command=="PING" or command=="STATUS" or command=="CHECK_UPDATE" or command=="CHECK_START" then
       local latch=read("/.megazero_miner_error")
@@ -531,7 +531,7 @@ function M.listen(cfg,telemetry)
     local good,msg=pcall(recoveryAction)
     local result={kind="admin_reply",version=1,site=site,unit=unit,
      computer_id=selfID,request_id=request.request_id,
-     command="RECOVER_HOME",agent_version="1.15",
+     command="RECOVER_HOME",agent_version="1.16",
      accepted=good,phase=good and "DONE" or "FAILED",
      reason=tostring(msg):sub(1,180)}
     if not good then
