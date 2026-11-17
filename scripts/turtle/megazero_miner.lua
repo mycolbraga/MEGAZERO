@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.15 | Froglight scavabili, resto protetto
+-- MEGAZERO MINER v2.3.16 | Froglight scavabili, resto protetto
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -35,7 +35,7 @@ for _,n in ipairs({
  "tuff","granite","diorite","andesite","dirt","grass_block",
  "gravel","sand","red_sand","calcite","dripstone_block",
  "pointed_dripstone","clay","moss_block","mud","packed_mud",
- "rooted_dirt","coarse_dirt","soul_sand","basalt","smooth_basalt",
+ "rooted_dirt","coarse_dirt","glow_lichen","soul_sand","basalt","smooth_basalt",
  "blackstone","netherrack","terracotta"
 }) do NATURAL["minecraft:"..n]=true end
 -- Eccezione richiesta per tutte le Turtle: SOLO le tre Froglight vanilla.
@@ -170,15 +170,24 @@ function M.start(agent,cfg,options)
   return (x==hx and y==hy and z==hz) or inSector(x,y,z)
  end
  local function detailStatus(state,detail,problem)
-  local completed=0
+  -- Avanzamento per sezioni 2x2 completate, non per livelli visitati.
+  local complete,total=0,maxLevels*maxDistance
   for n=1,maxLevels do
-   if s.completedLevels[tostring(n)]==true then completed=completed+1 end
+   local k=tostring(n)
+   if s.completedLevels[k]==true then
+    complete=complete+maxDistance
+   else
+    local deferred=s.incomplete[k]
+    local done=deferred and deferred.distance or 0
+    if s.level==n then done=math.max(done,s.distance or 0) end
+    complete=complete+math.max(0,math.min(maxDistance,done))
+   end
   end
+  local percent=total>0 and math.floor(100*complete/total) or 0
   pcall(function()
    agent:report(state,{
     x=s.x,y=s.y,z=s.z,fuel=turtle.getFuelLevel(),
-    detail=detail,error=problem,
-    progress=math.floor(100*completed/maxLevels)
+    detail=detail,error=problem,progress=percent
    })
   end)
   print(state..": "..detail)
@@ -294,99 +303,53 @@ function M.start(agent,cfg,options)
  end
  -- I blocchi rimasti a sigillare le correnti non vanno rimossi subito.
  local traceCurrent -- ricerca sorgente dopo una corrente, definita dopo i movimenti
- -- Non raccogliere sorgenti che sono parte di piu' celle dello stesso fluido.
- -- Valutazione prudenziale locale: i grandi laghi non sono mappabili
- -- interamente dall'ispezione di una sola cella; se bloccati, differire.
- local function lakeEvidence(kind)
-  -- Classificazione prudenziale: almeno due facce con lo stesso fluido,
-  -- di cui una sorgente. Basta anche una sola seconda faccia corrente.
-  -- Non si entra nel liquido, si osservano soltanto blocchi adiacenti.
-  local old=s.d
-  local n=0
-  local sources=0
-  for _,dirCode in ipairs({0,1,2,3}) do
-   turnTo(dirCode)
-   local f=fluidi.peek("front")
-   if f and f.kind==kind then
-    n=n+1
-    if f.source then sources=sources+1 end
-   end
-  end
-  local fu=fluidi.peek("up")
-  local fd=fluidi.peek("down")
-  if fu and fu.kind==kind then
-   n=n+1
-   if fu.source then sources=sources+1 end
-  end
-  if fd and fd.kind==kind then
-   n=n+1
-   if fd.source then sources=sources+1 end
-  end
-  turnTo(old)
-  return sources>=1 and n>=2
- end
+ -- Una colonna verticale stretta NON e' automaticamente un lago.
+ -- Prima tentare sigillatura; se persiste, fermarsi alla stessa quota.
  local function markBlocked(reason,kind,x,y,z)
   error("GALLERIA_INCOMPLETA:"..reason..":"..kind..":"..x..":"..y..":"..z)
  end
  local function bonify(move,x,y,z,allowFlow)
   abortIfStop()
-  assert(inSector(x,y,z),"Bonifica fuori fascia")
-  local sideName=fluidSide(move)
-  local f=fluidi.peek(sideName)
+  assert(inSector(x,y,z),"Bonifica fuori settore")
+  local face=fluidSide(move)
+  local f=fluidi.peek(face)
   if not f then return true end
-  -- Distese sospette: mai raccogliere un lago come fonte isolata.
-  if f.source and lakeEvidence(f.kind) then
-   markBlocked("LAGO_DA_COPRIRE",f.kind,x,y,z)
+  local allowed=function(cx,cy,cz)
+   return cx==x and cy==y and cz==z and inSector(cx,cy,cz)
   end
-  if not f.source and allowFlow then
-   detailStatus("SCAVO","SEGUO CORRENTE "..f.kind.." da "..x..","..y..","..z)
-   assert(type(traceCurrent)=="function","Ricerca corrente non inizializzata")
-   local found=traceCurrent(f.kind)
-   if not found then
-    markBlocked("CORRENTE_SENZA_SORGENTE_NEL_SETTORE",f.kind,x,y,z)
-   end
-   -- Il flusso rimasto dopo il prelievo puo' impiegare vari tick
-   -- a svanire, soprattutto con la lava in grandi colonne.
-   local timeout=f.kind=="LAVA" and 120 or 15
-   local cleared=false
-   for sec=1,timeout do
-    abortIfStop()
-    if not fluidi.peek(sideName) then cleared=true;break end
-    sleep(1)
-   end
-   if not cleared then
-    markBlocked("CORRENTE_PERSISTENTE",f.kind,x,y,z)
-   end
-   s.waterPending=false;save()
-   return true
-  end
-  local before=f.kind=="ACQUA" and countItem("minecraft:water_bucket")
-    or countItem("minecraft:lava_bucket")
-  detailStatus("SCAVO","BONIFICA "..f.kind.." "..x..","..y..","..z)
-  local result,why=fluidi.resolve(sideName,{x=x,y=y,z=z},
-    function(cx,cy,cz) return cx==x and cy==y and cz==z and
-      inSector(cx,cy,cz) end)
-  if result=="raccolto" then
-   local after=f.kind=="ACQUA" and countItem("minecraft:water_bucket")
-     or countItem("minecraft:lava_bucket")
-   assert(after>before,"Prelievo non confermato nel secchio")
-   s.buckets=s.buckets+1
-   if f.kind=="ACQUA" then s.waterPending=false end
-   save()
-   sleep(0.4)
-   assert(not fluidi.peek(sideName),"La sorgente si e' rigenerata")
-   return true
-  end
+  -- PRIORITA 1: chiudi la corrente O la sorgente con un blocco.
+  local result,why=fluidi.seal(face,{x=x,y=y,z=z},allowed)
   if result=="sigillato" then
    s.blocked=s.blocked+1;save()
-   return false -- lasciare il tappo integro; non scavarlo.
+   detailStatus("SCAVO","SIGILLATA "..f.kind.." a "..x..","..y..","..z)
+   return true
   end
-  local problem=tostring(why or result)
-  if problem:find("secchio vuoto",1,true) or
+  if result=="libero" then return true end
+  -- PRIORITA 2: se non riesce a piazzare pietra, raccogli sorgenti
+  -- con secchio. Mai inseguire una corrente fuori dalla propria corsia.
+  if f.source then
+   local item=f.kind=="ACQUA" and "minecraft:water_bucket" or
+     "minecraft:lava_bucket"
+   local before=countItem(item)
+   local taken,reason=fluidi.resolve(face,{x=x,y=y,z=z},allowed)
+   if taken=="raccolto" then
+    assert(countItem(item)>before,"Prelievo fonte non confermato")
+    s.buckets=s.buckets+1;save()
+    sleep(0.4)
+    return true
+   elseif taken=="sigillato" then
+    s.blocked=s.blocked+1;save()
+    return true
+   end
+   why=reason or why
+  end
+  local problem=tostring(why or "Bonifica non riuscita")
+  if problem:find("SCORTE:",1,true) or
+     problem:find("secchio vuoto",1,true) or
      problem:find("slot libero",1,true) then
-   error("SCORTE: "..problem)
+   error("SCORTE: "..problem,0)
   end
-  markBlocked("BONIFICA_FALLITA",f.kind,x,y,z)
+  markBlocked("FLUIDO_NON_SIGILLABILE",f.kind,x,y,z)
  end
  local function prepare(move,x,y,z,first,fluidTransit)
   -- Mai scavare o bonificare all'interno della base.
@@ -580,9 +543,6 @@ function M.start(agent,cfg,options)
      local f=fluidi.peek(sideName)
      if f and f.kind==kind then
       if f.source then
-       if lakeEvidence(kind) then
-        markBlocked("LAGO_DA_COPRIRE",kind,x,y,z)
-       end
        local old=countItem(buckets)
        local result,why=fluidi.resolve(sideName,{x=x,y=y,z=z},
         function(cx,cy,cz) return cx==x and cy==y and cz==z and
