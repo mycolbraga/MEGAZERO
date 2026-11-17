@@ -348,7 +348,7 @@ local function loadRecovery()
  local h,why=http.get(url)
  assert(h,"Download recupero fallito: "..tostring(why))
  local source=h.readAll();h.close()
- assert(source:sub(1,28)=="-- MEGAZERO RECUPERO GPS v1.1",
+ assert(source:sub(1,#"-- MEGAZERO RECUPERO GPS v1.1")=="-- MEGAZERO RECUPERO GPS v1.1",
   "Sorgente recupero inattesa")
  local code,err=load(source,"=megazero_recupero_sicuro")
  assert(code,"Sintassi recupero invalida: "..tostring(err))
@@ -380,13 +380,13 @@ function M.listen(cfg,telemetry)
      request.target_computer_id==selfID and
      type(request.request_id)=="string" and
      #request.request_id>0 and #request.request_id<=64 then
+   local recoveryAction=nil
    local response=seen[request.request_id]
    if not response then
     local command=request.command
     response={kind="admin_reply",version=1,site=site,unit=unit,
      computer_id=selfID,request_id=request.request_id,command=command,
      accepted=false,phase="FAILED",agent_version="1.15"}
-    local recoveryAction=nil
     local ok,err=pcall(function()
      if command=="PING" or command=="STATUS" or command=="CHECK_UPDATE" or command=="CHECK_START" then
       local latch=read("/.megazero_miner_error")
