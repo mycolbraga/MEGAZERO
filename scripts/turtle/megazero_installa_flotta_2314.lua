@@ -135,7 +135,7 @@ print("Checkpoint: "..#cp.path.." passi, lvl "..tostring(cp.level)..
  " dist "..tostring(cp.distance))
 print("Scorte: "..empties.." secchi vuoti, "..lava.." lava in cassa")
 if already and not hasLatch then
- print("V2.3.13 / AGENTE 1.10 GIA' INSTALLATI; nessuna modifica.")
+ print("V2.3.14 / AGENTE 1.11 GIA' INSTALLATI; nessuna modifica.")
  return
 end
 -- Scarica e verifica TUTTO prima di cambiare qualsiasi file.
