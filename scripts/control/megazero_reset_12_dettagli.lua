@@ -13,9 +13,13 @@ while true do
   line:match("^([NOSE]%d%d) PC(%d+) | (.-) | GPS ([%d%-,.]+) | CP ([%d%-,.]+) | d=([%d%-]+) pend=(%S+) passi=(%S+) liv=(%S+) dist=(%S+)")
  if unit and kind~="HOME" then
   n=n+1
-  local state= gps==cp and "GPS=CP" or "GPS!=CP"
-  print(("%s PC%s | %s | pend=%s | d=%s | passi=%s"):format(unit,pc,state,pending,dir,steps))
-  print(("  GPS %s  |  CP %s  | liv %s dist %s"):format(gps,cp,lev,dist))
+  local x,y,z=gps:match("^(-?%d+),(-?%d+),(-?%d+)$")
+  local cx,cy,cz=cp:match("^(-?%d+),(-?%d+),(-?%d+)$")
+  local delta="?"
+  if x and cx then
+   delta=("%+d,%+d,%+d"):format(x-cx,y-cy,z-cz)
+  end
+  print(("%s | pend=%s | d=%s | path=%s | GPS-CP %s"):format(unit,pending,dir,steps,delta))
  end
 end
 f.close()
