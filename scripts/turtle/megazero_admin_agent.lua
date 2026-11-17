@@ -1,4 +1,4 @@
--- MEGAZERO ADMIN AGENT v1.13 | OTA sicuro da HOME con checkpoint conservato
+-- MEGAZERO ADMIN AGENT v1.14 | OTA sicuro da HOME con checkpoint conservato
 -- Pacchetti mirati dal PC 54; update consentito solo a Turtle ferma.
 local M={}
 local PROTOCOL="megazero.admin.v1"
@@ -10,7 +10,7 @@ local PACKAGE={
  {name="megazero_fluidi",remote="megazero_fluidi.lua",prefix="-- MEGAZERO FLUIDI v1.1"},
  {name="megazero_auto",remote="megazero_auto.lua",prefix="-- MEGAZERO | Gestione avvio automatico"},
  {name="megazero_admin_agent",remote="megazero_admin_agent.lua",
-  prefix="-- MEGAZERO ADMIN AGENT v1.13"}
+  prefix="-- MEGAZERO ADMIN AGENT v1.14"}
 }
 
 local function read(path)
@@ -87,7 +87,7 @@ local function targetPackage(request)
  local release=RELEASE
  local minerVersion="2.3.16"
  local fluidVersion="1.1"
- local agentVersion="1.13"
+ local agentVersion="1.14"
  if type(request)=="table" and request.release~=nil then
   assert(type(request.release)=="string" and
    #request.release==40 and request.release:match("^[0-9a-f]+$"),
@@ -353,7 +353,7 @@ function M.listen(cfg,telemetry)
  local selfID=os.getComputerID()
  local seen={}
  local arm=nil
- print("ADMIN AGENT v1.13 | "..unit.." | PC "..central)
+ print("ADMIN AGENT v1.14 | "..unit.." | PC "..central)
  while true do
   local sender,request=rednet.receive(PROTOCOL)
   if sender==central and type(request)=="table" and
@@ -367,7 +367,7 @@ function M.listen(cfg,telemetry)
     local command=request.command
     response={kind="admin_reply",version=1,site=site,unit=unit,
      computer_id=selfID,request_id=request.request_id,command=command,
-     accepted=false,phase="FAILED",agent_version="1.13"}
+     accepted=false,phase="FAILED",agent_version="1.14"}
     local ok,err=pcall(function()
      if command=="PING" or command=="STATUS" or command=="CHECK_UPDATE" or command=="CHECK_START" then
       local latch=read("/.megazero_miner_error")
@@ -390,6 +390,48 @@ function M.listen(cfg,telemetry)
        response.update_allowed=allowed
        response.block_reason=reason
       end
+      response.accepted=true;response.phase="DONE"
+     elseif command=="RESET_AUDIT" then
+      -- Solo controllo, nessun movimento e nessuna scrittura.
+      local cpPath="/.megazero_miner_v23_"..unit.."_LAVORO"
+      local rawCp=read(cpPath)
+      local parsed,cp=pcall(textutils.unserialize,rawCp or "")
+      local side,n=unit:match("^([NOSE])(%d%d)$")
+      n=tonumber(n)
+      local i=n-1
+      local hx,hy,hz,d
+      if side=="N" then hx,hy,hz,d=2119-2*i,-51,2995,0
+      elseif side=="O" then hx,hy,hz,d=2099,-51,2995+2*i,3
+      elseif side=="S" then hx,hy,hz,d=2099+2*i,-51,3015,2
+      else hx,hy,hz,d=2119,-51,3015-2*i,1 end
+      local gx,gy,gz=gps.locate(4,false)
+      local gpsOK=type(gx)=="number" and type(gy)=="number"
+       and type(gz)=="number"
+      local home=gpsOK and math.abs(gx-hx)<=0.25
+       and math.abs(gy-hy)<=0.25 and math.abs(gz-hz)<=0.25
+      local cpOK=parsed and type(cp)=="table" and
+       type(cp.path)=="table" and type(cp.x)=="number"
+       and type(cp.y)=="number" and type(cp.z)=="number"
+       and type(cp.d)=="number"
+      response.reset_audit={
+       gps_ok=gpsOK,gps_x=gx,gps_y=gy,gps_z=gz,
+       home_x=hx,home_y=hy,home_z=hz,home_d=d,
+       gps_home=home==true,cp_ok=cpOK==true,
+       saved_x=cpOK and cp.x or nil,
+       saved_y=cpOK and cp.y or nil,
+       saved_z=cpOK and cp.z or nil,
+       saved_d=cpOK and cp.d or nil,
+       pending=cpOK and cp.pending or nil,
+       path_count=cpOK and #cp.path or nil,
+       level=cpOK and cp.level or nil,
+       distance=cpOK and cp.distance or nil,
+       autostart=cfg.miner_autostart==true,
+       error_latched=read("/.megazero_miner_error")~=nil,
+       ready_home=cpOK and home and cp.pending==nil
+        and #cp.path==0 and cp.x==hx and cp.y==hy
+        and cp.z==hz and cp.d==d and
+        cfg.miner_autostart==false
+      }
       response.accepted=true;response.phase="DONE"
      elseif command=="ARM_START" then
       local allowed,reason=checkStart(cfg,telemetry)
