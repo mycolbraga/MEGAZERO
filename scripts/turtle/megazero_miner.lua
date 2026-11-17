@@ -364,7 +364,7 @@ function M.start(agent,cfg,options)
     "Uscita dalla base ostruita da fluido diverso da acqua")
    return
   end
-  local freeChecks,digs=0,0
+  local freeChecks,digs,fluidAttempts=0,0,0
   -- Niente limite di otto colpi: sabbia e gravel possono cadere a colonne.
   -- Occorrono tre controlli consecutivi a vuoto prima di avanzare.
   while digs<256 do
@@ -372,14 +372,13 @@ function M.start(agent,cfg,options)
    local f=fluidi.peek(fluidSide(move))
    if f then
     if fluidTransit and f.kind==fluidTransit and not f.source then return end
-    local clear=bonify(move,x,y,z,true)
-    if not clear then
-     markBlocked("FLUIDO_SIGILLATO_SUL_PERCORSO",f.kind,x,y,z)
+    fluidAttempts=fluidAttempts+1
+    if fluidAttempts>4 then
+     markBlocked("FLUIDO_PERSISTENTE_DOPO_SIGILLI",f.kind,x,y,z)
     end
-    if not f.source then
-     local still=fluidi.peek(fluidSide(move))
-     if still then markBlocked("CORRENTE_NON_SPARITA",f.kind,x,y,z) end
-    end
+    -- Il tappo interno va scavato per completare la cella.
+    -- Limite di quattro rigenerazioni per evitare loop infiniti.
+    bonify(move,x,y,z,true)
    end
    local exists,block=inspect(move)
    if not exists then
@@ -425,10 +424,11 @@ function M.start(agent,cfg,options)
    end
    -- Dopo un minerale, gravel/sabbia sovrastanti possono ricadere.
    local still,b=inspect(move)
-   if still and b and GRAVITY[b.name] then
+   if still then
+    -- Dopo un minerale puo apparire lichen, altro blocco o un fluido.
     prepare(move,x,y,z,false)
    end
-   assert(not inspect(move),"Vena ostruita dopo scavo")
+   assert(not inspect(move),"Vena ostruita dopo pulizia")
    s.ore=s.ore+1;save()
   else
    prepare(move,x,y,z,first,fluidTransit)
@@ -961,8 +961,10 @@ function M.start(agent,cfg,options)
      s.incomplete[key]=entry
      detailStatus("BLOCCATO","Galleria "..key..
        " sospesa; salvata per il recupero",why)
-     s.level=s.level+1;s.distance=0;save()
-     return false
+     -- Non scendere di quota: la stessa colonna di lava potrebbe
+     -- saltare tutte le gallerie fino alla bedrock.
+     save()
+     error("GALLERIA SOSPESA (quota invariata): "..why,0)
     end
     if why:find("SCORTE:",1,true) and atHome() then
      trips=trips+1
