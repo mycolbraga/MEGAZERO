@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.11 | Rientri scorte progressivi, Regulator slot 1
+-- MEGAZERO MINER v2.3.12 | Cassa senza ripristino slot, rientri progressivi
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -686,11 +686,11 @@ function M.start(agent,cfg,options)
    end
   end
  end
- -- Prelievo da cassa superiore verificato su N01:
- -- pushItems della cassa VERSO SE STESSA funziona (PUSH 1, RITORNO 1).
- -- Sposta il solo articolo richiesto nello slot 1, preleva con suckUp,
- -- quindi rimette l'eventuale contenuto originale dello slot 1.
- -- Non scarica oggetti nella Turtle, non sposta la Turtle e non crea secchi.
+ -- Prelievo da cassa superiore via pushItems verso la stessa cassa.
+ -- Con il Regulator gli SLOT NON sono stabili fra due comandi:
+ -- lasciamo gli oggetti non prelevati nella cassa (source/park),
+ -- senza forzare il ripristino allo slot originale.
+ -- Si verifica sempre cosa e quanto e' stato davvero prelevato.
  local function pullFromTop(name,amount)
   if amount<=0 then return end
   local chest=peripheral.wrap("top")
@@ -725,26 +725,24 @@ function M.start(agent,cfg,options)
      assert(n==contents[1].count,
       "Non riesco a liberare lo slot 1: lasciato "..tostring(n))
     end
+    -- Se il Regulator ha riempito slot 1 durante il parcheggio,
+    -- non tentare un trasferimento che potrebbe pescare l'oggetto errato.
+    local currentOne=chest.list()[1]
+    assert(not currentOne,
+     "Slot 1 riempito dal Regulator ("..
+      tostring(currentOne and currentOne.name)..
+      "): prelievo fermato, oggetti ancora in cassa")
     local moved=chest.pushItems(chestName,source,requested,1)
-    if moved~=requested then
-     if park then
-      local now=chest.list()
-      local inOne=now[1]
-      if inOne and inOne.name==name then
-       chest.pushItems(chestName,1,inOne.count,source)
-      end
-      local inPark=chest.list()[park]
-      if inPark then chest.pushItems(chestName,park,inPark.count,1) end
-     end
-     error("Non riesco a portare "..label.." nello slot 1: "..tostring(moved),0)
-    end
+    assert(moved==requested,
+     "Non riesco a portare "..label.." nello slot 1: "..
+      tostring(moved).." di "..requested.."; materiali in cassa")
    end
    local slot=nil
    for i=1,16 do
     if turtle.getItemCount(i)==0 then slot=i;break end
    end
-   -- Nel ramo di errore lo slot parcheggiato viene ripristinato PRIMA
-   -- di uscire: nessun blocco/combustibile viene scaricato nella Turtle.
+   -- Se un prelievo non riesce, i materiali non prelevati restano
+   -- nella cassa. Non tentare spostamenti di ripristino concorrenti.
    local ok,problem=false,nil
    if slot then
     turtle.select(slot)
@@ -758,25 +756,8 @@ function M.start(agent,cfg,options)
    else
     problem="Inventario Turtle senza uno slot libero"
    end
-   -- Ripristina eventuali resti nello slot sorgente.
-   local restored=true
-   if source~=1 then
-    local now=chest.list()
-    local inOne=now[1]
-    if inOne and inOne.name==name then
-     local moved=chest.pushItems(chestName,1,inOne.count,source)
-     if moved~=inOne.count then restored=false end
-    end
-    if park then
-     local inPark=chest.list()[park]
-     if inPark then
-      local moved=chest.pushItems(chestName,park,inPark.count,1)
-      if moved~=inPark.count then restored=false end
-     end
-    end
-   end
-   assert(restored,
-    "Cassa superiore da verificare: impossibile ripristinare gli slot")
+   -- NON ripristinare gli slot originali: il Regulator puo' aver
+   -- gia' occupato slot 1. L'oggetto parcheggiato resta nella cassa.
    assert(ok,"Prelievo "..label.." fallito: "..tostring(problem))
    remaining=remaining-requested
   end
