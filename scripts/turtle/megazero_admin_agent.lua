@@ -1,12 +1,12 @@
--- MEGAZERO ADMIN AGENT v1.6 | Miner 2.3.9 e secchi vuoti da Regulator
+-- MEGAZERO ADMIN AGENT v1.7 | Miner 2.3.10: trasferimento secchi slot 1 verificato
 -- Pacchetti mirati dal PC 54; update consentito solo a Turtle ferma.
 local M={}
 local PROTOCOL="megazero.admin.v1"
-local RELEASE="4a0c5f39f512e071958a9e8b042085755100efef"
+local RELEASE="126ac3c6f47c293c540c936e9f23b6ea218b1a22"
 local BASE="https://raw.githubusercontent.com/mycolbraga/MEGAZERO/"..RELEASE.."/scripts/turtle/"
-local MARKER="/.megazero_ota239_state"
+local MARKER="/.megazero_ota2310_state"
 local PACKAGE={
- {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.3.9"},
+ {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.3.10"},
  {name="megazero_fluidi",remote="megazero_fluidi.lua",prefix="-- MEGAZERO FLUIDI v1.0"},
  {name="megazero_auto",remote="megazero_auto.lua",prefix="-- MEGAZERO | Gestione avvio automatico"}
 }
@@ -32,10 +32,10 @@ local function existing(name)
  return "/"..name
 end
 local function stagePath(name)
- return "/.megazero_stage_239_"..name
+ return "/.megazero_stage_2310_"..name
 end
 local function backupPath(name)
- return "/.megazero_ota_backup_239_"..name
+ return "/.megazero_ota_backup_2310_"..name
 end
 local function mineInfo(unit)
  local header=firstLine(existing("megazero_miner"))
@@ -105,13 +105,13 @@ local function prepareUpdate(unit)
   verifyFile(temp,item)
  end
  write(MARKER,textutils.serialize({unit=unit,release=RELEASE,
-  fileCount=#PACKAGE,version="2.3.9"}))
+  fileCount=#PACKAGE,version="2.3.10"}))
 end
 local function commitUpdate(unit)
  local data=assert(read(MARKER),"Nessun update preparato")
  local mark=assert(textutils.unserialize(data),"Manifest staging illeggibile")
  assert(mark.unit==unit and mark.release==RELEASE and
-   mark.fileCount==#PACKAGE and mark.version=="2.3.9",
+   mark.fileCount==#PACKAGE and mark.version=="2.3.10",
    "Staging non corrispondente")
  for _,item in ipairs(PACKAGE) do
   verifyFile(stagePath(item.name),item)
@@ -200,7 +200,7 @@ local function checkStart(cfg,telemetry)
  end
  local version=firstLine(existing("megazero_miner"))
  if not version or version:sub(1,#PACKAGE[1].prefix)~=PACKAGE[1].prefix then
-  return false,"Miner non v2.3.9" end
+  return false,"Miner non v2.3.10" end
  local boot=firstLine(existing("megazero_boot"))
  if not boot or not boot:find("^%-%- MEGAZERO BOOT 1%.2") then
   return false,"BOOT non v1.2" end
@@ -267,7 +267,7 @@ function M.listen(cfg,telemetry)
  local selfID=os.getComputerID()
  local seen={}
  local arm=nil
- print("ADMIN AGENT v1.6 | "..unit.." | PC "..central)
+ print("ADMIN AGENT v1.7 | "..unit.." | PC "..central)
  while true do
   local sender,request=rednet.receive(PROTOCOL)
   if sender==central and type(request)=="table" and
@@ -281,7 +281,7 @@ function M.listen(cfg,telemetry)
     local command=request.command
     response={kind="admin_reply",version=1,site=site,unit=unit,
      computer_id=selfID,request_id=request.request_id,command=command,
-     accepted=false,phase="FAILED",agent_version="1.6"}
+     accepted=false,phase="FAILED",agent_version="1.7"}
     local ok,err=pcall(function()
      if command=="PING" or command=="STATUS" or command=="CHECK_UPDATE" or command=="CHECK_START" then
       local latch=read("/.megazero_miner_error")
@@ -332,7 +332,7 @@ function M.listen(cfg,telemetry)
        response.installed=commitUpdate(unit)
        response.accepted=true;response.phase="DONE"
       end
-      response.package_version="2.3.9"
+      response.package_version="2.3.10"
      else
       response.reason="Comando non abilitato su v1.1"
      end
