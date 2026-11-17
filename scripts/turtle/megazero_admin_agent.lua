@@ -1,4 +1,4 @@
--- MEGAZERO ADMIN AGENT v1.14 | OTA sicuro da HOME con checkpoint conservato
+-- MEGAZERO ADMIN AGENT v1.15 | OTA sicuro da HOME con checkpoint conservato
 -- Pacchetti mirati dal PC 54; update consentito solo a Turtle ferma.
 local M={}
 local PROTOCOL="megazero.admin.v1"
@@ -10,7 +10,7 @@ local PACKAGE={
  {name="megazero_fluidi",remote="megazero_fluidi.lua",prefix="-- MEGAZERO FLUIDI v1.1"},
  {name="megazero_auto",remote="megazero_auto.lua",prefix="-- MEGAZERO | Gestione avvio automatico"},
  {name="megazero_admin_agent",remote="megazero_admin_agent.lua",
-  prefix="-- MEGAZERO ADMIN AGENT v1.14"}
+  prefix="-- MEGAZERO ADMIN AGENT v1.15"}
 }
 
 local function read(path)
@@ -87,7 +87,7 @@ local function targetPackage(request)
  local release=RELEASE
  local minerVersion="2.3.16"
  local fluidVersion="1.1"
- local agentVersion="1.14"
+ local agentVersion="1.15"
  if type(request)=="table" and request.release~=nil then
   assert(type(request.release)=="string" and
    #request.release==40 and request.release:match("^[0-9a-f]+$"),
@@ -341,6 +341,24 @@ local function enableAutostart(cfg)
  return true
 end
 
+local RECOVERY_SHA="75c1ecd739a61db5341395dfc51d69141be5cc9c"
+local function loadRecovery()
+ local url="https://raw.githubusercontent.com/mycolbraga/MEGAZERO/"..
+  RECOVERY_SHA.."/scripts/turtle/megazero_recupero_sicuro.lua"
+ local h,why=http.get(url)
+ assert(h,"Download recupero fallito: "..tostring(why))
+ local source=h.readAll();h.close()
+ assert(source:sub(1,28)=="-- MEGAZERO RECUPERO GPS v1.1",
+  "Sorgente recupero inattesa")
+ local code,err=load(source,"=megazero_recupero_sicuro")
+ assert(code,"Sintassi recupero invalida: "..tostring(err))
+ local mod=code()
+ assert(type(mod)=="table" and type(mod.run)=="function" and
+  type(mod.homeReady)=="function" and type(mod.resetZero)=="function",
+  "Modulo recupero non riconosciuto")
+ return mod
+end
+
 function M.listen(cfg,telemetry)
  assert(type(cfg)=="table" and type(telemetry)=="table",
   "Agente remoto richiede configurazione e rete")
@@ -353,7 +371,7 @@ function M.listen(cfg,telemetry)
  local selfID=os.getComputerID()
  local seen={}
  local arm=nil
- print("ADMIN AGENT v1.14 | "..unit.." | PC "..central)
+ print("ADMIN AGENT v1.15 | "..unit.." | PC "..central)
  while true do
   local sender,request=rednet.receive(PROTOCOL)
   if sender==central and type(request)=="table" and
@@ -367,7 +385,8 @@ function M.listen(cfg,telemetry)
     local command=request.command
     response={kind="admin_reply",version=1,site=site,unit=unit,
      computer_id=selfID,request_id=request.request_id,command=command,
-     accepted=false,phase="FAILED",agent_version="1.14"}
+     accepted=false,phase="FAILED",agent_version="1.15"}
+    local recoveryAction=nil
     local ok,err=pcall(function()
      if command=="PING" or command=="STATUS" or command=="CHECK_UPDATE" or command=="CHECK_START" then
       local latch=read("/.megazero_miner_error")
@@ -433,6 +452,34 @@ function M.listen(cfg,telemetry)
         cfg.miner_autostart==false
       }
       response.accepted=true;response.phase="DONE"
+     elseif command=="RESET_CHECK" then
+      local allowed,reason=checkStopped(cfg,telemetry)
+      assert(allowed,reason)
+      local mod=loadRecovery()
+      response.reset_allowed,response.reset_reason=mod.homeReady(cfg)
+      response.accepted=true;response.phase="DONE"
+     elseif command=="RESET_ZERO" then
+      local allowed,reason=checkStopped(cfg,telemetry)
+      assert(allowed,reason)
+      assert(request.reset_token=="MEGAZERO_40_RESET_DA_ZERO",
+       "Conferma centrale reset errata")
+      local mod=loadRecovery()
+      response.reset_result=mod.resetZero(cfg)
+      telemetry:report("PREPARAZIONE",{
+       detail="RESET 0% confermato; checkpoint liv 1 dist 0; autostart OFF"})
+      response.accepted=true;response.phase="DONE"
+     elseif command=="RECOVER_HOME" then
+      local allowed,reason=checkStopped(cfg,telemetry)
+      assert(allowed,reason)
+      local cp=mineInfo(unit)
+      assert(cp.saved and not cp.checkpoint_invalid and
+       type(cp.path_count)=="number" and cp.path_count>0,
+       "Checkpoint senza percorso recuperabile")
+      assert(request.recovery_token=="MEGAZERO_RIENTRO_12_CHECKPOINT",
+       "Conferma rientro non valida")
+      local mod=loadRecovery()
+      recoveryAction=function()return mod.run(cfg,telemetry)end
+      response.accepted=true;response.phase="RECOVERING"
      elseif command=="ARM_START" then
       local allowed,reason=checkStart(cfg,telemetry)
       assert(allowed,reason)
@@ -480,6 +527,21 @@ function M.listen(cfg,telemetry)
     seen[request.request_id]=response
    end
    rednet.send(central,response,PROTOCOL)
+   if recoveryAction and response.accepted==true then
+    local good,msg=pcall(recoveryAction)
+    local result={kind="admin_reply",version=1,site=site,unit=unit,
+     computer_id=selfID,request_id=request.request_id,
+     command="RECOVER_HOME",agent_version="1.15",
+     accepted=good,phase=good and "DONE" or "FAILED",
+     reason=tostring(msg):sub(1,180)}
+    if not good then
+     pcall(function()telemetry:report("ERRORE",{
+      detail="RIENTRO GPS INTERROTTO; checkpoint salvato",
+      error=tostring(msg):sub(1,150)})end)
+    end
+    seen[request.request_id]=result
+    rednet.send(central,result,PROTOCOL)
+   end
    if response.accepted==true and
       ((response.phase=="STARTING" and response.command=="START") or
        (response.phase=="RESTARTING" and response.command=="RESTART_IDLE")) then
