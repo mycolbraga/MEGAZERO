@@ -62,7 +62,7 @@ for _,m in ipairs(modules) do
  m.path=existing(m.name)
  m.old=read(m.path)
  if m.old:sub(1,#m.head)~=m.head then upToDate=false end
- assert(m.old:sub(1,11)=="-- MEGAZERO ",
+ assert(m.old:sub(1,12)=="-- MEGAZERO ",
   "Programma non riconosciuto: "..m.name)
 end
 if not read(existing("megazero_auto")):find("Miner non v2.3.15",1,true) then
