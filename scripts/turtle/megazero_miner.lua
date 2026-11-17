@@ -896,7 +896,9 @@ function M.start(agent,cfg,options)
    end
    if freeSlots()<=4 or currentFuel()<#s.path+260 then pruneInventory(false);compactInventory() end
    if freeSlots()<=2 or currentFuel()<#s.path+260 then
-    error("SCORTE: rientro per inventario o carburante")
+    error("SCORTE: slot liberi "..freeSlots().."/16, carburante "..
+     currentFuel()..", passi da HOME "..#s.path..
+     ", posizione "..s.x..","..s.y..","..s.z)
    end
   end
   assert(not s.waterPending,
