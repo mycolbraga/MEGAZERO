@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.12 | Cassa senza ripristino slot, rientri progressivi
+-- MEGAZERO MINER v2.3.13 | Froglight scavabili, resto protetto
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -38,6 +38,13 @@ for _,n in ipairs({
  "rooted_dirt","coarse_dirt","soul_sand","basalt","smooth_basalt",
  "blackstone","netherrack","terracotta"
 }) do NATURAL["minecraft:"..n]=true end
+-- Eccezione richiesta per tutte le Turtle: SOLO le tre Froglight vanilla.
+-- Gli altri blocchi costruiti e i componenti restano protetti.
+local ALLOWED_DECOR = {
+ ["minecraft:verdant_froglight"]=true,
+ ["minecraft:pearlescent_froglight"]=true,
+ ["minecraft:ochre_froglight"]=true
+}
 
 local function isOre(b)
  if not b or type(b.name)~="string" then return false end
@@ -402,7 +409,7 @@ function M.start(agent,cfg,options)
     local name=block and block.name or "?"
     if name=="minecraft:bedrock" then error("BEDROCK IN PERCORSO") end
     assert(not unsafe(name),"Infrastruttura o blocco protetto: "..name)
-    assert(NATURAL[name] or isOre(block) or isSpawner(block),
+    assert(NATURAL[name] or ALLOWED_DECOR[name] or isOre(block) or isSpawner(block),
      "Blocco non minerario sconosciuto: "..name)
     if freeSlots()<=2 then pruneInventory(false);compactInventory() end
     assert(freeSlots()>2,"SCORTE: inventario quasi pieno")
@@ -496,7 +503,7 @@ function M.start(agent,cfg,options)
     assert(inSector(nx,ny,nz),
       "RIENTRO: blocco presso la base protetto: "..name)
     local allowed=block and
-      (GRAVITY[name] or NATURAL[name] or
+      (GRAVITY[name] or NATURAL[name] or ALLOWED_DECOR[name] or
         (isOre(block) and not unsafe(name)))
     assert(allowed,"RIENTRO: blocco NON naturale: "..name)
     assert(freeSlots()>0,"RIENTRO: inventario pieno davanti a "..name)
