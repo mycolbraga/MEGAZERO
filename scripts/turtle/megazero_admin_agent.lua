@@ -2,7 +2,7 @@
 -- Pacchetti mirati dal PC 54; update consentito solo a Turtle ferma.
 local M={}
 local PROTOCOL="megazero.admin.v1"
-local RELEASE="4bb89a27fa95fe062a0741e6bbfaedffa9266061"
+local RELEASE="4463edf6923275ed0cc7bc65a83275324ad5aec4"
 local BASE="https://raw.githubusercontent.com/mycolbraga/MEGAZERO/"..RELEASE.."/scripts/turtle/"
 local MARKER="/.megazero_ota2316_state"
 local PACKAGE={
@@ -408,6 +408,10 @@ function M.listen(cfg,telemetry)
       assert(allowed,reason)
       enableAutostart(cfg)
       response.accepted=true;response.phase="STARTING"
+     elseif command=="RESTART_IDLE" then
+      local allowed,reason=checkStopped(cfg,telemetry)
+      assert(allowed,reason)
+      response.accepted=true;response.phase="RESTARTING"
      elseif command=="PREPARE_UPDATE" or command=="COMMIT_UPDATE" then
       local allowed,reason=checkStopped(cfg,telemetry)
       assert(allowed,reason)
@@ -434,8 +438,9 @@ function M.listen(cfg,telemetry)
     seen[request.request_id]=response
    end
    rednet.send(central,response,PROTOCOL)
-   if response.accepted==true and response.phase=="STARTING"
-      and response.command=="START" then
+   if response.accepted==true and
+      ((response.phase=="STARTING" and response.command=="START") or
+       (response.phase=="RESTARTING" and response.command=="RESTART_IDLE")) then
     -- Invio ACK prima del reboot. STARTING non equivale a scavo confermato.
     sleep(2)
     os.reboot()
