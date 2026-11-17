@@ -326,7 +326,7 @@ function M.listen(cfg,telemetry)
  local selfID=os.getComputerID()
  local seen={}
  local arm=nil
-" print("ADMIN AGENT v1.11 | "..unit.." | PC "..central)
+ print("ADMIN AGENT v1.11 | "..unit.." | PC "..central)
  while true do
   local sender,request=rednet.receive(PROTOCOL)
   if sender==central and type(request)=="table" and
