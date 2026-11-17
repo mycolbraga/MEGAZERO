@@ -447,7 +447,49 @@ function M.start(agent,cfg,options)
   s.pending=nil;save()
   pcall(function() agent:heartbeat() end)
  end
- local function reverseOne()
+ -- Cerca una via alternativa per una singola cella in avanti.
+ -- Qualunque passo avvenuto viene aggiunto a s.path e puo essere ripercorso
+ -- all'indietro: nessuna deviazione senza checkpoint.
+ local reverseOne
+ local function stepForwardDetour()
+  local origin=#s.path
+  turnTo(front)
+  local tx,ty,tz=coords("F")
+  local ok,why=pcall(function() step("F") end)
+  if ok then return end
+  if s.pending or #s.path~=origin then error(why,0) end
+  if not tostring(why):find("GALLERIA_INCOMPLETA:",1,true) then
+   error(why,0)
+  end
+  -- Seconda corsia, poi varianti sopra/sotto, sempre nel settore.
+  -- Si torna alla stessa cella prevista dal percorso principale.
+  local routes={
+   {{"F",left},{"F",front},{"F",(left+2)%4}},
+   {{"U"},{"F",front},{"D"}},
+   {{"D"},{"F",front},{"U"}}
+  }
+  for _,route in ipairs(routes) do
+   local success,reason=pcall(function()
+    for _,leg in ipairs(route) do
+     local move,heading=leg[1],leg[2]
+     if heading~=nil then turnTo(heading) end
+     step(move)
+    end
+    assert(s.x==tx and s.y==ty and s.z==tz,
+     "Deviazione non rientrata nella stessa cella della galleria")
+    turnTo(front)
+   end)
+   if success then
+    detailStatus("SCAVO","Deviazione completata; continuo a verificare il 2x2")
+    return
+   end
+   if s.pending then error(reason,0) end
+   while #s.path>origin do reverseOne() end
+   turnTo(front)
+  end
+  markBlocked("NESSUNA_DEVIAZIONE_SICURA","FLUIDO",tx,ty,tz)
+ end
+ reverseOne=function()
   assert(not s.pending,"Posizione incerta dopo reboot")
   reserveReturning()
   local n=#s.path
@@ -854,7 +896,7 @@ function M.start(agent,cfg,options)
   -- Il primo punto esterno conta come 1° blocco della galleria.
   for dist=1,maxDistance do
    abortIfStop()
-   if dist>1 then turnTo(front);step("F") end
+   if dist>1 then stepForwardDetour() end
    coverLakeFloor()
    carveHead() -- tunnel 2 blocchi alto, senza scavare tutto il volume.
    if dist>s.distance then
