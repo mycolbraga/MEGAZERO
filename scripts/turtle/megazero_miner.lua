@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.14 | Froglight scavabili, resto protetto
+-- MEGAZERO MINER v2.3.15 | Froglight scavabili, resto protetto
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -128,6 +128,14 @@ function M.start(agent,cfg,options)
  end
  s.incomplete=s.incomplete or {}
  if s.retryComplete==nil then s.retryComplete=false end
+ if type(s.completedLevels)~="table" then
+  s.completedLevels={}
+  local reached=s.retryComplete and maxLevels or math.min(maxLevels,s.level-1)
+  for n=1,reached do
+   if s.incomplete[tostring(n)]==nil then s.completedLevels[tostring(n)]=true end
+  end
+ end
+ if s.finished and next(s.incomplete)~=nil then s.finished=false end
  -- BOOT 1.2 intercetta Ctrl+T e passa un flag, senza terminare il programma.
  local RETURN_REQUESTED="MEGAZERO_RETURN_REQUESTED"
  local function stopRequested()
@@ -157,13 +165,15 @@ function M.start(agent,cfg,options)
   return (x==hx and y==hy and z==hz) or inSector(x,y,z)
  end
  local function detailStatus(state,detail,problem)
+  local completed=0
+  for n=1,maxLevels do
+   if s.completedLevels[tostring(n)]==true then completed=completed+1 end
+  end
   pcall(function()
    agent:report(state,{
     x=s.x,y=s.y,z=s.z,fuel=turtle.getFuelLevel(),
     detail=detail,error=problem,
-    progress=math.min(100,math.floor(
-      ((s.level-1)*maxDistance+math.min(maxDistance,s.distance))/
-      (maxLevels*maxDistance)*100))
+    progress=math.floor(100*completed/maxLevels)
    })
   end)
   print(state..": "..detail)
@@ -932,6 +942,14 @@ function M.start(agent,cfg,options)
    end
    return
   end
+  if s.retryComplete and next(s.incomplete)~=nil then
+   local count=0
+   for _ in pairs(s.incomplete) do count=count+1 end
+   detailStatus("ERRORE","GALLERIE SOSPESE: "..count..
+     "; recupero esplicito richiesto, checkpoint conservato",
+     "Lavoro non completo")
+   return
+  end
   if s.finished then
    detailStatus("BASE","Lavoro gia' concluso: nessun nuovo scavo")
    return
@@ -953,6 +971,7 @@ function M.start(agent,cfg,options)
     if ok then
      s.lastScorte=nil;s.lastScorteAt=nil
      s.incomplete[tostring(s.level-1)]=nil
+     s.completedLevels[tostring(s.level-1)]=true
      save()
      return true
     end
@@ -971,6 +990,7 @@ function M.start(agent,cfg,options)
      local key=tostring(s.level)
      local entry=s.incomplete[key] or {attempts=0}
      entry.attempts=entry.attempts+1
+     entry.distance=math.max(entry.distance or 0,s.distance or 0)
      entry.lastError=why
      entry.stoppedAt={x=stoppedX,y=stoppedY,z=stoppedZ}
      s.incomplete[key]=entry
@@ -1023,19 +1043,23 @@ function M.start(agent,cfg,options)
    end
    table.sort(deferred)
    for _,level in ipairs(deferred) do
-    s.level=level;s.distance=0;save()
+    local entry=s.incomplete[tostring(level)]
+    s.level=level
+    s.distance=entry and entry.distance or 0
+    save()
     attemptLevel(true)
    end
    s.retryComplete=true
    s.level=maxLevels+1;s.distance=0;save()
   end
-  s.finished=true;save()
   local missing=0
   for _,_ in pairs(s.incomplete) do missing=missing+1 end
   if missing>0 then
-   detailStatus("INCOMPLETO",missing..
-     " gallerie ancora sospese; nessuna ripetizione automatica infinita")
+   s.finished=false;save()
+   detailStatus("ERRORE","GALLERIE SOSPESE: "..missing.." da recuperare.",
+     "Lavoro non completato; recupero controllato necessario")
   else
+   s.finished=true;save()
    detailStatus("BASE","COMPLETATO: "..maxLevels..
      " quote, minerali estratti "..s.ore)
   end
