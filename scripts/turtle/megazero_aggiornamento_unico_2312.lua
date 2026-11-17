@@ -28,7 +28,8 @@ local function existing(n)
 end
 local cfgPath="/megazero_config"
 local cfg=assert(textutils.unserialize(read(cfgPath)),"Config illeggibile")
-local side,num=type(cfg.unit)=="string" and cfg.unit:match("^([NOSE])(%d%d)$")
+local side,num
+if type(cfg.unit)=="string" then side,num=cfg.unit:match("^([NOSE])(%d%d)$") end
 num=tonumber(num)
 assert(cfg.site=="MINIERA-01" and side and num and num>=1 and num<=10,
  "Turtle non appartenente a MINIERA-01")
