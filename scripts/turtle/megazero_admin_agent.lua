@@ -1,4 +1,4 @@
--- MEGAZERO ADMIN AGENT v1.17 | OTA sicuro da HOME con checkpoint conservato
+-- MEGAZERO ADMIN AGENT v1.18 | OTA sicuro da HOME con checkpoint conservato
 -- Pacchetti mirati dal PC 54; update consentito solo a Turtle ferma.
 local M={}
 local PROTOCOL="megazero.admin.v1"
@@ -6,11 +6,11 @@ local RELEASE="daa87ad51ac89f14490ac9d769a3f31d0b170962"
 local BASE="https://raw.githubusercontent.com/mycolbraga/MEGAZERO/"..RELEASE.."/scripts/turtle/"
 local MARKER="/.megazero_ota2316_state"
 local PACKAGE={
- {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.3.17"},
+ {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.3.18"},
  {name="megazero_fluidi",remote="megazero_fluidi.lua",prefix="-- MEGAZERO FLUIDI v1.2"},
  {name="megazero_auto",remote="megazero_auto.lua",prefix="-- MEGAZERO | Gestione avvio automatico"},
  {name="megazero_admin_agent",remote="megazero_admin_agent.lua",
-  prefix="-- MEGAZERO ADMIN AGENT v1.17"}
+  prefix="-- MEGAZERO ADMIN AGENT v1.18"}
 }
 
 local function read(path)
@@ -85,9 +85,9 @@ end
 -- Download solo dal repository noto, a file fissi; Lua compilato e verificato.
 local function targetPackage(request)
  local release=RELEASE
- local minerVersion="2.3.17"
+ local minerVersion="2.3.18"
  local fluidVersion="1.2"
- local agentVersion="1.17"
+ local agentVersion="1.18"
  if type(request)=="table" and request.release~=nil then
   assert(type(request.release)=="string" and
    #request.release==40 and request.release:match("^[0-9a-f]+$"),
@@ -258,6 +258,8 @@ local function checkStart(cfg,telemetry)
   return false,"Errore miner non risolto" end
  if fs.exists(MARKER) then
   return false,"Aggiornamento OTA ancora preparato" end
+ if fs.exists("/.megazero_stop_all.request") then
+  return false,"STOP GENERALE ancora in corso" end
  local cp=mineInfo(cfg.unit)
  if cp.checkpoint_invalid or not cp.saved then
   return false,"Checkpoint assente/non leggibile" end
@@ -286,7 +288,7 @@ local function checkStart(cfg,telemetry)
  end
  local version=firstLine(existing("megazero_miner"))
  if not version or version:sub(1,#PACKAGE[1].prefix)~=PACKAGE[1].prefix then
-  return false,"Miner non v2.3.17" end
+  return false,"Miner non v2.3.18" end
  local boot=firstLine(existing("megazero_boot"))
  if not boot or not boot:find("^%-%- MEGAZERO BOOT 1%.2") then
   return false,"BOOT non v1.2" end
@@ -371,7 +373,7 @@ function M.listen(cfg,telemetry)
  local selfID=os.getComputerID()
  local seen={}
  local arm=nil
- print("ADMIN AGENT v1.17 | "..unit.." | PC "..central)
+ print("ADMIN AGENT v1.18 | "..unit.." | PC "..central)
  while true do
   local sender,request=rednet.receive(PROTOCOL)
   if sender==central and type(request)=="table" and
@@ -386,7 +388,7 @@ function M.listen(cfg,telemetry)
     local command=request.command
     response={kind="admin_reply",version=1,site=site,unit=unit,
      computer_id=selfID,request_id=request.request_id,command=command,
-     accepted=false,phase="FAILED",agent_version="1.17"}
+     accepted=false,phase="FAILED",agent_version="1.18"}
     local ok,err=pcall(function()
      if command=="PING" or command=="STATUS" or command=="CHECK_UPDATE" or command=="CHECK_START" then
       local latch=read("/.megazero_miner_error")
@@ -410,6 +412,27 @@ function M.listen(cfg,telemetry)
        response.block_reason=reason
       end
       response.accepted=true;response.phase="DONE"
+     elseif command=="STOP_ALL" then
+      -- Nessun movimento dall'agente: il miner legge un marker
+      -- persistente e torna HOME utilizzando il proprio checkpoint.
+      assert(request.stop_token=="MEGAZERO_STOP_ALL_40",
+       "Token arresto generale mancante")
+      local raw=assert(read("/megazero_config"),"Config assente")
+      local disk=assert(textutils.unserialize(raw),"Config non leggibile")
+      assert(disk.site==site and disk.unit==unit,
+       "Identita' Turtle diversa")
+      local marker="/.megazero_stop_all.request"
+      if disk.miner_autostart==true or
+         cfg.miner_autostart==true or
+         telemetry.status=="SCAVO" or telemetry.status=="RIENTRO" then
+       if not fs.exists(marker) then
+        write(marker,"STOP_ALL | PC"..central..
+         " | "..tostring(os.epoch("utc")))
+       end
+       response.accepted=true;response.phase="STOPPING"
+      else
+       response.accepted=true;response.phase="STOPPED"
+      end
      elseif command=="RESET_AUDIT" then
       -- Solo controllo, nessun movimento e nessuna scrittura.
       local cpPath="/.megazero_miner_v23_"..unit.."_LAVORO"
@@ -515,7 +538,7 @@ function M.listen(cfg,telemetry)
        })
        response.accepted=true;response.phase="DONE"
       end
-      response.package_version=response.package_version or "2.3.17"
+      response.package_version=response.package_version or "2.3.18"
      else
       response.reason="Comando non abilitato su v1.2"
      end
@@ -531,7 +554,7 @@ function M.listen(cfg,telemetry)
     local good,msg=pcall(recoveryAction)
     local result={kind="admin_reply",version=1,site=site,unit=unit,
      computer_id=selfID,request_id=request.request_id,
-     command="RECOVER_HOME",agent_version="1.17",
+     command="RECOVER_HOME",agent_version="1.18",
      accepted=good,phase=good and "DONE" or "FAILED",
      reason=tostring(msg):sub(1,180)}
     if not good then
