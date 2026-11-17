@@ -4,7 +4,7 @@ local M={}
 local PROTOCOL="megazero.admin.v1"
 local RELEASE="6129e2450931eac9acc502e559e84d1c24a7f87c"
 local BASE="https://raw.githubusercontent.com/mycolbraga/MEGAZERO/"..RELEASE.."/scripts/turtle/"
-local MARKER="/.megazero_ota2313_state"
+local MARKER="/.megazero_ota2314_state"
 local PACKAGE={
  {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.3.14"},
  {name="megazero_fluidi",remote="megazero_fluidi.lua",prefix="-- MEGAZERO FLUIDI v1.0"},
@@ -32,10 +32,10 @@ local function existing(name)
  return "/"..name
 end
 local function stagePath(name)
- return "/.megazero_stage_2313_"..name
+ return "/.megazero_stage_2314_"..name
 end
 local function backupPath(name)
- return "/.megazero_ota_backup_2313_"..name
+ return "/.megazero_ota_backup_2314_"..name
 end
 local function mineInfo(unit)
  local header=firstLine(existing("megazero_miner"))
@@ -148,39 +148,66 @@ local function commitUpdate(unit)
  for _,item in ipairs(PACKAGE) do
   verifyFile(stagePath(item.name),item)
   assert(not fs.exists(backupPath(item.name)),
-    "Backup gia' esistente: "..backupPath(item.name))
+    "Backup OTA gia esistente: "..backupPath(item.name))
  end
+ local cpPath="/.megazero_miner_v23_"..unit.."_LAVORO"
+ local cpRaw=read(cpPath)
+ local configPath="/megazero_config"
+ local cfgRaw=assert(read(configPath),"Config assente")
+ local cfg=assert(textutils.unserialize(cfgRaw),"Config illeggibile")
+ assert(cfg.unit==unit and cfg.site=="MINIERA-01","Config non corrisponde")
+ local errPath="/.megazero_miner_error"
+ local errRaw=read(errPath)
+ local backupDir="/.megazero_ota2314_backup_"..unit
+ assert(not fs.exists(backupDir),"Backup OTA precedente presente")
+ fs.makeDir(backupDir)
+ write(backupDir.."/megazero_config",cfgRaw)
+ if cpRaw then write(backupDir.."/checkpoint",cpRaw) end
+ if errRaw then write(backupDir.."/megazero_miner_error",errRaw) end
  local originals={}
  for _,item in ipairs(PACKAGE) do
   local target=existing(item.name)
   local existed=fs.exists(target)
-  originals[#originals+1]={target=target,backup=backupPath(item.name),
-    existed=existed}
+  local backup=backupPath(item.name)
+  originals[#originals+1]={target=target,backup=backup,existed=existed}
+  if existed then fs.copy(target,backup) end
  end
- local ok,err=pcall(function()
-  -- Prima salvare tutti i file originali, poi toccare i programmi.
-  for _,v in ipairs(originals) do
-   if v.existed then fs.copy(v.target,v.backup) end
-  end
-  for i,item in ipairs(PACKAGE) do
-   local v=originals[i]
+ -- Disarma il boot al prossimo riavvio; mai riavviare durante l'OTA.
+ local temp=configPath..".ota2314.tmp"
+ assert(not fs.exists(temp),"File config temporaneo OTA gia presente")
+ cfg.miner_autostart=false
+ write(temp,textutils.serialize(cfg))
+ local ok,why=pcall(function()
+  fs.delete(configPath);fs.move(temp,configPath)
+  for k,item in ipairs(PACKAGE) do
+   local v=originals[k]
    if fs.exists(v.target) then fs.delete(v.target) end
    fs.move(stagePath(item.name),v.target)
    verifyFile(v.target,item)
   end
+  assert(read(cpPath)==cpRaw,"Checkpoint cambiato durante OTA")
+  if errRaw then fs.delete(errPath) end
  end)
  if not ok then
   local recovered=true
   for _,v in ipairs(originals) do
-   local success=pcall(function()
+   local good=pcall(function()
     if fs.exists(v.target) then fs.delete(v.target) end
-    if v.existed and fs.exists(v.backup) then fs.copy(v.backup,v.target)
-    elseif v.existed then error("Backup mancante: "..v.target) end
+    if v.existed then fs.copy(v.backup,v.target) end
    end)
-   if not success then recovered=false end
+   if not good then recovered=false end
   end
-  error("Installazione fallita; ripristino "..(recovered and "eseguito" or
-    "NON COMPLETO")..": "..tostring(err))
+  local good=pcall(function()
+   if fs.exists(configPath) then fs.delete(configPath) end
+   fs.copy(backupDir.."/megazero_config",configPath)
+   if errRaw then
+    if fs.exists(errPath) then fs.delete(errPath) end
+    fs.copy(backupDir.."/megazero_miner_error",errPath)
+   end
+  end)
+  if not good then recovered=false end
+  error("OTA fallito; ripristino "..(recovered and "OK" or "DA VERIFICARE")..
+   ": "..tostring(why))
  end
  fs.delete(MARKER)
  return #PACKAGE
