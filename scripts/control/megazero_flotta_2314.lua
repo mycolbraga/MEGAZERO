@@ -34,7 +34,7 @@ rednet.open(peripheral.getName(modem))
 local function now() return os.epoch("utc") end
 local seq=0
 local function exchange(command,targets,phase,waitMs,extras)
- local jobs={},results={},errors={}
+ local jobs,results,errors={},{},{}
  for _,t in ipairs(targets) do
   seq=seq+1
   local id="F54-"..now().."-"..seq
