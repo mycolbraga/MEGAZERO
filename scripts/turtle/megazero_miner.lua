@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.17 | Froglight scavabili, resto protetto
+-- MEGAZERO MINER v2.3.18 | Froglight scavabili, resto protetto
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -145,9 +145,11 @@ function M.start(agent,cfg,options)
  end
  -- BOOT 1.2 intercetta Ctrl+T e passa un flag, senza terminare il programma.
  local RETURN_REQUESTED="MEGAZERO_RETURN_REQUESTED"
+ local REMOTE_STOP="/.megazero_stop_all.request"
  local function stopRequested()
-  return type(options.stopRequested)=="function" and
-    options.stopRequested()==true
+  return fs.exists(REMOTE_STOP) or
+    (type(options.stopRequested)=="function" and
+      options.stopRequested()==true)
  end
  local function abortIfStop()
   if stopRequested() then error(RETURN_REQUESTED,0) end
@@ -1134,9 +1136,18 @@ function M.start(agent,cfg,options)
    local unloadOK,unloadError=pcall(unload)
    local disableOK,disableError=pcall(disarmAutostart)
    if disableOK then
-    local msg=unloadOK and "CTRL+T: HOME raggiunta, scarico concluso, autostart OFF" or
-      ("CTRL+T: HOME raggiunta, SCARICO DA VERIFICARE: "..tostring(unloadError))
+    local remote=fs.exists(REMOTE_STOP)
+    local label=remote and "STOP REMOTO" or "CTRL+T"
+    local msg=unloadOK and (label..": HOME raggiunta, scarico concluso, autostart OFF") or
+      (label..": HOME raggiunta, SCARICO DA VERIFICARE: "..tostring(unloadError))
     detailStatus("BASE",msg)
+    if remote then
+     -- Marker eliminato SOLO dopo HOME confermata e autostart OFF.
+     fs.delete(REMOTE_STOP)
+     print("STOP REMOTO: HOME raggiunta. Riavvio l'agente di controllo.")
+     sleep(1)
+     os.reboot()
+    end
     print("Rientro concluso. Console pronta: puoi eseguire reboot dalla HOME.")
     return
    end
