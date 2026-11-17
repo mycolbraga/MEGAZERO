@@ -105,7 +105,7 @@ for _,t in ipairs(units) do
  if p then
   local v=p.miner and p.miner.version or ""
   local updated=type(v)=="string" and
-   v:find("^%-%- MEGAZERO MINER v2%.3%.14") and p.agent_version=="1.12"
+   v:find("^%-%- MEGAZERO MINER v2%.3%.15") and p.agent_version=="1.12"
   if updated then installed=installed+1 else old=old+1 end
   local st=p.current_status
   if st=="SCAVO" or st=="RIENTRO" then active=active+1
@@ -129,7 +129,7 @@ if mode=="aggiorna" then
  local targets=collect(status,function(_,p)
   local v=p.miner and p.miner.version or ""
   return p.agent_version=="1.12" and type(v)=="string" and
-   (not v:find("^%-%- MEGAZERO MINER v2%.3%.14") or
+   (not v:find("^%-%- MEGAZERO MINER v2%.3%.15") or
     (p.error_latch and p.error_latch~="")) and
    p.current_status~="SCAVO" and p.current_status~="RIENTRO"
  end)
@@ -167,7 +167,7 @@ end
 local candidates=collect(status,function(_,p)
  local v=p.miner and p.miner.version or ""
  return p.agent_version=="1.12" and type(v)=="string" and
-  v:find("^%-%- MEGAZERO MINER v2%.3%.14") and
+  v:find("^%-%- MEGAZERO MINER v2%.3%.15") and
   (p.current_status=="BASE" or p.current_status=="PREPARAZIONE")
 end)
 print("Candidati fermi da avviare: "..#candidates)
