@@ -1,12 +1,12 @@
--- MEGAZERO ADMIN AGENT v1.10 | Miner 2.3.13: tutte le Froglight autorizzate
+-- MEGAZERO ADMIN AGENT v1.11 | OTA sicuro da HOME con checkpoint conservato
 -- Pacchetti mirati dal PC 54; update consentito solo a Turtle ferma.
 local M={}
 local PROTOCOL="megazero.admin.v1"
-local RELEASE="83c4ffd5d58b727e92e9ad1a8b40bf74088678bd"
+local RELEASE="6129e2450931eac9acc502e559e84d1c24a7f87c"
 local BASE="https://raw.githubusercontent.com/mycolbraga/MEGAZERO/"..RELEASE.."/scripts/turtle/"
 local MARKER="/.megazero_ota2313_state"
 local PACKAGE={
- {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.3.13"},
+ {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.3.14"},
  {name="megazero_fluidi",remote="megazero_fluidi.lua",prefix="-- MEGAZERO FLUIDI v1.0"},
  {name="megazero_auto",remote="megazero_auto.lua",prefix="-- MEGAZERO | Gestione avvio automatico"}
 }
@@ -59,18 +59,50 @@ local function mineInfo(unit)
  return summary
 end
 local function checkStopped(cfg,telemetry)
- if cfg.miner_autostart~=false then
-  return false,"Miner abilitato: vietato aggiornare" end
- if fs.exists("/.megazero_miner_error") then
-  return false,"Errore miner presente: verifica manuale" end
  if telemetry.status=="SCAVO" or telemetry.status=="RIENTRO" then
-  return false,"Turtle in movimento" end
+  return false,"Turtle impegnata in scavo/rientro" end
+ -- Il miner puo' avere autostart attivo ma essere terminato con ERRORE.
+ if cfg.miner_autostart==true and telemetry.status~="ERRORE" then
+  return false,"Miner ancora abilitato: non posso provare sia fermo" end
  local cp=mineInfo(cfg.unit)
- if cp.checkpoint_invalid then return false,"Checkpoint corrotto" end
- if cp.saved and not cp.finished then
-  return false,"Checkpoint di lavoro presente: non aggiorno" end
- if cp.pending or (cp.path_count and cp.path_count>0) then
-  return false,"Percorso di rientro non concluso" end
+ if cp.checkpoint_invalid or cp.pending or (cp.path_count and cp.path_count>0) then
+  return false,"Checkpoint pendente o illeggibile" end
+ if cp.finished then return false,"Lavoro gia' finito" end
+ local side,n=cfg.unit:match("^([NOSE])(%d%d)$")
+ n=tonumber(n)
+ if not side or not n or n<1 or n>10 then return false,"Unita non valida" end
+ local k=n-1
+ local x0,y0,z0,d0
+ if side=="N" then x0,y0,z0,d0=2119-2*k,-51,2995,0
+ elseif side=="O" then x0,y0,z0,d0=2099,-51,2995+2*k,3
+ elseif side=="S" then x0,y0,z0,d0=2099+2*k,-51,3015,2
+ else x0,y0,z0,d0=2119,-51,3015-2*k,1 end
+ if cp.saved then
+  local c=read("/.megazero_miner_v23_"..cfg.unit.."_LAVORO")
+  local ok,state=pcall(textutils.unserialize,c or "")
+  if not ok or type(state)~="table" or type(state.path)~="table" or
+   state.pending~=nil or #state.path~=0 or state.x~=x0 or
+   state.y~=y0 or state.z~=z0 or state.d~=d0 then
+   return false,"Checkpoint non alla propria HOME" end
+ end
+ local x,y,z=gps.locate(4,false)
+ if type(x)~="number" or math.abs(x-x0)>0.25 or
+   math.abs(y-y0)>0.25 or math.abs(z-z0)>0.25 then
+  return false,"GPS HOME non verificata" end
+ local err=read("/.megazero_miner_error")
+ if err then
+  local allowed={"Slot 1 riempito dal Regulator","Uscita dalla base ostruita",
+    "Regulator:","Scorta secchi","Prelievo secchi",
+    "spostare lava nello slot 1","Impossibile raggiungere i secchi vuoti",
+    "Blocco non minerario sconosciuto: minecraft:verdant_froglight",
+    "Blocco non minerario sconosciuto: minecraft:pearlescent_froglight",
+    "Blocco non minerario sconosciuto: minecraft:ochre_froglight"}
+  local found=false
+  for _,reason in ipairs(allowed) do
+   if err:find(reason,1,true) then found=true;break end
+  end
+  if not found then return false,"Errore non previsto: controllare la Turtle" end
+ end
  return true
 end
 local function checkBundle()
@@ -105,13 +137,13 @@ local function prepareUpdate(unit)
   verifyFile(temp,item)
  end
  write(MARKER,textutils.serialize({unit=unit,release=RELEASE,
-  fileCount=#PACKAGE,version="2.3.13"}))
+  fileCount=#PACKAGE,version="2.3.14"}))
 end
 local function commitUpdate(unit)
  local data=assert(read(MARKER),"Nessun update preparato")
  local mark=assert(textutils.unserialize(data),"Manifest staging illeggibile")
  assert(mark.unit==unit and mark.release==RELEASE and
-   mark.fileCount==#PACKAGE and mark.version=="2.3.13",
+   mark.fileCount==#PACKAGE and mark.version=="2.3.14",
    "Staging non corrispondente")
  for _,item in ipairs(PACKAGE) do
   verifyFile(stagePath(item.name),item)
@@ -173,7 +205,7 @@ local function checkStart(cfg,telemetry)
   return false,"Configurazione su disco non valida" end
  if diskCfg.unit~=cfg.unit or diskCfg.site~=cfg.site then
   return false,"Identita' config discordante" end
- if diskCfg.miner_autostart~=false or cfg.miner_autostart~=false then
+ if diskCfg.miner_autostart~=false then
   return false,"Avvio miner gia' abilitato" end
  if telemetry.status~="PREPARAZIONE" and telemetry.status~="BASE" then
   return false,"Stato non autorizzato: "..tostring(telemetry.status) end
@@ -200,7 +232,7 @@ local function checkStart(cfg,telemetry)
  end
  local version=firstLine(existing("megazero_miner"))
  if not version or version:sub(1,#PACKAGE[1].prefix)~=PACKAGE[1].prefix then
-  return false,"Miner non v2.3.13" end
+  return false,"Miner non v2.3.14" end
  local boot=firstLine(existing("megazero_boot"))
  if not boot or not boot:find("^%-%- MEGAZERO BOOT 1%.2") then
   return false,"BOOT non v1.2" end
@@ -211,7 +243,7 @@ local function checkStart(cfg,telemetry)
  if not lower or type(lower.list)~="function" then
   return false,"Cassa inferiore per scarico non disponibile" end
  local blocked,block=turtle.inspect()
- if blocked then
+ if blocked and not (block and block.name=="minecraft:water") then
   return false,"Uscita dalla base ostruita: "..tostring(block and block.name) end
  local available,buckets=0,0
  local items=chest.list()
@@ -267,7 +299,7 @@ function M.listen(cfg,telemetry)
  local selfID=os.getComputerID()
  local seen={}
  local arm=nil
- print("ADMIN AGENT v1.10 | "..unit.." | PC "..central)
+ "print("ADMIN AGENT v1.11 | "..unit.." | PC "..central)
  while true do
   local sender,request=rednet.receive(PROTOCOL)
   if sender==central and type(request)=="table" and
@@ -330,9 +362,13 @@ function M.listen(cfg,telemetry)
        response.accepted=true;response.phase="STAGED"
       else
        response.installed=commitUpdate(unit)
+       cfg.miner_autostart=false
+       local e=read("/.megazero_miner_error")
+       if e then fs.delete("/.megazero_miner_error") end
+       telemetry:report("BASE",{detail="OTA completato; HOME ferma; checkpoint invariato"})
        response.accepted=true;response.phase="DONE"
       end
-      response.package_version="2.3.13"
+      response.package_version="2.3.14"
      else
       response.reason="Comando non abilitato su v1.1"
      end
