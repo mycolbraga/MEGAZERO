@@ -1,5 +1,5 @@
 -- MEGAZERO | E01 / E02 / E03: recupero uscita ostruita, miner 2.3.13
--- Esegui SOLO sulla Turtle interessata e FERMA alla HOME, uscita libera.
+-- Esegui SOLO sulla Turtle interessata e FERMA alla HOME. Acqua davanti consentita.
 -- Non interrompe scavi, non muove, non riavvia. Mantiene checkpoint.
 assert(turtle,"Da eseguire solo su una Turtle, non sulla centrale")
 local RELEASE="efda6384e708e47e8d7ca84a76715465ed68cf56"
@@ -37,7 +37,8 @@ local unit=cfg.unit
 assert(unit=="E01" or unit=="E02" or unit=="E03",
  "Riservato ESCLUSIVAMENTE a E01, E02, E03; identita' "..tostring(unit).." diversa")
 local blocked,block=turtle.inspect()
-assert(not blocked,"Uscita "..unit.." ancora ostruita: "..
+assert(not blocked or (block and block.name=="minecraft:water"),
+ "Uscita "..unit.." ostruita da BLOCCO SOLIDO: "..
  tostring(block and block.name or "?")..
  ". Nessun aggiornamento effettuato.")
 local i=num-1
@@ -109,6 +110,17 @@ if hasLatch then
  end
  assert(valid,"Errore non riconosciuto: "..err:sub(1,145))
 end
+local PATCH_MARKER="-- MEGAZERO E01-E03: acqua consentita SOLO al primo passo fuori base"
+local EXIT_OLD=[=[   local exists=inspect(move)
+   assert(not exists and not fluidi.peek(fluidSide(move)),
+    "Uscita dalla base ostruita: non rompo infrastrutture")]=]
+local EXIT_NEW=[=[   -- MEGAZERO E01-E03: acqua consentita SOLO al primo passo fuori base
+   local exists,block=inspect(move)
+   local fluid=fluidi.peek(fluidSide(move))
+   assert(not exists or (block and block.name=="minecraft:water"),
+    "Uscita dalla base ostruita da blocco solido: non rompo infrastrutture")
+   assert(not fluid or fluid.kind=="ACQUA",
+    "Uscita dalla base ostruita da fluido diverso da acqua")]=]
 local pkg={
  {name="megazero_miner",prefix="-- MEGAZERO MINER v2.3.13"},
  {name="megazero_admin_agent",prefix="-- MEGAZERO ADMIN AGENT v1.10"},
@@ -121,6 +133,7 @@ for _,m in ipairs(pkg) do
  if m.name=="megazero_miner" then
   assert(m.old:find("^%-%- MEGAZERO MINER v2%.3%."),
    "Miner sconosciuto, STOP")
+  if not m.old:find(PATCH_MARKER,1,true) then already=false end
  elseif m.name=="megazero_admin_agent" then
   assert(m.old:find("^%-%- MEGAZERO ADMIN AGENT v1%."),
    "Agente sconosciuto, STOP")
@@ -133,7 +146,7 @@ end
 if not read(existing("megazero_auto")):find("Miner non v2.3.13",1,true) then
  already=false
 end
-print(unit.." PC"..os.getComputerID()..": GPS HOME confermata, uscita libera")
+print(unit.." PC"..os.getComputerID()..": GPS HOME confermata, uscita libera o acqua ammessa")
 print("Checkpoint: "..#cp.path.." passi, lvl "..tostring(cp.level)..
  " dist "..tostring(cp.distance))
 print("Scorte: "..empties.." secchi vuoti, "..lava.." lava in cassa")
@@ -146,6 +159,14 @@ for _,m in ipairs(pkg) do
  local response,why=http.get(BASE..m.name..".lua")
  assert(response,"Download "..m.name.." fallito: "..tostring(why))
  m.new=response.readAll();response.close()
+ if m.name=="megazero_miner" then
+  local at=assert(m.new:find(EXIT_OLD,1,true),
+   "Miner 2.3.13 con codice uscita diverso: STOP senza modifiche")
+  assert(not m.new:find(EXIT_OLD,at+#EXIT_OLD,true),
+   "Controllo uscita presente piu volte: STOP")
+  m.new=m.new:sub(1,at-1)..EXIT_NEW..m.new:sub(at+#EXIT_OLD)
+  assert(m.new:find(PATCH_MARKER,1,true),"Patch acqua non applicata")
+ end
  assert(m.new:sub(1,#m.prefix)==m.prefix,
   "Versione download inattesa "..m.name)
  assert(load(m.new,"="..m.name),"Modulo Lua non compilabile "..m.name)
@@ -204,7 +225,7 @@ if not success then
 end
 if hasLatch then fs.delete(latch) end
 assert(read(cpPath)==cpRaw,"ERRORE: checkpoint modificato inaspettatamente")
-print(unit..": INSTALLATA v2.3.13 / agente v1.10")
+print(unit..": INSTALLATA v2.3.13 (uscita attraversa acqua) / agente v1.10")
 print("Checkpoint e HOME invariati. Backup: "..backup)
 print("Autostart OFF; NESSUNO SCAVO o REBOOT.")
 print("Prossimo passo: reboot, poi avvio da PC54.")
