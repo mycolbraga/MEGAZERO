@@ -626,7 +626,7 @@ local function draw()
    local label
    if stopSession then
     local ack,home,fail=stopCounts()
-    label="FERMA TUTTO | ACK "..ack.."/40 | HOME GPS "..home.."/40
+    label="FERMA TUTTO | ACK "..ack.."/40 | HOME GPS "..home.."/40"
     if fail>0 then label=label.." | NEGATI "..fail end
    elseif stopConfirmUntil>now() then
     label="CONFERMA FERMA TUTTO: TOCCA ANCORA ENTRO 10s"
