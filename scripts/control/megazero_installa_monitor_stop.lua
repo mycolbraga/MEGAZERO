@@ -1,7 +1,7 @@
 -- MEGAZERO PC54 | Installa monitor 1.7 con FERMA TUTTO; non muove Turtle.
 assert(not turtle and os.getComputerID()==54,"Eseguire solo su PC54")
 local url="https://raw.githubusercontent.com/mycolbraga/MEGAZERO/"..
- "4809d4cf85a143b10b2d26fa85011a15712f6853/"..
+ "59458f712d242d6de611033e77899a167ecb2b0a/"..
  "scripts/control/megazero_control.lua"
 local resp,why=http.get(url)
 assert(resp,"Download monitor fallito: "..tostring(why))
