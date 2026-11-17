@@ -2,7 +2,7 @@
 -- Pacchetti mirati dal PC 54; update consentito solo a Turtle ferma.
 local M={}
 local PROTOCOL="megazero.admin.v1"
-local RELEASE="c73386041f6008a5b25bbf33f5e37b5091d8772e"
+local RELEASE="05f812f08d91e275ca01750dcba3309718cee1ba"
 local BASE="https://raw.githubusercontent.com/mycolbraga/MEGAZERO/"..RELEASE.."/scripts/turtle/"
 local MARKER="/.megazero_ota2316_state"
 local PACKAGE={
