@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.16 | Froglight scavabili, resto protetto
+-- MEGAZERO MINER v2.3.17 | Froglight scavabili, resto protetto
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -127,6 +127,9 @@ function M.start(agent,cfg,options)
   s=value
  end
  s.incomplete=s.incomplete or {}
+ -- Tappi piazzati su celle della galleria: non scavarli alla cieca.
+ -- Persistono nel checkpoint anche dopo rientri e riavvii.
+ s.seals=s.seals or {}
  if s.retryComplete==nil then s.retryComplete=false end
  local migrated=false
  if type(s.completedLevels)~="table" then
@@ -308,6 +311,9 @@ function M.start(agent,cfg,options)
  local function markBlocked(reason,kind,x,y,z)
   error("GALLERIA_INCOMPLETA:"..reason..":"..kind..":"..x..":"..y..":"..z)
  end
+ local function sealKey(x,y,z)
+  return x..":"..y..":"..z
+ end
  local function bonify(move,x,y,z,allowFlow)
   abortIfStop()
   assert(inSector(x,y,z),"Bonifica fuori settore")
@@ -317,39 +323,47 @@ function M.start(agent,cfg,options)
   local allowed=function(cx,cy,cz)
    return cx==x and cy==y and cz==z and inSector(cx,cy,cz)
   end
-  -- PRIORITA 1: chiudi la corrente O la sorgente con un blocco.
-  local result,why=fluidi.seal(face,{x=x,y=y,z=z},allowed)
-  if result=="sigillato" then
-   s.blocked=s.blocked+1;save()
-   detailStatus("SCAVO","SIGILLATA "..f.kind.." a "..x..","..y..","..z)
+  -- ORDINE: raccolta della SORGENTE con secchio -> sigillo della
+  -- corrente residua -> tentativo di continuare SOLO se la cella e'
+  -- libera. Non togliere un tappo mentre il fluido puo rigenerarsi.
+  local result,detail=fluidi.resolve(face,{x=x,y=y,z=z},allowed)
+  if result=="libero" or result=="raccolto" then
+   assert(not fluidi.peek(face),
+    "Bonifica non confermata: fluido rimasto dopo prelievo")
+   if result=="raccolto" then
+    s.buckets=s.buckets+1;save()
+    detailStatus("SCAVO","SORGENTE "..f.kind.." raccolta a "..
+     x..","..y..","..z)
+   end
    return true
   end
-  if result=="libero" then return true end
-  -- PRIORITA 2: se non riesce a piazzare pietra, raccogli sorgenti
-  -- con secchio. Mai inseguire una corrente fuori dalla propria corsia.
-  if f.source then
-   local item=f.kind=="ACQUA" and "minecraft:water_bucket" or
-     "minecraft:lava_bucket"
-   local before=countItem(item)
-   local taken,reason=fluidi.resolve(face,{x=x,y=y,z=z},allowed)
-   if taken=="raccolto" then
-    assert(countItem(item)>before,"Prelievo fonte non confermato")
-    s.buckets=s.buckets+1;save()
-    sleep(0.4)
-    return true
-   elseif taken=="sigillato" then
-    s.blocked=s.blocked+1;save()
-    return true
+  local failure=detail
+  if not result then
+   -- Il prelievo puo fallire per assenza di secchi o per fonte
+   -- non prelevabile. Prima di rinunciare tenta il sigillo.
+   result,detail=fluidi.seal(face,{x=x,y=y,z=z},allowed)
+   if result=="libero" then return true end
+   if not result then
+    local msg=tostring(failure or detail or "Fluido non gestito")
+    if msg:find("secchio",1,true) or
+       msg:find("slot libero",1,true) or
+       msg:find("SCORTE:",1,true) or
+       tostring(detail):find("SCORTE:",1,true) then
+     error("SCORTE: "..msg.." | sigillo: "..tostring(detail),0)
+    end
+    markBlocked("FLUIDO_NON_GESTIBILE",f.kind,x,y,z)
    end
-   why=reason or why
   end
-  local problem=tostring(why or "Bonifica non riuscita")
-  if problem:find("SCORTE:",1,true) or
-     problem:find("secchio vuoto",1,true) or
-     problem:find("slot libero",1,true) then
-   error("SCORTE: "..problem,0)
-  end
-  markBlocked("FLUIDO_NON_SIGILLABILE",f.kind,x,y,z)
+  assert(result=="sigillato","Risultato bonifica imprevisto")
+  -- Il blocco piazzato occupa ancora una cella del 2x2.
+  -- Non dichiararla completata e non romperlo subito:
+  -- il chiamante deve provare una via alternativa sicura.
+  local key=sealKey(x,y,z)
+  s.seals[key]=detail or true
+  s.blocked=s.blocked+1
+  save()
+  detailStatus("SCAVO","SIGILLO "..f.kind.." a "..x..","..y..","..z)
+  markBlocked("SIGILLO_SU_CELLA_2X2",f.kind,x,y,z)
  end
  local function prepare(move,x,y,z,first,fluidTransit)
   -- Mai scavare o bonificare all'interno della base.
@@ -369,15 +383,26 @@ function M.start(agent,cfg,options)
   -- Occorrono tre controlli consecutivi a vuoto prima di avanzare.
   while digs<256 do
    abortIfStop()
+   local key=sealKey(x,y,z)
+   local sealed=s.seals[key]
+   if sealed then
+    local exists,block=inspect(move)
+    if exists and block and (sealed==true or block.name==sealed) then
+     markBlocked("TAPPO_DA_NON_RIMUOVERE","SOLIDO",x,y,z)
+    end
+    -- Il blocco e' stato tolto o cambiato: non assumere che sia
+    -- tuttora un tappo. Rivaluta il fluido prima di scavare.
+    s.seals[key]=nil;save()
+   end
    local f=fluidi.peek(fluidSide(move))
    if f then
     if fluidTransit and f.kind==fluidTransit and not f.source then return end
     fluidAttempts=fluidAttempts+1
     if fluidAttempts>4 then
-     markBlocked("FLUIDO_PERSISTENTE_DOPO_SIGILLI",f.kind,x,y,z)
+     markBlocked("FLUIDO_PERSISTENTE",f.kind,x,y,z)
     end
-    -- Il tappo interno va scavato per completare la cella.
-    -- Limite di quattro rigenerazioni per evitare loop infiniti.
+    -- bonify torna SOLO a cella vuota; se sigilla una cella
+    -- 2x2 segnala incompleta e la deviazione prova altre vie.
     bonify(move,x,y,z,true)
    end
    local exists,block=inspect(move)
