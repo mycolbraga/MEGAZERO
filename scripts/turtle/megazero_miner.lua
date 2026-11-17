@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.13 | Froglight scavabili, resto protetto
+-- MEGAZERO MINER v2.3.14 | Froglight scavabili, resto protetto
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -377,9 +377,13 @@ function M.start(agent,cfg,options)
   -- Mai scavare o bonificare all'interno della base.
   assert(inSector(x,y,z),"Intervento fuori area o dentro la base vietato")
   if first then
-   local exists=inspect(move)
-   assert(not exists and not fluidi.peek(fluidSide(move)),
-    "Uscita dalla base ostruita: non rompo infrastrutture")
+   -- Acqua ammessa SOLO al primo passo fuori HOME, lava/solidi protetti.
+   local exists,block=inspect(move)
+   local flow=fluidi.peek(fluidSide(move))
+   assert(not exists or (block and block.name=="minecraft:water"),
+    "Uscita dalla base ostruita da blocco solido: non rompo infrastrutture")
+   assert(not flow or flow.kind=="ACQUA",
+    "Uscita dalla base ostruita da fluido diverso da acqua")
    return
   end
   local freeChecks,digs=0,0
@@ -693,80 +697,84 @@ function M.start(agent,cfg,options)
    end
   end
  end
- -- Prelievo da cassa superiore via pushItems verso la stessa cassa.
- -- Con il Regulator gli SLOT NON sono stabili fra due comandi:
- -- lasciamo gli oggetti non prelevati nella cassa (source/park),
- -- senza forzare il ripristino allo slot originale.
- -- Si verifica sempre cosa e quanto e' stato davvero prelevato.
+ -- Regulator: trasferimenti verificati e tentativi limitati.
+ -- Lo slot 1 puo' cambiare mentre il Regulator inserisce oggetti:
+ -- non presumere mai che contenga ancora l'oggetto richiesto.
  local function pullFromTop(name,amount)
   if amount<=0 then return end
   local chest=peripheral.wrap("top")
   assert(chest and type(chest.list)=="function" and
-   type(chest.size)=="function" and type(chest.pushItems)=="function",
-   "Cassa superiore senza interfaccia trasferimenti")
-  local chestName=assert(peripheral.getName(chest),
-   "Nome periferica cassa superiore assente")
+    type(chest.size)=="function" and type(chest.pushItems)=="function",
+    "Cassa superiore senza interfaccia trasferimenti")
+  local chestName=assert(peripheral.getName(chest),"Nome cassa superiore assente")
   local label=name=="minecraft:bucket" and "secchi vuoti" or
-   (name=="minecraft:lava_bucket" and "secchi lava" or name)
-  local remaining=amount
+    (name=="minecraft:lava_bucket" and "secchi lava" or name)
+  local remaining,attempts=amount,0
+  local function retry(reason)
+   attempts=attempts+1
+   assert(attempts<=40,"Regulator: impossibile prelevare "..label..
+     " dopo 40 verifiche; ultimo: "..reason)
+   sleep(0.1)
+  end
   while remaining>0 do
    abortIfStop()
    local contents=assert(chest.list(),"Cassa superiore non leggibile")
-   local source=nil
+   local source
    for i=1,chest.size() do
-    local item=contents[i]
-    if item and item.name==name and item.count>0 then
-     source=i;break
-    end
+    local it=contents[i]
+    if it and it.name==name and it.count>0 then source=i;break end
    end
    assert(source,"Regulator: mancano "..remaining.." "..label.." nella cassa superiore")
-   local requested=math.min(remaining,contents[source].count)
-   local park=nil
    if source~=1 then
-    if contents[1] then
+    local current=contents[1]
+    if current and current.name~=name then
+     local park
      for i=chest.size(),2,-1 do
       if not contents[i] then park=i;break end
      end
-     assert(park,"Cassa rifornimenti piena: serve 1 slot libero per "..label)
-     local n=chest.pushItems(chestName,1,contents[1].count,park)
-     assert(n==contents[1].count,
-      "Non riesco a liberare lo slot 1: lasciato "..tostring(n))
+     assert(park,"Cassa rifornimenti piena: manca slot libero per "..label)
+     local moved=chest.pushItems(chestName,1,current.count,park)
+     if moved~=current.count then retry("parcheggio slot 1 non completo") end
     end
-    -- Se il Regulator ha riempito slot 1 durante il parcheggio,
-    -- non tentare un trasferimento che potrebbe pescare l'oggetto errato.
-    local currentOne=chest.list()[1]
-    assert(not currentOne,
-     "Slot 1 riempito dal Regulator ("..
-      tostring(currentOne and currentOne.name)..
-      "): prelievo fermato, oggetti ancora in cassa")
-    local moved=chest.pushItems(chestName,source,requested,1)
-    assert(moved==requested,
-     "Non riesco a portare "..label.." nello slot 1: "..
-      tostring(moved).." di "..requested.."; materiali in cassa")
+    local first=chest.list()[1]
+    if first and first.name~=name then
+     retry("slot 1 riempito da "..first.name)
+    else
+     local src=chest.list()[source]
+     if src and src.name==name then
+      local moved=chest.pushItems(chestName,source,
+       math.min(src.count,remaining),1)
+      if moved<=0 then retry("trasferimento verso slot 1 fallito") end
+     else
+      retry("Regulator ha spostato la sorgente")
+     end
+    end
    end
-   local slot=nil
-   for i=1,16 do
-    if turtle.getItemCount(i)==0 then slot=i;break end
-   end
-   -- Se un prelievo non riesce, i materiali non prelevati restano
-   -- nella cassa. Non tentare spostamenti di ripristino concorrenti.
-   local ok,problem=false,nil
-   if slot then
+   local first=chest.list()[1]
+   if first and first.name==name then
+    local slot
+    for i=1,16 do
+     if turtle.getItemCount(i)==0 then slot=i;break end
+    end
+    assert(slot,"Inventario Turtle senza slot libero")
     turtle.select(slot)
-    local sucked,why=turtle.suckUp(requested)
+    local ok,why=turtle.suckUp(math.min(first.count,remaining))
     local got=turtle.getItemDetail(slot)
-    ok=sucked and got and got.name==name and got.count==requested
-    if not ok then
-     problem="suckUp: "..tostring(why).." | oggetto "..tostring(got and got.name)..
-      " x"..tostring(got and got.count)
+    if ok and got and got.name==name then
+     remaining=remaining-got.count
+     attempts=0
+    elseif got then
+     -- Cambio di contenuto nel tick di prelievo: restituisci
+     -- esattamente l'oggetto imprevisto, senza distruggerlo.
+     assert(turtle.dropUp(got.count),
+      "Oggetto imprevisto "..got.name.." non restituibile alla cassa")
+     retry("prelevato "..got.name.." anziche "..label)
+    else
+     retry("suckUp non riuscito: "..tostring(why))
     end
    else
-    problem="Inventario Turtle senza uno slot libero"
+    retry("slot 1 non contiene "..label)
    end
-   -- NON ripristinare gli slot originali: il Regulator puo' aver
-   -- gia' occupato slot 1. L'oggetto parcheggiato resta nella cassa.
-   assert(ok,"Prelievo "..label.." fallito: "..tostring(problem))
-   remaining=remaining-requested
   end
  end
  local function pullBucketsFromTop(required)
@@ -786,10 +794,7 @@ function M.start(agent,cfg,options)
   assert(atHome(),"Rifornimento solo alla propria postazione")
   compactInventory()
   unload()
-  -- Scorta regolata di 3 secchi VUOTI, mai derivata dal carburante.
-  pullBucketsFromTop(3-countItem("minecraft:bucket"))
-  assert(countItem("minecraft:bucket")>=3,
-    "Scorta secchi insufficiente dopo il prelievo dalla cassa superiore")
+  -- Prima rifornisci carburante: il Regulator puo occupare slot 1 con lava.
   local limit=turtle.getFuelLimit()
   local fuel=turtle.getFuelLevel()
   if type(limit)=="number" and type(fuel)=="number" then
@@ -800,6 +805,10 @@ function M.start(agent,cfg,options)
     getLava()
    end
   end
+  -- Mantieni tre secchi vuoti anche quando non serve lava.
+  pullBucketsFromTop(3-countItem("minecraft:bucket"))
+  assert(countItem("minecraft:bucket")>=3,
+    "Scorta secchi insufficiente dopo il prelievo dalla cassa superiore")
   unload() -- Tiene 3 secchi e fino a SEAL_TARGET blocchi dallo scavo.
  end
  -- Crea una superficie di passaggio su liquido sotto la Turtle,
