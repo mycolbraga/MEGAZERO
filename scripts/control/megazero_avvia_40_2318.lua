@@ -102,7 +102,7 @@ for _,t in ipairs(units) do
  local p=status[t.unit]
  local v=p.miner and p.miner.version or ""
  local ok=p.agent_version=="1.18" and type(v)=="string" and
-  v:find("^%-%- MEGAZERO MINER v2%.3%.17") and
+  v:find("^%-%- MEGAZERO MINER v2%.3%.18") and
   p.miner_autostart==false and
   (p.current_status=="BASE" or p.current_status=="PREPARAZIONE") and
   not (p.error_latch and p.error_latch~="")
