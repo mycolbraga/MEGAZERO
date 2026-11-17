@@ -1,4 +1,4 @@
--- MEGAZERO FLUIDI v1.2 | Modulo bonifica + collaudo fermo N01
+-- MEGAZERO FLUIDI v1.3 | Modulo bonifica + collaudo fermo N01
 -- Uso sul terminale N01: megazero_fluidi N01
 -- Uso come modulo futuro: local fluidi = dofile("/megazero_fluidi")
 -- NON muove, NON scava, NON crea fluidi. Gestisce solo la faccia ispezionata.
@@ -170,6 +170,32 @@ local function solidSlot()
   end
 end
 
+
+-- Prelievo OPZIONALE della sorgente d'acqua, senza sigilli.
+-- Se non e' una sorgente o il prelievo non riesce, il chiamante puo'
+-- comunque attraversare l'acqua. Mai eseguire un place con pietra.
+function M.tryCollectWaterSource(side,pos,allowed)
+ if type(pos)~="table" or type(allowed)~="function" or
+  not allowed(pos.x,pos.y,pos.z) then
+  return false,"Cella non autorizzata"
+ end
+ local f=M.peek(side)
+ if not f or f.kind~="ACQUA" or not f.source then
+  return false,"Non e' una sorgente d'acqua"
+ end
+ local ok,why=oneEmptyBucket()
+ if not ok then return false,tostring(why) end
+ -- Ricontrollo dopo la scelta del secchio, prima del piazzamento.
+ local again=M.peek(side)
+ if not again or again.kind~="ACQUA" or not again.source then
+  return false,"Sorgente d'acqua cambiata"
+ end
+ local placed,reason=placeAt(side)
+ if not placed then return false,tostring(reason) end
+ local item=turtle.getItemDetail(turtle.getSelectedSlot())
+ if item and item.name=="minecraft:water_bucket" then return true end
+ return false,"Prelievo acqua non confermato"
+end
 
 -- Seconda opzione: sigillare se la raccolta della sorgente non basta.
 -- Non scava e non muove la Turtle. La cella e' ammessa SOLO dal chiamante.
