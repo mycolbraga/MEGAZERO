@@ -1,12 +1,12 @@
--- MEGAZERO ADMIN AGENT v1.11 | OTA sicuro da HOME con checkpoint conservato
+-- MEGAZERO ADMIN AGENT v1.12 | OTA sicuro da HOME con checkpoint conservato
 -- Pacchetti mirati dal PC 54; update consentito solo a Turtle ferma.
 local M={}
 local PROTOCOL="megazero.admin.v1"
-local RELEASE="6129e2450931eac9acc502e559e84d1c24a7f87c"
+local RELEASE="fc7a6e1158cf35a53daf88a36c065f09a84a0f1a"
 local BASE="https://raw.githubusercontent.com/mycolbraga/MEGAZERO/"..RELEASE.."/scripts/turtle/"
-local MARKER="/.megazero_ota2314_state"
+local MARKER="/.megazero_ota2315_state"
 local PACKAGE={
- {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.3.14"},
+ {name="megazero_miner",remote="megazero_miner.lua",prefix="-- MEGAZERO MINER v2.3.15"},
  {name="megazero_fluidi",remote="megazero_fluidi.lua",prefix="-- MEGAZERO FLUIDI v1.0"},
  {name="megazero_auto",remote="megazero_auto.lua",prefix="-- MEGAZERO | Gestione avvio automatico"}
 }
@@ -32,10 +32,10 @@ local function existing(name)
  return "/"..name
 end
 local function stagePath(name)
- return "/.megazero_stage_2314_"..name
+ return "/.megazero_stage_2315_"..name
 end
 local function backupPath(name)
- return "/.megazero_ota_backup_2314_"..name
+ return "/.megazero_ota_backup_2315_"..name
 end
 local function mineInfo(unit)
  local header=firstLine(existing("megazero_miner"))
@@ -137,13 +137,13 @@ local function prepareUpdate(unit)
   verifyFile(temp,item)
  end
  write(MARKER,textutils.serialize({unit=unit,release=RELEASE,
-  fileCount=#PACKAGE,version="2.3.14"}))
+  fileCount=#PACKAGE,version="2.3.15"}))
 end
 local function commitUpdate(unit)
  local data=assert(read(MARKER),"Nessun update preparato")
  local mark=assert(textutils.unserialize(data),"Manifest staging illeggibile")
  assert(mark.unit==unit and mark.release==RELEASE and
-   mark.fileCount==#PACKAGE and mark.version=="2.3.14",
+   mark.fileCount==#PACKAGE and mark.version=="2.3.15",
    "Staging non corrispondente")
  for _,item in ipairs(PACKAGE) do
   verifyFile(stagePath(item.name),item)
@@ -158,7 +158,7 @@ local function commitUpdate(unit)
  assert(cfg.unit==unit and cfg.site=="MINIERA-01","Config non corrisponde")
  local errPath="/.megazero_miner_error"
  local errRaw=read(errPath)
- local backupDir="/.megazero_ota2314_backup_"..unit
+ local backupDir="/.megazero_ota2315_backup_"..unit
  assert(not fs.exists(backupDir),"Backup OTA precedente presente")
  fs.makeDir(backupDir)
  write(backupDir.."/megazero_config",cfgRaw)
@@ -173,7 +173,7 @@ local function commitUpdate(unit)
   if existed then fs.copy(target,backup) end
  end
  -- Disarma il boot al prossimo riavvio; mai riavviare durante l'OTA.
- local temp=configPath..".ota2314.tmp"
+ local temp=configPath..".ota2315.tmp"
  assert(not fs.exists(temp),"File config temporaneo OTA gia presente")
  cfg.miner_autostart=false
  write(temp,textutils.serialize(cfg))
@@ -259,7 +259,7 @@ local function checkStart(cfg,telemetry)
  end
  local version=firstLine(existing("megazero_miner"))
  if not version or version:sub(1,#PACKAGE[1].prefix)~=PACKAGE[1].prefix then
-  return false,"Miner non v2.3.14" end
+  return false,"Miner non v2.3.15" end
  local boot=firstLine(existing("megazero_boot"))
  if not boot or not boot:find("^%-%- MEGAZERO BOOT 1%.2") then
   return false,"BOOT non v1.2" end
@@ -326,7 +326,7 @@ function M.listen(cfg,telemetry)
  local selfID=os.getComputerID()
  local seen={}
  local arm=nil
- print("ADMIN AGENT v1.11 | "..unit.." | PC "..central)
+ print("ADMIN AGENT v1.12 | "..unit.." | PC "..central)
  while true do
   local sender,request=rednet.receive(PROTOCOL)
   if sender==central and type(request)=="table" and
@@ -340,7 +340,7 @@ function M.listen(cfg,telemetry)
     local command=request.command
     response={kind="admin_reply",version=1,site=site,unit=unit,
      computer_id=selfID,request_id=request.request_id,command=command,
-     accepted=false,phase="FAILED",agent_version="1.11"}
+     accepted=false,phase="FAILED",agent_version="1.12"}
     local ok,err=pcall(function()
      if command=="PING" or command=="STATUS" or command=="CHECK_UPDATE" or command=="CHECK_START" then
       local latch=read("/.megazero_miner_error")
@@ -395,7 +395,7 @@ function M.listen(cfg,telemetry)
        telemetry:report("BASE",{detail="OTA completato; HOME ferma; checkpoint invariato"})
        response.accepted=true;response.phase="DONE"
       end
-      response.package_version="2.3.14"
+      response.package_version="2.3.15"
      else
       response.reason="Comando non abilitato su v1.1"
      end
