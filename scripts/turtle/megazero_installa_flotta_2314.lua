@@ -2,7 +2,7 @@
 -- Esegui su una qualunque N/O/S/E 01..10, ferma alla HOME. NON in SCAVO.
 -- Non interrompe scavi, non muove, non riavvia. Mantiene checkpoint.
 assert(turtle,"Da eseguire solo su una Turtle, non sulla centrale")
-local RELEASE="64e6387606900d27c03d4294cf4fc9bb6f3d30aa"
+local RELEASE="b0bd166def315c355ba732d0c447bdc9507baeee"
 local BASE="https://raw.githubusercontent.com/mycolbraga/MEGAZERO/"..
  RELEASE.."/scripts/turtle/"
 local function read(p)
