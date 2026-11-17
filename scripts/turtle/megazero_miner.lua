@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.19 | Froglight scavabili, resto protetto
+-- MEGAZERO MINER v2.3.20 | Froglight scavabili, resto protetto
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -449,6 +449,20 @@ function M.start(agent,cfg,options)
    else
     freeChecks=0
     local name=block and block.name or "?"
+    -- L'acqua/lava puo' apparire fra peek() e inspect() mentre
+    -- scorrono le correnti. Non trattarla come blocco solido sconosciuto.
+    if name=="minecraft:water" or name=="minecraft:lava" then
+     local kind=name=="minecraft:water" and "ACQUA" or "LAVA"
+     if move=="U" and kind=="ACQUA" then
+      -- Salita nel proprio pozzo: corrente d'acqua attraversabile.
+      return
+     end
+     fluidAttempts=fluidAttempts+1
+     if fluidAttempts>4 then
+      markBlocked("FLUIDO_INSTABILE",kind,x,y,z)
+     end
+     bonify(move,x,y,z,true)
+    else
     if name=="minecraft:bedrock" then error("BEDROCK IN PERCORSO") end
     assert(not unsafe(name),"Infrastruttura o blocco protetto: "..name)
     assert(NATURAL[name] or ALLOWED_DECOR[name] or isOre(block) or isSpawner(block),
@@ -459,6 +473,7 @@ function M.start(agent,cfg,options)
     assert(ok,"Scavo impossibile "..name..": "..tostring(why))
     digs=digs+1
     sleep(GRAVITY[name] and 0.3 or 0.15)
+    end
    end
   end
   error("Colonna di gravel/sabbia o blocchi troppo lunga: oltre 256 tentativi")
