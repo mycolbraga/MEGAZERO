@@ -240,5 +240,5 @@ end
 line("HOME: "..home.." | ALTRE: "..elsewhere..
  " | INCERTE: "..unknown.." | PENDING: "..pending)
 line("NESSUN MOVIMENTO, RESET O AVVIO ESEGUITO.")
-if file then file.close() end
-line("Report PC54: /megazero_reset_40_audit.txt")
+if file then file.close();file=nil end
+print("Report PC54: /megazero_reset_40_audit.txt")
