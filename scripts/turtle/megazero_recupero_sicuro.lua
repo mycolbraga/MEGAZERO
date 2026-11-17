@@ -1,4 +1,4 @@
--- MEGAZERO RECUPERO GPS v1.1 | rientro sul percorso salvato, NO NUOVO SCAVO
+-- MEGAZERO RECUPERO GPS v1.2 | rientro sul percorso salvato, NO NUOVO SCAVO
 -- Eseguito solo dall'agente amministrativo, mai come startup.
 local M={}
 local V={{0,-1},{1,0},{0,1},{-1,0}}
@@ -132,6 +132,57 @@ local function backup(cpPath,latchPath,unit)
  if latch then write(dir.."/errore",latch) end
  return dir
 end
+
+-- Autorizzazione esplicita al varco nel tetto sopra le basi.
+-- Solo blocchi vanilla innocui, sulla traccia GPS gia' registrata:
+-- mai casse, macchine, Turtle, cablaggi o altri oggetti funzionali.
+local function isRoofBlock(unit,hx,hy,hz,hd,x,y,z,block)
+ if not sector(hx,hy,hz,hd,x,y,z) then return false end
+ local forward=(x-hx)*V[hd+1][1]+(z-hz)*V[hd+1][2]
+ local left=(hd+3)%4
+ local lateral=(x-hx)*V[left+1][1]+(z-hz)*V[left+1][2]
+ if forward<1 or forward>2 or lateral<0 or lateral>1 or
+   y< -50 or y> -48 then return false end
+ local name=block and block.name
+ if type(name)~="string" or not name:match("^minecraft:") then
+  return false
+ end
+ for _,pattern in ipairs({
+  "chest","shulker","barrel","hopper","dispenser","dropper",
+  "furnace","smoker","blast_furnace","crafting_table",
+  "crafter","redstone","repeater","comparator","observer",
+  "piston","lever","button","pressure_plate","rail",
+  "bedrock","portal","spawner","command_block","structure",
+  "turtle","computer","lightning_rod","beacon",
+  "water","lava","bubble_column","sign","door","trapdoor"
+ }) do
+  if name:find(pattern,1,true) then return false end
+ end
+ return true
+end
+local function removeRoofObstacle(unit,hx,hy,hz,hd,x,y,z,move)
+ local inspectFn=move=="F" and turtle.inspect or
+  move=="U" and turtle.inspectUp or turtle.inspectDown
+ local digFn=move=="F" and turtle.dig or
+  move=="U" and turtle.digUp or turtle.digDown
+ local exists,block=inspectFn()
+ if not exists then return false,"Ostacolo non identificabile" end
+ if not isRoofBlock(unit,hx,hy,hz,hd,x,y,z,block) then
+  return false,"Blocco protetto/non autorizzato: "..
+   tostring(block and block.name or "?")
+ end
+ -- Una sola rimozione, poi GPS e movimento verificati dal chiamante.
+ local removed,reason=digFn()
+ if not removed then
+  return false,"Tetto non scavabile: "..tostring(reason)
+ end
+ local remains=inspectFn()
+ if remains then
+  return false,"Ostacolo ancora presente dopo il taglio"
+ end
+ return true,tostring(block.name)
+end
+
 local function record(cpPath,cp)
  write(cpPath,textutils.serialize(cp))
 end
@@ -229,11 +280,24 @@ function M.run(cfg,agent)
   cp.pending="BACK";record(cpPath,cp)
   local ok,reason=move()
   if not ok then
-   -- Conferma che NON sia stato compiuto alcun movimento.
+   -- Non scavare se posizione GPS cambiata o stato di movimento incerto.
    assertAt(cp.x,cp.y,cp.z)
-   cp.pending=nil;record(cpPath,cp)
-   error("Passaggio rientro bloccato a "..tx..","..ty..","..tz..
-    ": "..tostring(reason),0)
+   local direction=item.m=="U" and "D" or
+      item.m=="D" and "U" or "F"
+   -- L'autorizzazione al tetto vale solo nel settore e vicino alla HOME.
+   local dug,what=removeRoofObstacle(unit,hx,hy,hz,hd,tx,ty,tz,direction)
+   if dug then
+    -- La traccia originale resta invariata fino al movimento riuscito.
+    ok,reason=move()
+    if not ok then assertAt(cp.x,cp.y,cp.z) end
+   else
+    reason=tostring(reason).." | "..tostring(what)
+   end
+   if not ok then
+    cp.pending=nil;record(cpPath,cp)
+    error("Passaggio rientro bloccato a "..tx..","..ty..","..tz..
+     ": "..tostring(reason),0)
+   end
   end
   -- Se GPS assente o diverso, lascia BACK pendente per non perdere
   -- la possibilità di riconciliare il passo dopo un reboot.
