@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.10 | 3 secchi da Regulator via slot 1 verificato
+-- MEGAZERO MINER v2.3.11 | Rientri scorte progressivi, Regulator slot 1
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -941,11 +941,18 @@ function M.start(agent,cfg,options)
   local function attemptLevel(isRetry)
    detailStatus("SCAVO","Quota "..LEVELS[s.level]..
     ", settore personale "..cfg.unit..(isRetry and " RITENTATIVO" or ""))
-   local attempts=0
-   while attempts<5 do
-    attempts=attempts+1
+   -- Non ripartire da zero dopo un rientro per inventario.
+   -- s.distance e' l'ultima cella COMPLETATA, salvata in checkpoint.
+   -- Si ripercorrono le celle fino a quel punto, senza riscavarle.
+   local trips,stalled=0,0
+   while true do
+    abortIfStop()
+    local distanceBefore=s.distance or 0
+    local oreBefore=s.ore or 0
+    local blockedBefore=s.blocked or 0
     local ok,problem=pcall(processLevel)
     if ok then
+     s.lastScorte=nil;s.lastScorteAt=nil
      s.incomplete[tostring(s.level-1)]=nil
      save()
      return true
@@ -956,7 +963,6 @@ function M.start(agent,cfg,options)
     end
     local blocked=why:find("GALLERIA_INCOMPLETA:",1,true)~=nil
     detailStatus("RIENTRO","Interruzione livello "..s.level..", rientro",why)
-    -- Il punto dell'ostacolo si trova nel messaggio e nel checkpoint.
     local stoppedX,stoppedY,stoppedZ=s.x,s.y,s.z
     if #s.path>0 then
      assert(not s.pending,"Posizione incerta: impossibile pianificare rientro")
@@ -975,17 +981,35 @@ function M.start(agent,cfg,options)
      return false
     end
     if why:find("SCORTE:",1,true) and atHome() then
-     s.distance=0;save()
+     trips=trips+1
+     -- Anche una vena ricca senza aumento della distanza e' progresso.
+     local progressed=(s.distance or 0)>distanceBefore or
+       (s.ore or 0)>oreBefore or (s.blocked or 0)>blockedBefore
+     stalled=progressed and 0 or stalled+1
+     s.lastScorte=why
+     s.lastScorteAt={x=stoppedX,y=stoppedY,z=stoppedZ,
+       level=s.level,distance=s.distance,
+       trips=trips,stalled=stalled}
+     save()
+     if stalled>=5 or trips>=80 then
+      error("SCORTE: rientro ripetuto senza soluzione; liv "..s.level..
+       " dist "..tostring(s.distance).." | viaggio "..trips..
+       " senza progressi "..stalled.." | ultimo motivo: "..why..
+       " | punto "..stoppedX..","..stoppedY..","..stoppedZ)
+     end
+     detailStatus("BASE","Rifornimento; riprendo liv "..s.level..
+       " da distanza completata "..tostring(s.distance)..
+       " (rientro "..trips..", progressi "..tostring(progressed)..")")
+     -- NON azzerare s.distance: l'errore precedente obbligava
+     -- a riscavare dall'inizio e consumava tutti i 5 tentativi.
      supply()
     elseif why:find("BEDROCK IN PERCORSO",1,true) and atHome() then
-     -- Quota non accessibile: non modificare bedrock.
      s.level=s.level+1;s.distance=0;save()
      return true
     else
      error("Scavo interrotto: "..why)
     end
    end
-   error("Troppi rientri per le scorte sullo stesso livello")
   end
   -- Prima completa tutti i livelli non ostacolati.
   while s.level<=maxLevels do
