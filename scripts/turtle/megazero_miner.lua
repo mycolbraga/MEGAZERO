@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.18 | Froglight scavabili, resto protetto
+-- MEGAZERO MINER v2.3.19 | Froglight scavabili, resto protetto
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -130,6 +130,22 @@ function M.start(agent,cfg,options)
  -- Tappi piazzati su celle della galleria: non scavarli alla cieca.
  -- Persistono nel checkpoint anche dopo rientri e riavvii.
  s.seals=s.seals or {}
+ -- Versioni precedenti: ricostruisce il tipo dei tappi gia' piazzati
+ -- usando SOLTANTO il loro errore registrato nel checkpoint.
+ s.waterSeals=s.waterSeals or {}
+ local migratedWater=false
+ for key in pairs(s.seals) do
+  for _,entry in pairs(s.incomplete) do
+   if type(entry)=="table" and type(entry.lastError)=="string"
+    and entry.lastError:find("SIGILLO_SU_CELLA_2X2:ACQUA:"..key,1,true) then
+    if not s.waterSeals[key] then
+     s.waterSeals[key]=true
+     migratedWater=true
+    end
+   end
+  end
+ end
+ if migratedWater then migrated=true end
  if s.retryComplete==nil then s.retryComplete=false end
  local migrated=false
  if type(s.completedLevels)~="table" then
@@ -362,6 +378,7 @@ function M.start(agent,cfg,options)
   -- il chiamante deve provare una via alternativa sicura.
   local key=sealKey(x,y,z)
   s.seals[key]=detail or true
+  if f.kind=="ACQUA" then s.waterSeals[key]=true end
   s.blocked=s.blocked+1
   save()
   detailStatus("SCAVO","SIGILLO "..f.kind.." a "..x..","..y..","..z)
@@ -390,14 +407,31 @@ function M.start(agent,cfg,options)
    if sealed then
     local exists,block=inspect(move)
     if exists and block and (sealed==true or block.name==sealed) then
-     markBlocked("TAPPO_DA_NON_RIMUOVERE","SOLIDO",x,y,z)
+     if move=="U" and s.waterSeals[key]==true and
+        type(sealed)=="string" and block.name==sealed then
+      -- Solo nel pozzo verticale: riapre un tappo d'ACQUA
+      -- registrato da QUESTA Turtle. Non rompe tappi di lava.
+      -- La corrente verra' attraversata senza ostruire la corsia.
+      local ok,why=turtle.digUp()
+      assert(ok,"Riapertura sigillo acqua fallita: "..tostring(why))
+      s.seals[key]=nil;s.waterSeals[key]=nil;save()
+      sleep(0.15)
+     else
+      markBlocked("TAPPO_DA_NON_RIMUOVERE","SOLIDO",x,y,z)
+     end
+    else
+     -- Tappo gia' rimosso/cambiato: nessuna modifica al blocco ignoto.
+     s.seals[key]=nil;s.waterSeals[key]=nil;save()
     end
-    -- Il blocco e' stato tolto o cambiato: non assumere che sia
-    -- tuttora un tappo. Rivaluta il fluido prima di scavare.
-    s.seals[key]=nil;save()
    end
    local f=fluidi.peek(fluidSide(move))
    if f then
+    -- Pozzo verticale di accesso: l'acqua che cade da livelli sopra
+    -- e' attraversabile. Sigillarla qui bloccherebbe l'unica salita.
+    -- LAVA non attraversabile: resta gestita dalla bonifica sicura.
+    if move=="U" and f.kind=="ACQUA" then
+     return
+    end
     if fluidTransit and f.kind==fluidTransit and not f.source then return end
     fluidAttempts=fluidAttempts+1
     if fluidAttempts>4 then
