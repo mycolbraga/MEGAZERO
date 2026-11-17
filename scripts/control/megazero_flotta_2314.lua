@@ -129,7 +129,8 @@ if mode=="aggiorna" then
  local targets=collect(status,function(_,p)
   local v=p.miner and p.miner.version or ""
   return p.agent_version=="1.11" and type(v)=="string" and
-   not v:find("^%-%- MEGAZERO MINER v2%.3%.14") and
+   (not v:find("^%-%- MEGAZERO MINER v2%.3%.14") or
+    (p.error_latch and p.error_latch~="")) and
    p.current_status~="SCAVO" and p.current_status~="RIENTRO"
  end)
  if #targets==0 then
