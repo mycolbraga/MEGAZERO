@@ -14,11 +14,14 @@ end
 local rawCfg=assert(read("/megazero_config"),"Configurazione assente")
 local cfg=assert(textutils.unserialize(rawCfg),"Configurazione illeggibile")
 assert(cfg.site=="MINIERA-01" and cfg.unit=="N02","Non e' N02")
-assert(read("/megazero_miner"):find("^%-%- MEGAZERO MINER v2%.3%.21"),
+local miner=assert(read("/megazero_miner"),"Miner non trovato")
+assert(miner:find("^%-%- MEGAZERO MINER v2%.3%.21"),
  "Versione miner diversa da 2.3.21: STOP")
 local x,y,z=pos()
-assert(x==2117 and z==2994 and y>=-51 and y<=-25 and y%1==0,
- "N02 non nel pozzo atteso (2117, -25..-51, 2994): STOP")
+local alreadyHome=(x==2117 and y==-51 and z==2995)
+assert(alreadyHome or (x==2117 and z==2994 and
+ y>=-51 and y<=-25 and y%1==0),
+ "N02 non nel pozzo o HOME attesi: STOP")
 local fuel=turtle.getFuelLevel()
 assert(type(fuel)~="number" or fuel>=y+51+4,
  "Carburante insufficiente per rientro")
@@ -42,7 +45,7 @@ local safeBlocks={
 print("N02 PC14 | GPS "..x..","..y..","..z)
 print("Rientro nella propria colonna, nessun reset prima della HOME.")
 -- Il pozzo e' la cella esterna N02: X2117 Z2994.
-while y> -51 do
+while not alreadyHome and y> -51 do
  local expected=y-1
  local ok,why=turtle.down()
  if not ok then
@@ -60,19 +63,23 @@ while y> -51 do
   "GPS inatteso dopo discesa: FERMO")
  y=b
 end
-print("Pozzo raggiunto: 2117 -51 2994")
--- All'inizio della risalita il miner punta a NORD; un singolo BACK
--- dovrebbe riportare alla postazione. Se non coincide, annulla il passo.
-local ok,reason=turtle.back()
-assert(ok,"HOME ostruita: "..tostring(reason))
-local a,b,c=pos()
-if a~=2117 or b~=-51 or c~=2995 then
- local rollback=turtle.forward()
- assert(rollback,"Direzione non confermata e ritorno indietro fallito")
- local rx,ry,rz=pos()
- assert(rx==2117 and ry==-51 and rz==2994,"GPS non tornato nel pozzo")
- error("Orientamento diverso da NORD: STOP, nessun checkpoint modificato")
+if not alreadyHome then
+ print("Pozzo raggiunto: 2117 -51 2994")
+ -- La risalita iniziale lascia N02 rivolta a nord: BACK porta alla HOME.
+ -- Se il GPS smentisce l'orientamento, annulla il passo e interrompe.
+ local ok,reason=turtle.back()
+ assert(ok,"HOME ostruita: "..tostring(reason))
+ local a,b,c=pos()
+ if a~=2117 or b~=-51 or c~=2995 then
+  local rollback=turtle.forward()
+  assert(rollback,"Direzione non confermata e ritorno fallito")
+  local rx,ry,rz=pos()
+  assert(rx==2117 and ry==-51 and rz==2994,"GPS non tornato nel pozzo")
+  error("Orientamento diverso da NORD: STOP, nessun checkpoint modificato")
+ end
 end
+local a,b,c=pos()
+assert(a==2117 and b==-51 and c==2995,"GPS HOME non confermata")
 print("GPS HOME N02 confermata: 2117 -51 2995")
 -- La procedura agisce solo ora sul checkpoint di N02.
 local newCp={x=2117,y=-51,z=2995,d=0,path={},pending=nil,
@@ -84,8 +91,22 @@ local newCfg={}
 for k,v in pairs(cfg) do newCfg[k]=v end
 newCfg.miner_autostart=false
 local cfgText=textutils.serialize(newCfg)
-assert(fs.getFreeSpace("/")>=#newRaw+#cfgText+128,
- "GPS HOME raggiunta, ma poco spazio per checkpoint/config: NON modifica file")
+local required=#newRaw+#cfgText+128
+if fs.getFreeSpace("/")<required then
+ -- Solo una copia OBSOLETA dell'agente v1.19 (NON checkpoint/config).
+ -- L'agente installato v1.20 e' gia' stato verificato sopra con il miner.
+ local live=read("/megazero_admin_agent")
+ local old="/.megazero_ota2316_backup_N02_f6887ed109/megazero_admin_agent"
+ if type(live)=="string" and
+  live:find("^%-%- MEGAZERO ADMIN AGENT v1%.20") and
+  fs.exists(old) and
+  (read(old) or ""):find("^%-%- MEGAZERO ADMIN AGENT v1%.19") then
+  fs.delete(old)
+  print("Spazio liberato: eliminata SOLTANTO copia vecchia agente 1.19")
+ end
+end
+assert(fs.getFreeSpace("/")>=required,
+ "HOME raggiunta, ma spazio insufficiente: checkpoint non modificato")
 -- Archivia il vecchio checkpoint senza duplicarlo.
 fs.move(cpPath,destBackup)
 local h=fs.open(cpPath,"w")
@@ -117,7 +138,7 @@ if fs.exists(stop) then
  fs.move(stop,stopBackup)
 end
 print("N02 HOME, CHECKPOINT NUOVO 0%, AUTOSTART OFF")
-print("Vecchio checkpoint e errore archiviati; 39 Turtle intatte.")
+print("Checkpoint/errore precedenti archiviati; altre 39 intatte.")
 print("Riavvio N02, senza scavo.")
 sleep(1)
 os.reboot()
