@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.26 | Froglight scavabili, resto protetto
+-- MEGAZERO MINER v2.3.27 | Froglight scavabili, resto protetto
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -40,7 +40,7 @@ for _,n in ipairs({
  "gravel","sand","red_sand","calcite","dripstone_block",
  "pointed_dripstone","clay","moss_block","mud","packed_mud",
  "rooted_dirt","coarse_dirt","glow_lichen","soul_sand","basalt","smooth_basalt",
- "blackstone","netherrack","terracotta","magma_block","amethyst_block","budding_amethyst"
+ "blackstone","netherrack","terracotta","magma_block","amethyst_block"
 }) do NATURAL["minecraft:"..n]=true end
 -- Eccezione richiesta per tutte le Turtle: SOLO le tre Froglight vanilla.
 -- Gli altri blocchi costruiti e i componenti restano protetti.
@@ -484,6 +484,10 @@ function M.start(agent,cfg,options)
      bonify(move,x,y,z,true)
     else
     if name=="minecraft:bedrock" then error("BEDROCK IN PERCORSO") end
+    -- Budding amethyst non produce il blocco come drop: non distruggerlo.
+    if name=="minecraft:budding_amethyst" then
+     markBlocked("BLOCCO_SENZA_DROP",name,x,y,z)
+    end
     -- La lista DISCARD riguarda SOLO lo smaltimento, non cosa scavare.
     -- Tutti i blocchi non tecnici lungo la corsia sono scavabili:
     -- il drop si conserva anche se il nome non e' nella lista NATURAL.
@@ -635,7 +639,8 @@ function M.start(agent,cfg,options)
     local allowed=block and not unsafe(name) and
       name~="minecraft:bedrock" and
       name~="minecraft:water" and name~="minecraft:lava" and
-      name~="minecraft:bubble_column"
+      name~="minecraft:bubble_column" and
+      name~="minecraft:budding_amethyst"
     assert(allowed,"RIENTRO: blocco protetto o fluido: "..name)
     assert(freeSlots()>0,"RIENTRO: inventario pieno davanti a "..name)
     local cleared,why=digFn()
