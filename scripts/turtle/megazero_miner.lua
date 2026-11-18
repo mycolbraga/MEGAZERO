@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.21 | Froglight scavabili, resto protetto
+-- MEGAZERO MINER v2.3.22 | Froglight scavabili, resto protetto
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -36,7 +36,7 @@ for _,n in ipairs({
  "gravel","sand","red_sand","calcite","dripstone_block",
  "pointed_dripstone","clay","moss_block","mud","packed_mud",
  "rooted_dirt","coarse_dirt","glow_lichen","soul_sand","basalt","smooth_basalt",
- "blackstone","netherrack","terracotta"
+ "blackstone","netherrack","terracotta","magma_block"
 }) do NATURAL["minecraft:"..n]=true end
 -- Eccezione richiesta per tutte le Turtle: SOLO le tre Froglight vanilla.
 -- Gli altri blocchi costruiti e i componenti restano protetti.
