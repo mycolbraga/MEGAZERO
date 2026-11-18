@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.22 | Froglight scavabili, resto protetto
+-- MEGAZERO MINER v2.3.23 | Froglight scavabili, resto protetto
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -6,6 +6,10 @@
 -- Ritorno fisico per passi inversi; nessun lavoro dentro il perimetro base.
 
 local M = {}
+-- Le colonne di bolle sono acqua attraversabile, mai blocchi da scavare.
+local function isWaterLike(name)
+ return name=="minecraft:water" or name=="minecraft:bubble_column"
+end
 local DXY = {[0]={0,-1},[1]={1,0},[2]={0,1},[3]={-1,0}}
 local BASE_Y = -51
 local LEVELS={}
@@ -403,7 +407,7 @@ function M.start(agent,cfg,options)
    -- Acqua ammessa SOLO al primo passo fuori HOME, lava/solidi protetti.
    local exists,block=inspect(move)
    local flow=fluidi.peek(fluidSide(move))
-   assert(not exists or (block and block.name=="minecraft:water"),
+   assert(not exists or (block and isWaterLike(block.name)),
     "Uscita dalla base ostruita da blocco solido: non rompo infrastrutture")
    assert(not flow or flow.kind=="ACQUA",
     "Uscita dalla base ostruita da fluido diverso da acqua")
@@ -441,7 +445,7 @@ function M.start(agent,cfg,options)
    if f and f.kind=="ACQUA" then
     bonify(move,x,y,z,true) -- prova la sorgente, non sigilla l'acqua
     local existsNow,blockNow=inspect(move)
-    if not existsNow or (blockNow and blockNow.name=="minecraft:water") then
+    if not existsNow or (blockNow and isWaterLike(blockNow.name)) then
      return
     end
     -- Se la cella e' cambiata, rifare la verifica: lava mai ignorata.
@@ -467,11 +471,11 @@ function M.start(agent,cfg,options)
     local name=block and block.name or "?"
     -- L'acqua/lava puo' apparire fra peek() e inspect() mentre
     -- scorrono le correnti. Non trattarla come blocco solido sconosciuto.
-    if name=="minecraft:water" then
+    if isWaterLike(name) then
      bonify(move,x,y,z,true)
      -- Tutta l'acqua e' attraversabile: avanti, sopra e sotto.
      local still,b=inspect(move)
-     if not still or (b and b.name=="minecraft:water") then return end
+     if not still or (b and isWaterLike(b.name)) then return end
     elseif name=="minecraft:lava" then
      fluidAttempts=fluidAttempts+1
      if fluidAttempts>4 then
@@ -521,7 +525,7 @@ function M.start(agent,cfg,options)
     prepare(move,x,y,z,false)
    end
    local present,afterBlock=inspect(move)
-   assert(not present or (afterBlock and afterBlock.name=="minecraft:water"),
+   assert(not present or (afterBlock and isWaterLike(afterBlock.name)),
     "Vena ostruita dopo pulizia")
    s.ore=s.ore+1;save()
   else
