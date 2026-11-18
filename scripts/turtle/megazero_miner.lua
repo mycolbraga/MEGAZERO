@@ -1,4 +1,4 @@
--- MEGAZERO MINER v2.3.25 | Froglight scavabili, resto protetto
+-- MEGAZERO MINER v2.3.26 | Froglight scavabili, resto protetto
 -- Modulo per megazero_boot: return function(agent, config, opzioni)
 -- Non eseguire in automatico prima del collaudo di N01.
 -- Gallerie Y -1,-4,...,-61 (testa a Y 0,...,-60), max 300.
@@ -484,13 +484,12 @@ function M.start(agent,cfg,options)
      bonify(move,x,y,z,true)
     else
     if name=="minecraft:bedrock" then error("BEDROCK IN PERCORSO") end
-    -- Un blocco ignoto/protetto lascia sospesa SOLO questa galleria.
-    -- Non romperlo: registra il blocco e continua da HOME alla prossima quota.
+    -- La lista DISCARD riguarda SOLO lo smaltimento, non cosa scavare.
+    -- Tutti i blocchi non tecnici lungo la corsia sono scavabili:
+    -- il drop si conserva anche se il nome non e' nella lista NATURAL.
+    -- I blocchi protetti restano intatti e la galleria viene sospesa.
     if unsafe(name) then
      markBlocked("BLOCCO_PROTETTO",name,x,y,z)
-    end
-    if not (NATURAL[name] or ALLOWED_DECOR[name] or isOre(block) or isSpawner(block)) then
-     markBlocked("BLOCCO_NON_RICONOSCIUTO",name,x,y,z)
     end
     if freeSlots()<=2 then pruneInventory(false);compactInventory() end
     assert(freeSlots()>2,"SCORTE: inventario quasi pieno")
@@ -633,10 +632,11 @@ function M.start(agent,cfg,options)
     local name=block and block.name or "sconosciuto"
     assert(inSector(nx,ny,nz),
       "RIENTRO: blocco presso la base protetto: "..name)
-    local allowed=block and
-      (GRAVITY[name] or NATURAL[name] or ALLOWED_DECOR[name] or
-        (isOre(block) and not unsafe(name)))
-    assert(allowed,"RIENTRO: blocco NON naturale: "..name)
+    local allowed=block and not unsafe(name) and
+      name~="minecraft:bedrock" and
+      name~="minecraft:water" and name~="minecraft:lava" and
+      name~="minecraft:bubble_column"
+    assert(allowed,"RIENTRO: blocco protetto o fluido: "..name)
     assert(freeSlots()>0,"RIENTRO: inventario pieno davanti a "..name)
     local cleared,why=digFn()
     assert(cleared,"RIENTRO: non riesco a scavare "..name..
