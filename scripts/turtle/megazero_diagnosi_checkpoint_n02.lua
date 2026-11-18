@@ -46,5 +46,9 @@ for _,name in ipairs(fs.list("/")) do
 end
 table.sort(candidates)
 print("COPIE TROVATE: "..#candidates)
-for i,p in ipairs(candidates) do print(i.." "..p);print("  "..info(p)) end
-print("FINE: NESSUN FILE MODIFICATO, NESSUN MOVIMENTO")
+for i,p in ipairs(candidates) do
+ local label=p:match("N02_(%x+)/checkpoint") or
+  p:match("saved_N02_(%x+)/checkpoint") or p:sub(-12)
+ print(i.." ["..label:sub(1,10).."] "..info(p))
+end
+print("FINE: SOLA LETTURA")
