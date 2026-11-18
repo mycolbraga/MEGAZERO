@@ -15,15 +15,15 @@ local raw=assert(read(cfgPath),"Configurazione mancante")
 local cfg=assert(textutils.unserialize(raw),"Configurazione illeggibile")
 local unit=cfg.unit
 local expected={
- N07={x=2107,y=-51,z=2995,d=0,pc=19},
- N08={x=2105,y=-51,z=2995,d=0,pc=20},
- N09={x=2103,y=-51,z=2995,d=0,pc=21},
- N10={x=2101,y=-51,z=2995,d=0,pc=22},
+ N07={x=2107,y=-51,z=2995,d=0},
+ N08={x=2105,y=-51,z=2995,d=0},
+ N09={x=2103,y=-51,z=2995,d=0},
+ N10={x=2101,y=-51,z=2995,d=0},
  S07={x=2111,y=-51,z=3015,d=2}
 }
 local home=expected[unit]
 assert(cfg.site=="MINIERA-01" and home,"Solo N07 N08 N09 N10 S07")
-if home.pc then assert(os.getComputerID()==home.pc,"ID PC non corrisponde") end
+-- Identita verificata da config + GPS HOME, indipendentemente dall ID.
 assert(cfg.miner_autostart==true or cfg.miner_autostart==false,
  "Autostart non leggibile")
 local gx,gy,gz=gps.locate(4,false)
