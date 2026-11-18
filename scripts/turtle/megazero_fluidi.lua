@@ -1,4 +1,4 @@
--- MEGAZERO FLUIDI v1.3 | Modulo bonifica + collaudo fermo N01
+-- MEGAZERO FLUIDI v1.4 | Modulo bonifica + collaudo fermo N01
 -- Uso sul terminale N01: megazero_fluidi N01
 -- Uso come modulo futuro: local fluidi = dofile("/megazero_fluidi")
 -- NON muove, NON scava, NON crea fluidi. Gestisce solo la faccia ispezionata.
@@ -6,6 +6,8 @@
 local M = {}
 local FLUIDS = {
   ["minecraft:water"]="ACQUA",
+  -- Colonna di bolle: acqua attraversabile, NON prelevabile come sorgente.
+  ["minecraft:bubble_column"]="ACQUA",
   ["minecraft:lava"]="LAVA"
 }
 local SOLIDS = {
