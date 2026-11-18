@@ -484,9 +484,14 @@ function M.start(agent,cfg,options)
      bonify(move,x,y,z,true)
     else
     if name=="minecraft:bedrock" then error("BEDROCK IN PERCORSO") end
-    assert(not unsafe(name),"Infrastruttura o blocco protetto: "..name)
-    assert(NATURAL[name] or ALLOWED_DECOR[name] or isOre(block) or isSpawner(block),
-     "Blocco non minerario sconosciuto: "..name)
+    -- Un blocco ignoto/protetto lascia sospesa SOLO questa galleria.
+    -- Non romperlo: registra il blocco e continua da HOME alla prossima quota.
+    if unsafe(name) then
+     markBlocked("BLOCCO_PROTETTO",name,x,y,z)
+    end
+    if not (NATURAL[name] or ALLOWED_DECOR[name] or isOre(block) or isSpawner(block)) then
+     markBlocked("BLOCCO_NON_RICONOSCIUTO",name,x,y,z)
+    end
     if freeSlots()<=2 then pruneInventory(false);compactInventory() end
     assert(freeSlots()>2,"SCORTE: inventario quasi pieno")
     local ok,why=dig(move)
